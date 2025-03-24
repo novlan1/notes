@@ -172,12 +172,10 @@ const targetName = `${subPackages[0]}/${dispatchDir}/${dispatchChunkFileName}`;
 >
 > 有时候，越快完成，写得越好，越慢完成，写得越差
 
-
 ## 5. 参考
 
 1. https://juejin.cn/post/7135671174893142030
 2. https://github.com/sanyuan0704/vite-plugin-chunk-split/blob/master/README-CN.md
-
 
 ----
 
