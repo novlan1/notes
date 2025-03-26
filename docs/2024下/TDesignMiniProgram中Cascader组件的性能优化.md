@@ -57,7 +57,6 @@ function parseOptions(options: OptionsType, keys: KeysType) {
 1. 将 `options` 设为纯数据字段
 2. `handleSelect` 时切片更新 `items`，就是更新 `items` 的某一列，而不是一起更新。
 
-
 第 1 个就是新增了 `pureDataPattern`，如下：
 
 ```ts
