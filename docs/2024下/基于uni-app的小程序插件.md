@@ -545,7 +545,6 @@ p => view
 
 为方便其他子工程迁移，贴下转化的基础步骤。
 
-
 ### 5.1. 框架级别
 
 1. 复制 `main.ts`
@@ -582,7 +581,6 @@ import type { XXType } from 'xx';
 ```
 
 6. Vant 组件改成 Press UI 组件，常见的包括 List/Tab/Swiper 等。
-
 
 ## 6. 赛事转化
 
@@ -673,7 +671,6 @@ export function normalizeMiniProgramFilename(
 ```
 
 这里举个例子，`filename` 为 `/Users/yang/Documents/git-a/guandan-match/node_modules/press-ui/press-info/press-info.vue`，`inputDir` 为 `./src/project/guandan-match` 时，`path.relative` 生成的路径就会带上 `../`，这里背后的逻辑是 `inputDir` 和 `node_modules` 必须是同一级。
-
 
 uni-app 社区也有其他人遇到了相同问题，参见：
 
