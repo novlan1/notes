@@ -373,7 +373,6 @@ replaceLibraryLoaderOptions: {
 
 <img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2024/8/own_mike_1aa7454104cc5e6542.png" width="500">
 
-
 去掉 `js-base64` 后的 JS 总体积：
 
 <img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2024/8/own_mike_4c73a0420f2de42cc5.png" width="500">
@@ -400,7 +399,6 @@ replaceLibraryLoaderOptions: {
 
 - 去掉 `initMixin`，使用工具方法
 
-
 #### 3.6.2. pmd-tools
 
 - `env/user-agent.ts` 小程序中用不到，用关键词编译方法去掉
@@ -415,7 +413,6 @@ replaceLibraryLoaderOptions: {
 
 `tcss` 已废弃，直接去掉
 
-
 其他项目想用的话，手动替换。
 
 ### 3.7. scoped
@@ -426,7 +423,6 @@ replaceLibraryLoaderOptions: {
 
 <img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2024/8/own_mike_bfad98a1eb69e896e3.png" width="500">
 
-
 其他项目想用的话，使用 `plugin-light` 中的 `removeScopedLoader`。
 
 ### 3.8. 最新进度
@@ -434,7 +430,6 @@ replaceLibraryLoaderOptions: {
 当前总包 1.512 MB
 
 <img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2024/8/own_mike_d34295e3ea4044dedc.png" width="500">
-
 
 ## 4. Vue3
 
