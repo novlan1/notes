@@ -340,7 +340,6 @@ methods: {
 
 <img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2024/8/own_mike_2014d9c6eb9f6f272b.gif" width="375">
 
-
 其他项目想要使用的话，可以使用封装好的方法。
 
 ### 3.4. uni-i18n
