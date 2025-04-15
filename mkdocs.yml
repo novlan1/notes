@@ -1,0 +1,58 @@
+site_name: 杨国旺的文章
+site_url: https://notes.wangdoc.com
+
+plugins:
+  - literate-nav:
+      nav_file: nav.md
+      tab_length: 2
+
+theme:
+  name: material
+
+  font:
+    text: Merriweather Sans
+    code: Red Hat Mono
+
+  icon:
+    logo: material/library
+
+  palette:
+    # Light Mode
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Light mode
+      primary: green
+      accent: deep orange
+
+    # Dark Mode
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Dark mode
+      primary: grey
+      accent: deep purple
+
+  features:
+    - navigation.footer
+    - content.code.copy
+    - content.code.select
+
+
+markdown_extensions:
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      auto_title: false
+      anchor_linenums: true
+      linenums: false
+      line_spans: __span
+      use_pygments: true
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+
+copyright: Copyright &copy; 2025 novlan1
