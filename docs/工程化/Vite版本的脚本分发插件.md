@@ -1,3 +1,4 @@
+
 ## 1. 开始
 
 遇到一个比较大的项目从 `Vue2` 的 `uni-app` 迁移到 `Vue3`，主包大小又超了，在组件分发的基础上，做了脚本分发，这里简单记录下。
@@ -85,15 +86,15 @@ function createMoveToVendorChunkFn(): GetManualChunk {
 
 报错信息：
 
-<img src="https://km.woa.com/asset/000100022412004dc4598f27cf461401?height=786&amp;width=1654" width="500">
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2024/11/own_mike_d0f6532827b3cd18db.png" width="500">
 
 common/vendor 相关内容：
 
-<img src="https://km.woa.com/asset/00010002241200c52e67a8e11c47ed01?height=580&amp;width=1102" width="500">
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2024/11/own_mike_c02d488b4f5347989d.png" width="500">
 
 `views/sche/logic/reset-sche.js` 相关内容：
 
-<img src="https://km.woa.com/asset/0001000224120065c248d0bd1b45d401?height=1054&amp;width=1626" width="500">
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2024/11/own_mike_a9299e602389d6fbb3.png" width="500">
 
 ### 2.3. 最佳出路
 
@@ -159,10 +160,10 @@ const targetName = `${subPackages[0]}/${dispatchDir}/${dispatchChunkFileName}`;
 
 使用后能减少 `130KB`。
 
-<img src="https://km.woa.com/asset/00010002241200ca0208d85fe841d701?height=890&amp;width=1224" width="500">
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2024/11/own_mike_649de2fcc66b512bb3.png" width="500">
 
 
-<img src="https://km.woa.com/asset/0001000224120029af46817f5f4f1101?height=720&amp;width=1036" width="500">
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2024/11/own_mike_c0afad5ba87391b28d.png" width="500">
 
 
 ## 4. 感悟
