@@ -1,5 +1,5 @@
 site_name: 杨国旺的文章
-site_url: https://notes.wangdoc.com
+site_url: https://novlan1.github.io/notes/
 
 plugins:
   - literate-nav:
