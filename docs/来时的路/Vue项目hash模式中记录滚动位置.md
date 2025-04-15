@@ -1,5 +1,5 @@
 
-由于vue-router中的scrollBehavior只在history模式中有效，需要自己实现记录滚动位置，当返回的时候，恢复原来的位置。
+由于 vue-router 中的 scrollBehavior 只在 history 模式中有效，需要自己实现记录滚动位置，当返回的时候，恢复原来的位置。
 
 ### 1. 实现前提
 
@@ -7,9 +7,9 @@
 
 ### 2. 基本实现
 
-1、在每个路由页面的beforeRouteLeave记录滚动位置即scrollTop
+1、在每个路由页面的 beforeRouteLeave 记录滚动位置即 scrollTop
 
-2、当回退时，activate的生命周期中调用scrollTo方法，滚动到之前的位置。
+2、当回退时，activate的生命周期中调用 scrollTo 方法，滚动到之前的位置。
 
 ### 3. 优化
 
