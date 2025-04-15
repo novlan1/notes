@@ -5,10 +5,13 @@ plugins:
   - literate-nav:
       nav_file: nav.md
       tab_length: 2
+  - search
 
 theme:
   name: material
 
+  favicon: images/favicon.ico
+  
   font:
     text: Merriweather Sans
     code: Red Hat Mono
@@ -22,7 +25,7 @@ theme:
       toggle:
         icon: material/weather-night
         name: Light mode
-      primary: green
+      primary: 4351AF
       accent: deep orange
 
     # Dark Mode
@@ -37,6 +40,9 @@ theme:
     - navigation.footer
     - content.code.copy
     - content.code.select
+    - search.suggest
+    - search.highlight
+    - search.share
 
 
 markdown_extensions:
