@@ -1,5 +1,12 @@
 site_name: 杨的文章
+site_author: novlan1
+site_description: Notes Of Novlan1
 site_url: https://novlan1.github.io/notes/
+
+copyright: Copyright &copy; 2025 novlan1
+
+repo_name: novlan1
+repo_url: https://github.com/novlan1/
 
 plugins:
   - literate-nav:
@@ -63,4 +70,3 @@ markdown_extensions:
   - pymdownx.snippets
   - pymdownx.superfences
 
-copyright: Copyright &copy; 2025 novlan1
