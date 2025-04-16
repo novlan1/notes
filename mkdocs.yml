@@ -62,7 +62,7 @@ markdown_extensions:
   - pymdownx.highlight:
       auto_title: false
       anchor_linenums: true
-      linenums: false
+      linenums: true
       line_spans: __span
       use_pygments: true
       pygments_lang_class: true

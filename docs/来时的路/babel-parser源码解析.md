@@ -76,7 +76,7 @@ const { parse } = require('@babel/parser')
 parse('const a = 1', {})
 ```
 
-调用`@babel/parser`的`parse`方法的时候，会先通过[getParser]((https://github.com/babel/babel/blob/v7.16.4/packages/babel-parser/src/index.js#L80))实例化一个`Parser`，然后调用`Parser`上面的`parse`方法。
+调用`@babel/parser`的`parse`方法的时候，会先通过[getParser](https://github.com/babel/babel/blob/v7.16.4/packages/babel-parser/src/index.js#L80)实例化一个`Parser`，然后调用`Parser`上面的`parse`方法。
 
 ```js
 function getParser(options: ?Options, input: string): Parser {
