@@ -10,8 +10,10 @@ plugins:
 theme:
   name: material
 
+  language: zh
+
   favicon: images/favicon.ico
-  
+
   font:
     text: Merriweather Sans
     code: Red Hat Mono
