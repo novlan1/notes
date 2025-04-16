@@ -2,7 +2,7 @@
 
 先看效果
 
-
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/4/own_mike_a347755d6bd00e2ecd.gif" width="300">
 
 实现的注意点：
 
