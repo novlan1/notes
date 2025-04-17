@@ -13,6 +13,9 @@ plugins:
       nav_file: nav.md
       tab_length: 2
   - search
+  - git-revision-date-localized:
+      type: iso_datetime
+      timezone: Asia/Shanghai
 
 theme:
   name: material
