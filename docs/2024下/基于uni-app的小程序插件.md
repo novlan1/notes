@@ -14,7 +14,7 @@
 
 ```bash
 # 开发
-npm run dev:mp-plugin 
+npm run dev:mp-plugin
 # 发布
 npm run build:mp-plugin
 ```
@@ -143,7 +143,7 @@ spawnSync(command, otherArgv, { stdio: 'inherit' });
 第三方公共包括：
 
 - uni-app 相关
-  - uni-mp-weixin/dist/index.js 
+  - uni-mp-weixin/dist/index.js
   - vue-cli-plugin-uni/mp-runtime.esm.js
   - uni-i18n
 - Press UI
@@ -481,9 +481,9 @@ Vue.prototype.$set = set
 <img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2024/8/own_mike_abb7c22e5de1650fee.png" width="500">
 
 ```
-Maximum recursive updates exceeded. This means you have a reactive effect 
-that is mutating its own dependencies vendor.j5: 3. and thus recursively 
-triggering itself. Possible sources include component template, render 
+Maximum recursive updates exceeded. This means you have a reactive effect
+that is mutating its own dependencies vendor.j5: 3. and thus recursively
+triggering itself. Possible sources include component template, render
 function, updated hook or watcher source
 ```
 
@@ -526,7 +526,7 @@ vue3 不会在 `img/div/span` 这些 H5 标签转化的产物中加额外类名�
 需要自己改成
 
 ```scss
-img, 
+img,
 image {
 
 }
@@ -682,7 +682,7 @@ export function normalizeMiniProgramFilename(
 }
 ```
 
-这里举个例子，`filename` 为 `/Users/yang/Documents/git-woa/guandan-match/node_modules/@tencent/press-ui/press-info/press-info.vue`，`inputDir` 为 `./src/project/guandan-match` 时，`path.relative` 生成的路径就会带上 `../`，这里背后的逻辑是 `inputDir` 和 `node_modules` 必须是同一级。
+这里举个例子，`filename` 为 `/Users/yang/Documents/git-a/guandan-match/node_modules/@tencent/press-ui/press-info/press-info.vue`，`inputDir` 为 `./src/project/guandan-match` 时，`path.relative` 生成的路径就会带上 `../`，这里背后的逻辑是 `inputDir` 和 `node_modules` 必须是同一级。
 
 
 uni-app 社区也有其他人遇到了相同问题，参见：

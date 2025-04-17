@@ -1,6 +1,6 @@
 ## 1. 开始
 
-[Press UI](https://h5.igame.qq.com/pmd-mobile.support.press-ui.press-ui/) 近期迁入了活动组件，这里记录下遇到的问题、解决方法以及一些思考。
+[Press UI](https://novlan1.github.io/press-ui/h5/) 近期迁入了活动组件，这里记录下遇到的问题、解决方法以及一些思考。
 
 何为活动组件？这里指的是展示类的某业务组件。
 

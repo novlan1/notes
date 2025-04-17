@@ -92,7 +92,7 @@ RGB 模式更适合用于工业，HSV 和 HSL 更直观，符合直觉。
 
 ### 5. Press UI
 
-[Press UI 组件库](https://h5.igame.qq.com/pmd-mobile.support.press-ui.press-ui/)已实现 Color Picker 组件，支持 `2*(n+1)` 端，即 Vue2 + Vue3，uni-app、非 uni-app。
+[Press UI 组件库](https://novlan1.github.io/press-ui/h5/)已实现 Color Picker 组件，支持 `2*(n+1)` 端，即 Vue2 + Vue3，uni-app、非 uni-app。
 
 ### 6. 参考
 

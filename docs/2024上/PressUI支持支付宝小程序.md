@@ -146,7 +146,7 @@ export default {
 
 `scss` 选择器路径上只能有1个 `::v-deep`，其他不会被转化。
 
-比如 
+比如
 
 ```scss
 .press-collapse-item {
@@ -261,8 +261,8 @@ const contentObserver = uni.createIntersectionObserver(this, {
   <scroll-view>
    <slot/>
   </scroll-view>
-  <div 
-    v-for="(item, index) of indexList" 
+  <div
+    v-for="(item, index) of indexList"
     :key="item"
   >
   </div>
@@ -306,4 +306,4 @@ const contentObserver = uni.createIntersectionObserver(this, {
 
 <img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/press/img/services.gif" width="600">
 
-官网地址：[https://h5.igame.qq.com/pmd-mobile.support.press-ui.press-ui](https://h5.igame.qq.com/pmd-mobile.support.press-ui.press-ui)
+官网地址：[https://novlan1.github.io/press-ui/h5/](https://novlan1.github.io/press-ui/h5/)

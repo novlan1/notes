@@ -1,6 +1,6 @@
 ## 1. 开始
 
-[Press UI](https://h5.igame.qq.com/pmd-mobile.support.press-ui.press-ui/) 是一套基于 [uni-app](https://uniapp.dcloud.net.cn/) 的组件库，是项目内孵化的，但并不与任何业务绑定的底层组件库。
+[Press UI](https://novlan1.github.io/press-ui/h5/) 是一套基于 [uni-app](https://uniapp.dcloud.net.cn/) 的组件库，是项目内孵化的，但并不与任何业务绑定的底层组件库。
 
 目前 Press UI 主要有三方面功能：
 

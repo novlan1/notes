@@ -88,7 +88,7 @@ scp -P 36000 -r $FILE root@my:$TARGET_PATH
 
 ```bash
 assError: required parameters must precede optional parameters
-        on line 229 of ../../../../../../Users/yang/Documents/git-woa/press-ui-app/press-ui-app/packages/base/mixin.scss
+        on line 229 of ../../../../../../Users/yang/Documents/git-a/press-ui-app/press-ui-app/packages/base/mixin.scss
 >> @mixin halfBorder($color: $color-gray-3, $borderRadius) {
 ```
 
