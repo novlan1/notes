@@ -58,5 +58,5 @@ require('./common/vendor.js');(global["webpackJsonp"]=global["webpackJsonp"]||[]
 
 问题原因：uni-app 问题，QQ小程序打包 `vendor` 时模块划分有问题，把应该放到主包的模块放到了分包中。
 
-解决方法：需要确定被划分错的是哪个模块，比如最近一次的模块是 `@tencent/pmd-tools/lib/time`，当前的解决方法是把它放到 `main.js` 中。
+解决方法：需要确定被划分错的是哪个模块，比如最近一次的模块是 `pmd-tools/lib/time`，当前的解决方法是把它放到 `main.js` 中。
 

@@ -566,17 +566,15 @@ p => view
 
 4. `manifest.json` 中 `vueVersion` 改成 3
 
-5. `pmd-merchant-ui` 替换，`pmd-merchant-ui/src/tip-comp-dialog-prompt/css` => `@tencent/press-plus/press-act-prompt-dialog/css`
+5. `pmd-merchant-ui` 替换，`pmd-merchant-ui/src/tip-comp-dialog-prompt/css` => `press-plus/press-act-prompt-dialog/css`
 
 
 ### 5.2. 业务级别
 
-
-
 1. `app.$set` 和 `this.$set` 用 `press-ui` 中的 `setAdapter` 替换。
 
 ```ts
-import { setAdapter } from '@tencent/press-ui/common/vue3/set';
+import { setAdapter } from 'press-ui/common/vue3/set';
 ```
 
 2. `router.push`， `router.replace` 在小程序下，用原生方法实现。
@@ -682,7 +680,7 @@ export function normalizeMiniProgramFilename(
 }
 ```
 
-这里举个例子，`filename` 为 `/Users/yang/Documents/git-a/guandan-match/node_modules/@tencent/press-ui/press-info/press-info.vue`，`inputDir` 为 `./src/project/guandan-match` 时，`path.relative` 生成的路径就会带上 `../`，这里背后的逻辑是 `inputDir` 和 `node_modules` 必须是同一级。
+这里举个例子，`filename` 为 `/Users/yang/Documents/git-a/guandan-match/node_modules/press-ui/press-info/press-info.vue`，`inputDir` 为 `./src/project/guandan-match` 时，`path.relative` 生成的路径就会带上 `../`，这里背后的逻辑是 `inputDir` 和 `node_modules` 必须是同一级。
 
 
 uni-app 社区也有其他人遇到了相同问题，参见：

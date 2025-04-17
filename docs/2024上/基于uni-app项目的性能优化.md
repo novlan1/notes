@@ -289,7 +289,7 @@ cacheGroups: [
 看了一下，应该是某些地方没用条件编译，且 tree-shaking 没有生效。这里我封装了下，统一用 press-ui 的：
 
 ```ts
-import { TIM } from '@tencent/press-ui/common/im/helper/tim';
+import { TIM } from 'press-ui/common/im/helper/tim';
 ```
 
 
@@ -350,7 +350,7 @@ export {
 ```js
 module.exports = {
   externals: {
-    '@tencent/t-comm/lib/router/path-to-regexp': 'commonjs @tencent/t-comm/lib/router/path-to-regexp'
+    't-comm/lib/router/path-to-regexp': 'commonjs t-comm/lib/router/path-to-regexp'
   },
 }
 ```
@@ -358,7 +358,7 @@ module.exports = {
 对于第二点，可以利用条件编译。对于非小程序会用到的代码，直接用条件编译包裹起来，打包时去掉。还好我之前已经封装了一个 `loader`，拿来用即可。
 
 ```js
-const { LOADER_MAP } = require('@tencent/plugin-light/lib/loader');
+const { LOADER_MAP } = require('plugin-light/lib/loader');
 
 
 module.export = {
@@ -429,7 +429,7 @@ __webpack_require__.e = function requireEnsure(chunkId) {
     promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
 
       // 下面的对象同样很多，这里也只列了一小部分
-      var href = "" + ({"component/ui/tip-merchant/tip-comp-dialog-explain/index":"component/ui/tip-merchant/tip-comp-dialog-explain/index","components/dialogs/match-intro-layer/index":"components/dialogs/match-intro-layer/index","components/global-component/global-component":"components/global-component/global-component","views/index/common/vendor":"views/index/common/vendor","node-modules/@tencent/press-ui/press-loading/press-loading":"node-modules/@tencent/press-ui/press-loading/press-loading"}[chunkId]||chunkId) + ".wxss";
+      var href = "" + ({"component/ui/tip-merchant/tip-comp-dialog-explain/index":"component/ui/tip-merchant/tip-comp-dialog-explain/index","components/dialogs/match-intro-layer/index":"components/dialogs/match-intro-layer/index","components/global-component/global-component":"components/global-component/global-component","views/index/common/vendor":"views/index/common/vendor","node-modules/press-ui/press-loading/press-loading":"node-modules/press-ui/press-loading/press-loading"}[chunkId]||chunkId) + ".wxss";
       var fullhref = __webpack_require__.p + href;
       var existingLinkTags = document.getElementsByTagName("link");
       for(var i = 0; i < existingLinkTags.length; i++) {

@@ -286,7 +286,7 @@ export default {
 
 ## 3. 版本控制
 
-有时，组件库的一些更新是需要测试和验证的，需要发 `alpha` 或 `beta` 版本，那么一个问题是，当用户执行 `npm i @tencent/press-plus@latest` 时，会装上 `alpha` 版本或者 `beta` 版本吗？
+有时，组件库的一些更新是需要测试和验证的，需要发 `alpha` 或 `beta` 版本，那么一个问题是，当用户执行 `npm i press-plus@latest` 时，会装上 `alpha` 版本或者 `beta` 版本吗？
 
 答案是可能会，取决于**发布时是否添加标签**。
 
@@ -296,7 +296,7 @@ export default {
 npm publish --tag beta
 ```
 
-可以通过 `npm view @tencent/press-ui` 或者 `npm dist-tag ls @tencent/press-ui` 命令查看 `npm` 包有哪些发布标签，及对应的版本。
+可以通过 `npm view press-ui` 或者 `npm dist-tag ls press-ui` 命令查看 `npm` 包有哪些发布标签，及对应的版本。
 
 <img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2023/12/own_mike_eb54cab8d8f8b35a4b.png" width="600" />
 
