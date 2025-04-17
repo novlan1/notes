@@ -1,6 +1,5 @@
 # 个人笔记
 
-
 依赖安装
 
 ```bash
@@ -19,6 +18,16 @@ mkdocs serve
 
 # 打包
 mkdocs build
+```
+
+`python` 虚拟环境
+
+```bash
+# 创建虚拟环境
+python -m venv venv
+
+# 激活
+source venv/bin/activate
 ```
 
 参考

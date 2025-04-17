@@ -1,21 +1,27 @@
 - [首页](index.md)
-- 工程化
-  - [tailwindcss 应用](工程化/tailwindcss应用.md)
-  - [Vite 版本的脚本分发插件](工程化/Vite版本的脚本分发插件.md)
-  - [Vite 版本的组件分发插件](工程化/Vite版本的组件分发插件.md)
-- 思考
-  - [代码随想](思考/代码随想.md)
-  - [书](思考/书.md)
-- 优化
-  - [项目优化](优化/项目优化.md)
-  - [小程序登录体验优化](优化/小程序登录体验优化.md)
-- Uni App
-  - [基于 uni-app 的小程序插件](uni-app/基于uni-app的小程序插件.md)
-- 组件库
-  - [Color Picker 组件与色彩](组件库/ColorPicker组件与色彩.md)
-  - [TDesign MiniProgram 中 Cascader 组件的性能优化](组件库/TDesignMiniProgram中Cascader组件的性能优化.md)
+- 2025上
+  - [项目优化](2025上/项目优化.md)
+  - [代码随想](2025上/代码随想.md)
+  - [tailwindcss 应用](2025上/tailwindcss应用.md)
 - 2024下
+  - [基于 uni-app 的小程序插件](2024下/基于uni-app的小程序插件.md)
+  - [TDesign MiniProgram 中 Cascader 组件的性能优化](2024下/TDesignMiniProgram中Cascader组件的性能优化.md)
   - [React 学习](2024下/React学习.md)
+  - [Color Picker 组件与色彩](2024下/ColorPicker组件与色彩.md)
+  - [Vite 版本的组件分发插件](2024下/Vite版本的组件分发插件.md)
+  - [小程序登录体验优化](2024下/小程序登录体验优化.md)
+  - [Vite 版本的脚本分发插件](2024下/Vite版本的脚本分发插件.md)
+  - [《书》](2024下/书.md)
+- 2024上
+  - [10分钟看完 Vue3 工程适配](2024上/10分钟看完Vue3工程适配.md)
+  - [《代码之丑》笔记](2024上/代码之丑-笔记.md)
+  - [基于uni-app项目的性能优化](2024上/基于uni-app项目的性能优化.md)
+  - [Press UI 支持支付宝小程序](2024上/PressUI支持支付宝小程序.md)
+  - [uni-app在H5下的缓存机制](2024上/uni-app在H5下的缓存机制.md)
+  - [用户体验优化-无感登录webview](2024上/用户体验优化-无感登录webview.md)
+  - [迁移库引用](2024上/迁移库引用.md)
+  - [《浏览器工作原理与实践》笔记](2024上/浏览器工作原理与实践-笔记.md)
+  - [Service Worker 理论与实践](2024上/ServiceWorker理论与实践.md)
 - 2023下
   - [孪生项目的开发方式优化](2023下/孪生项目的开发方式优化.md)
   - [关键词编译的类型提示](2023下/关键词编译的类型提示.md)
