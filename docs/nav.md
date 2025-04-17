@@ -4,6 +4,7 @@
   - [代码随想](2025上/代码随想.md)
   - [tailwindcss 应用](2025上/tailwindcss应用.md)
   - [代码规范总结](2025上/代码规范总结.md)
+  - [外包面试题](2025上/外包面试题.md)
 - 2024下
   - [基于 uni-app 的小程序插件](2024下/基于uni-app的小程序插件.md)
   - [TDesign MiniProgram 中 Cascader 组件的性能优化](2024下/TDesignMiniProgram中Cascader组件的性能优化.md)
