@@ -1,5 +1,3 @@
-[toc]
-
 # 1. 小程序特殊标签&API
 
 ## 1.1. scroll-view

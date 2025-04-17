@@ -1,5 +1,3 @@
-[toc]
-
 ## 1. 背景
 
 `uni-app` 内主流的 `router` 方案是使用`uni-simple-router`加`uni-read-pages`，自动读取 `pages.json`，然后替换`ROUTES`变量，[相关文档在这里](https://hhyang.cn/v2/start/quickstart.html)。
@@ -27,7 +25,7 @@ this.$Router.push({ path: '/user', params: { userId }}) // -> /user
 
 
 ```js
-router.push('/somePath/:id') 
+router.push('/somePath/:id')
 ```
 
 或者这样：

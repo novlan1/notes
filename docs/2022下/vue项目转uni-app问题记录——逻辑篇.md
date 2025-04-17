@@ -1,6 +1,3 @@
-[toc]
-
-
 ## 1. v-for
 
 ### 1.1. 基础
@@ -181,12 +178,12 @@ uni-app 中的页面也可以触发 `beforeDestroy`，但是前提是路由出�
 
 ## 10. uni-app页面生命周期执行顺序
 
-- beforeCreate 
-- created 
-- beforeMount 
-- onLoad 
-- onShow 
-- mounted  
+- beforeCreate
+- created
+- beforeMount
+- onLoad
+- onShow
+- mounted
 - onReady
 
 注意 `beforeMount -> onLoad -> onShow -> mounted -> onReady`
@@ -245,7 +242,7 @@ const path = curPage?.$vm?.getNavigatorPreviousPath?.();
 uni-app 中 view 标签上的 dataset 可以保留 number 类型，div 不可以。
 
 ```html
-<view 
+<view
   v-for="(item, index) of list"
   :key="index"
   :data-index="index"
@@ -288,7 +285,7 @@ uni-app 小程序中遍历 slot，会生成抽象节点 `componentGenerics`
 将ref定义在组件上面再使用如下代码去获取其方法获取其top，则会报错
 
 ```html
- <el-row class="qzblgzhTable" ref="row"></el-row>       
+ <el-row class="qzblgzhTable" ref="row"></el-row>
 ```
 
 ```js

@@ -1,5 +1,3 @@
-[toc]
-
 # 1. 样式
 
 ## 1.1. fixed弹窗滑动时，下层页面也跟着滑动（穿透问题）
@@ -179,8 +177,8 @@ _____
 后面发现用字符串就可以了。
 
 这样会报错
-              
-```html 
+
+```html
 :style="getString(item,index)"
 ```
 
@@ -192,7 +190,7 @@ _____
 />
 ```
 可以变通一下，这样也不会报错
- 
+
 ```html
 <div
  :style="true ? getString(item,index) : ''"
@@ -432,7 +430,7 @@ Page({
 
 ```html
 <!-- 存在问题 -->
-<Comp 
+<Comp
   :list="tabMap[curTab]"
 />
 ```
@@ -441,7 +439,7 @@ Page({
 
 ```vue
 <!-- 不推荐 -->
-<Comp 
+<Comp
   :list="curList"
 />
 
