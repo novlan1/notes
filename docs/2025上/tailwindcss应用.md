@@ -158,11 +158,6 @@ module.exports = {
 import "tailwindcss/tailwind.css"
 ```
 
-参考：
-
-1. https://juejin.cn/post/7091578341194465317
-2. https://blog.csdn.net/zqd_java/article/details/136568490
-
 ## 4. Vue3 项目
 
 安装依赖
@@ -208,3 +203,9 @@ import "./styles/tailwind.css";
 - preflight，预设的基础样式，原本含义是“飞行前检查”，[示例](https://unpkg.com/tailwindcss@2.2.19/dist/base.css)
 
 当在 CSS 中包含 `@tailwind base` 时，Tailwind 会自动注入 preflight。
+
+## 6. 参考
+
+1. [https://juejin.cn/post/7091578341194465317](https://juejin.cn/post/7091578341194465317)
+2. [https://blog.csdn.net/zqd_java/article/details/136568490](https://blog.csdn.net/zqd_java/article/details/136568490)
+3. [https://blog.csdn.net/amiaoyaofeixiang/article/details/134395717](https://blog.csdn.net/amiaoyaofeixiang/article/details/134395717)
