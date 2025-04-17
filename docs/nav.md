@@ -38,6 +38,10 @@
   - [前端工程化配置 husky+commitlint](2022上/前端工程化配置husky+commitlint.md)
   - [浅析 Vant 的下拉刷新组件](2022上/浅析Vant的下拉刷新组件.md)
   - [浅析 NProgress 进度条的实现](2022上/浅析NProgress进度条的实现.md)
+  - [一键部署dev项目](2022上/一键部署dev项目.md)
+  - [前端配置频繁更新怎么办](2022上/前端配置频繁更新怎么办.md)
+  - [使用VueDraggable中的一些问题](2022上/使用VueDraggable中的一些问题.md)
+  - [为 form-create-designer 增加 table slot](2022上/为form-create-designer增加table-slot.md)
 - 2021下
   - [在讲究用户体验的年代，如何高效的制作弹窗的动画效果](2021下/在讲究用户体验的年代，如何高效的制作弹窗的动画效果.md)
   - [深入解析Vue2和Vue3的响应式原理](2021下/深入解析Vue2和Vue3的响应式原理.md)
