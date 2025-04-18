@@ -6,16 +6,15 @@
 
 ### 2.1. 是否显示
 
-- Element-UI​​ 使用 :visible.sync 进行双向绑定
+- Element-UI​​ 使用 `:visible.sync` 进行双向绑定
+​​- Element-Plus​​ 改用 `v-model` 或 `:model-value`
 
-```html
-<el-dialog :visible.sync="dialogVisible"></el-dialog>
-```
-
-​​- Element-Plus​​ 改用 v-model 或 :model-value
-
-```html
-<el-dialog v-model="dialogVisible"></el-dialog>
+```diff
+<el-dialog
+-  :visible.sync="dialogVisible"
++  v-model="dialogVisible"
+>
+</el-dialog>
 ```
 
 ### 2.2. padding
@@ -32,24 +31,16 @@ element-plus 中 el-dialog 中默认有 `padding`，去除方法：
 
 用 footer 插槽，才有 `.el-dialog__footer` 元素，之前写的样式才能生效。
 
-之前：
-
-```html
+```diff
 <el-dialog>
-  <div slot="footer">
-  </div>
+-  <div slot="footer">
+-  </div>
++  <template #footer>
++    <!-- 这里的内容会渲染到 .el-dialog__footer -->
++  </template>
 </el-dialog>
 ```
 
-现在：
-
-```html
-<el-dialog>
-  <template #footer>
-    <!-- 这里的内容会渲染到 .el-dialog__footer -->
-  </template>
-</el-dialog>
-```
 
 ### 2.4. custom-class
 
@@ -57,30 +48,26 @@ element-plus 中 el-dialog 中默认有 `padding`，去除方法：
 
 ## 3. el-table 插槽语法​
 
-- Element-UI​​ 使用 slot-scope
+- Element-UI​​ 使用 `slot-scope`
+​​- Element-Plus​​ 改用 `#default`
 
-```html
- <template slot-scope="scope"></template>
-```
+```diff
+<template
+-  slot-scope="scope"
++  #default="scope"
+>
 
-​​- Element-Plus​​ 改用 #default
-
-```html
- <template #default="scope"></template>
+</template>
 ```
 
 ## 4. el-icon 使用方式​
 
 - ​​Element-UI​​ 使用 class 引入图标
-
-```html
-<i class="el-icon-edit"></i>
-```
-
 - Element-Plus​​ 改用 `<el-icon>` 组件
 
-```html
-<el-icon><Edit /></el-icon>
+```diff
+-  <i class="el-icon-edit"></i>
++  <el-icon><Edit /></el-icon>
 ```
 
 业务中常用的有：
