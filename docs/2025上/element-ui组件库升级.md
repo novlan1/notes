@@ -83,6 +83,28 @@ element-plus 中 el-dialog 中默认有 `padding`，去除方法：
 <el-icon><Edit /></el-icon>
 ```
 
+业务中常用的有：
+
+之前：
+
+```ts
+<i
+  class="el-icon-plus"
+/>
+```
+
+```ts
+import { Plus as ElIconPlus } from '@element-plus/icons-vue';
+```
+
+现在：
+
+```html
+<el-icon>
+  <ElIconPlus />
+</el-icon>
+```
+
 ## 5. el-select
 
 element-plus 中 el-select 边框去除方法
@@ -96,5 +118,18 @@ element-plus 中 el-select 边框去除方法
   &__wrapper.is-focused {
     box-shadow: none;
   }
+}
+```
+
+## el-checkbox
+
+`element-ui` 中的 `checkbox` 没有默认高度，`element-plus` 中的 `.el-checkbox` 有默认高度为 32px。
+
+这一点会对后面绝对定位的图标产生影响。
+
+```css
+.icon-question {
+-  top: 4px;
++  top: 9px;
 }
 ```
