@@ -6,6 +6,7 @@
   - [tailwindcss细节](2025上/tailwindcss细节.md)
   - [代码规范总结](2025上/代码规范总结.md)
   - [外包面试题](2025上/外包面试题.md)
+  - [element-ui组件库升级](2025上/element-ui组件库升级.md)
 - 2024下
   - [基于 uni-app 的小程序插件](2024下/基于uni-app的小程序插件.md)
   - [TDesign MiniProgram 中 Cascader 组件的性能优化](2024下/TDesignMiniProgram中Cascader组件的性能优化.md)
