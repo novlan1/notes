@@ -120,3 +120,19 @@ element-plus 中 el-select 边框去除方法
 +  top: 9px;
 }
 ```
+
+## el-button
+
+`type="text"` 已被废弃，可替换成 `link & type="primary"`。
+
+```diff
+<el-button
+-  type="text"
++  link
++  type="primary"
+>
+  button
+</el-button>
+```
+
+参考：[button](https://element-plus.org/zh-CN/component/button.html#%E9%93%BE%E6%8E%A5%E6%8C%89%E9%92%AE)
