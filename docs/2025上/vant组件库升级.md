@@ -1,8 +1,8 @@
-## 开始
+## 1. 开始
 
 一些项目需要从 `vant@2` 升级到 `vant@4`，记录下差异。
 
-## picker
+## 2. picker
 
 回调参数更新：
 
@@ -14,7 +14,7 @@ onConfirm(v) {
 ```
 
 
-## popup
+## 3. popup
 
 是否展示由 `v-model` 改为 `v-model:show`
 
@@ -26,7 +26,7 @@ onConfirm(v) {
 </van-popup>
 ```
 
-## toast
+## 4. toast
 
 函数式调用的需要手动引入样式，无法通过 `auto-import` 自动引入。
 
@@ -34,7 +34,7 @@ onConfirm(v) {
 import 'vant/lib/toast/index.css';
 ```
 
-## dialog
+## 5. dialog
 
 是否展示由 `v-model` 改为 `v-model:show`
 
@@ -46,7 +46,7 @@ import 'vant/lib/toast/index.css';
 </van-dialog>
 ```
 
-## action-sheet
+## 6. action-sheet
 
 是否展示由 `v-model` 改为 `v-model:show`
 
@@ -58,7 +58,7 @@ import 'vant/lib/toast/index.css';
 </van-action-sheet>
 ```
 
-## tabs
+## 7. tabs
 
 ```diff
 <van-tabs
