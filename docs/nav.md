@@ -8,7 +8,7 @@
   - [外包面试题](2025上/外包面试题.md)
   - [element-ui组件库升级](2025上/element-ui组件库升级.md)
   - [vant组件库升级](2025上/vant组件库升级.md)
-  - [plugin-light和press-ui等基础库同步](plugin-light和press-ui等基础库同步)
+  - [plugin-light 和 press-ui 等基础库同步](2025上/plugin-light和press-ui等基础库同步)
 - 2024下
   - [基于 uni-app 的小程序插件](2024下/基于uni-app的小程序插件.md)
   - [TDesign MiniProgram 中 Cascader 组件的性能优化](2024下/TDesignMiniProgram中Cascader组件的性能优化.md)
