@@ -64,3 +64,11 @@ press-next 中组件包括和平赛事、掼蛋赛事、无畏赛事等组件，
 [press-components](https://h5.igame.qq.com/pmd-mobile.pmd-h5.press-components.press/) 是基于 pnpm 的 monorepo 库，包含了对 `tdesign-vue-next` 和 `element-plus` 的二次封装，是 PC 组件库。与 `press-ui/press-next` 等互不引用。
 
 贡献指南[参考这里](https://h5.igame.qq.com/pmd-mobile.pmd-h5.press-components.press/zh-CN/guide/docs-dev.html)。
+
+## 7. 其他
+
+- [frontend-cloud](https://git.com/pmd-mobile/pmd-h5/frontend-cloud)，上云项目，用于回滚、灰度发布、备份等
+- [cron-job](https://git.com/pmd-mobile/pmd-h5/cron-job)，定时任务管理
+- [t-comm](https://git.com/pmd-mobile/pmd-h5/t-comm)，专业、稳定、纯粹的工具库
+- [vue-template](https://git.com/pmd-mobile/pmd-h5/vue3-h5-template)，非 uni-app Vue3 项目模板，包括 h5、PC、TGS等模版
+- [vue-cross-template](https://git.com/pmd-mobile/pmd-h5/vue3-cross-template)，uni-app Vue3 项目模板
