@@ -27,8 +27,8 @@
 - [Uni App Vue 项目基础配置](https://mobile.com/plugin-light/zh/project-config-uni-vue.html)
 - [Vite 项目基础配置](https://mobile.com/plugin-light/zh/project-config-vite.html)
 - [Vue 项目基础配置](https://mobile.com/plugin-light/zh/project-config-vue.html)
-- [ESlint Plugin Light](https://mobile.com/plugin-light/zh/eslint-config-light.html)
-- [ESlint Plugin Light Vue3](https://mobile.com/plugin-light/zh/eslint-config-light-vue3.html)
+- [ESlint Config Light](https://mobile.com/plugin-light/zh/eslint-config-light.html)
+- [ESlint Config Light Vue3](https://mobile.com/plugin-light/zh/eslint-config-light-vue3.html)
 - [Vue3 前端脚手架 Net CLI](https://mobile.com/plugin-light/zh/net-cli.html)
 
 贡献指南[参考这里](https://mobile.com/plugin-light/CONTRIBUTING.html)。
