@@ -1,37 +1,19 @@
 # 个人笔记
 
-依赖安装
+命令
 
 ```bash
-pip3 install mkdocs
+# 以来安装
+pnpm install
 
-pip3 install mkdocs-material
-
-pip3 install mkdocs-literate-nav
-```
-
-相关命令
-
-```bash
 # 开发
-mkdocs serve
+pnpm run docs:dev
 
 # 打包
-mkdocs build
+pnpm run docs:build
 ```
 
-`python` 虚拟环境
+注意事项
 
-```bash
-# 创建虚拟环境
-python -m venv venv
-
-# 激活
-source venv/bin/activate
-```
-
-参考
-
-- [Mkdocs materials](https://github.com/squidfunk/mkdocs-material)
-- [Getting Started with Material for MkDocs](https://jameswillett.dev/getting-started-with-material-for-mkdocs/)
-
+- 不可出现未闭合的标签，否则打包异常
+- 不可出现预期以外`{{foo}}`，否则打包异常
