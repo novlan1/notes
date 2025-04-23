@@ -44,7 +44,7 @@
     },
     {
       "text": "2024下",
-      "collapsed": true,
+      "collapsed": false,
       "items": [
         {
           "text": "基于 uni-app 的小程序插件",
@@ -102,7 +102,7 @@
     },
     {
       "text": "2024上",
-      "collapsed": true,
+      "collapsed": false,
       "items": [
         {
           "text": "10分钟看完 Vue3 工程适配",
@@ -156,7 +156,7 @@
     },
     {
       "text": "2023下",
-      "collapsed": true,
+      "collapsed": false,
       "items": [
         {
           "text": "孪生项目的开发方式优化",
@@ -206,7 +206,7 @@
     },
     {
       "text": "2023上",
-      "collapsed": true,
+      "collapsed": false,
       "items": [
         {
           "text": "Press UI — 基于uni-app的跨端组件库",
@@ -244,7 +244,7 @@
     },
     {
       "text": "2022下",
-      "collapsed": true,
+      "collapsed": false,
       "items": [
         {
           "text": "Vite真香之路",
@@ -362,7 +362,7 @@
     },
     {
       "text": "2022上",
-      "collapsed": true,
+      "collapsed": false,
       "items": [
         {
           "text": "V8引擎介绍",
@@ -512,7 +512,7 @@
     },
     {
       "text": "2021下",
-      "collapsed": true,
+      "collapsed": false,
       "items": [
         {
           "text": "在讲究用户体验的年代，如何高效的制作弹窗的动画效果",
@@ -618,7 +618,7 @@
     },
     {
       "text": "2021上",
-      "collapsed": true,
+      "collapsed": false,
       "items": [
         {
           "text": "Jest 笔记",
@@ -656,7 +656,7 @@
     },
     {
       "text": "2020下",
-      "collapsed": true,
+      "collapsed": false,
       "items": [
         {
           "text": "babel 与 polyfill",
@@ -670,7 +670,7 @@
     },
     {
       "text": "2020上",
-      "collapsed": true,
+      "collapsed": false,
       "items": [
         {
           "text": "砌一道高墙，拥着她入眠",
@@ -744,7 +744,7 @@
     },
     {
       "text": "张小龙",
-      "collapsed": true,
+      "collapsed": false,
       "items": [
         {
           "text": "张小龙的微信盗梦十诫",
