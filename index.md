@@ -7,13 +7,13 @@ hero:
   text: 'Notes of Novlan1'
   actions:
     - theme: brand
-      text: 2025
+      text: '2025'
       link: /docs/2025上/项目优化
     - theme: alt
-      text: 2024
+      text: '2024'
       link: /docs/2024下/基于uni-app的小程序插件
     - theme: alt
-      text: 2023
+      text: '2023'
       link: /docs/2023下/孪生项目的开发方式优化
 
 features:

@@ -15,7 +15,7 @@ export default defineConfig({
   base: '/notes/',
 
   head: [
-    ['link', { rel: 'icon', href: '/favicon.ico' }],
+    ['link', { rel: 'icon', href: '/notes/favicon.ico' }],
     ['meta', { name: 'author', content: 'novlan1' }],
     [
       'meta',
