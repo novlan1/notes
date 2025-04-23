@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitepress'
+import { defineConfig } from 'vitepress';
 import sidebarConfig from './sidebar.json';
 import { getFooterMessage } from './footer';
 
@@ -8,7 +8,7 @@ export default defineConfig({
   lang: 'zh-CN',
   title: '简单点',
   description: '杨的笔记',
-  
+
 
   lastUpdated: true,
   cleanUrls: true,
@@ -61,15 +61,15 @@ export default defineConfig({
     socialLinks: [{ icon: 'github', link: 'https://github.com/novlan1/notes/' }],
 
     footer: {
-      message:getFooterMessage(),
+      message: getFooterMessage(),
       copyright: 'Copyright © 2025-present novlan1',
     },
   },
   ignoreDeadLinks: true,
-  
+
   vite: {
     esbuild: {
       loader: 'tsx', // 支持 TS/TSX
-    }
-  }
-})
+    },
+  },
+});

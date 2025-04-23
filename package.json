@@ -5,6 +5,9 @@
     "docs:preview": "vitepress preview"
   },
   "devDependencies": {
+    "eslint-config-light": "^1.5.5",
+    "eslint-config-light-vue3": "^1.0.8",
+    "typescript": "5.1",
     "vitepress": "^1.6.3"
   }
 }

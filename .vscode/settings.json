@@ -1,5 +1,22 @@
 {
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always",
+    "source.fixAll.stylelint": "always"
+  },
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "eslint.autofixOnSave": false,
+  "eslint.nodePath": "./node_modules",
+  "eslint.validate": [
+    "vue",
+    "html",
+    "javascript",
+    "typescript",
+    "javascriptreact",
+    "typescriptreact"
+  ],
   "files.autoSave": "off",
   "files.insertFinalNewline": true,
-  "files.trimTrailingWhitespace": true
+  "files.trimTrailingWhitespace": true,
+  "javascript.format.enable": false,
 }
