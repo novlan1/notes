@@ -3,7 +3,7 @@
 命令
 
 ```bash
-# 以来安装
+# 依赖安装
 pnpm install
 
 # 开发

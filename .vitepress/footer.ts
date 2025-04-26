@@ -8,13 +8,13 @@ const MESSAGE_LIST = [
     link: 'https://novlan1.github.io/canvas-game/',
   },
   {
-    text: 'Comment',
-    link: 'https://novlan1.github.io/comment-code-online/',
+    text: 'CSS',
+    link: 'https://novlan1.github.io/more-css/',
   },
   {
-    text: 'More CSS',
-    link: 'https://novlan1.github.io/more-css/',
-  }
+    text: 'COMMENT',
+    link: 'https://novlan1.github.io/comment-code-online/',
+  },
 ];
 
 export function getFooterMessage() {
