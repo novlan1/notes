@@ -1,9 +1,19 @@
 const MESSAGE_LIST = [
-  { text: 'Press UI', link: 'https://github.com/novlan1/press-ui/' },
-  { text: 'T Comm', link: 'https://github.com/novlan1/t-comm/' },
+  {
+    text: 'Press UI',
+    link: 'https://novlan1.github.io/press-ui/',
+  },
+  {
+    text: 'T Comm',
+    link: 'https://novlan1.github.io/t-comm/',
+  },
   {
     text: 'Plugin Light',
-    link: 'https://github.com/novlan1/plugin-light/',
+    link: 'https://novlan1.github.io/plugin-light/',
+  },
+  {
+    text: 'ONE',
+    link: 'https://novlan1.github.io/one/',
   },
 ];
 
