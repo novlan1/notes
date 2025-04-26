@@ -1,17 +1,5 @@
 const MESSAGE_LIST = [
   {
-    text: 'Press UI',
-    link: 'https://novlan1.github.io/press-ui/',
-  },
-  {
-    text: 'T Comm',
-    link: 'https://novlan1.github.io/t-comm/',
-  },
-  {
-    text: 'Plugin Light',
-    link: 'https://novlan1.github.io/plugin-light/',
-  },
-  {
     text: 'ONE',
     link: 'https://novlan1.github.io/one/',
   },
