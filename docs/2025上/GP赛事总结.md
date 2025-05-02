@@ -74,10 +74,6 @@
 
 ### 3. 性能
 
-竖版性能部分其实做了很多工作，不过都被不停增长的需求、不同增加的代码体积抵消了，首屏时间约为 `2200ms` 左右，在赛事、商家同等量级、同等复杂度的业务中算是较好的。
-
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/5/own_mike_8xeSdcGKWcr6zian.png" width="500">
-
 横版由于升级了 Vue3，去掉了冗余样式，性能有比较大的提升，由 `3600ms+` 提升到了 `2200ms` 左右。
 
 之前：
@@ -87,6 +83,10 @@
 现在：
 
 <img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/5/own_mike_Ynwr8EX2Q4YwRamE.png" width="500">
+
+竖版性能部分其实做了很多工作，不过都被不停增长的需求、不同增加的代码体积抵消了，当前首屏时间约为 `2200ms` 左右，在赛事、商家同等量级、同等复杂度的业务中算是较好的。
+
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/5/own_mike_8xeSdcGKWcr6zian.png" width="500">
 
 竖版性能相关优化具体介绍下。
 
@@ -181,6 +181,10 @@ H5 的异步加载是用了 `little-loader`。
 
 <img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/3/own_mike_8f266681fa965b8410.png" width="600">
 
+#### 3.3. 其他
+
+还开发了 `postcss` [插件](https://mobile.a.com/plugin-light/zh/postcss-plugin-remove-selector.html)，减少了 `press-icon-plus` 的样式体积 `15KB`。
+
 ### 4. 用户体验
 
 除了产品和其他人员提出的用户体验优化之外，前端主动优化了诸多用户体验部分。
@@ -211,7 +215,7 @@ H5 的异步加载是用了 `little-loader`。
 
 核心原理是借助了 `router` 的 `beforeEach` 和 `afterEach` 钩子，在路由跳转前后改变顶层类名，进而增加 `translateX` 相关动画。
 
-#### 4.3. H5在PC端展示优化
+#### 4.3. PC 端展示优化
 
 背景是 H5 用电脑浏览器打开时，会变形，宽高都会被拉长。现在优化成了在 PC 打开时，依然保持 H5 的样式。
 
