@@ -36,7 +36,7 @@
 对于我们项目而言，还有更深层次的原因：
 
 - 由于前端开发与UI开发分离，许多时候前端删掉了某些DOM结构，却不知道删掉对应的样式文件，造成性能问题
-- 类名写的很乱，即便一个按钮也有无数种写法，难以维护。用 `tailwindcss` 之后，大部分情况下只有一个标准答案，会限制开发人员的“胡乱发挥”
+- 类名写的很乱，即便一个按钮也有无数种写法，难以维护。用 `tailwindcss` 之后，**大部分情况下只有一个标准答案，会限制开发人员的“胡乱发挥”**
 
 对于有些人认为的 `tailwindcss` 会让模板变成很长，造成难以维护。我是这样看待的：
 
@@ -49,7 +49,7 @@
 个人对 `tailwindcss` 的理解：
 
 1. 用工具帮开发者完成书写CSS，这个工具是无数测试用例、无数线上项目验证过的
-2. 简单、高效，让简单的事情回归简单
+2. 简单、高效，**让简单的事情回归简单**
 
 社区内使用 `tailwindcss` 或者其他原子化 CSS 的项目很多，比如 `github`、`x.com`，证明了它的成熟性。
 
@@ -199,7 +199,7 @@ H5 的异步加载是用了 `little-loader`。
 
 <img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/2/own_mike_f6aec9336555447752.gif" width="300">
 
-此外，之前是固定的 `scheme`，这里优化成弹出登录框时，判断当前 `url`，获取当前的页面、参数等信息，并动态拼接 `scheme`，注入到 `config` 中。让用户跳转到小程序后，打开的就是短信里的链接，无需再次点击。
+此外，之前是固定的 `scheme`，这里优化成弹出登录框时，**判断当前 `url`，获取当前的页面、参数等信息，并动态拼接 `scheme`，注入到 `config` 中**。让用户跳转到小程序后，打开的就是短信里的链接，无需再次点击。
 
 下图是这一优化上线后，小程序的访问次数对比。
 
@@ -214,6 +214,11 @@ H5 的异步加载是用了 `little-loader`。
 <img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2024/12/own_mike_1726c8e1bea10c9ff3.gif" width="200">
 
 核心原理是借助了 `router` 的 `beforeEach` 和 `afterEach` 钩子，在路由跳转前后改变顶层类名，进而增加 `translateX` 相关动画。
+
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2024/12/own_mike_d1e5f789f8ce463b57.png" width="300">
+
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2024/12/own_mike_716cf8a6eab5168bb9.png" width="300">
+
 
 #### 4.3. PC 端展示优化
 
