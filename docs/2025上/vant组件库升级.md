@@ -86,9 +86,9 @@ import 'vant/lib/toast/index.css';
 </van-tabs>
 ```
 
-## 其他
+## 8. 其他
 
-### `.native` 修饰符被废弃
+### 8.1. `.native` 修饰符被废弃
 
 Vue 3 中，`.native` 修饰符已被废弃，以下是关键区别和迁移建议：
 

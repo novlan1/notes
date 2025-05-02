@@ -17,7 +17,7 @@
           "link": "/docs/2025上/tailwindcss应用.md"
         },
         {
-          "text": "tailwindcss细节",
+          "text": "tailwindcss 细节",
           "link": "/docs/2025上/tailwindcss细节.md"
         },
         {
@@ -29,11 +29,11 @@
           "link": "/docs/2025上/外包面试题.md"
         },
         {
-          "text": "element-ui组件库升级",
+          "text": "element-ui 组件库升级",
           "link": "/docs/2025上/element-ui组件库升级.md"
         },
         {
-          "text": "vant组件库升级",
+          "text": "vant 组件库升级",
           "link": "/docs/2025上/vant组件库升级.md"
         },
         {
@@ -47,6 +47,10 @@
         {
           "text": "TGS和电子流总结",
           "link": "/docs/2025上/TGS和电子流总结"
+        },
+        {
+          "text": "GP赛事总结",
+          "link": "/docs/2025上/GP赛事总结"
         }
       ]
     },

@@ -108,7 +108,7 @@ element-plus 中 el-select 边框去除方法
 }
 ```
 
-## el-checkbox
+## 6. el-checkbox
 
 `element-ui` 中的 `checkbox` 没有默认高度，`element-plus` 中的 `.el-checkbox` 有默认高度为 32px。
 
@@ -121,7 +121,7 @@ element-plus 中 el-select 边框去除方法
 }
 ```
 
-## el-button
+## 7. el-button
 
 `type="text"` 已被废弃，可替换成 `link & type="primary"`。
 
