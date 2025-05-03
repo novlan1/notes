@@ -28,10 +28,6 @@ Array<{
 :columns-field-names="{ text: 'text', value: 'key', children: 'children' }"
 ```
 
-
-
-
-
 ## 3. popup
 
 是否展示由 `v-model` 改为 `v-model:show`
