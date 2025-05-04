@@ -4,7 +4,8 @@
   "scripts": {
     "docs:dev": "vitepress dev",
     "docs:build": "vitepress build",
-    "docs:preview": "vitepress preview"
+    "docs:preview": "vitepress preview",
+    "check": "node scripts/check/check.js"
   },
   "type": "module",
   "devDependencies": {
@@ -12,5 +13,9 @@
     "eslint-config-light-vue3": "^1.0.8",
     "typescript": "5.1",
     "vitepress": "^1.6.3"
+  },
+  "dependencies": {
+    "glob": "^11.0.2",
+    "t-comm": "^1.5.15"
   }
 }

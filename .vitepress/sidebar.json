@@ -163,6 +163,10 @@
         {
           "text": "preprocess 源码",
           "link": "/docs/2024上/preprocess源码.md"
+        },
+        {
+          "text": "海外部署记录",
+          "link": "/docs/2024上/海外部署记录.md"
         }
       ]
     },
@@ -213,6 +217,18 @@
         {
           "text": "Press Plus 和 Element Light 组件库",
           "link": "/docs/2023下/PressPlus和ElementLight组件库.md"
+        },
+        {
+          "text": "修改 ua",
+          "link": "/docs/2023下/修改ua.md"
+        },
+        {
+          "text": "rosetta",
+          "link": "/docs/2023下/rosetta.md"
+        },
+        {
+          "text": "undefined < 100",
+          "link": "/docs/2023下/undefined与100比较.md"
         }
       ]
     },
@@ -369,6 +385,10 @@
         {
           "text": "前端国际化",
           "link": "/docs/2022下/前端国际化.md"
+        },
+        {
+          "text": "单测总结",
+          "link": "/docs/2022下/单测总结.md"
         }
       ]
     },
