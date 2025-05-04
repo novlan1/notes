@@ -67,8 +67,12 @@
           "link": "/docs/2024下/TDesignMiniProgram中Cascader组件的性能优化.md"
         },
         {
-          "text": "React 学习",
-          "link": "/docs/2024下/React学习.md"
+          "text": "React 学习一",
+          "link": "/docs/2024下/React学习一.md"
+        },
+        {
+          "text": "React 学习二",
+          "link": "/docs/2024下/React学习二.md"
         },
         {
           "text": "Color Picker 组件与色彩",
@@ -113,12 +117,16 @@
         {
           "text": "history 模式白屏",
           "link": "/docs/2024下/history模式白屏.md"
+        },
+        {
+          "text": "递归 Partial",
+          "link": "/docs/2024下/递归partial.md"
         }
       ]
     },
     {
       "text": "2024上",
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         {
           "text": "10分钟看完 Vue3 工程适配",
@@ -215,12 +223,16 @@
         {
           "text": "GP赛事跨端核心总结",
           "link": "/docs/2024上/GP赛事跨端核心总结.md"
+        },
+        {
+          "text": "红包算法",
+          "link": "/docs/2024上/红包算法.md"
         }
       ]
     },
     {
       "text": "2023下",
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         {
           "text": "孪生项目的开发方式优化",
@@ -294,7 +306,7 @@
     },
     {
       "text": "2023上",
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         {
           "text": "Press UI — 基于uni-app的跨端组件库",
@@ -336,7 +348,7 @@
     },
     {
       "text": "2022下",
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         {
           "text": "Vite真香之路",
@@ -458,7 +470,7 @@
     },
     {
       "text": "2022上",
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         {
           "text": "V8引擎介绍",
@@ -603,12 +615,16 @@
         {
           "text": "程序员的核心竞争力",
           "link": "/docs/2022上/程序员的核心竞争力.md"
+        },
+        {
+          "text": "运行跨域的 Chrome",
+          "link": "/docs/2022上/运行跨域的chrome.md"
         }
       ]
     },
     {
       "text": "2021下",
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         {
           "text": "在讲究用户体验的年代，如何高效的制作弹窗的动画效果",
@@ -714,7 +730,7 @@
     },
     {
       "text": "2021上",
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         {
           "text": "Jest 笔记",
@@ -752,7 +768,7 @@
     },
     {
       "text": "2020下",
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         {
           "text": "babel 与 polyfill",
@@ -766,7 +782,7 @@
     },
     {
       "text": "2020上",
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         {
           "text": "砌一道高墙，拥着她入眠",
@@ -840,7 +856,7 @@
     },
     {
       "text": "张小龙",
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         {
           "text": "张小龙的微信盗梦十诫",
@@ -866,6 +882,7 @@
     },
     {
       "text": "算法",
+      "collapsed": true,
       "items": [
         {
           "text": "求长度最小的子数组",
