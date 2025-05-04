@@ -199,6 +199,22 @@
         {
           "text": "消极情绪",
           "link": "/docs/2024上/消极情绪.md"
+        },
+        {
+          "text": "全局弹窗控制",
+          "link": "/docs/2024上/全局弹窗控制.md"
+        },
+        {
+          "text": "研发平台数据上报",
+          "link": "/docs/2024上/研发平台数据上报.md"
+        },
+        {
+          "text": "global-component",
+          "link": "/docs/2024上/global-component.md"
+        },
+        {
+          "text": "GP赛事跨端核心总结",
+          "link": "/docs/2024上/GP赛事跨端核心总结.md"
         }
       ]
     },
@@ -261,6 +277,18 @@
         {
           "text": "undefined < 100",
           "link": "/docs/2023下/undefined与100比较.md"
+        },
+        {
+          "text": "权限管理系统需求",
+          "link": "/docs/2023下/权限管理系统需求.md"
+        },
+        {
+          "text": "tim 离线消息",
+          "link": "/docs/2023下/tim离线消息.md"
+        },
+        {
+          "text": "tim 消息",
+          "link": "/docs/2023下/tim消息.md"
         }
       ]
     },
