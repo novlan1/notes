@@ -25,11 +25,30 @@ export default defineConfig({
           '前端, notes, 笔记, Javascript, Typescript, React, Vue, webpack, vite, HTTP, 算法',
       },
     ],
-    // baidu 统计
     [
       'script',
-      {},
+      {
+        src: 'https://tam.cdn-go.cn/aegis-sdk/latest/aegis.min.js',
+      },
+    ],
+    [
+      'script',
+      {
+        src: 'https://tam.cdn-go.cn/aegis-sdk/latest/aegis.min.js',
+      },
       `
+      console.log('Aegis', window.Aegis);
+      if (typeof Aegis === 'function') {
+        var aegis = new Aegis({
+          id: 'gQnLgtg0Ge1bzwkXy2', // 上报 id
+          uin: 'xxx', // 用户唯一 ID（可选）
+          reportApiSpeed: true, // 接口测速
+          reportAssetSpeed: true, // 静态资源测速
+          spa: true, // spa 应用页面跳转的时候开启 pv 计算
+          hostUrl: 'https://rumt-zh.com'
+        });
+        console.log('aegis', aegis);
+      }
       console.log('welcome notes of novlan1!');
       `,
     ],
