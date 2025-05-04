@@ -33,9 +33,7 @@ export default defineConfig({
     ],
     [
       'script',
-      {
-        src: 'https://tam.cdn-go.cn/aegis-sdk/latest/aegis.min.js',
-      },
+      {},
       `
       console.log('Aegis', window.Aegis);
       if (typeof Aegis === 'function') {
