@@ -191,6 +191,14 @@
         {
           "text": "安全沙箱",
           "link": "/docs/2024上/安全沙箱.md"
+        },
+        {
+          "text": "专注力",
+          "link": "/docs/2024上/专注力.md"
+        },
+        {
+          "text": "消极情绪",
+          "link": "/docs/2024上/消极情绪.md"
         }
       ]
     },
@@ -291,6 +299,10 @@
         {
           "text": "聊天记录滚动锚定的实现",
           "link": "/docs/2023上/聊天记录滚动锚定的实现.md"
+        },
+        {
+          "text": "Typescript 中 resolve 参数为空时报错",
+          "link": "/docs/2023上/typescript中resolve参数为空时报错.md"
         }
       ]
     },
