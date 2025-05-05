@@ -5,17 +5,35 @@
     "docs:dev": "vitepress dev",
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview",
-    "check": "node scripts/check/check.js"
+    "check": "node scripts/check/check.js",
+    "extra:install": "bash scripts/install/extra-install.sh"
   },
   "type": "module",
   "devDependencies": {
+    "@plugin-light/import-meta-resolve": "^0.0.2",
+    "@plugin-light/preprocess": "^0.0.4",
+    "@plugin-light/project-config-uni-vite": "^0.0.37",
+    "@plugin-light/project-config-uni-vue": "^0.0.4",
+    "@plugin-light/project-config-vite": "^1.0.5",
+    "@plugin-light/project-config-vue": "^0.0.11",
+    "@plugin-light/shared": "^0.0.20",
+    "@plugin-light/shared-vue2": "^0.0.8",
+    "@plugin-light/uni-read-pages-vite": "^0.0.4",
     "eslint-config-light": "^1.5.5",
-    "eslint-config-light-vue3": "^1.0.8",
+    "eslint-config-light-vue3": "^1.0.9",
+    "eslint-plugin-light": "^1.0.4",
+    "net-cli": "^0.1.2",
     "typescript": "5.1",
     "vitepress": "^1.6.3"
   },
   "dependencies": {
+    "ebus-light": "^0.0.2",
     "glob": "^11.0.2",
-    "t-comm": "^1.5.15"
+    "press-next": "^1.0.27",
+    "press-plus": "^1.8.8",
+    "press-ui": "^3.0.9",
+    "share-light": "^0.0.5",
+    "t-comm": "^1.5.20",
+    "vconsole-helper": "^0.0.4"
   }
 }
