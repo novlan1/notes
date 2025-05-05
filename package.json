@@ -44,6 +44,7 @@
     "share-light": "^0.0.5",
     "swiper-next": "^0.1.1",
     "t-comm": "^1.5.20",
-    "vconsole-helper": "^0.0.4"
+    "vconsole-helper": "^0.0.4",
+    "vue-next-lazyload": "^0.3.9"
   }
 }
