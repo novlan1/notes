@@ -12,7 +12,7 @@
   "devDependencies": {
     "@plugin-light/import-meta-resolve": "^0.0.2",
     "@plugin-light/preprocess": "^0.0.4",
-    "@plugin-light/project-config-uni-vite": "^0.0.37",
+    "@plugin-light/project-config-uni-vite": "^0.0.34",
     "@plugin-light/project-config-uni-vue": "^0.0.4",
     "@plugin-light/project-config-vite": "^1.0.5",
     "@plugin-light/project-config-vue": "^0.0.11",
@@ -21,6 +21,7 @@
     "@plugin-light/uni-read-pages-vite": "^0.0.4",
     "eslint-config-light": "^1.5.5",
     "eslint-config-light-vue3": "^1.0.9",
+    "eslint-config-rookie": "^1.0.4",
     "eslint-plugin-light": "^1.0.4",
     "net-cli": "^0.1.2",
     "typescript": "5.1",
