@@ -263,8 +263,11 @@ H5 的异步加载是用了 `little-loader`。
 #### 4.4. 其他
 
 1. 支持兜底路由（404页面重定向到首页）
-2. 跳转二级页面时，携带已有的信息并展示。举例，从赛点列表到子赛事详情跳转时，会携带 Banner、活动名称等，并先展示出来，接口返回后，显示其他信息。这里不能放到 `url` 里，否则 `url` 过长，复制后用户体验差。并且需有容量控制，防止超出限制而报错。
+2. 跳转二级页面时，携带已有的信息并展示
 3. 核心页面增加骨架屏
+4. 通用 [popup-container](https://h5.igame.qq.com/pmd-mobile.pmd-h5.press-next.press-next/components/press/press-gp-popup-container.html) 关闭区域扩大
+5. 部分按钮、图标的 `active` 点击效果
+6. 赛事统计数字的 [rollingText](https://h5.igame.qq.com/pmd-mobile.support.press-ui.press-ui/components/press/press-rolling-text.html) 动效
 
 ### 5. 总结
 
