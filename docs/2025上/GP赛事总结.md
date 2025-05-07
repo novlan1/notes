@@ -6,6 +6,8 @@
 
 工程相关的包括提高代码质量、全量使用 `tailwindcss`、横版升级等。
 
+这方面的业务价值就是提升了业务稳定性，相比之前，现网缺陷少了很多，代码质量上也有了提升。比起性能，工程上不好用数字表示，但个人感觉这个更重要，尤其是重构过大大小小的x山之后。
+
 #### 2.1. 代码质量
 
 和平赛场很大一部分前端工作都交给了外部开发者，如何保证他们的代码质量是关键。
@@ -14,8 +16,8 @@
 
 1. 任务分配上
    - 分出去的都是相对简单的、非核心主流程的
-   - **有清晰的技术方案、明确的实现路径**
-   - 尽量是业务中已有类似的实现，照猫画虎就能完成的
+   - **有明确的技术方案和实现路径**
+   - 尽量是业务中已有类似的代码，照猫画虎就能完成的
 2. 加强代码审查
    - 代码提测前CR一次，合主干前再CR一次，复杂点的需求两三天就要CR一次，再复杂的不会交出去
    - 这里的CR节奏与其他项目并不完全一样，其他项目可能只CR到主干一次，很多问题发现不了。和平赛场这里还是继续坚持更频繁的CR
@@ -29,15 +31,23 @@
 4. 核心代码物理隔离
    - 历史规律看，只有物理隔离才能保证代码稳定可靠，否则他们**一定会入侵他们可以接触到的代码（时间早晚问题）**，分分钟给你搞乱，而涉及大量文件的CR你可能根本关注不到
    - 和平赛场的核心逻辑、核心组件都沉淀到 `Press Next` 中，`Press Next` 比业务库代码要求更严格（如 TS 开启严格模式），且有单独的CR和发布管理
-5. 严格遵守开发、发布流程，即开发、测试、预发布、正式发布、现网验证等流程
+5. 提供常用组件、常用逻辑的使用方式指引
+6. 严格遵守开发、发布流程，即开发、自测、测试、预发布、正式发布、现网验证等流程
 
 通过以上方法，尽量让代码可控，避免发现问题太晚。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/5/own_mike_TYfWdx43eNXsw2Gj.png" width="400">
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/5/own_mike_TYfWdx43eNXsw2Gj.png" width="500">
 
 <p></p>
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/5/own_mike_n7Eiy2X4CX8AGYPY.png" width="406">
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/5/own_mike_n7Eiy2X4CX8AGYPY.png" width="500">
+
+对代码规范的理解：
+
+1. 自洽，自己配的规则自己要遵守，不要满屏飘红
+2. 统一，用一致的方式解决同一类问题，即便后面升级也方便脚本统一处理
+3. 安全，ESLint 中的一些规则可以提前发现问题，比如 `no-undef`、`no-dupe-class-members`
+4. 效率，利用好工具可以提升开发效率
 
 #### 2.2. tailwindcss
 
@@ -268,10 +278,11 @@ H5 的异步加载是用了 `little-loader`。
 4. 通用 [popup-container](https://h5.igame.qq.com/pmd-mobile.pmd-h5.press-next.press-next/components/press/press-gp-popup-container.html) 关闭区域扩大
 5. 部分按钮、图标的 `active` 点击效果
 6. 赛事统计数字的 [rollingText](https://h5.igame.qq.com/pmd-mobile.support.press-ui.press-ui/components/press/press-rolling-text.html) 动效
+7. 切换 `tab` 后，更新 `query`，页面刷新后可以记录位置
 
 ### 5. 总结
 
-和平赛场采取了一系列措施，保证代码“长青”，并优化了性能和用户体验，后面会继续加强、持续优化。
+和平赛场采取了一系列措施，保证代码质量，并优化了性能和用户体验，后面会继续加强、持续优化。
 
 上面提到的很多点，影响方面并非只有一个，比如使用 `tailwindcss`，不止在工程上提升了效率，也防止了CSS的膨胀，提升了性能。
 
