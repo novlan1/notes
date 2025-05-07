@@ -31,6 +31,19 @@ function mpBackUp() {
 }
 ```
 
+微信小程序 `canvas` 的 DOM 元素，必须声明 `type="2d"`，才能通过 `createSelectorQuery` 获取到 `node` 节点。
+
+```ts
+uni.createSelectorQuery()
+  .in(this)
+  .select(`#${this.canvasId}`)
+  // .fields({ node: true })
+  .node()
+  .exec((res) => {})
+```
+
+小程序中的 `canvas` 绘图最后必须 `ctx.draw()`，第一个参数是 `reserve`，表示本次绘制是否接着上一次绘制，默认 `false`。
+
 ### 1.1.3. 动态scrollIntoView
 
 这个API的参数必须是 `scrollView` 的子元素，不能是子子元素。

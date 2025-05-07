@@ -46,7 +46,7 @@ class="
 
 ## 5. box-shadow
 
-`rgba`的颜色值中间不能加空格，不能用小数点的`rem`，下面是错误的：
+`rgba` 的颜色值中间不能加空格，不能用小数点的 `rem`，下面是错误的：
 
 ```html
 :class="{ 'shadow-[0_0.08rem_0.08rem_rgba(0, 0, 0, 0.16)]': index === active }"
@@ -58,6 +58,28 @@ class="
 :class="{ 'shadow-[0_4px_4px_rgba(0,0,0,0.16)]': index === active }"
 ```
 
+## 6. border
+
+设置 `border-bottom`:
+
+```css
+a {
+  border-bottom: .02rem solid rgba(255, 255, 255, .10);
+}
+```
+
+设置如下：
+
+```html
+<div class="
+  border-0
+  border-solid
+  border-b-[rgba(255,255,255,.10)]
+  border-b-0.08
+">
+</div>
+```
+
+需要设置一个 `border-0`，否则其他方向的边框也会有，不符合预期。另外，`tailwindcss` 中没有 `border-b-solid`。
 
 持续更新...
-
