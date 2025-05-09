@@ -80,7 +80,7 @@ TGS 和电子流都是管理端，二者有以下不同：
 | 大量 `typo` 拼写错误，有些甚至表现在 `url` 上，<br>如 `/apply/authentification`                                            | 全局检查，<br>改成正确的，避免低级错误                                                  |
 | 导出用大对象，不利于 `tree-shaking`                                                                                        | 分方法导出，避免大对象                                                                  |
 
-新系统采用 Vue3 技术栈，使用的组件库也进行相应的了升级，[Element UI => Element Plus](https://iwiki.woa.com/p/4014546747), [Vant2 => Vant4](https://iwiki.woa.com/p/4014546742)。
+新系统采用 Vue3 技术栈，使用的组件库也进行相应的了升级，[Element UI => Element Plus](https://iwiki.a.com/p/4014546747), [Vant2 => Vant4](https://iwiki.a.com/p/4014546742)。
 
 目前，无畏契约电子流、金铲铲电子流已接入。此外，旧系统中其他游戏的电子流、通用版电子流也用新模板重新做了下，可以在下次相关需求时测试并上线。
 
