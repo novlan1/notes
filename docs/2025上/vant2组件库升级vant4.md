@@ -93,4 +93,4 @@ import 'vant/lib/toast/index.css';
 Vue 3 中，`.native` 修饰符已被废弃，以下是关键区别和迁移建议：
 
 - ​​Vue 2​​：`.native` 用于监听组件根元素的原生事件（如 `@click.native`），因为自定义组件的 `v-on` 默认只能监听子组件通过 `$emit` 触发的事件。
-​- ​Vue 3​​：移除了 `.native`，改为通过 `emits` 选项显式声明组件事件。未在 `emits` 中定义的事件会被视为原生事件，自动绑定到根元素。
+- ​Vue 3​​：移除了 `.native`，改为通过 `emits` 选项显式声明组件事件。未在 `emits` 中定义的事件会被视为原生事件，自动绑定到根元素。

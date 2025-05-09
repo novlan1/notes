@@ -7,7 +7,7 @@
 ### 2.1. 是否显示
 
 - Element-UI​​ 使用 `:visible.sync` 进行双向绑定
-​​- Element-Plus​​ 改用 `v-model` 或 `:model-value`
+- Element-Plus​​ 改用 `v-model` 或 `:model-value`
 
 ```diff
 <el-dialog
@@ -49,7 +49,7 @@ element-plus 中 el-dialog 中默认有 `padding`，去除方法：
 ## 3. el-table 插槽语法​
 
 - Element-UI​​ 使用 `slot-scope`
-​​- Element-Plus​​ 改用 `#default`
+- Element-Plus​​ 改用 `#default`
 
 ```diff
 <template
@@ -94,7 +94,7 @@ import { Plus as ElIconPlus } from '@element-plus/icons-vue';
 
 ## 5. el-select
 
-element-plus 中 el-select 边框去除方法
+`element-plus` 中 `el-select` 边框去除方法
 
 ```css
 :root .el-select {
