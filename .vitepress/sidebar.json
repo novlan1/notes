@@ -30,11 +30,11 @@
         },
         {
           "text": "element-ui 组件库升级",
-          "link": "/docs/2025上/element-ui组件库升级.md"
+          "link": "/docs/2025上/element-ui组件库升级element-plus.md"
         },
         {
           "text": "vant 组件库升级",
-          "link": "/docs/2025上/vant组件库升级.md"
+          "link": "/docs/2025上/vant2组件库升级vant4.md"
         },
         {
           "text": "plugin-light 和 press-ui 等基础库同步",
