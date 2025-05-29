@@ -98,3 +98,38 @@ pb-[calc(env(safe-area-inset-bottom)+70px)]
 ```html
 [clip-path:polygon(0_0,100%_0,100%_100%,20%_100%)]
 ```
+
+
+### 笔记
+
+一些比较生僻的原子化样式
+
+```html
+<!-- 字体加粗font-来做的，不是text- -->
+<div class="font-bold">font-</div>
+<!-- 行高用leading- -->
+<div class="leading-[32px] bg-[red]">line-height</div>
+<!-- 字间距用tracking- -->
+<div class="tracking-[10px]">tracking</div>
+<!-- 单行溢出省略号用truncate -->
+<div class="truncate w-[108px]">我们是明天的太阳，祖国的花朵，其实是牛马</div>
+<!-- 多行省略号用line-clamp- -->
+<div class="line-clamp-2 w-[108px]">我们是明天的太阳，祖国的花朵，其实是牛马</div>
+```
+
+一些使用上有一定技巧的原子化样式
+
+```html
+<!-- 二色渐变 -->
+<div class="h-[30px] bg-gradient-to-r from-cyan-500 to-blue-500"></div>
+<!-- 三色渐变 -->
+<div class="h-[30px] bg-gradient-to-r from-[green] from-10% via-[red] via-50% to-[yellow] to-90%"></div>
+<!-- 鼠标hover,按下样式 -->
+<div class="w-full h-[30px] bg-[red] hover:bg-[green] active:bg-[yellow]"></div>
+<!-- 父级鼠标hover,按下，子孙元素样式 -->
+<div class="w-full h-[60px] flex items-center group bg-[green]">
+  <div class="w-full h-[30px] bg-[red] group-hover:bg-[green] group-active:bg-[blue]"></div>
+</div>
+<!-- 对于自定义背景图得用bg-[url()],背景尺寸的得需要使用bg-[length宽_高] -->
+<div class="w-[100px] h-[100px] bg-[url('https://placehold.jp/999999/ff4400/300x300.png?text=EXAMPLE')] bg-[length:100px_100px]"></div>
+```
