@@ -1,8 +1,10 @@
-## 开始
+## 1. 开始
 
 头条小程序跟其他小程序很不一样。
 
-## $parent 收集
+## 2. 问题及解决方法
+
+### 2.1. $parent 收集
 
 其他小程序及H5可以通过 `provide/inject` 来收集 `parent`。头条小程序中找不到。
 
@@ -40,7 +42,7 @@ function findNearListParent(children = [], name) {
 }
 ```
 
-## 生命周期
+### 2.2. 生命周期
 
 Vue 中父子组件生命周期正常的执行顺序是：父组件先创建，然后子组件创建；子组件先挂载，然后父组件挂载，即“父beforeCreate-> 父create -> 子beforeCreate-> 子created -> 子mounted -> 父mounted”。
 
@@ -64,7 +66,7 @@ mounted() {
 
 `column` 组件 `mounted` => 调用 `picker` 组件 `setColumns`; `emit afterSetColumns` => `area` 组件 `setValues` => 调用 `picker` 组件 `setColumnValues` 和 `setIndexes`
 
-## 样式覆盖
+### 2.3. 样式覆盖
 
 头条小程序下，父组件中不能在样式文件中覆盖子组件的样式。
 
