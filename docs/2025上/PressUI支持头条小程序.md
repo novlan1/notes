@@ -63,3 +63,13 @@ mounted() {
 看一下 `area` 组件数据初始化流程：
 
 `column` 组件 `mounted` => 调用 `picker` 组件 `setColumns`; `emit afterSetColumns` => `area` 组件 `setValues` => 调用 `picker` 组件 `setColumnValues` 和 `setIndexes`
+
+## 样式覆盖
+
+头条小程序下，父组件中不能在样式文件中覆盖子组件的样式。
+
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/6/own_mike_HaQmC7fSnrBbXhzS.png" width="600">
+
+解决办法是，通过 `customStyle` 属性传递，或者写在全局。写在全局是下策，业务过于关心组件库了，这里采用的是 `customStyle`。
+
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/6/own_mike_X5XhDK4Gh5MxAQbN.png" width="600">
