@@ -75,3 +75,44 @@ mounted() {
 解决办法是，通过 `customStyle` 属性传递，或者写在全局。写在全局是下策，业务过于关心组件库了，这里采用的是 `customStyle`。
 
 <img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/6/own_mike_X5XhDK4Gh5MxAQbN.png" width="600">
+
+### 2.4. 虚拟节点
+
+使用 Fragment 组件节点后，自定义事件将失效。Press UI 针对头条小程序，一律不适用此属性，保持统一。
+
+参考[文档](https://developer.open-douyin.com/docs/resource/zh-CN/mini-app/develop/tutorial/custom-component/component-model-and-style#7417c627)
+
+## 3. 其他
+
+### 3.1. onPageScroll
+
+必须在页面声明 `onPageScroll` 方法（空的也行）后，才能动态添加新的监听事件。
+
+```ts
+export default {
+  onPageScroll() {},
+}
+```
+
+### 3.2. 抖音授权登录
+
+只能用原生组件以及原生方法。推测其会检测语法，`@click="onLogin"` 也不行，因为他会转变成 `bindtap={{xx}}`，这种有大括号，不被认可。
+
+```html
+<button class="abc" bindtap="onLogin">抖音授权登录</button>
+```
+
+```ts
+defineOptions({
+  onLogin() {
+    uni.getUserProfile({
+    success(res) {
+      console.log('onLogin.res', res)
+    },
+    fail(err) {
+      console.log('onLogin.fail', err)
+    }
+  })
+  }
+})
+```
