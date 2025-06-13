@@ -67,6 +67,10 @@
         {
           "text": "Pix UI 网络请求",
           "link": "/docs/2025上/pixui-network.md"
+        },
+        {
+          "test": "浏览器中打开 Pix UI 页面",
+          "link": "/docs/2025上/pixui-web.md"
         }
       ]
     },

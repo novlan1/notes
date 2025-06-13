@@ -11,3 +11,8 @@
 4. `packages/network/src/request/base/tipRequest.ts` 中 `this.doSend(param)` 用的还是 `param`，不是处理后的数据，意味着返回新对象没用，得改变旧对象
 5. `mockLoginParams` 从环境变量中拿
 6. `pixui` 项目之前 `typescript` 版本太低（3+），需升级到 5+
+
+
+支持在浏览器中打开 `pixui` 页面：
+
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/6/own_mike_sG6dnFHhi7SnXBRG.png" width="600">
