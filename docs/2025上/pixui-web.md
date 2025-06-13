@@ -13,4 +13,3 @@
 1. 先用线上地址登录页面，种下 `cookie`，登录地址如 https://h5-test.nes.smoba.qq.com/pvpesport.web.pro.develop/
 2. 配置 `host`，如 `127.0.0.1:8080  https://h5-pro-test.nes.smoba.qq.com`
 3. 在浏览器中打开 `https://h5-pro-test.nes.smoba.qq.com/app` 页面即可
-
