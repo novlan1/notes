@@ -63,6 +63,10 @@
         {
           "text": "Press UI 支持头条小程序",
           "link": "/docs/2025上/PressUI支持头条小程序.md"
+        },
+        {
+          "text": "Pix UI 网络请求",
+          "link": "/docs/2025上/pixui-network.md"
         }
       ]
     },
