@@ -7,6 +7,7 @@
 - `send`，调用 `doSend`
 - 抽象 `doSend`
 - 私有 `interceptBeforeSend`、`interceptAfterResponse`、`interceptError`
+- 管理 `requestInterceptors`、`responseInterceptors`、`errorInterceptors`
 
 ### 1.2. MpRequest
 
@@ -37,12 +38,12 @@ public setRequestFactory(factory: TipRequestFactory) {
 
 ```ts
 public request(param: ITipRequestParam): Promise<any> {
-    const request = this.requestFactory.create(param);
-    if (this.requestDecorator) {
-      return this.requestDecorator(() => request.send(param, this.customInterceptor), param);
-    }
-    return request.send(param, this.customInterceptor);
+  const request = this.requestFactory.create(param);
+  if (this.requestDecorator) {
+    return this.requestDecorator(() => request.send(param, this.customInterceptor), param);
   }
+  return request.send(param, this.customInterceptor);
+}
 ```
 
 ## 2. vue/network
