@@ -53,5 +53,8 @@ public request(param: ITipRequestParam): Promise<any> {
 ```ts
 const factory = new MpRequestFactory();
 factory.requestInterceptors = ['xxx'];
+factory.responseInterceptors = ['xxx'];
+factory.errorInterceptors = ['xxx'];
 NetworkManager.instance.setRequestFactory(factory);
+NetworkManager.instance.setDecorator(mpCodeScheduler);
 ```
