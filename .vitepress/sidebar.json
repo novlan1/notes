@@ -69,8 +69,16 @@
           "link": "/docs/2025上/pixui-network.md"
         },
         {
-          "test": "浏览器中打开 Pix UI 页面",
+          "text": "浏览器中打开 Pix UI 页面",
           "link": "/docs/2025上/pixui-web.md"
+        },
+        {
+          "text": "组件库总结",
+          "link": "/docs/2025上/组件库总结.md"
+        },
+        {
+          "text": "网络框架解析",
+          "link": "/docs/2025上/pmd-network.md"
         }
       ]
     },
