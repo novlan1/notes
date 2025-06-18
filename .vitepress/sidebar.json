@@ -79,6 +79,10 @@
         {
           "text": "网络框架解析",
           "link": "/docs/2025上/pmd-network.md"
+        },
+        {
+          "text": "支持异步拦截器",
+          "link": "/docs/2025上/network-async-interceptor.md"
         }
       ]
     },
