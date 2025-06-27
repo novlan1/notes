@@ -83,6 +83,14 @@
         {
           "text": "支持异步拦截器",
           "link": "/docs/2025上/network-async-interceptor.md"
+        },
+        {
+          "text": "国际化方案",
+          "link": "/docs/2025上/hok-match-i18n.md"
+        },
+        {
+          "text": "业务被重定向至501",
+          "link": "/docs/2025上/csrf-nick.md"
         }
       ]
     },
