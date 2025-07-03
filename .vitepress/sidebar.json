@@ -11,6 +11,10 @@
         {
           "text": "Promise 链式调用",
           "link": "/docs/2025下/promise-link.md"
+        },
+        {
+          "text": "TDesign",
+          "link": "/docs/2025下/tdesign.md"
         }
       ]
     },

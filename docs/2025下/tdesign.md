@@ -1,0 +1,5 @@
+- 在 `tdesign-mobile-vue` 中新增了 `Grid/List/Skeleton/Loading/ColorPicker` 组件，并支持了暗黑模式，并为 `Fab/Tab/Checkbox/Search` 等组件增加了很多新特性；
+- 在 `tdesign-mobile-react` 中新增了`Guide/ImageViewer` 等组件， 重构了 `Message/Toast/SwipeCell/Drawer/PulldownRefresh/Guide/Fab` 等组件;
+- 在 `tdesign-miniprogram` 中新增了  `ColorPicker` 组件，并大幅优化了`Cascader`的性能；
+- 在 `tdesign-web-components` 中 新增了 `Dialog/Collapse/Slider` 等组件；
+- 另外，还修复了组件库的一些Bug，完善了一些文档，提升了组件库的易用性。
