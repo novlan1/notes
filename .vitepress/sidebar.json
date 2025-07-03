@@ -7,6 +7,10 @@
         {
           "text": "内存占用过高",
           "link": "/docs/2025下/内存占用过高.md"
+        },
+        {
+          "text": "Promise 链式调用",
+          "link": "/docs/2025下/promise-link.md"
         }
       ]
     },
