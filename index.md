@@ -8,7 +8,7 @@ hero:
   actions:
     - theme: brand
       text: '2025'
-      link: /docs/2025上/项目优化
+      link: /docs/2025下/内存占用过高
     - theme: alt
       text: '2024'
       link: /docs/2024下/基于uni-app的小程序插件

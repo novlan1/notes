@@ -1,8 +1,18 @@
 {
   "sidebar": [
     {
-      "text": "2025上",
+      "text": "2025下",
       "collapsed": false,
+      "items": [
+        {
+          "text": "内存占用过高",
+          "link": "/docs/2025下/内存占用过高.md"
+        }
+      ]
+    },
+    {
+      "text": "2025上",
+      "collapsed": true,
       "items": [
         {
           "text": "项目优化",
@@ -96,7 +106,7 @@
     },
     {
       "text": "2024下",
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         {
           "text": "基于 uni-app 的小程序插件",
