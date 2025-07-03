@@ -17,4 +17,11 @@ QQ内支持打开微信小程序，并支持切换QQ/微信登录。
 
 <img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/6/own_mike_ZYsdcknsmAAezzKH.png" width="600">
 
+流程：
+
+```
+qq内打开微信小程序 => 选择qq/wx登录 => 微信时 wx.login => code => 业务后台
+                                   QQ 时，plugin.login => code => 业务后台
+```
+
 其他微信小程序想在QQ内打开时使用QQ登录，可以参考[这篇文档](https://doc.w.qq.com/doc/w3_AQQARgb8AOsUIV9oM3SQTG0ERPg9D?scode=AJEAIQdfAAoJXvYs45AcMAiQYjAHA)。
