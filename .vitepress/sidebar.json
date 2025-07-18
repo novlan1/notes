@@ -15,6 +15,10 @@
         {
           "text": "TDesign",
           "link": "/docs/2025下/tdesign.md"
+        },
+        {
+          "text": "Vue 中的 h 函数",
+          "link": "/docs/2025下/h函数.md"
         }
       ]
     },
