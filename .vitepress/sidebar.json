@@ -19,6 +19,10 @@
         {
           "text": "Vue 中的 h 函数",
           "link": "/docs/2025下/h函数.md"
+        },
+        {
+          "text": "TDesign 小程序大仓",
+          "link": "/docs/2025下/tdesign-miniprogram-monorepo.md"
         }
       ]
     },
