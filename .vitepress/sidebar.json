@@ -43,44 +43,12 @@
           "link": "/docs/2025上/代码随想.md"
         },
         {
-          "text": "tailwindcss 应用",
-          "link": "/docs/2025上/tailwindcss应用.md"
-        },
-        {
-          "text": "tailwindcss 细节",
-          "link": "/docs/2025上/tailwindcss细节.md"
-        },
-        {
-          "text": "代码规范总结",
-          "link": "/docs/2025上/代码规范总结.md"
-        },
-        {
           "text": "外包面试题",
           "link": "/docs/2025上/外包面试题.md"
         },
         {
-          "text": "element-ui 组件库升级",
-          "link": "/docs/2025上/element-ui组件库升级element-plus.md"
-        },
-        {
-          "text": "vant 组件库升级",
-          "link": "/docs/2025上/vant2组件库升级vant4.md"
-        },
-        {
           "text": "plugin-light 和 press-ui 等基础库同步",
           "link": "/docs/2025上/plugin-light和press-ui等基础库同步"
-        },
-        {
-          "text": "前端白名单优化",
-          "link": "/docs/2025上/前端白名单优化"
-        },
-        {
-          "text": "TGS和电子流总结",
-          "link": "/docs/2025上/TGS和电子流总结"
-        },
-        {
-          "text": "GP赛事总结",
-          "link": "/docs/2025上/GP赛事总结"
         },
         {
           "text": "TS类型体操",
@@ -91,36 +59,12 @@
           "link": "/docs/2025上/5月感悟.md"
         },
         {
-          "text": "Press UI 支持头条小程序",
-          "link": "/docs/2025上/PressUI支持头条小程序.md"
-        },
-        {
-          "text": "Pix UI 网络请求",
-          "link": "/docs/2025上/pixui-network.md"
-        },
-        {
-          "text": "浏览器中打开 Pix UI 页面",
-          "link": "/docs/2025上/pixui-web.md"
-        },
-        {
           "text": "组件库总结",
           "link": "/docs/2025上/组件库总结.md"
         },
         {
           "text": "网络框架解析",
           "link": "/docs/2025上/pmd-network.md"
-        },
-        {
-          "text": "支持异步拦截器",
-          "link": "/docs/2025上/network-async-interceptor.md"
-        },
-        {
-          "text": "国际化方案",
-          "link": "/docs/2025上/hok-match-i18n.md"
-        },
-        {
-          "text": "业务被重定向至501",
-          "link": "/docs/2025上/csrf-nick.md"
         }
       ]
     },
