@@ -56,6 +56,12 @@ importers:
       vconsole-helper:
         specifier: ^0.0.4
         version: 0.0.4
+      viewerjs:
+        specifier: ^1.11.7
+        version: 1.11.7
+      vitepress-plugin-image-viewer:
+        specifier: ^1.1.6
+        version: 1.1.6
       vue-next-lazyload:
         specifier: ^0.3.9
         version: 0.3.9(vue@3.5.13(typescript@5.1.6))
@@ -7008,6 +7014,9 @@ packages:
   vfile@6.0.3:
     resolution: {integrity: sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q==}
 
+  viewerjs@1.11.7:
+    resolution: {integrity: sha512-0JuVqOmL5v1jmEAlG5EBDR3XquxY8DWFQbFMprOXgaBB0F7Q/X9xWdEaQc59D8xzwkdUgXEMSSknTpriq95igg==}
+
   vite-plugin-cdn-import@0.3.5:
     resolution: {integrity: sha512-e1raoalfBiIhv+hnMeSp1UNjloDDBhHpeFxkwRRdPBmTdDRqdEEn8owUmT5u8UBSVCs4xN3n/od4a91vXEhXPQ==}
 
@@ -7082,6 +7091,9 @@ packages:
         optional: true
       terser:
         optional: true
+
+  vitepress-plugin-image-viewer@1.1.6:
+    resolution: {integrity: sha512-ZfYy1s/bXju6vGVsE/5gPXT449+KaXZ6ZIPAvcmPM07VmC7Bv57bCvFar2II7C2EjexxfPQsxUh70vSBbe14kQ==}
 
   vitepress@1.6.3:
     resolution: {integrity: sha512-fCkfdOk8yRZT8GD9BFqusW3+GggWYZ/rYncOfmgcDtP3ualNHCAg+Robxp2/6xfH1WwPHtGpPwv7mbA3qomtBw==}
@@ -15913,6 +15925,8 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
+  viewerjs@1.11.7: {}
+
   vite-plugin-cdn-import@0.3.5(rollup@2.79.2):
     dependencies:
       rollup-plugin-external-globals: 0.6.1(rollup@2.79.2)
@@ -16023,6 +16037,10 @@ snapshots:
       fsevents: 2.3.3
       sugarss: 2.0.0
       terser: 5.39.0
+
+  vitepress-plugin-image-viewer@1.1.6:
+    dependencies:
+      viewerjs: 1.11.7
 
   vitepress@1.6.3(@algolia/client-search@5.23.4)(@types/node@22.15.3)(async-validator@4.2.5)(axios@1.9.0)(postcss@7.0.39)(search-insights@2.17.3)(sortablejs@1.15.6)(sugarss@2.0.0)(terser@5.39.0)(typescript@5.1.6):
     dependencies:
