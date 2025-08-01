@@ -35,10 +35,6 @@
       "collapsed": true,
       "items": [
         {
-          "text": "项目优化",
-          "link": "/docs/2025上/项目优化.md"
-        },
-        {
           "text": "代码随想",
           "link": "/docs/2025上/代码随想.md"
         },
@@ -47,20 +43,12 @@
           "link": "/docs/2025上/外包面试题.md"
         },
         {
-          "text": "plugin-light 和 press-ui 等基础库同步",
-          "link": "/docs/2025上/plugin-light和press-ui等基础库同步"
-        },
-        {
           "text": "TS类型体操",
           "link": "/docs/2025上/TS类型体操.md"
         },
         {
           "text": "5月感悟",
           "link": "/docs/2025上/5月感悟.md"
-        },
-        {
-          "text": "组件库总结",
-          "link": "/docs/2025上/组件库总结.md"
         },
         {
           "text": "网络框架解析",
