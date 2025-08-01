@@ -95,28 +95,12 @@
       "collapsed": true,
       "items": [
         {
-          "text": "10分钟看完 Vue3 工程适配",
-          "link": "/docs/2024上/10分钟看完Vue3工程适配.md"
-        },
-        {
           "text": "《代码之丑》笔记",
           "link": "/docs/2024上/代码之丑-笔记.md"
         },
         {
-          "text": "基于uni-app项目的性能优化",
-          "link": "/docs/2024上/基于uni-app项目的性能优化.md"
-        },
-        {
-          "text": "Press UI 支持支付宝小程序",
-          "link": "/docs/2024上/PressUI支持支付宝小程序.md"
-        },
-        {
           "text": "uni-app在H5下的缓存机制",
           "link": "/docs/2024上/uni-app在H5下的缓存机制.md"
-        },
-        {
-          "text": "用户体验优化-无感登录webview",
-          "link": "/docs/2024上/用户体验优化-无感登录webview.md"
         },
         {
           "text": "迁移库引用",
@@ -185,10 +169,6 @@
         {
           "text": "global-component",
           "link": "/docs/2024上/global-component.md"
-        },
-        {
-          "text": "GP赛事跨端核心总结",
-          "link": "/docs/2024上/GP赛事跨端核心总结.md"
         },
         {
           "text": "红包算法",
