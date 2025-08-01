@@ -27,6 +27,10 @@
         {
           "text": "工程师个人发展指南",
           "link": "/docs/2025下/工程师个人发展指南.md"
+        },
+        {
+          "text": "isolatedModules 和 verbatimModuleSyntax",
+          "link": "/docs/2025下/isolatedModules-verbatimModuleSyntax.md"
         }
       ]
     },
