@@ -81,10 +81,6 @@
           "link": "/docs/2024下/书.md"
         },
         {
-          "text": "history 模式白屏",
-          "link": "/docs/2024下/history模式白屏.md"
-        },
-        {
           "text": "递归 Partial",
           "link": "/docs/2024下/递归partial.md"
         }
@@ -99,12 +95,8 @@
           "link": "/docs/2024上/代码之丑-笔记.md"
         },
         {
-          "text": "uni-app在H5下的缓存机制",
+          "text": "uni-app 在 H5 下的缓存机制",
           "link": "/docs/2024上/uni-app在H5下的缓存机制.md"
-        },
-        {
-          "text": "迁移库引用",
-          "link": "/docs/2024上/迁移库引用.md"
         },
         {
           "text": "《浏览器工作原理与实践》笔记",
@@ -159,18 +151,6 @@
           "link": "/docs/2024上/消极情绪.md"
         },
         {
-          "text": "全局弹窗控制",
-          "link": "/docs/2024上/全局弹窗控制.md"
-        },
-        {
-          "text": "研发平台数据上报",
-          "link": "/docs/2024上/研发平台数据上报.md"
-        },
-        {
-          "text": "global-component",
-          "link": "/docs/2024上/global-component.md"
-        },
-        {
           "text": "红包算法",
           "link": "/docs/2024上/红包算法.md"
         }
@@ -199,10 +179,6 @@
         {
           "text": "Press UI 应用于普通Vue项目的实践",
           "link": "/docs/2023下/PressUI应用于普通Vue项目的实践.md"
-        },
-        {
-          "text": "小程序CI升级",
-          "link": "/docs/2023下/小程序CI升级.md"
         },
         {
           "text": "npm包漏洞探究",
@@ -235,18 +211,6 @@
         {
           "text": "undefined < 100",
           "link": "/docs/2023下/undefined与100比较.md"
-        },
-        {
-          "text": "权限管理系统需求",
-          "link": "/docs/2023下/权限管理系统需求.md"
-        },
-        {
-          "text": "tim 离线消息",
-          "link": "/docs/2023下/tim离线消息.md"
-        },
-        {
-          "text": "tim 消息",
-          "link": "/docs/2023下/tim消息.md"
         }
       ]
     },
@@ -273,10 +237,6 @@
         {
           "text": "随笔",
           "link": "/docs/2023上/随笔.md"
-        },
-        {
-          "text": "qq小程序组件加载失败分析",
-          "link": "/docs/2023上/qq小程序组件加载失败分析.md"
         },
         {
           "text": "代码重构之路",

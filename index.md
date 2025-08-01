@@ -11,7 +11,7 @@ hero:
       link: /docs/2025下/内存占用过高
     - theme: alt
       text: '2024'
-      link: /docs/2024下/基于uni-app的小程序插件
+      link: /docs/2024下/TDesignMiniProgram中Cascader组件的性能优化
     - theme: alt
       text: '2023'
       link: /docs/2023下/孪生项目的开发方式优化
