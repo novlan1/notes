@@ -61,10 +61,6 @@
       "collapsed": true,
       "items": [
         {
-          "text": "基于 uni-app 的小程序插件",
-          "link": "/docs/2024下/基于uni-app的小程序插件.md"
-        },
-        {
           "text": "TDesign MiniProgram 中 Cascader 组件的性能优化",
           "link": "/docs/2024下/TDesignMiniProgram中Cascader组件的性能优化.md"
         },
@@ -81,40 +77,8 @@
           "link": "/docs/2024下/ColorPicker组件与色彩.md"
         },
         {
-          "text": "Vite 版本的组件分发插件",
-          "link": "/docs/2024下/Vite版本的组件分发插件.md"
-        },
-        {
-          "text": "小程序登录体验优化",
-          "link": "/docs/2024下/小程序登录体验优化.md"
-        },
-        {
-          "text": "Vite 版本的脚本分发插件",
-          "link": "/docs/2024下/Vite版本的脚本分发插件.md"
-        },
-        {
           "text": "《书》",
           "link": "/docs/2024下/书.md"
-        },
-        {
-          "text": "pix-ui 为什么用 React",
-          "link": "/docs/2024下/pix-ui为什么用React.md"
-        },
-        {
-          "text": "pix-ui 网络请求和登录态",
-          "link": "/docs/2024下/pix-ui网络请求和登录态.md"
-        },
-        {
-          "text": "pix-ui aegis 上报",
-          "link": "/docs/2024下/pix-ui-aegis.md"
-        },
-        {
-          "text": "Vue3升级总结",
-          "link": "/docs/2024下/Vue3升级总结.md"
-        },
-        {
-          "text": "用户体验优化总结",
-          "link": "/docs/2024下/用户体验优化总结.md"
         },
         {
           "text": "history 模式白屏",
