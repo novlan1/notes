@@ -35,6 +35,18 @@
         {
           "text": "isolatedModules 和 verbatimModuleSyntax",
           "link": "/docs/2025下/isolatedModules-verbatimModuleSyntax.md"
+        },
+        {
+          "text": "tdesign-uniapp",
+          "link": "/docs/2025下/tdesign-uniapp.md"
+        },
+        {
+          "text": "git",
+          "link": "/docs/2025下/git.md"
+        },
+        {
+          "text": "ti18n",
+          "link": "/docs/2025下/ti18n.md"
         }
       ]
     },
