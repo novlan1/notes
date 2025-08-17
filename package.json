@@ -2,6 +2,7 @@
   "name": "notes",
   "author": "novlan1",
   "scripts": {
+    "dev": "npm run docs:dev",
     "docs:dev": "vitepress dev",
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview",
