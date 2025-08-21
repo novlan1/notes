@@ -252,20 +252,20 @@ Ingress 的主要功能包括：
 
 ## 16. Deployment
 
-Deployment 用于部署应用程序，并且用声明的方式升级应用程序。其中，Deployment 由 ReplicaSet(1:N) 组成，并且由 ReplicaSet 来创建和管理Pod。
+Deployment 用于部署应用程序，并且用声明的方式升级应用程序。其中，Deployment 由 `ReplicaSet(1:N)` 组成，并且由 ReplicaSet 来创建和管理 Pod。
 
 ## 17. Service
 
 1. 为什么需要服务(Service)
 
-- pod是短暂的, 随时都可能被销毁。
-- 新的pod创建之前不能确定该pod分配的ip
-- 水平伸缩也就以为着多个pod可能提供相同的服务，客户端不想也不关心每个pod的ip, 相反，客户端期望通过一个单一的ip地址进行访问多个pod.
+- `pod` 是短暂的, 随时都可能被销毁。
+- 新的 `pod` 创建之前不能确定该 `pod` 分配的 `ip`
+- 水平伸缩也就以为着多个 `pod` 可能提供相同的服务，客户端不想也不关心每个 `pod` 的 `ip`, 相反，客户端期望通过一个单一的 `ip` 地址进行访问多个 `pod`.
 
-服务是一种为一组功能相同的pod提供单一不变的接入点的资源。当服务存在时，该服务的ip地址和端口（创建服务的时候，通过ports[n].port和ports[n].targetPort 指定了服务端口到pod端口的映射）不会改变。客户端通过ip和port与服务建立连接，然后这些连接会被路由到提供该服务的某个pod上(通过负载均衡)。
+服务是一种为一组功能相同的 `pod` 提供单一不变的接入点的资源。当服务存在时，该服务的 `ip` 地址和端口（创建服务的时候，通过 `ports[n].port和ports[n].targetPort` 指定了服务端口到 `pod` 端口的映射）不会改变。客户端通过 `ip` 和 `port` 与服务建立连接，然后这些连接会被路由到提供该服务的某个 `pod` 上(通过负载均衡)。
 
 2. 集群内部pod间通信
-服务的后端可能不止有一个pod, 服务通过标签选择器来指定哪些pod属于同一个组，然后连接到服务的客户端连接，服务会通过负载均衡路由到某个后端pod。
+服务的后端可能不止有一个 pod, 服务通过标签选择器来指定哪些 pod 属于同一个组，然后连接到服务的客户端连接，服务会通过负载均衡路由到某个后端 pod。
 
 3. 集群内部服务暴露给外部客户端
 
@@ -283,19 +283,20 @@ Deployment 用于部署应用程序，并且用声明的方式升级应用程序
 
 2. 了解pod
 
-- 可以把pod看作一个独立的机器，一个pod中可以运行一个或者多个容器，这些容器之间共享相同的ip和port空间。
-- 一个pod的所有容器都运行在同一个woker node中，一个pod不会跨越两个worker node.
-- 由于大多数容器的文件系统来自于容器镜像，所以每个容器的文件系统与其他容器是完全隔离的，但是可以试用Volume在容器间共享文件目录。
-- pod是短暂的， 他们随时的会启动或者关闭。也就是这如果某个pod被销毁之后，重新创建的pod的ip可能会变化。
+- 可以把 pod 看作一个独立的机器，一个 pod 中可以运行一个或者多个容器，这些容器之间共享相同的ip和port空间。
+- 一个pod的所有容器都运行在同一个 worker node 中，一个 pod 不会跨越两个 worker node.
+- 由于大多数容器的文件系统来自于容器镜像，所以每个容器的文件系统与其他容器是完全隔离的，但是可以试用 Volume 在容器间共享文件目录。
+- pod 是短暂的， 他们随时的会启动或者关闭。也就是这如果某个 pod 被销毁之后，重新创建的pod的ip可能会变化。
 
 3. Label
 
-标签是一个可以附加到资源的任意key-value对（一个标签就是一个key/value对，每个资源可以拥有多个标签）， 然后通过Selector(即标签选择器)来选择具有确切标签的资源。
+标签是一个可以附加到资源的任意 key-value 对（一个标签就是一个 `key/value` 对，每个资源可以拥有多个标签）， 然后通过 Selector (即标签选择器)来选择具有确切标签的资源。
 
 4. ReplicaSet
 
-前边我们通过手工创建了dnsutil-pod, 如果dsnutils-pod由于worker node节点失败， 那么该pod也会消失，并且不会被新的替换。或者如果我们想创建n个dnsutil-pod，只能通过手工创建吗？答案是：ReplicaSet(即副本控制器)
-ReplicaSet是一种k8s资源，通过它可以保持pod始终按照期望的副本数量运行。如果某个pod因为任何原因消失，则ReplicaSet会注意到缺少了的pod,并且创建新的pod替代它。ReplicaSet是一种期望式声明方式，我们只需要告诉它我期望的副本数量，而不用告诉它怎么做。
+前边我们通过手工创建了 dnsutil-pod, 如果 dsnutils-pod 由于 worker node 节点失败， 那么该 pod 也会消失，并且不会被新的替换。或者如果我们想创建 n 个 dnsutil-pod，只能通过手工创建吗？答案是：ReplicaSet (即副本控制器)
+
+ReplicaSet 是一种 k8s 资源，通过它可以保持 pod 始终按照期望的副本数量运行。如果某个 pod 因为任何原因消失，则 ReplicaSet 会注意到缺少了的 pod，并且创建新的 pod 替代它。ReplicaSet 是一种期望式声明方式，我们只需要告诉它我期望的副本数量，而不用告诉它怎么做。
 
 ## 19. 容器
 
@@ -315,4 +316,14 @@ docker 是 k8s 最初唯一支持的容器类型，但是现在k8s也开始支�
 4. 为什么多个容器比单个容器中包含多个进程要好
 
 容器之所以被设计为单个容器只运行一个进程（除非进程本身产生子进程），是因为如果单个容器中运行多个不相关的进程，那么开发人员需要保持这些所有进程都运行OK, 并且管理他们的日志等（比如，两个进程，其中一个生产者进程，一个消费者进程，如果消费者进程crash之后，我们需要考虑该进程重启的机制）。
+
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/8/own_mike_kezRn8EibyFmH5Ns.jpg" width="600" />
+
+## 20. Tailwind CSS 与 UnoCSS
+
+1. Tailwind CSS 是一个 CSS 框架（Library），提供了预定义的实用类（Utility Classes）。开发者可以通过组合这些类快速构建 UI。
+
+2. UnoCSS 更像是一个原子 CSS 引擎（Engine），其核心是按需（on-demand）生成 CSS 的机制。通过 Preset 配置，它可以模仿 Tailwind CSS 的行为，同时也能实现其他不同的风格。
+
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/8/own_mike_8kySPmsEjxhEyxpe.jpg" width="600" />
 

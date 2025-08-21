@@ -6,7 +6,7 @@ isolatedModules 是 TypeScript 配置中的一个重要选项，用于确保每�
 
 • 作用：当设置为 true 时，强制每个文件必须显式使用 import 或 export 语句，否则会被视为全局脚本文件而报错。这确保了文件在独立编译时（如通过 Babel 或 esbuild）的类型安全性和可移植性。
 
-• 报错示例：若文件未包含模块化语句（如 export {}），会提示错误：
+• 报错示例：若文件未包含模块化语句（如 `export {}`），会提示错误：
 
 ```
 TS1208: Cannot compile under '--isolatedModules' because it is considered a global script file.。
@@ -52,7 +52,7 @@ verbatimModuleSyntax 是 TypeScript 5.0 引入的一个重要编译选项，用�
 
 • 构建工具兼容性：传统 TypeScript 编译会移除未用作值的类型导入，但像 Babel、Rolldown 等工具无法识别跨文件类型依赖，可能导致运行时错误。verbatimModuleSyntax 通过保留所有导入语句（包括类型导入）解决此问题。
 
-• 副作用模块的保留：确保带有副作用的模块（如包含 console.log 的初始化代码）不会被错误移除，因为其导入语句会被完整保留。
+• 副作用模块的保留：确保带有副作用的模块（如包含 `console.log` 的初始化代码）不会被错误移除，因为其导入语句会被完整保留。
 
 3. 与旧选项的对比
 
@@ -89,3 +89,136 @@ verbatimModuleSyntax 是 TypeScript 5.0 引入的一个重要编译选项，用�
 • 迁移成本：从旧选项切换时，需检查项目中所有类型导入是否已显式标记为 type。
 
 通过启用 verbatimModuleSyntax，开发者可以更精准地控制模块系统的行为，提升代码的跨工具兼容性和运行时可靠性。
+
+
+---
+
+启用 `verbatimModuleSyntax: true` 后：
+
+​1. 强制区分类型导入和值导入
+
+- 必须显式用 type 标记类型导入/导出
+- 非类型导入/导出会 ​100% 保留 在编译后的代码中
+​
+2. 禁止隐式类型导入删除
+
+- 如果没有 type 修饰符，TypeScript 会认为这是一个值导入，即使它看起来像类型
+​
+3. 更接近 ESM 的运行时行为
+
+- 编译后的代码更接近原生 ES 模块的预期行为
+
+## 3. forceConsistentCasingInFileNames
+
+forceConsistentCasingInFileNames 是 TypeScript 编译器的一个选项（在 `tsconfig.json` 中配置），用于 ​强制文件名的大小写一致性。它的作用是避免在大小写敏感的操作系统（如 Linux、macOS）和大小写不敏感的系统（如 Windows）之间因文件名大小写不一致而导致的潜在问题。
+
+forceConsistentCasingInFileNames 的作用:
+
+1. ​启用后（true）​：TypeScript 会检查所有模块导入的路径是否和实际文件名的大小写完全一致，如果不一致，会直接报错。
+2. 禁用后（false，默认值）​：TypeScript 不会检查文件名大小写，可能导致跨平台兼容性问题。
+
+## 4. esModuleInterop 作用
+
+启用 `esModuleInterop: true` 后，TypeScript 会：
+
+1. ​自动生成兼容性代码：在编译后的 JavaScript 中插入辅助函数（`__importDefault`、`__importStar`），使 ES 模块的 import 语法能正确加载 CommonJS 模块。
+2. 放宽类型检查：允许直接使用 `import defaultExport from 'module'` 语法导入 CommonJS 模块。
+
+未启用 esModuleInterop：
+
+```js
+import * as fs from 'fs'; // 必须用命名空间导入
+fs.readFileSync(...);
+```
+
+启用 esModuleInterop：
+
+```js
+import fs from 'fs'; // 可以直接默认导入
+fs.readFileSync(...);
+```
+
+## 5. moduleDetection
+
+moduleDetection 允许你显式指定模块检测策略，避免隐式推断带来的问题。
+
+默认行为的问题
+
+在 TypeScript 4.x 及更早版本中，模块检测规则较为隐式：
+
+- 如果文件中有 import/export 语句，则视为 ESM。
+- 否则视为 CommonJS（或全局脚本）。
+
+但这种规则在以下场景会出错：
+
+- 某些工具（如 Babel、Webpack）可能允许混合使用 ESM 和 CommonJS。
+- 配置文件（如 .ts 中只有类型）可能被误判。
+
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/8/own_mike_BQDnbBXsCN5SiAPA.jpg" width="600" />
+
+## 6. allowImportingTsExtensions
+
+allowImportingTsExtensions 的作用
+
+1. false（默认）​：禁止在导入语句中使用 `.ts`、`.tsx`、`.mts` 或 `.cts` 扩展名。
+
+```ts
+import { foo } from "./file.ts"; // ❌ 报错：无法导入 TS 扩展名文件
+​```
+
+2. true：允许在导入语句中显式使用 TypeScript 文件扩展名。
+
+```ts
+import { foo } from "./file.ts"; // ✅ 允许（但需确保运行时支持）
+```
+
+## 7. module
+
+module 决定了：
+
+1. 输出的 JavaScript 使用哪种模块标准（如 CommonJS、ES Modules 等）
+2. 如何转换 `import/export` 语法
+3. 是否生成兼容性代码（如 `require()` 或 `define()`）
+
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/8/own_mike_SmjzTRw3mfEkMK3s.jpg" width="600" />
+
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/8/own_mike_YXKb4yCRWmGebTfm.jpg" width="600" />
+
+## useDefineForClassFields
+
+useDefineForClassFields 的作用
+
+​1. false（默认）​：类字段使用 `[[Set]]` 语义（`this.field = value`）。
+​2. true：类字段使用 `[[Define]]` 语义（`Object.defineProperty`），符合 ES2022+ 标准。
+
+源代码
+
+```js
+class Foo {
+  x = 1;
+}
+```
+
+​编译后的 JavaScript
+​
+1. useDefineForClassFields: false（默认）​
+
+```js
+class Foo {
+  constructor() {
+    this.x = 1; // [[Set]] 语义
+  }
+}
+```
+
+2. ​useDefineForClassFields: true
+
+```js
+class Foo {
+  constructor() {
+    Object.defineProperty(this, "x", { value: 1 }); // [[Define]] 语义
+  }
+}
+```
+
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/8/own_mike_FdiGXZwNZbHW7WjX.jpg" width="600" />
