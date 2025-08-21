@@ -325,5 +325,76 @@ docker 是 k8s 最初唯一支持的容器类型，但是现在k8s也开始支�
 
 2. UnoCSS 更像是一个原子 CSS 引擎（Engine），其核心是按需（on-demand）生成 CSS 的机制。通过 Preset 配置，它可以模仿 Tailwind CSS 的行为，同时也能实现其他不同的风格。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/8/own_mike_8kySPmsEjxhEyxpe.jpg" width="600" />
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/8/own_mike_8kySPmsEjxhEyxpe.jpg" width="380" />
 
+## 21. 重构
+
+**在重构一个屎山项目时，最重要的指标就是如何保证下一次重构不会很快到来**。
+
+所以**重构的技术方案中必须要包含如何让代码“保鲜”的方法，否则重构结束后，换一拨人维护几个来回，整个代码仓库又会迅速劣化成屎山**。
+
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/8/own_mike_3iWnazMYJEmBhxBa.jpg" width="300" />
+
+## 22. 意义
+
+一个小提示，在公司里，老板们让你做的，对你的评价，以及希望你进步的方向，最大受益人是老板而不是你。如果你打算在公司里做到退休,可以按照老板们的要求做。但是如果你发现你做的这些事情对你离开公司后没有任何帮助，你就得审思一下这些事情有没有意义。得把平台的成功和自己的成功分开来。
+
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/8/own_mike_d5naXmZckpYMaaMT.jpg" width="300" />
+
+## 23. 连不上办公网怎么办
+
+打开目录：`/Library/Preferences/SystemConfiguration/`
+
+删除 `.plist` 后缀的文件
+
+```
+com.apple.airport.preferences.plist
+com.apple.network.identification.plist
+com.apple.wifi.message-tracer.plist
+NetworkInterfaces.plist
+preferences.plist
+```
+
+重启电脑，然后再在IOA重新配置 T-WiFi 看看
+
+## 24. PR
+
+1. PR（Pull Request）如果给其它项目提交合并代码的请求时，就说会提交一个PR。
+
+2. WIP（Work In Progress ）如果你要做一个很大的改动，可以在完成部分的情况下先提交，但说明WIP，方便项目维护人员知道你还在 Work，同时他们可以先审核已经完成的。
+
+3. PTAL(Please Take A Look):请求项目维护人员进行 code review。
+
+4. TBR(To Be Reviewed)提示这些代码要进行审核。
+
+5. TL(Too Long)/DR(Didn’t Read): 太长了，懒得看。
+
+6. LGTM(Looks Good To Me):通常是 code review 的时候回复的，即审核通过的意思。
+
+7. SGTM(Sounds Good To Me):跟 LGTM 同义。
+
+8. AFAIK(As Far As I Know):据我所知。
+
+9. CC(Carbon Copy):抄送。
+
+## 25. TextEllipsis
+
+TextEllipsis 组件核心
+
+1. H5下在body下动态生成Dom（暂称为container），该DOM是不可见的，可以设置为 fixed，zIndex 和 top 巨低，其他样式属性和组件文本一样。具体是通过  window.getComputedStyle(this.$refs.root) 拿到 offsetHeight、lineHeight、padding 等值，然后设置到 container 上， container.style.setProperty(name, originStyle.getPropertyValue(name))
+
+2. 通过上面的值判断是否需要收起，最大可展示高度 maxHeight 计算公式为 (rows + 0.5) * lineHeight + paddingTop + paddingBottom，如果 maxHeight 小于 offsetHeight，说明需要收起
+
+3. 省略位置的计算是通过二分法得到的，每次二分都会将当前结果加上 expandText（展开），插入到 container 的 innerHtml 和 innerText 中，这样可以获取最新的 offsetHeight，然后再通过第2步的公式比较
+
+4. 直到满足条件，即找到精确的省略位置，让文字正好占满 rows 行
+
+小程序核心
+
+1. 无法动态生成 DOM，需要在组件内部先手动预埋一个 DOM
+2. 预埋的 DOM 的 offsetHeight、lineHeight 属性的获取是异步的，意味着二分法获取精确省略位置的步骤也都要变成异步
+
+3. 二分法中改变 innerText/innerHtml 的行为，在小程序下只能变成修改 DOM 内的文本变量
+4. 由于小程序文本布局和 H5 不完全相同，可能导致最后的展示效果超过了 rows 行。这里的解决办法是设置 adjustString，防止超行
+
+5. 小程序下不支持 action Slot。因为小程序不支持操作 html，所以二分法中无法将 slot 的 html 插入到 container 的innerHTML中，也就拿不到 slot 的具体宽度，从而找不到精确的省略位置
