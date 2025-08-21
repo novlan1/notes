@@ -1,4 +1,8 @@
-#### 1. tdesign-miniprogram
+### 1. button
+
+button 不是最简单的，loading/icon才是最简单的，它们是 button 的子元素
+
+### 2. tdesign-miniprogram
 
 `tdesign-miniprogram` 中 `wxComponent` 类的作用：
 
@@ -7,13 +11,13 @@
 3. 方法，增加 `_trigger`，兼容受控情况下的抛出事件，非生命周期函数挂载在 `methods` 对象上
 4. 生命周期函数放到 `lifetimes` 上
 
-#### 2. uni-app
+### 3. uni-app
 
 `src/core/runtime/mp/polyfill/index.js`
 
 uni-app 中运行时对 `vant-weapp` 的 `polyfill` 核心逻辑
 
-#### 3. data
+### 4. data
 
 `data` 不用提前声明，`created` 中动态声明即可
 
@@ -23,7 +27,7 @@ created() {
 }
 ```
 
-#### 4. uni-app 中 事件的处理
+### 5. uni-app 中 事件的处理
 
 ```ts
  const oldEmit = vm.$emit
@@ -48,7 +52,7 @@ created() {
   }
 ```
 
-#### 5. watch
+### 6. watch
 
 `watch`，这么获取
 
@@ -61,11 +65,11 @@ vm.$options.watch
 `image` 中 `calcSize` 中用到了。
 
 
-#### 6. props
+### 7. props
 
 `miniprogram-to-uniapp` 直接转化后的代码有 `this = props`，这肯定是不对的，需要改成 `this.props = props`
 
-#### 7. 通用
+### 8. 通用
 
 1. 去掉 `zpMixins`， `zpMixins.extend`
 2. 组件位置改成` index`，比如 `loading/index`，而不是 `loading/loading`
@@ -76,6 +80,6 @@ vm.$options.watch
 7. `<tag arrow />` 中 `arrow` 在组件里取到的值为空字符串，但是期望是 `boolean`。`tdesign-miniprogram` 中一些 `props` 的 `type` 为 `null`，会导致这个问题。
 `<tag arrow />` `arrow` 在组件里取到的值为空字符串，但是期望是 `true`。
 
-#### 8. token 核心
+### 9. token 核心
 
 > 颜色色板 => 全局语义token => 组件token
