@@ -51,6 +51,10 @@
         {
           "text": "from-wx",
           "link": "/docs/2025下/from-wx.md"
+        },
+        {
+          "text": "业务核心",
+          "link": "/docs/2025下/business-core.md"
         }
       ]
     },
