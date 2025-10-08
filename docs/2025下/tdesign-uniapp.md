@@ -83,3 +83,114 @@ vm.$options.watch
 ### 9. token 核心
 
 > 颜色色板 => 全局语义token => 组件token
+
+----
+
+2025.10.9
+
+### 10. TODO
+
+1. 组件结构优化，components/name/name => components/name/index
+2. 组件中 css 改回 less
+3. image 的 mode 属性在 H5 的适配
+4. props 由 tdesign-api 统一自动生成
+5. 事件抛出检查，统一去掉 detail，以及 tap => click
+6. badge 在 h5 下有偏移
+7. 统一 externalClasses 的使用，去掉手动写在 props 中的，以及 extra-class => t-class，
+8. 之前组件中的 pageLifetimes 处理
+9. Grid 组件css修改
+10. dialog confirm/cancel 按钮的 class 都改成 tClass了，小程序下要确认
+11. dialog with-input 示例
+12. getInstance 这个方法，refs要兼容带或不带#
+13. 每个组件补充 emits，尤其是 click 事件
+14. pull-down-refresh 中与back-top的relation
+15. demo 中 组件和样式放一起，一起自动渲染到文档中
+16. Icon 组件太大（样式文件大），需要优化
+17. 组件中之前的 externalClasses 的 class 检查
+
+link 新增 css
+
+```scss
+/* #ifdef H5 */
+:deep(.navigator-wrap) {
+  display: flex;
+  align-items: center;
+}
+/* #endif */
+```
+
+### 11. 命令调用
+
+tdesign-uniapp 中支持命令调用的组件有
+
+- action-sheet
+- dialog
+- message
+- toast
+
+关于数据转换
+
+- toast 没有组件调用，只有命令式，无需数据转换。
+- message 嵌套了一层 message-item，message-item 没有 props，都是 setData 直接给的 data，所以根本不需要转换。
+  - 这是另一种解决思路了，用嵌套子组件，而不是转换数据。子组件一嵌套，且数据全部不走props，而是调用子组件内部方法。
+  - 当前 message 父组件只监听 visible。这种方式有个弊端，就是组件调用时，其他属性变化，并没有监听到。
+  - message 核心 setMessage（组件调用、命令调用都走） => addMessage (=> showMessageItem) 或者 updateMessage
+  - Message.ts 中的 setMessage/addMessage/showMessageItem 都是指的 message 内部的 message-item，是循环的 messageList，而不是页面级别的 t-message
+
+- dialog/action-sheet 需要转换
+
+核心
+
+- dialog 的命令调用核心就跟 press-ui 的一样了，调用 setData，将属性（包含 visible: true）传进去，同时将 instance 的 _onConfirm 设置为 promise 的 resolve
+- toast 一样的，只是用来 instance.show 方法，内部还是 setData
+
+转换就是把所有props都声明成data，比如 visible=> dataVisible，要改的地方包括
+
+1. data 中初始化
+2. watch 中监听
+3. setData 收口，设置的时候都加上 data 开头
+
+### 12. 受控属性
+
+存在受控属性的非表单组件有
+
+- 反馈类：action-sheet、dropdown-item、guide
+- 展示类：check-tag、collapse、image-viewer
+- 导航类：indexes、sidebar、steps、tabbar、tabs
+
+小程序受控属性，可以使用 `this.setData({ [value]: this.defaultValue })`，即改变 props 的值，vue 中不可以，会报错 `'set' on proxy: trap returned falsish for property 'value'`
+
+所以，需要 useDefaultValue 这种 hook，根据 defaultValue和value，得出新的 newValue，用于组件中真正判断
+
+当前受控属性的处理，是将其转成 data 开头的内部属性，不过初始化的时候，会判断受控和非受控值。同时触发事件的时候也要判断当前是否存在受控属性，非受控的时候直接改变内部值并抛出事件，受控的时候只抛出事件。
+
+注意，props 中受控和非受控属性的默认值都是 null 或 undefined
+
+总结下来，受控属性要处理的：
+
+1. watch 中监听
+2. created 中初始化
+3. methods 中新增 _trigger，作为抛出事件的收口
+
+### 13. 可维护性
+
+- 用统一的语法
+- 不使用编译后的、混淆后的变量
+
+### 14. 最新转换步骤
+
+1. uniComponent包裹
+2. 去掉 setData，改成直接赋值
+3. externalClasses 改成 props，在模板中同步修改
+4. prefix 改具名导入，之前是 const { prefix } = config;
+5. replace props.js，from: `value: ([^{]+)`，to: `default: $1`
+
+### 15. site 工程中的 alias
+
+tdesign-uniapp 在 H5下使用 vite.config 中的 alias，不使用 workspace，解决修改组件后必须重启才能生效
+
+小程序下，这种方式会报错，找不到组件，只能找js文件，所以vite.config 需根据环境判断，是否设置 alias
+
+### 16. hard
+
+The hard road might not lead to glory But the easy road definitely won't.
