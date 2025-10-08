@@ -88,6 +88,8 @@ vm.$options.watch
 
 2025.10.9
 
+----
+
 ### 10. TODO
 
 1. 组件结构优化，components/name/name => components/name/index
@@ -107,7 +109,11 @@ vm.$options.watch
 15. demo 中 组件和样式放一起，一起自动渲染到文档中
 16. Icon 组件太大（样式文件大），需要优化
 17. 组件中之前的 externalClasses 的 class 检查
-18. `icon="{{ { name: 'xx' }}}"` 这种传值并过滤了，要检查
+18. 下面这种传值并过滤了，要检查
+
+```html
+icon="{{ { name: 'xx' } }}"
+```
 
 link 新增 css
 
