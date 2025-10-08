@@ -3,6 +3,10 @@
     "source.fixAll.eslint": "always",
     "source.fixAll.stylelint": "always"
   },
+  "cSpell.ignoreWords": [
+    "tdesign",
+    "miniprogram"
+  ],
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
   "eslint.autofixOnSave": false,
