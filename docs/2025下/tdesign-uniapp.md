@@ -90,30 +90,45 @@ vm.$options.watch
 
 ----
 
-### 10. TODO
+### 10. API 设计
 
-1. 组件结构优化，components/name/name => components/name/index
-2. 组件中 css 改回 less
-3. image 的 mode 属性在 H5 的适配
-4. props 由 tdesign-api 统一自动生成
-5. 事件抛出检查，统一去掉 detail，以及 tap => click
-6. badge 在 h5 下有偏移
-7. 统一 externalClasses 的使用，去掉手动写在 props 中的，以及 extra-class => t-class，
-8. 之前组件中的 pageLifetimes 处理
-9. Grid 组件css修改
-10. dialog confirm/cancel 按钮的 class 都改成 tClass了，小程序下要确认
-11. dialog with-input 示例
-12. getInstance 这个方法，refs要兼容带或不带#
-13. 每个组件补充 emits，尤其是 click 事件
-14. pull-down-refresh 中与back-top的relation
-15. demo 中 组件和样式放一起，一起自动渲染到文档中
-16. Icon 组件太大（样式文件大），需要优化
-17. 组件中之前的 externalClasses 的 class 检查
-18. 下面这种传值并过滤了，要检查
+API 一定要与官方一致，这是最不能妥协的，包括 `props`、`events`、事件参数，参数类型、插槽、CSS变量。
 
-```html
-icon="{{ { name: 'xx' } }}"
-```
+一方面开发者没有额外心智负担，一方限制开发人员的胡乱发挥，也减少开发者的决策成本。
+
+尽量与小程序对齐，而不是 `mobile-vue`，因为 `uniapp` 语法主要是小程序的语法。
+
+### 11. TODO
+
+- [ ] ~~组件结构优化，components/name/name => components/name/index~~
+- [x] 组件中 css 改回 less
+- [ ] image 的 mode 属性在 H5 的适配
+- [ ] props 由 tdesign-api 统一自动生成
+- [ ] 事件抛出检查，统一去掉 detail，以及 tap => click
+- [ ] 统一 externalClasses 的使用，去掉手动写在 props 中的，以及 extra-class => t-class
+- [ ] badge 在 h5 下有偏移
+- [ ] 之前组件中的 pageLifetimes 处理
+- [x] Grid 组件css修改
+- [ ] dialog confirm/cancel 按钮的 class 都改成 tClass了，小程序下要确认
+- [x] dialog with-input 示例
+- [ ] getInstance 这个方法，refs要兼容带或不带#
+- [ ] 每个组件补充 emits，尤其是 click 事件，并提到单独文件中，由 tdesign-api 生成
+- [x] pull-down-refresh 中与back-top的relation
+- [ ] demo 中 组件和样式放一起，一起自动渲染到文档中
+- [ ] Icon 组件太大（样式文件大），需要优化
+- [ ] 组件中之前的 externalClasses 的 class 检查
+- [ ] 下面这种传值被过滤了，要检查 `icon="{{ { name: 'xx' } }}"`
+- [ ] 检查需要增加 v-model 的组件，有些属性必须受控，比如 cascader/calendar 的 visible
+- [ ] 文档代码格式不友好，两个属性再换行，充分利用空间
+- [ ] Loading 示例 slider 部分 需要补充
+- [x] Less 编译成 css，以及将 rpx 转成 px
+- [ ] Slider 组件 h5 竖向，有错位
+- [ ] calendar 小程序展示时没有动画（非必现）
+- [ ] miniprogram uploader 组件 defaultFiles 未使用
+- [ ] tdesign-uniapp 模板
+- [ ] 文档顶部链接问题
+- [ ] 其他端适配问题
+
 
 link 新增 css
 
@@ -126,7 +141,7 @@ link 新增 css
 /* #endif */
 ```
 
-### 11. 命令调用
+### 12. 命令调用
 
 tdesign-uniapp 中支持命令调用的组件有
 
@@ -157,7 +172,7 @@ tdesign-uniapp 中支持命令调用的组件有
 2. watch 中监听
 3. setData 收口，设置的时候都加上 data 开头
 
-### 12. 受控属性
+### 13. 受控属性
 
 存在受控属性的非表单组件有
 
@@ -179,12 +194,12 @@ tdesign-uniapp 中支持命令调用的组件有
 2. created 中初始化
 3. methods 中新增 _trigger，作为抛出事件的收口
 
-### 13. 可维护性
+### 14. 可维护性
 
 - 用统一的语法
 - 不使用编译后的、混淆后的变量
 
-### 14. 最新转换步骤
+### 15. 最新转换步骤
 
 1. uniComponent包裹
 2. 去掉 setData，改成直接赋值
@@ -192,24 +207,91 @@ tdesign-uniapp 中支持命令调用的组件有
 4. prefix 改具名导入，之前是 const { prefix } = config;
 5. replace props.js，from: `value: ([^{]+)`，to: `default: $1`
 
-### 15. site 工程中的 alias
+### 16. site 工程中的 alias
 
 tdesign-uniapp 在 H5下使用 vite.config 中的 alias，不使用 workspace，解决修改组件后必须重启才能生效
 
 小程序下，这种方式会报错，找不到组件，只能找js文件，所以vite.config 需根据环境判断，是否设置 alias
 
-### 16. hard
+### 17. hard
 
 The hard road might not lead to glory But the easy road definitely won't.
 
-### 17. WXS
+### 18. WXS
 
 <img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/10/own_mike_62aJQAxB8dp3b6j7.png" width="600" />
 
-### 18. artwork
+### 19. artwork
 
 <img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/10/own_mike_YerJ44De845RSASw.png" width="600" />
 
-### 19. zh
+### 20. 三方库
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/10/own_mike_YerJ44De845RSASw.png" width="600" />
+`tdesign-miniprogram` 执行 `npm run build`，在 `miniprogram_dist/node_modules` 目录下 拿到 `dayjs` 和 `tinycolor2` 的产物，复制到 `tdesign-uniapp` 的 `npm` 目录下，用啥拿啥
+。
+
+一次性工作，一般不会改。
+
+### 21. input 受控
+
+H5 下，uni-app 封装了 `input`，且不支持受控。
+
+Input 限制中文字符在 uni-app 实现的话，解决方案是先设置一次，然后在 nextTick 中再设置一次。
+
+参考：https://ask.dcloud.net.cn/article/39736
+
+其他方案：
+
+1. 可以动态创建input，不用 uni-app 包裹的，缺点是更新属性麻烦。
+2. 动态计算 maxlength，用浏览器原生属性约束。
+
+### 22. externalClass
+
+uni-app 下，externalClasses 是不生效的。
+
+参考：
+
+- https://github.com/dcloudio/uni-app/issues/3275
+- https://ask.dcloud.net.cn/question/163695
+
+所以 `styleIsolation: apply-shared` 不够用，以只能改成 `styleIsolation: shared`
+
+可以改下 `packages/site/node_modules/@dcloudio/uni-mp-compiler/dist/transforms/transformComponent.js`，把 `isComponentProp` 方法，将 `t-class` 排除，就能解决，但是官方不会推出。
+
+### 23. scoped
+
+tdesign-uniapp 必须加 `scoped`，否则一个自定义组件加了 `styleIsolation: shared`，同一页面下其他没加此属性的自定义组件也会生效，只要 `class` 相同！
+
+### 24. t-class
+
+统一用 tClass，而不是 class
+
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/10/own_mike_bR3Jm86QaWDeWRdD.png" width="600" />
+
+### 25. distanceTop
+
+`drawer` 顶部过高，是因为子组件 `popup` 中使用的 `--td-popup-distance-top` 变量为0，这个变量由 `distanceTop` 生成，`distanceTop` 又是由 `using-custom-navbar` 这个 `mixin` 生成。
+
+distanceTop 由 uni.getMenuButtonBoundingClientRect 计算生成，H5下没有这个API，可以直接传入 customNavbarHeight
+
+### 26. page-scroll
+
+使用到 `page-scroll` 这个 `mixin` 的组件有
+
+1. sticky
+2. indexes
+3. tabs(引入了sticky)
+
+所有如果改动了 `page-scroll`，这三个组件都要测试下
+
+### 27. getCustomNavbarHeight 报错
+
+```
+Cannot read properties of null (reading 'parentElement')
+```
+
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/10/own_mike_ycz2zafE5BbMiDDs.png" width="600" />
+
+这种就是 mounted 之后没延时，没获取到对应元素。
+
+
