@@ -21,7 +21,7 @@
 
 贴一张图，方便理解：
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2022/8/uni-app-components.png" width="900">
+<img src="https://cdn.uwayfly.com/article/2022/8/uni-app-components.png" width="900">
 
 - 第1层是包级别，包括主包、分包1、分包2、分包3
 - 第2层主要是页面直接引用的组件级别，包括组件A-G
@@ -219,17 +219,17 @@ Object.keys(allUsingComponentMap).forEach((componentName) => {
 
 不使用本插件时，包依赖分析如下，主包大小为 3.54M：
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2022/8/uni-app-bundle-week-2.7.png" width="380">
+<img src="https://cdn.uwayfly.com/article/2022/8/uni-app-bundle-week-2.7.png" width="380">
 
 
 只移动仅有一个分包使用的组件时，包依赖分析如下，主包大小为 1.96M：
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2022/8/uni-app-bundle-week-2.8.png" width="380">
+<img src="https://cdn.uwayfly.com/article/2022/8/uni-app-bundle-week-2.8.png" width="380">
 
 
 移动所有只有分包使用的组件式，包分析如下，主包大小为 1.37M：
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2022/8/uni-app-bundle-week-2.6.png" width="380">
+<img src="https://cdn.uwayfly.com/article/2022/8/uni-app-bundle-week-2.6.png" width="380">
 
 
 可以看到效果是显著的，主包大小减小了 2.17M。

@@ -170,9 +170,9 @@ vue-jest@3.0.7版本安装失败，需要按照 vue-jest@4。
 
 全量安装的话，能节省`90s`左右，之前耗时：
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2023/8/own_mike_c1021396214509dde6.png" width="300">
+<img src="https://cdn.uwayfly.com/article/2023/8/own_mike_c1021396214509dde6.png" width="300">
 
 现在：
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2023/8/own_mike_7669daf7aa9fbb14dc.png" width="300">
+<img src="https://cdn.uwayfly.com/article/2023/8/own_mike_7669daf7aa9fbb14dc.png" width="300">
 

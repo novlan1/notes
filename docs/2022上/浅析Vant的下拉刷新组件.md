@@ -316,5 +316,5 @@ HTMLElement属性：
   整个内容区域的宽度(包括需拉动滚动条隐藏起来的那些部分) `scrollWidth = scrollTop+clientWidth`
 
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2022/clientX-offsetX.png" width="500">
+<img src="https://cdn.uwayfly.com/article/2022/clientX-offsetX.png" width="500">
 

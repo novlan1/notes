@@ -2,11 +2,11 @@
 
 处理数据一定要放在父组件中，如果放在子组件中，会非常卡，日志显示createNode达到5000多个。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/4/own_mike_0024d288830b3cb3ca.png" width="900">
+<img src="https://cdn.uwayfly.com/article/2025/4/own_mike_0024d288830b3cb3ca.png" width="900">
 
 优化后：
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/4/own_mike_06ec09070431539b0a.png" width="900">
+<img src="https://cdn.uwayfly.com/article/2025/4/own_mike_06ec09070431539b0a.png" width="900">
 
 实际处理非常简单，就是请求回接口后，在父组件进行数据的处理，比如格式化日期等。
 

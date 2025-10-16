@@ -163,7 +163,7 @@ self.addEventListener('fetch', function(event) {
 
 Service Worker 生命周期图
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2024/5/own_mike_1cd3e000315251ce4d.png" width="600" />
+<img src="https://cdn.uwayfly.com/article/2024/5/own_mike_1cd3e000315251ce4d.png" width="600" />
 
 ### 3. 缓存策略
 

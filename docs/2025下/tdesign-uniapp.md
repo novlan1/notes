@@ -219,11 +219,11 @@ The hard road might not lead to glory But the easy road definitely won't.
 
 ### 18. WXS
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/10/own_mike_62aJQAxB8dp3b6j7.png" width="600" />
+<img src="https://cdn.uwayfly.com/article/2025/10/own_mike_62aJQAxB8dp3b6j7.png" width="600" />
 
 ### 19. artwork
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/10/own_mike_YerJ44De845RSASw.png" width="600" />
+<img src="https://cdn.uwayfly.com/article/2025/10/own_mike_YerJ44De845RSASw.png" width="600" />
 
 ### 20. 三方库
 
@@ -266,7 +266,7 @@ tdesign-uniapp 必须加 `scoped`，否则一个自定义组件加了 `styleIsol
 
 统一用 tClass，而不是 class
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/10/own_mike_bR3Jm86QaWDeWRdD.png" width="600" />
+<img src="https://cdn.uwayfly.com/article/2025/10/own_mike_bR3Jm86QaWDeWRdD.png" width="600" />
 
 ### 25. distanceTop
 
@@ -290,7 +290,7 @@ distanceTop 由 uni.getMenuButtonBoundingClientRect 计算生成，H5下没有�
 Cannot read properties of null (reading 'parentElement')
 ```
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/10/own_mike_ycz2zafE5BbMiDDs.png" width="600" />
+<img src="https://cdn.uwayfly.com/article/2025/10/own_mike_ycz2zafE5BbMiDDs.png" width="600" />
 
 这种就是 mounted 之后没延时，没获取到对应元素。
 

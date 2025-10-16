@@ -38,7 +38,7 @@ body.press-act-award-dialog--type-gp {
 ```
 
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2023/11/own_mike_4c2a77c7fa33d7f435.png" width="500"/>
+<img src="https://cdn.uwayfly.com/article/2023/11/own_mike_4c2a77c7fa33d7f435.png" width="500"/>
 
 小程序内稍有不同：
 

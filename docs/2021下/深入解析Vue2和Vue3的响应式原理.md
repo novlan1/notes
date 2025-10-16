@@ -316,7 +316,7 @@ Vue 中定义一个 Watcher 类来表示观察订阅依赖。至于为啥引入W
 「依赖收集的目的是:」 将观察者 Watcher 对象存放到当前闭包中的订阅者 Dep 的 subs 中。形成如下所示的这样一个关系（图参考《剖析 Vue.js 内部运行机制》）。
 
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2024/3/own_mike_3099b1207f542cb05e.png" width="600">
+<img src="https://cdn.uwayfly.com/article/2024/3/own_mike_3099b1207f542cb05e.png" width="600">
 
 
 
@@ -341,7 +341,7 @@ Watcher 只在构造函数中对 Dep.target 赋值一次 this，也就可以防�
 
 ### Dep 和 Watcher 的关系
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2024/3/own_mike_af2a5ba272a89d2ab4.webp" width="600">
+<img src="https://cdn.uwayfly.com/article/2024/3/own_mike_af2a5ba272a89d2ab4.webp" width="600">
 
 
 Observer 负责将数据转换成 getter/setter 形式； Dep 负责管理数据的依赖列表；是一个发布订阅模式，上游对接 Observer，下游对接 Watcher Watcher 是实际上的数据依赖，负责将数据的变化转发到外界(渲染、回调)； 首先将 data 传入 Observer 转成 getter/setter 形式；当 Watcher 实例读取数据时，会触发 getter，被收集到 Dep 仓库中；当数据更新时，触发 setter，通知 Dep 仓库中的所有 Watcher 实例更新，Watcher 实例负责通知外界

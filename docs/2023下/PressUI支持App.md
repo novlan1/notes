@@ -200,13 +200,13 @@ Press UI 中还在使用 page 的滚动的组件只有 press-sticky 了，在 AP
 
 目前 Press UI 组件已兼容 App，可扫码下面二维码下载安装，体验安卓版本。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/press/apk/press-ui-apk-main.png" width="200px"/>
+<img src="https://cdn.uwayfly.com/press/apk/press-ui-apk-main.png" width="200px"/>
 
 iOS 证书制作要花钱，等有钱了再说～
 
 目前 Press UI 支持的产品矩阵如下：
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2023/10/own_mike_13f3281f0a188e0fbd.png" width="600">
+<img src="https://cdn.uwayfly.com/article/2023/10/own_mike_13f3281f0a188e0fbd.png" width="600">
 
 ## 5. 原理
 

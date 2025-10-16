@@ -10,7 +10,7 @@
 
 下图是示例二维码，分别为H5、微信小程序、QQ小程序。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/press/qrcode/press-ui-demo-qrcode-3.png" width="600">
+<img src="https://cdn.uwayfly.com/press/qrcode/press-ui-demo-qrcode-3.png" width="600">
 
 在做一个普通Vue项目（非`uni-app`环境）需求时，需要一个组件，在 Press UI 已经有了，可不可以直接用 Press UI 内的呢？这样就不用写两套代码了。
 
@@ -76,7 +76,7 @@ Press UI 要想跨第n+1端，需要一个环境来调试并检验成果。由�
 
 下面是 Press UI 在非`uni-app`环境下的示例：
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2023/8/own_mike_32e3f24500cdc9b1c0.png" width="300">
+<img src="https://cdn.uwayfly.com/article/2023/8/own_mike_32e3f24500cdc9b1c0.png" width="300">
 
 
 ## 4. 遇到的问题
@@ -270,7 +270,7 @@ item
 目前 Press UI 的`schedule-tree`、`area`组件在普通Vue项目中使用，实现了一套代码`n+1`端复用，`n`是`uni-app`赋予的，`1`是本次扩展的。
 
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2023/8/own_mike_99e6e6c41944b384b4.jpg" width="375">
+<img src="https://cdn.uwayfly.com/article/2023/8/own_mike_99e6e6c41944b384b4.jpg" width="375">
 
 有些组件还实现了5端复用，除了H5、微信小程序、QQ小程序、普通H5外，还兼容了PC端。不过这种兼容并非是平台级别的，更多是UI展示和事件的处理。
 

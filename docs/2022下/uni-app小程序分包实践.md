@@ -223,13 +223,13 @@ const hasMainPackageComponent = function (module, subPackageRoot) {
 
 优化前效果
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2022/8/uniapp-before-subpackage-2.png" width="300">
+<img src="https://cdn.uwayfly.com/article/2022/8/uniapp-before-subpackage-2.png" width="300">
 
 
 优化后：
 
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2022/8/uniapp-after-subpackage-2.png" width="300">
+<img src="https://cdn.uwayfly.com/article/2022/8/uniapp-after-subpackage-2.png" width="300">
 
 
 

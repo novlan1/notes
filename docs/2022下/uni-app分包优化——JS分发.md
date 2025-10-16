@@ -118,12 +118,12 @@ const findNameChunk = function (chunks, name) {
 
 JS分发到分包之前，主包大小为 2.48M：
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2022/8/uni-app-bundle-week-2.4.png" width="380">
+<img src="https://cdn.uwayfly.com/article/2022/8/uni-app-bundle-week-2.4.png" width="380">
 
 优化后，主包大小为 1.97M，减小了 0.51M：
 
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2022/8/uni-app-bundle-week-2.5.png" width="380">
+<img src="https://cdn.uwayfly.com/article/2022/8/uni-app-bundle-week-2.5.png" width="380">
 
 
 

@@ -158,7 +158,7 @@ t-comm 文档中“引入”的标题，不能写 `###`，而要写 `<h3>`，前
 
 对于业务中来说，如果 `columns` 不同，就应该用不同的 `picker`，或者用 `v-if`，主动销毁 `picker`。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/8/own_mike_4QTkhRZYJ3BD4p6p.jpg" width="600"   />
+<img src="https://cdn.uwayfly.com/article/2025/8/own_mike_4QTkhRZYJ3BD4p6p.jpg" width="600"   />
 
 ## 13. CSS 中 box-shadow
 
@@ -323,7 +323,7 @@ docker 是 k8s 最初唯一支持的容器类型，但是现在k8s也开始支�
 
 容器之所以被设计为单个容器只运行一个进程（除非进程本身产生子进程），是因为如果单个容器中运行多个不相关的进程，那么开发人员需要保持这些所有进程都运行OK, 并且管理他们的日志等（比如，两个进程，其中一个生产者进程，一个消费者进程，如果消费者进程crash之后，我们需要考虑该进程重启的机制）。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/8/own_mike_kezRn8EibyFmH5Ns.jpg" width="600" />
+<img src="https://cdn.uwayfly.com/article/2025/8/own_mike_kezRn8EibyFmH5Ns.jpg" width="600" />
 
 ## 21. Tailwind CSS 与 UnoCSS
 
@@ -331,7 +331,7 @@ docker 是 k8s 最初唯一支持的容器类型，但是现在k8s也开始支�
 
 2. UnoCSS 更像是一个原子 CSS 引擎（Engine），其核心是按需（on-demand）生成 CSS 的机制。通过 Preset 配置，它可以模仿 Tailwind CSS 的行为，同时也能实现其他不同的风格。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/8/own_mike_8kySPmsEjxhEyxpe.jpg" width="380" />
+<img src="https://cdn.uwayfly.com/article/2025/8/own_mike_8kySPmsEjxhEyxpe.jpg" width="380" />
 
 ## 22. 重构
 
@@ -339,13 +339,13 @@ docker 是 k8s 最初唯一支持的容器类型，但是现在k8s也开始支�
 
 所以**重构的技术方案中必须要包含如何让代码“保鲜”的方法，否则重构结束后，换一拨人维护几个来回，整个代码仓库又会迅速劣化成屎山**。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/8/own_mike_3iWnazMYJEmBhxBa.jpg" width="300" />
+<img src="https://cdn.uwayfly.com/article/2025/8/own_mike_3iWnazMYJEmBhxBa.jpg" width="300" />
 
 ## 23. 意义
 
 一个小提示，在公司里，老板们让你做的，对你的评价，以及希望你进步的方向，最大受益人是老板而不是你。如果你打算在公司里做到退休,可以按照老板们的要求做。但是如果你发现你做的这些事情对你离开公司后没有任何帮助，你就得审思一下这些事情有没有意义。得把平台的成功和自己的成功分开来。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/8/own_mike_d5naXmZckpYMaaMT.jpg" width="300" />
+<img src="https://cdn.uwayfly.com/article/2025/8/own_mike_d5naXmZckpYMaaMT.jpg" width="300" />
 
 ## 24. 连不上办公网怎么办
 

@@ -49,7 +49,7 @@ Vue.use(VueLazyload, {
 总体的思路如下：
 
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2022/8/uni-app-v-lazy.png" width="800">
+<img src="https://cdn.uwayfly.com/article/2022/8/uni-app-v-lazy.png" width="800">
 
 
 ```html

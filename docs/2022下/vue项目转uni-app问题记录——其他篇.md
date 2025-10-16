@@ -154,7 +154,7 @@ this.createSelectorQuery().select(`.wrap >>> #${id}`);
 Reflect.apply requires the first argument be a function
 ```
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2023/8/own_mike_bbddb032816df0fe51.jpg" width="375">
+<img src="https://cdn.uwayfly.com/article/2023/8/own_mike_bbddb032816df0fe51.jpg" width="375">
 
 解决：`qs`从`6.11.2`降级到`6.5.2`时，亲测正常。
 

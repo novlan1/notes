@@ -158,4 +158,4 @@ Object.defineProperty(this, '$route', {
 2. 对 `route.params` 的 `hook`，是在 `mixin` 的 `mounted` 中，对 `this.$route` 进行劫持。
 
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2022/8/uni-app-router-hook.png" width="500">
+<img src="https://cdn.uwayfly.com/article/2022/8/uni-app-router-hook.png" width="500">

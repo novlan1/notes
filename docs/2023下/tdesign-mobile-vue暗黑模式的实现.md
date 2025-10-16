@@ -72,7 +72,7 @@ export default defineComponent({
 
 下面是官方给出的 `token` 使用指南。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2023/8/own_mike_af2d77b3ab91996f92.png" width="800">
+<img src="https://cdn.uwayfly.com/article/2023/8/own_mike_af2d77b3ab91996f92.png" width="800">
 
 全局语义`token`是组件无关、色值无关的变量，可以当作不同模式的“中间层”。
 

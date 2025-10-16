@@ -154,7 +154,7 @@ moduleDetection 允许你显式指定模块检测策略，避免隐式推断带�
 - 某些工具（如 Babel、Webpack）可能允许混合使用 ESM 和 CommonJS。
 - 配置文件（如 .ts 中只有类型）可能被误判。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/8/own_mike_BQDnbBXsCN5SiAPA.jpg" width="600" />
+<img src="https://cdn.uwayfly.com/article/2025/8/own_mike_BQDnbBXsCN5SiAPA.jpg" width="600" />
 
 ## 6. allowImportingTsExtensions
 
@@ -180,9 +180,9 @@ module 决定了：
 2. 如何转换 `import/export` 语法
 3. 是否生成兼容性代码（如 `require()` 或 `define()`）
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/8/own_mike_SmjzTRw3mfEkMK3s.jpg" width="600" />
+<img src="https://cdn.uwayfly.com/article/2025/8/own_mike_SmjzTRw3mfEkMK3s.jpg" width="600" />
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/8/own_mike_YXKb4yCRWmGebTfm.jpg" width="600" />
+<img src="https://cdn.uwayfly.com/article/2025/8/own_mike_YXKb4yCRWmGebTfm.jpg" width="600" />
 
 ## 8. useDefineForClassFields
 
@@ -221,4 +221,4 @@ class Foo {
 }
 ```
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/8/own_mike_FdiGXZwNZbHW7WjX.jpg" width="600" />
+<img src="https://cdn.uwayfly.com/article/2025/8/own_mike_FdiGXZwNZbHW7WjX.jpg" width="600" />

@@ -15,10 +15,10 @@ import CertificationDialog from 'src/project/dzs-match/components/dialogs/certif
 
 这样引入子模块的内容，或者在一个很深的目录下引入其他内容，都是非常方便的。但缺点是在VSCode中无法跳转定义，于是写了个插件解决了这个问题。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2022/vscode-plugin-tip-define-2.png" width="600">
+<img src="https://cdn.uwayfly.com/article/2022/vscode-plugin-tip-define-2.png" width="600">
 
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2022/vscode-plugin-tip-define.png" width="600">
+<img src="https://cdn.uwayfly.com/article/2022/vscode-plugin-tip-define.png" width="600">
 
 核心逻辑非常简单：
 - 判断当前行是否符合需求，即引入了src开头的文件，如果不是则退出；

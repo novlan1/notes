@@ -9,7 +9,7 @@
 1. 我们项目是从H5项目转成`uni-app`项目的，项目比较大，改动成本高。
 2. `uni-ui`、`uview`这些库的API易用性较差，与`vant`相比差距大。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/press%2Fimg%2Fpress-ui-demo-screenshot.png" width="300" >
+<img src="https://cdn.uwayfly.com/press%2Fimg%2Fpress-ui-demo-screenshot.png" width="300" >
 
 
 ## 2. 介绍
@@ -27,12 +27,12 @@
 
 文档地址：[https://novlan1.github.io/press-ui/](https://novlan1.github.io/press-ui/)
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/press%2Fimg%2Fpress-ui-doc-screenshot.png" width="800" >
+<img src="https://cdn.uwayfly.com/press%2Fimg%2Fpress-ui-doc-screenshot.png" width="800" >
 
 
 三端示例体验地址：
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/press/qrcode/press-ui-demo-qrcode-3.png" width="700">
+<img src="https://cdn.uwayfly.com/press/qrcode/press-ui-demo-qrcode-3.png" width="700">
 
 
 ### 2.2. 解决痛点
@@ -65,10 +65,10 @@
 
 `press-ui`可应用于`uni-app`项目，或者普通的H5项目，目前已应用在王者赛宝、HoK Club、赛宝pro等项目中。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2023/4/pvp-esports-screenshort.png" width="300">
+<img src="https://cdn.uwayfly.com/article/2023/4/pvp-esports-screenshort.png" width="300">
 
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2023/4/hok-club-screenshot.png" width="300">
+<img src="https://cdn.uwayfly.com/article/2023/4/hok-club-screenshot.png" width="300">
 
 
 ## 3. 如何使用
@@ -172,7 +172,7 @@ module.export = {
 
 欢迎体验、试用、共建，可以加入群聊，二维码过期可以私聊加入。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/press/img/chat-group/caht-group-20230425.png" width="300">
+<img src="https://cdn.uwayfly.com/press/img/chat-group/caht-group-20230425.png" width="300">
 
 
 ## 5. 技术细节
@@ -287,11 +287,11 @@ watcher.close();
 
 笔者对项目中之前的组件，全部进行了BEM改造，以`press-dialog`为例，改造前：
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2022/12/press_dialog_before_bem.pic.jpg">
+<img src="https://cdn.uwayfly.com/article/2022/12/press_dialog_before_bem.pic.jpg">
 
 改造后：
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2022/12/press_dialog_after_bem.pic.jpg" >
+<img src="https://cdn.uwayfly.com/article/2022/12/press_dialog_after_bem.pic.jpg" >
 
 
 可以看出，可读性大幅增强。

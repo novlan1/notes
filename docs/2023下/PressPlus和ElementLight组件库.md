@@ -298,11 +298,11 @@ npm publish --tag beta
 
 可以通过 `npm view press-ui` 或者 `npm dist-tag ls press-ui` 命令查看 `npm` 包有哪些发布标签，及对应的版本。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2023/12/own_mike_eb54cab8d8f8b35a4b.png" width="600" />
+<img src="https://cdn.uwayfly.com/article/2023/12/own_mike_eb54cab8d8f8b35a4b.png" width="600" />
 
 此外，还可以通过 `npm dist-tag add <package-spec (with version)> [<tag>]` 或者 `npm dist-tag rm <package-spec> <tag>` 对发布标签进行增删改。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2023/12/own_mike_bb5f9176ff021178a2.png" width="500" />
+<img src="https://cdn.uwayfly.com/article/2023/12/own_mike_bb5f9176ff021178a2.png" width="500" />
 
 参考：
 - https://docs.npmjs.com/cli/v10/commands/npm-dist-tag

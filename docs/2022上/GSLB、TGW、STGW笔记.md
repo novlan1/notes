@@ -62,7 +62,7 @@ GSLB即我们公司的qq.com授权的DNS。其在提供域名解析最基本功�
 LVS(Linux Virtual Server) 是构建于一组由真实服务器（real server，简称RS）构成的服务器集群上的高可靠，高可用性server。对端用户来说，其架构是透明的，就好像是和一台高性能的虚拟服务器相连。
 
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2022/lvs.pic_hd.jpg" width="500">
+<img src="https://cdn.uwayfly.com/article/2022/lvs.pic_hd.jpg" width="500">
 
 - Load Balancer 负载均衡器：是整个集群最前端的服务，它将client的请求均衡的分发到真实的服务器RS上。因此端用户认为所有服务都是有单个IP提供。
 - Real Server 真实服务器：是提个服务的真实服务器，提供业务接入层的应用逻辑处理，与中间层（app）、数据层通讯。
@@ -79,7 +79,7 @@ IP层的LB由于其开销小，能并发的server节点一般能达25甚至100�
 
 公司的TGW借鉴了LVS技术，其具体功能有：负载均衡，多通接入，IP收敛等功能特点，其接入方式又分为七层接入和四层接入。TGW其架构如下图
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2022/tgw_01.pic.jpg" width="300">
+<img src="https://cdn.uwayfly.com/article/2022/tgw_01.pic.jpg" width="300">
 
 #### (1) 负载均衡
 
@@ -95,7 +95,7 @@ TGW周期性的探测server的状态，在1分钟内自动把故障server从可�
 
 中国的网络复杂，跨运营商访问延时非常大，互联而不互通。业务为了同时保证电信，联通用户的访问质量，传统的做法是分别部署电信，联通服务器，分而治之。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2022/tgw_02.pic.jpg" width="300">
+<img src="https://cdn.uwayfly.com/article/2022/tgw_02.pic.jpg" width="300">
 
 
 如上图所示，可以通过TGW多通接入来解决跨运营商访问延时大的问题。多通接入基本原理是：TGW把外网不同运营商的请求，通过内网隧道转发给server，server返回数据时，再把数据通过内网隧道返回给TGW，再由TGW发送给不同的运营商。与传统的反向代理服务器最大的不同是，由于TGW使用了隧道技术，服务器看到的是用户的真实IP地址，而不是TGW的地址。
@@ -126,7 +126,7 @@ STGW承担了公司内大部分平台和业务的流量接入，同时也作为�
 
 ### 1. 接入架构及流程
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2022/stgw.pic.jpg" width="500">
+<img src="https://cdn.uwayfly.com/article/2022/stgw.pic.jpg" width="500">
 
 以一个HTTPS请求为例，简单描述下接入转发流程：
 

@@ -75,7 +75,7 @@ closeIFrame() {
 
 还可以及时发现废弃属性，修改有问题的代码。避免改动一处代码，却漏了与之关联的地方。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2023/5/own_mike_1e84a1843ce1524907.png" width="500">
+<img src="https://cdn.uwayfly.com/article/2023/5/own_mike_1e84a1843ce1524907.png" width="500">
 
 
 ## 2. 在js文件中进行ts检查

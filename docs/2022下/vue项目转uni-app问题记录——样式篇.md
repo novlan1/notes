@@ -293,18 +293,18 @@ uni-app 小程序 `:empty`，可能会存在问题，slot 即使父组件不传�
 下图左边不生效，右边才生效。
 
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2023/6/own_mike_9637fa73dedc6e87b0.png" width="500">
+<img src="https://cdn.uwayfly.com/article/2023/6/own_mike_9637fa73dedc6e87b0.png" width="500">
 
 
 ## 1.15. 样式转化
 
 对`page`设置的样式，在h5中会被转成`uni-page-body`：
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2023/6/own_mike_af5205041bba65884d.png" width="700">
+<img src="https://cdn.uwayfly.com/article/2023/6/own_mike_af5205041bba65884d.png" width="700">
 
 对`html`和`body`设置的样式，在小程序中会被转成`page`：
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2023/6/own_mike_1018511e52a1f96ed5.png" width="700">
+<img src="https://cdn.uwayfly.com/article/2023/6/own_mike_1018511e52a1f96ed5.png" width="700">
 
 
 对于这些容易造成歧义、容易产生误解，理解成本较高的转化样式，建议使用条件编译，只在本平台写本台可识别的样式，减少这种转化。

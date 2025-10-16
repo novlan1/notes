@@ -14,7 +14,7 @@ linear-gradient中度数的意思，0度指向上，45度指向右，不填的�
 
 ### 2.1. 渐变背景
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/4/own_mike_c8c270f5be41d8e5af.gif" width="320">
+<img src="https://cdn.uwayfly.com/article/2025/4/own_mike_c8c270f5be41d8e5af.gif" width="320">
 
 核心代码
 
@@ -37,7 +37,7 @@ linear-gradient中度数的意思，0度指向上，45度指向右，不填的�
 
 ### 2.2. 渐变文本
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/4/own_mike_1159462e7e8c7a3026.gif" width="320">
+<img src="https://cdn.uwayfly.com/article/2025/4/own_mike_1159462e7e8c7a3026.gif" width="320">
 
 核心代码
 
@@ -67,7 +67,7 @@ hue-rotate(3.142rad)  /* 3.142弧度旋转，近似一圈，也就是360度 */
 
 ### 2.3. 闪烁文本
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/4/own_mike_64115cc72288e21e6f.gif" width="320">
+<img src="https://cdn.uwayfly.com/article/2025/4/own_mike_64115cc72288e21e6f.gif" width="320">
 
 核心代码
 
@@ -93,7 +93,7 @@ hue-rotate(3.142rad)  /* 3.142弧度旋转，近似一圈，也就是360度 */
 ### 2.4. 波浪线
 
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/4/own_mike_cfd02e4abeb33b202b.png" width="320">
+<img src="https://cdn.uwayfly.com/article/2025/4/own_mike_cfd02e4abeb33b202b.png" width="320">
 
 
 核心代码
@@ -134,7 +134,7 @@ hue-rotate(3.142rad)  /* 3.142弧度旋转，近似一圈，也就是360度 */
 
 ### 2.5. 方格背景
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/4/own_mike_fb7dc58a05ffa28fd1.png" width="500">
+<img src="https://cdn.uwayfly.com/article/2025/4/own_mike_fb7dc58a05ffa28fd1.png" width="500">
 
 核心代码
 
@@ -158,7 +158,7 @@ hue-rotate(3.142rad)  /* 3.142弧度旋转，近似一圈，也就是360度 */
 
 ### 2.6. 方格彩带
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/4/own_mike_f0974a3037c938ae7b.png" width="500">
+<img src="https://cdn.uwayfly.com/article/2025/4/own_mike_f0974a3037c938ae7b.png" width="500">
 
 核心代码
 
@@ -181,7 +181,7 @@ hue-rotate(3.142rad)  /* 3.142弧度旋转，近似一圈，也就是360度 */
 
 ### 2.7. 网格背景
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/4/own_mike_5fdd5cb52a9298c19a.png" width="500">
+<img src="https://cdn.uwayfly.com/article/2025/4/own_mike_5fdd5cb52a9298c19a.png" width="500">
 
 核心代码：
 
@@ -223,7 +223,7 @@ hue-rotate(3.142rad)  /* 3.142弧度旋转，近似一圈，也就是360度 */
 
 ### 2.8. 配合mask制作转场动画
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/4/own_mike_e4523a79b3a22641c8.gif" width="300">
+<img src="https://cdn.uwayfly.com/article/2025/4/own_mike_e4523a79b3a22641c8.gif" width="300">
 
 核心代码
 
@@ -242,7 +242,7 @@ hue-rotate(3.142rad)  /* 3.142弧度旋转，近似一圈，也就是360度 */
 
 ### 2.9. 配合`background-blend-mode`制作图片的hover效果
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/4/own_mike_3965fd69c43c578abc.gif" width="300">
+<img src="https://cdn.uwayfly.com/article/2025/4/own_mike_3965fd69c43c578abc.gif" width="300">
 
 核心代码
 
@@ -264,7 +264,7 @@ hue-rotate(3.142rad)  /* 3.142弧度旋转，近似一圈，也就是360度 */
 
 ### 2.10. 动态边框
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/4/own_mike_103fecb5156fb85494.gif" width="250">
+<img src="https://cdn.uwayfly.com/article/2025/4/own_mike_103fecb5156fb85494.gif" width="250">
 
 利用了`linear-gradient`可以画线的特点。
 
@@ -287,7 +287,7 @@ hue-rotate(3.142rad)  /* 3.142弧度旋转，近似一圈，也就是360度 */
 
 ### 2.11 图片切角
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/4/own_mike_55cb5da55c16ed8073.png" width="500">
+<img src="https://cdn.uwayfly.com/article/2025/4/own_mike_55cb5da55c16ed8073.png" width="500">
 
 其实是四个背景的加和，每个小背景各占四分之一。
 

@@ -426,4 +426,4 @@ Uni-app初次渲染过程
 
 
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2022/8/uni-app-mp-structure.png" width="500">
+<img src="https://cdn.uwayfly.com/article/2022/8/uni-app-mp-structure.png" width="500">

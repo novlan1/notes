@@ -10,7 +10,7 @@ Press UI 是一套基于 [uni-app](https://uniapp.dcloud.net.cn/) 的组件库�
 
 下图是示例二维码，分别为H5、微信小程序、QQ小程序，以及非uni-app环境的普通H5项目。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2023/8/own_mike_826bfef42386729465.png" width="600">
+<img src="https://cdn.uwayfly.com/article/2023/8/own_mike_826bfef42386729465.png" width="600">
 
 Press UI 是基于 Vue2 版本的 uni-app 搭建的，目前在使用的几个项目也都是 Vue2。但前端日新月异，Vue3 更快、性能更好，Press UI 如何兼容 Vue3 呢？
 
@@ -500,7 +500,7 @@ uni[method]()`
 
 下图是适配 Vue3 的示例：
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2023/9/own_mike_ccae70ddaae15082b8.png" width="300">
+<img src="https://cdn.uwayfly.com/article/2023/9/own_mike_ccae70ddaae15082b8.png" width="300">
 
 ## 8. 总结
 

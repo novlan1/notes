@@ -2,7 +2,7 @@
 
 有人在 `github` 上提了 [issue](https://github.com/Tencent/tdesign-miniprogram/issues/2840)，说 `Cascader` 在4级地址下卡顿明显。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2024/6/own_mike_f816e0f537c5e292a0.png" width="700"/>
+<img src="https://cdn.uwayfly.com/article/2024/6/own_mike_f816e0f537c5e292a0.png" width="700"/>
 
 ## 2. 解决
 
@@ -36,19 +36,19 @@ function parseOptions(options: OptionsType, keys: KeysType) {
 }
 ```
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2024/6/own_mike_f3d4bd1f53b29f1c66.png" width="800" />
+<img src="https://cdn.uwayfly.com/article/2024/6/own_mike_f3d4bd1f53b29f1c66.png" width="800" />
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2024/6/own_mike_94b325272bbeb25cbe.png" width="800" />
+<img src="https://cdn.uwayfly.com/article/2024/6/own_mike_94b325272bbeb25cbe.png" width="800" />
 
 ## 3. 效果
 
 优化前：
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2024/6/own_mike_90136e5a2f9582c59f.gif" width="399" />
+<img src="https://cdn.uwayfly.com/article/2024/6/own_mike_90136e5a2f9582c59f.gif" width="399" />
 
 优化后：
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2024/6/own_mike_733b0e9743fe66dc10.gif" width="399" />
+<img src="https://cdn.uwayfly.com/article/2024/6/own_mike_733b0e9743fe66dc10.gif" width="399" />
 
 ## 4. 进一步优化
 
@@ -71,9 +71,9 @@ options: WechatMiniprogram.Component.ComponentOptions = {
 
 `handleSelect` 时只需要更新 `items[level + 1]` 即可。直接看代码。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2024/6/own_mike_9396b3f80bb20f18f8.png" width="800" />
+<img src="https://cdn.uwayfly.com/article/2024/6/own_mike_9396b3f80bb20f18f8.png" width="800" />
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2024/6/own_mike_c626f7f26692a2063b.png" width="800" />
+<img src="https://cdn.uwayfly.com/article/2024/6/own_mike_c626f7f26692a2063b.png" width="800" />
 
 ## 5. 总结
 

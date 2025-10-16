@@ -12,7 +12,7 @@ web开发中，常有一些功能仅希望对开发、测试人员等一小部�
 
 这里的细节点就是维护密码数组和当前正在匹配的位置，流程图如下：
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2022/10/morse-1664680424742.png" width="600">
+<img src="https://cdn.uwayfly.com/article/2022/10/morse-1664680424742.png" width="600">
 
 
 ## 3. 延伸
