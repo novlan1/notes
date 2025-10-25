@@ -37,8 +37,12 @@
           "link": "/docs/2025下/isolatedModules-verbatimModuleSyntax.md"
         },
         {
-          "text": "tdesign-uniapp",
-          "link": "/docs/2025下/tdesign-uniapp.md"
+          "text": "TDesign UniApp 文章",
+          "link": "/docs/2025下/tdesign-uniapp-article.md"
+        },
+        {
+          "text": "TDesign UniApp 其他",
+          "link": "/docs/2025下/tdesign-uniapp-other.md"
         },
         {
           "text": "git",
