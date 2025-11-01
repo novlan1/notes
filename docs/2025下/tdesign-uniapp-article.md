@@ -100,10 +100,10 @@ import TLoading from 'tdesign-uniapp/loading/loading.vue';
 
 ### 4.1. 为什么不做转换工具
 
-1. 工具转出来的可读性差，可维护性差。
+1. 工具转出来的可读性差，可维护性差
 2. 转换工具无法做到100%，总有些语法需要手动转换。这意味着一定会有人工介入
 3. 维护转换工具成本比维护组件库高好几倍，且写出来的还不一定就能完全满足
-4. 业务真正要用的是组件库，真正关心的也是组件库。
+4. 业务真正要用的是组件库，真正关心的也是组件库
 
 ### 4.2. 与 tdesign-miniprogram 版本关系
 
@@ -570,7 +570,7 @@ created() {
 
 - `initLeft = boxLeft - halfblock`
 - `initRight  = boxRight - halfblock`
--` maxRange = boxRight - boxLeft - blockSize - 6` ( 6 是边框)
+- `maxRange = boxRight - boxLeft - blockSize - 6` ( 6 是边框)
 
 `capsule` 模式下：
 
@@ -586,7 +586,6 @@ created() {
 <img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_mDk26PEERn43wxNX.png" width="600" />
 
 图中分别是左、右、边框。
-
 
 ## 10. 总结
 
