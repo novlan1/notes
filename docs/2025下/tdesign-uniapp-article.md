@@ -1,8 +1,6 @@
-<!-- TDesign is an artwork. -->
+## 1. 背景
 
-## 1. 开始
-
-跨端需求一直就有，一套代码用在多个平台。国内使用 [uniapp](https://uniapp.dcloud.net.cn/) 框架人数较多，一直有外部声音想要 uniapp 版本的 TDesign，如 TDesign Miniprogram 下的众多 [issue](https://github.com/Tencent/tdesign-miniprogram/issues?q=uniapp)。
+跨端开发一直是前端领域的重要部分，旨在实现一套代码在多个平台运行。国内使用 [uniapp](https://uniapp.dcloud.net.cn/) 框架人数较多，一直有外部声音想要 uniapp 版本的 TDesign，如 TDesign Miniprogram 下的众多 [issue](https://github.com/Tencent/tdesign-miniprogram/issues?q=uniapp)。
 
 <img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/10/own_mike_z2BC3Qi7FE8DNNWx.png" width="600" />
 
@@ -16,7 +14,9 @@
 
 <img src="https://cdn.uwayfly.com/tdesign-uniapp/tdesign-uniapp-qrcodes.png?a=3" width="600" />
 
-## 3. 使用
+（注：其他平台同样支持，仅因平台审核等原因未能上架预览，不影响组件库正常使用。）
+
+## 3. 快速开始
 
 ### 3.1. 安装
 
@@ -84,15 +84,13 @@ import TLoading from 'tdesign-uniapp/loading/loading.vue';
 
 ### 3.4. 平台兼容性
 
-| Vue2                    | Vue3                    | H5                      | Android                 | iOS                     | app-nvue                | 微信小程序              | QQ小程序                |
-| ----------------------- | ----------------------- | ----------------------- | ----------------------- | ----------------------- | ----------------------- | ----------------------- | ----------------------- |
-| <p align="center">√</p> | <p align="center">√</p> | <p align="center">√</p> | <p align="center">√</p> | <p align="center">√</p> | <p align="center">_</p> | <p align="center">√</p> | <p align="center">√</p> |
+| 平台         | Vue2 | Vue3 | H5  | Android | iOS | App-nvue | 微信小程序 | QQ小程序 |
+| ------------ | ---- | ---- | --- | ------- | --- | -------- | ---------- | -------- |
+| **支持情况** | ✅    | ✅    | ✅   | ✅       | ✅   | ⚠️        | ✅          | ✅        |
 
-<p></p>
-
-| 支付宝小程序            | 抖音小程序              | 百度小程序              | 快手小程序              | 小红书小程序            | 京东小程序              |
-| ----------------------- | ----------------------- | ----------------------- | ----------------------- | ----------------------- | ----------------------- |
-| <p align="center">√</p> | <p align="center">√</p> | <p align="center">√</p> | <p align="center">√</p> | <p align="center">√</p> | <p align="center">√</p> |
+| 平台         | 支付宝小程序 | 抖音小程序 | 百度小程序 | 快手小程序 | 小红书小程序 | 京东小程序 |
+| ------------ | ------------ | ---------- | ---------- | ---------- | ------------ | ---------- |
+| **支持情况** | ✅            | ✅          | ✅          | ✅          | ✅            | ✅          |
 
 ## 4. 浅思考
 
@@ -126,7 +124,7 @@ API 尽量与小程序对齐，而不是 `mobile-vue/mobile-react`，因为 `uni
 
 ## 5. 转化过程
 
-### 5.1. 整体思路
+### 5.1. 核心转换逻辑
 
 之前写过 Press UI，整体思路差不多。就是将小程序的 `wxml/wxss/js/json` 转成 uniapp 的 Vue，四个文件合成一个文件。以及将小程序的语法进行转化，以下是核心部分：
 
@@ -482,6 +480,8 @@ Vue 中父子组件生命周期正常的执行顺序是：父组件先创建，�
 `button` 不是最简单的，`loading/icon` 才是最简单的，它们是 `button` 的子元素。
 
 ### 9.2. 组件归类
+
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_4fNtPMKtDajWBTyW.png" width="600" />
 
 导航类
 
