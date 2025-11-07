@@ -111,3 +111,11 @@ uniapp 中 CLI +Typescript 模板有点问题，slot 类型报错，解决方案
 ### 7. nvue vs uvue
 
 <img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_w2rj56ds3YeX8drQ.png" width="600" />
+
+### 8. Fab
+
+`fab` 组件 `draggable` 类型只能是 `[Boolean, String]`，不能是 `[String, Boolean]`，也就是 `Boolean` 在前，否则不能拖动。
+
+### 9. custom-style
+
+`custom-style` 我认为是**重剑无锋**。
