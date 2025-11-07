@@ -126,3 +126,57 @@ uniapp 中 CLI +Typescript 模板有点问题，slot 类型报错，解决方案
 
 1. 不同的子工程有不同的发布节奏，合并分支时机容易冲突
 2. 不同的子工程有不同的权限要求
+
+### 11. uniapp 中 app 开发
+
+资料：https://uniapp.dcloud.net.cn/tutorial/run/installSimulator.html#run-app-android-emulator
+
+### 12. 如何查看 udid
+
+连接设备，xcode, command+shift+2
+
+### 13. vscode config
+
+```json
+"editor.fontSize": 13,
+"chat.editor.fontSize": 13,
+"debug.console.fontSize": 13,
+"window.zoomLevel": 0.4
+```
+
+### 14. yak shaking map
+
+`yak-shaving-map`，剃毛路线图。`Yak shaving` 是编程领域的隐喻，指为完成一个任务而不得不先完成一系列琐碎前置任务的过程。直译保留原始意象，括号注释说明文化背景
+
+Yak​​ 通常被直译为 ​​“牦牛”​​。
+
+### 15. scaleToFill
+
+- scaleToFill - 缩放填充
+- ​aspectFill - 纵横填充​
+- aspectFit - 纵横适应
+- widthFix - 宽度自适应
+
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_FhGJXHsf4bZWCJF5.png" width="600" />
+
+### 16. tdesign-miniprogram 样式文件
+
+- `style/base = style/var + style/mixins`，大部分组件使用，`var` 和 `mixin` 都是用到才会编译，不用不会编译，不会增加体积
+- `style/index = style/base + style/utilities`，个别组件引入
+- `style/icons`，Icon 组件使用
+- `style/theme/index.css`，业务使用
+
+### 17. tdesign-uniapp 常用连接
+
+- 二维码图片，https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/tdesign-uniapp/tdesign-uniapp-qrcodes.png
+- 安卓包下载地址，https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/tdesign-uniapp/apk/tdesign-uniapp.apk
+
+### 18. 组件库上限
+
+交互和视觉设计决定了组件库的上限，组件库的交互一般都是业内共识了，所以基本就是视觉了，包括配色、大小。
+
+### 19. styleIsolation
+
+与页面、其他组件的影响。
+
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_AKM2Afy7B8RhYwne.png" width="600" />
