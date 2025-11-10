@@ -184,3 +184,15 @@ Yak​​ 通常被直译为 ​​“牦牛”​​。
 与页面、其他组件的影响。
 
 <img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_AKM2Afy7B8RhYwne.png" width="600" />
+
+### 20. `default: undefined`
+
+如何判断 `props` 是否被显式声明了 `default: undefined`?
+
+可以用:
+
+```ts
+'default' in a;
+```
+
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_RsnFj3ek8ZFJNfT4.png" width="376" />
