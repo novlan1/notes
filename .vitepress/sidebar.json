@@ -71,6 +71,10 @@
         {
           "text": "HBuilderX 自定义",
           "link": "/docs/2025下/hx-custom.md"
+        },
+        {
+          "text": "whistle 配置文件",
+          "link": "/docs/2025下/whistle-config.md"
         }
       ]
     },
