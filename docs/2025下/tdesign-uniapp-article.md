@@ -6,7 +6,21 @@
 
 原生小程序和 uniapp 有差异，有人在 uniapp 项目里用了原生小程序组件，需要魔改内部组件代码。
 
-基于以上需求，写了 TDesign UniApp 项目。
+基于以上需求，写了 [TDesign UniApp](https://github.com/novlan1/tdesign-uniapp) 项目。支持：
+
+- 🌈 暗色模式
+- 🌈 自定义主题
+- 🌍  国际化
+- 🚀 API 对齐官方
+- 🚀 类型提示
+- ...
+
+欢迎使用，欢迎 star，欢迎反馈！
+
+- 文档地址：https://uwayfly.com/tdesign-uniapp/
+- Github 地址：https://github.com/novlan1/tdesign-uniapp
+- NPM 地址: https://www.npmjs.com/package/tdesign-uniapp
+- DCloud 插件：https://ext.dcloud.net.cn/plugin?id=25431
 
 ## 2. 预览
 
@@ -587,7 +601,13 @@ created() {
 
 图中分别是左、右、边框。
 
-## 10. 总结
+## 10. 反馈
+
+有任何问题，建议通过 [Github issues](https://github.com/novlan1/tdesign-uniapp/issues) 反馈或扫码加入用户微信群。
+
+<img src="https://raw.githubusercontent.com/Tencent/tdesign/main/packages/site-components/src/images/groups/wx-group.png" width="200" />
+
+## 11. 总结
 
 > TDesign is an artwork.
 
@@ -601,4 +621,4 @@ created() {
 
 ---
 
-<!-- 注，本文发布于非工作时间。 -->
+注，本文发布于非工作时间。
