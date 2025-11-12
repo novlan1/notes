@@ -7,6 +7,9 @@
     "tdesign",
     "miniprogram"
   ],
+  "[markdown]": {
+    "editor.formatOnSave": false
+  },
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
   "eslint.autofixOnSave": false,
