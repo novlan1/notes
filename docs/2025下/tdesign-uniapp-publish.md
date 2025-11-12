@@ -1,3 +1,7 @@
+## 发布 NPM
+
+发布流程 https://docs.qq.com/doc/DSHhoc2tYa0xFU0pJ
+
 ## 发布插件
 
 1. 不要用 🐞 🚧 这种图片，否则更新日志完全无法显示
