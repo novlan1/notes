@@ -75,6 +75,26 @@
         {
           "text": "whistle 配置文件",
           "link": "/docs/2025下/whistle-config.md"
+        },
+        {
+          "text": "频率学派与贝叶斯学派",
+          "link": "/docs/2025下/频率学派与贝叶斯学派.md"
+        },
+        {
+          "text": "贝叶斯公式",
+          "link": "/docs/2025下/贝叶斯公式.md"
+        },
+        {
+          "text": "最大似然估计",
+          "link": "/docs/2025下/最大似然估计.md"
+        },
+        {
+          "text": "关于状态",
+          "link": "/docs/2025下/stateless.md"
+        },
+        {
+          "text": "MCP、Agent、RAG",
+          "link": "/docs/2025下/mcp-agent-rag.md"
         }
       ]
     },
