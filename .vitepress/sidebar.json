@@ -95,6 +95,10 @@
         {
           "text": "MCP、Agent、RAG",
           "link": "/docs/2025下/mcp-agent-rag.md"
+        },
+        {
+          "text": "COS外网下行流量突刺定位",
+          "link": "/docs/2025下/COS外网下行流量突刺定位.md"
         }
       ]
     },
