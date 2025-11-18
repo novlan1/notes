@@ -56,7 +56,7 @@ range类型时，点击line，需要判断当前移动的是左边还是右边�
 
 nvm 指定默认的node版本
 
-nvm alias default <version>  如： nvm alias default 20
+`nvm alias default <version>`  如： `nvm alias default 20`
 
 ---
 
