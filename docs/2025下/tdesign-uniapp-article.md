@@ -343,6 +343,7 @@ tdesign-uniapp 在 H5 下使用 `vite.config` 中的 `alias`，不使用 `worksp
 
 下面几个组件在关闭时，需要父组件中设置 `visible` 为 `false`，否则无法再次开启。也就是 `visible` 只能是受控的。可以给 `visible` 属性增加 `v-model` 语法糖。
 
+- picker
 - drawer
 - cascader
 - calendar

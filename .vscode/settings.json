@@ -5,7 +5,8 @@
   },
   "cSpell.ignoreWords": [
     "tdesign",
-    "miniprogram"
+    "miniprogram",
+    "uniapp"
   ],
   "[markdown]": {
     "editor.formatOnSave": false

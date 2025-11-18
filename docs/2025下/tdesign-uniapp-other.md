@@ -196,3 +196,33 @@ Yak​​ 通常被直译为 ​​“牦牛”​​。
 ```
 
 <img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_RsnFj3ek8ZFJNfT4.png" width="376" />
+
+### 21. 大仓
+
+方案：
+
+- packages
+  - common
+  - components
+  - pro-components
+  - tdesign-miniprogram
+  - tdesign-miniprogram-chat
+  - tdesign-uniapp
+    - site
+    - components
+  - tdesign-uniapp-chat
+    - site
+    - components
+
+以下废弃：
+
+- packages
+  - common
+  - components
+  - pro-components
+  - tdesign-miniprogram
+  - tdesign-miniprogram-chat
+  - tdesign-uniapp
+  - tdesign-uniapp-chat
+  - tdesign-uniapp-site
+  - tdesign-uniapp-chat-site
