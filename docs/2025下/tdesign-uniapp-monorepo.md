@@ -57,7 +57,7 @@ pnpm run uniapp -- dev:mp-alipay
 # 其他类似
 ```
 
-微信小程序产物路径如下，其他小程序类似
+微信小程序产物路径如下，其他小程序类似，在开发者工具引入即可。
 
 ```bash
 packages/tdesign-uniapp/example/dist/dev/mp-weixin

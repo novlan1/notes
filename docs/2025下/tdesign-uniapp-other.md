@@ -226,3 +226,23 @@ Yak​​ 通常被直译为 ​​“牦牛”​​。
   - tdesign-uniapp-chat
   - tdesign-uniapp-site
   - tdesign-uniapp-chat-site
+
+### 22. GitHub actions 执行基准
+
+GitHub Actions 在 PR 时默认会创建一个"合并后的虚拟提交"来执行，既不是纯粹的源分支，也不是纯粹的目标分支。
+
+`pull_request_target` 特殊，它是 GitHub Actions 中一个有风险但有时必要的事件类型，它与普通的 `pull_request` 有重要区别。
+
+核心区别
+
+普通 `pull_request` 事件：
+
+- 执行环境：在 PR 的源分支上下文中运行
+- 权限：有限权限，无法访问敏感 `secrets`（来自 `fork` 时）
+- 安全：相对安全
+
+`pull_request_target` 事件：
+
+- 执行环境：在 PR 的目标分支上下文中运行
+- 权限：拥有写仓库权限和完整 `secrets` 访问权
+- 安全风险：高风险，可能被恶意 PR 利用
