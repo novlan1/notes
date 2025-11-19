@@ -49,6 +49,10 @@
           "link": "/docs/2025下/tdesign-uniapp-monorepo.md"
         },
         {
+          "text": "TDesign UniAPP 发布",
+          "link": "/docs/2025下/tdesign-uniapp-publish.md"
+        },
+        {
           "text": "git",
           "link": "/docs/2025下/git.md"
         },
@@ -99,6 +103,10 @@
         {
           "text": "MCP、Agent、RAG",
           "link": "/docs/2025下/mcp-agent-rag.md"
+        },
+        {
+          "text": "之前笔记",
+          "link": "/docs/2025下/notes-before.md"
         }
       ]
     },

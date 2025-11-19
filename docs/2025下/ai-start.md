@@ -1,8 +1,6 @@
-最后，学习机器学习、深度学习算法方面的资料如下。工程可以从其中第2个《动手学深度学习》开始。工程方面，从接触到熟悉，后台毕业生一般需要2-6个月。
-
 1. 管中窥豹，定性理解：
 1）《这就是ChatGPT》，微信读书有，可以自己看。
-2）我写过一个材料《面向没做过算法的程序员的大模型核心概念讲解》https://doc.weixin.qq.com/doc/w3_ACIASwbdAFwIBCiHZr3TwSBURdg9s ，可能需要讲，只是自己看，有难懂的地方。
+2）《面向没做过算法的程序员的大模型核心概念讲解》https://doc.weixin.qq.com/doc/w3_ACIASwbdAFwIBCiHZr3TwSBURdg9s ，可能需要讲，只是自己看，有难懂的地方。
 3）后台接触LLM推理，可以以 https://www.databricks.com/blog/llm-inference-performance-engineering-best-practices 为线索，了解里面提到的概念、设备。选择性深入算法、开源实现、CUDA并行计算等领域继续了解。
 
 2. 对细节和底层掌握不全，但是完全定型理解，细节也有较好的把握：
