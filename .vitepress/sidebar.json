@@ -95,6 +95,10 @@
         {
           "text": "MCP、Agent、RAG",
           "link": "/docs/2025下/mcp-agent-rag.md"
+        },
+        {
+          "text": "TDesign UniAPP 大仓",
+          "link": "/docs/2025下/tdesign-uniapp-monorepo.md"
         }
       ]
     },
