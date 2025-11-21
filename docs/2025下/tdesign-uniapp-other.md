@@ -246,3 +246,76 @@ GitHub Actions 在 PR 时默认会创建一个"合并后的虚拟提交"来执�
 - 执行环境：在 PR 的目标分支上下文中运行
 - 权限：拥有写仓库权限和完整 `secrets` 访问权
 - 安全风险：高风险，可能被恶意 PR 利用
+
+### 类型
+
+全局搜索 `WechatMiniprogram`，不允许出现。
+
+### 脚本
+
+1. `pages` 脚本，处理 `pages.json` 生成
+2. 清理脚本
+    - `example` 中 `_tdesign, _tdesign-uniapp-chat, pages-more`
+    - HX 中 `uni_modules/tdesign-uniapp, uni_modules/tdesign-uniapp-chat, pages-more, pages, components/`
+3. `copy` 脚本
+    - 基础组件复制到 `src/_tdesign`，HX 是 `uni_modules/tdesign-uniapp/components`
+    - Chat 组件复制到 `src/_tdesign-uniapp-chat`，HX 是 `uni_modules/tdesign-uniapp-chat/components`
+    - 示例（`_example`）复制到 `src/pages-more`，HX 一样
+    <!-- - `common` 多复制一份到 `src/_tdesign-raw`，HX 是 `_tdesign-uniapp-raw`（现在其实没用了，之前是为了用 `less` 文件） -->
+    - `less` （非示例中的）解析然后复制
+    - 将 `example` 中 `src/pages` 和 `src/components` 复制到 HX 的 `pages` 和 `components` 下
+
+### HBuilderX 中配置 alias
+
+Vue3 中新建 `vite.config.js`
+
+```ts
+// vite.config.js
+import { defineConfig } from 'vite';
+import uni from '@dcloudio/vite-plugin-uni';
+import path from 'path';
+
+export default defineConfig({
+  plugins: [uni()],
+  resolve: {
+    alias: {
+      'tdesign-uniapp': path.resolve(__dirname, './uni_modules/tdesign-uniapp/components'),
+      'tdesign-uniapp-chat': path.resolve(__dirname, './uni_modules/tdesign-uniapp-chat/components'),
+    },
+  },
+});
+```
+
+Vue2 中新建 `vue.config.js`
+
+```ts
+// vue.config.js
+const path = require('path');
+
+function resolve(dir) {
+  return path.join(__dirname, dir);
+}
+
+module.exports = {
+  chainWebpack: (config) => {
+    config.resolve.alias
+      .set('tdesign-uniapp', resolve('./uni_modules/tdesign-uniapp/components'))
+      .set('tdesign-uniapp-chat', resolve('./uni_modules/tdesign-uniapp-chat/components'));
+  },
+};
+```
+
+Vue2 中不能在模板中使用 `?.` 可选链操作符。
+
+Vue3 类型为 Array 的，需要加默认值。
+
+```
+Invalid prop: type check failed for prop "value". Expected Array, got Boolean with value false.
+```
+
+```ts
+value: {
+  type: Array,
+  default: () => ([])
+},
+```
