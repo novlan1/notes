@@ -54,11 +54,31 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'Press UI', link: 'https://github.com/novlan1/press-ui/' },
-      { text: 'T Comm', link: 'https://github.com/novlan1/t-comm/' },
       {
-        text: 'Plugin Light',
-        link: 'https://github.com/novlan1/plugin-light/',
+        text: '组件库',
+        items: [
+          {
+            text: 'Press UI',
+            link: 'https://github.com/novlan1/press-ui/',
+          },
+          {
+            text: 'TDesign UniApp',
+            link: 'https://uwayfly.com/tdesign-uniapp/',
+          },
+        ],
+      },
+      {
+        text: '工具',
+        items: [
+          {
+            text: 'T Comm',
+            link: 'https://github.com/novlan1/t-comm/',
+          },
+          {
+            text: 'Plugin Light',
+            link: 'https://github.com/novlan1/plugin-light/',
+          },
+        ],
       },
     ],
 
