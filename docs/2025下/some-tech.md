@@ -73,3 +73,93 @@ import React, { useState } from 'react'
 
 ---
 
+`0.56*100` 精度丢失，`56.00000000000001`
+
+---
+
+在 GitHub 上查看文件时，可以按 “y” 键将 URL 更新为指向所查看文件精确版本的永久链接。
+
+---
+
+Vue3 全局组件声明的时候，不能加 `as any`。
+
+比如 `app.component('GlobalComponent', GlobalComponent as any);`
+
+只能 `app.component('GlobalComponent', GlobalComponent);`
+
+---
+
+Eslint 配置上 `parserOptions.project`，就会很慢。
+
+参考：https://github.com/typescript-eslint/typescript-eslint/issues/1828#issuecomment-607213862
+
+---
+
+nginx 403，可能是由于启动用户和 nginx 工作用户不一致所致
+
+参考：https://cloud.tencent.com/developer/article/1949092
+
+---
+
+玩游戏是进入心流最快的方式。
+
+---
+
+在 `src` 目录下找到包含 `@tencent/press-ui` 的文件，并打印文件名
+
+```bash
+grep -rl @tencent/press-ui src/
+```
+
+---
+
+```bash
+git clean -df
+```
+
+删除工作目录树中未跟踪的文件
+
+---
+
+- ifconfig，查看内网 IP 等信息
+- curl ifconfig.me，查看外网 IP 信息
+- date，查看系统时间
+- cal，在终端中查看日历
+
+- uptime，查看系统已经运行了多久，当前有几个用户等信息
+- cat 文件路名，显示文件内容（属于打印语句）
+- cat -n 文件名，显示文件，并每一行内容都编号
+
+- env，查看所有系统变量
+- export，查看所有系统变量
+- netstat -tlunp，查看当前运行的服务，同时可以查看到：运行的程序已使用端口情况
+
+- last，显示最近登录的帐户及时间
+- lastlog，显示系统所有用户各自在最近登录的记录，如果没有登录过的用户会显示 从未登陆过
+
+- df -h，自动以合适的磁盘容量单位查看磁盘大小和使用空间
+- du -sh /opt，查看 opt 这个文件夹大小
+- du -sh ./*，查看当前目录下所有文件夹大小
+- du -sh /opt/setups/，显示 /opt/setups/ 目录所占硬盘空间大小（s 表示 –summarize 仅显示总计，即当前目录的大小。h 表示 –human-readable 以 KB，MB，GB 为单位，提高信息的可读性）
+
+---
+
+vim 删除所有内容
+
+使用 `dd` 命令，`dd` 命令用于删除当前行。如果你想删除所有内容，可以结合使用范围命令。
+
+1. 首先，移动到文件的开始处，可以使用 `gg` 命令。
+2. 然后，使用 `dG` 命令删除从当前行到文件末尾的所有内容。
+
+或者，你也可以这样做：`ggdG`
+
+---
+
+vim 显示行号
+
+- `:set nu` 或 `:set number`
+
+vim 显示不行号
+
+- `:set nonu` 或 `:set nonumber`
+
