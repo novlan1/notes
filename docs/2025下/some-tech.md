@@ -101,10 +101,6 @@ nginx 403，可能是由于启动用户和 nginx 工作用户不一致所致
 
 ---
 
-玩游戏是进入心流最快的方式。
-
----
-
 在 `src` 目录下找到包含 `@tencent/press-ui` 的文件，并打印文件名
 
 ```bash
@@ -180,4 +176,10 @@ vim 显示不行号
 主子应用公共插件
 
 - 公共插件须在主包引入，从而影响主包大小
+
+---
+
+小程序 `swiper` 组件抽搐，原因是 `change` 事件中改变了 `current`，陷入了循环
+
+- https://developers.weixin.qq.com/community/develop/article/doc/000e6c56ce8e6013b94ab5f6356013
 

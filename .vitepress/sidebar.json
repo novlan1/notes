@@ -103,6 +103,22 @@
         {
           "text": "之前笔记",
           "link": "/docs/2025下/notes-before.md"
+        },
+        {
+          "text": "拖延笔记",
+          "link": "/docs/2025下/拖延.md"
+        },
+        {
+          "text": "OAuth2.0",
+          "link": "/docs/2025下/oAuth2.0.md"
+        },
+        {
+          "text": "随笔",
+          "link": "/docs/2025下/not-tech.md"
+        },
+        {
+          "text": "技术笔记",
+          "link": "/docs/2025下/some-tech.md"
         }
       ]
     },
