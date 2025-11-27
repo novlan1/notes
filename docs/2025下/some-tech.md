@@ -183,3 +183,27 @@ vim 显示不行号
 
 - https://developers.weixin.qq.com/community/develop/article/doc/000e6c56ce8e6013b94ab5f6356013
 
+---
+
+```bash
+# 发布latest版本
+npm publish
+
+# 发布alpha版本（测试版本）
+npm publish --tag=alpha
+```
+
+紧急回退包方案：
+
+分享一下 npm 给的处理方案 如果因为发布的新版本的包有问题，需要紧急回退的话，不用进行删包，直接用下面命令修改 latest 指向就行
+
+```bash
+npm dist-tag add <pkg>@<version> latest
+npm dist-tag add <pkg>@<version> [<tag>]
+npm dist-tag rm <pkg> <tag>
+npm dist-tag ls [<pkg>]
+aliases: dist-tags
+```
+
+Modify package distribution tags.
+
