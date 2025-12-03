@@ -119,6 +119,10 @@
         {
           "text": "技术笔记",
           "link": "/docs/2025下/some-tech.md"
+        },
+        {
+          "text": "代码圈复杂度",
+          "link": "/docs/2025下/complexity.md"
         }
       ]
     },

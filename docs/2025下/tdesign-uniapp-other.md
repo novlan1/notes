@@ -319,3 +319,9 @@ value: {
   default: () => ([])
 },
 ```
+
+### SwipeCell
+
+- `props.opened` 驱动 `state.opened`
+- touchmove 等事件会改变 `state.opened`
+- 监听 `state.opened`，执行 `onOpenedChange`
