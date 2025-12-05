@@ -29,7 +29,7 @@ if（（（status = success） and done） or
 
 |圈复杂度|代码状况|可测性|维护成本|
 |---|---|---|---|
-|1-10|清晰、结构化|	高|	低|
+|1-10|清晰、结构化|高|低|
 |11-20|复杂|中|中|
 |21-30|非常复杂|低|高|
 |>30|不可读|不可测|非常高|
@@ -99,3 +99,106 @@ lizard -s cyclomatic_complexity
 参考：
 
 - https://kaelzhang81.github.io/2017/06/18/%E8%AF%A6%E8%A7%A3%E5%9C%88%E5%A4%8D%E6%9D%82%E5%BA%A6/
+
+## pyenv
+
+安装 pyenv
+
+```bash
+curl https://pyenv.run | bash
+
+# or
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+```
+
+添加环境变量
+
+```bash
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+echo 'eval "$(pyenv init --path)"' >> ~/.bashrc
+echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+安装 python 版本
+
+```bash
+# 查看可安装的Python版本
+pyenv install --list
+
+# 安装指定版本（例如Python 3.9.5）
+pyenv install 3.9.5
+
+# 查看已安装的版本
+pyenv versions
+
+# 设置全局Python版本
+pyenv global 3.9.5
+
+# 验证Python版本
+python --version
+```
+
+常用命令
+
+```bash
+# 查看所有可安装版本
+pyenv install --list | grep -v "^\s*$"
+
+# 安装特定版本
+pyenv install 3.8.10
+
+# 设置局部版本（在当前目录生效）
+pyenv local 3.8.10
+
+# 重置版本
+pyenv global system  # 使用系统Python
+pyenv local --unset  # 取消局部设置
+
+# 卸载Python版本
+pyenv uninstall 3.8.10
+
+# 更新pyenv
+pyenv update
+```
+
+SSL 警告
+
+```
+WARNING: Disabling truststore since ssl support is missing
+```
+
+意思是，Python 编译时缺少 SSL 支持，导致无法通过 HTTPS 安全下载包。
+
+
+手动编译安装 OpenSSL
+
+```bash
+# 如果 yum 确实无法使用，手动编译安装
+cd /tmp
+
+# 下载 OpenSSL 源码
+wget https://www.openssl.org/source/openssl-1.1.1w.tar.gz
+# 如果上述链接失效，使用备用链接
+wget https://github.com/openssl/openssl/archive/refs/tags/OpenSSL_1_1_1w.tar.gz
+
+# 解压
+tar -xzf openssl-1.1.1w.tar.gz
+cd openssl-1.1.1w
+
+# 配置、编译、安装
+./config --prefix=/usr/local/openssl --openssldir=/usr/local/openssl shared zlib
+make
+sudo make install
+
+# 设置环境变量
+echo 'export PATH=/usr/local/openssl/bin:$PATH' >> ~/.bashrc
+echo 'export LD_LIBRARY_PATH=/usr/local/openssl/lib:$LD_LIBRARY_PATH' >> ~/.bashrc
+echo 'export PKG_CONFIG_PATH=/usr/local/openssl/lib/pkgconfig:$PKG_CONFIG_PATH' >> ~/.bashrc
+source ~/.bashrc
+
+# 验证安装
+/usr/local/openssl/bin/openssl version
+```
+
