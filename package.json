@@ -24,12 +24,16 @@
     "eslint-config-light-vue3": "^1.0.9",
     "eslint-config-rookie": "^1.1.2",
     "eslint-plugin-light": "^1.0.4",
+    "mermaid": "^11.12.2",
     "net-cli": "^0.1.2",
     "stylelint-config-common": "^1.0.10",
     "typescript": "5.1",
-    "vitepress": "^1.6.3"
+    "vitepress": "^1.6.3",
+    "vitepress-plugin-mermaid": "^2.0.17"
   },
   "dependencies": {
+    "@braintree/sanitize-url": "^7.1.1",
+    "dayjs": "^1.11.19",
     "ebus-light": "^0.0.2",
     "glob": "^11.0.2",
     "mime-light": "^4.0.2",

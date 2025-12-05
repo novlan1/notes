@@ -1,10 +1,10 @@
-import { defineConfig } from 'vitepress';
+import { withMermaid } from 'vitepress-plugin-mermaid';
 import sidebarConfig from './sidebar.json';
 import { getFooterMessage } from './footer';
 
 
 // https://vitepress.dev/reference/site-config
-export default defineConfig({
+export default withMermaid({
   lang: 'zh-CN',
   title: '简单点',
   description: '杨的笔记',
@@ -108,5 +108,14 @@ export default defineConfig({
     esbuild: {
       loader: 'tsx', // 支持 TS/TSX
     },
+  },
+
+  mermaid: {
+    // 配置参考： https://mermaid.js.org/config/setup/modules/mermaidAPI.html#mermaidapi-configuration-defaults
+  },
+
+  // 可选地使用 MermaidPluginConfig 为插件本身设置额外的配置
+  mermaidPlugin: {
+    class: 'mermaid my-mermaid-class', // 为父容器设置额外的CSS类
   },
 });
