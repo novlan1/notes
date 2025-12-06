@@ -336,7 +336,117 @@ Modify package distribution tags.
 <br>
 
 ```mermaid
-graph LR
-A[开始] --> B[处理]
-B --> C[结束]
+graph TD
+  widget --> tools
+  widget --> network
+  widget --> aegis
+
+  vue --> report
+  vue --> tools
+  vue --> config
+  vue --> aegis
+  vue --> types
+  vue --> location
+  vue --> widget
+  vue --> network
+  vue --> login
+
+  use --> tools
+  use --> widget
+
+  tools -- 反向 --> network
+  tools --> types
+  tools -- 反向 --> vue
+
+  report --> tools
+  report --> types
+  report --> config
+  report --> network
+
+  pixui --> network
+  pixui --> config
+
+  network --> types
+
+  netbar --> tools
+
+  login --> tools
+  login --> widget
+  login --> report
+  login --> types
+  login --> config
+  login --> network
+
+  location --> widget
+  location --> tools
+  location --> network
+
+  jsapi --> types
+  jsapi --> tools
+
+  config --> types
+
+  aegis --> tools
+
+  abtest --> types
+  abtest --> network
+  abtest --> aegis
 ```
+
+目标
+
+```mermaid
+graph TD
+  business --> location
+  business --> network
+  business --> report
+  business --> config
+  business --> login
+  business --> tools
+
+  login --> network
+  login --> tools
+  login --> config
+
+  location --> network
+  location --> config
+  location --> tools
+
+  report --> network
+  report --> config
+  report --> tools
+
+  abtest --> tools
+  abtest --> network
+
+
+  subgraph base[ ]
+    network --> config
+    config
+    tools
+  end
+
+  subgraph middle[ ]
+    jsapi --> tools
+    use --> tools
+  end
+
+  subgraph upper[ ]
+    location
+    report
+    login
+    abtest
+  end
+```
+
+1. `types` 去掉，移动到对应的子包内
+2. `widget` 去掉，业务无关放到 `press-plus`，业务相关放到 `business`
+3. GAME_ID 放到 `config` 中
+4. `report` 和 `ageis` 合并
+5. `app-info` 去掉
+6. `use` 放业务无关的钩子，业务相关的放到 `business`
+
+物理存储
+
+1. tools/config/network 拿走，放到 plugin-light
+2. location/business 不动
