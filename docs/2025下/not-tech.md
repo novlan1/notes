@@ -1046,7 +1046,7 @@ const DataList = ({ data }) => {
 
 如果有个男人同时满足这三个条件，还喜欢上了你，很可能是爱情诈骗。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_FZZm2DHSk2RSwiN8.jpg" width="500" />
+<img src="https://cdn.uwayfly.com/article/2025/11/own_mike_FZZm2DHSk2RSwiN8.jpg" width="500" />
 
 <br>
 <br>
@@ -1078,7 +1078,7 @@ const DataList = ({ data }) => {
 
 软件设计中，多想几个方案，进行对比。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_HRt8R4YPwiZd4bin.png" width="500" />
+<img src="https://cdn.uwayfly.com/article/2025/11/own_mike_HRt8R4YPwiZd4bin.png" width="500" />
 
 <br>
 <br>

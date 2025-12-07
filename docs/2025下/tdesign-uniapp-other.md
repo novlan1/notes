@@ -39,7 +39,7 @@ package.json "exports" 时无法解析此结果。“tdesign-uniapp”库可能�
 package.json 或键入
 ```
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_AyKiXpnM6kPxWhfa.png" width="600" />
+<img src="https://cdn.uwayfly.com/article/2025/11/own_mike_AyKiXpnM6kPxWhfa.png" width="600" />
 
 同时也要注意加上下面这句，否则其他 css 文件这些无法导入。
 
@@ -102,7 +102,7 @@ uniapp 中 CLI +Typescript 模板有点问题，slot 类型报错，解决方案
 
 1. 去掉 `env.d.ts` 中 `*.vue` 的类型
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_kirx5GczWXZdJRY5.png" width="600" />
+<img src="https://cdn.uwayfly.com/article/2025/11/own_mike_kirx5GczWXZdJRY5.png" width="600" />
 
 2. `tsconfig.json` 指定 `"moduleResolution": "bundler"`
 
@@ -110,7 +110,7 @@ uniapp 中 CLI +Typescript 模板有点问题，slot 类型报错，解决方案
 
 ### 7. nvue vs uvue
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_w2rj56ds3YeX8drQ.png" width="600" />
+<img src="https://cdn.uwayfly.com/article/2025/11/own_mike_w2rj56ds3YeX8drQ.png" width="600" />
 
 ### 8. Fab
 
@@ -118,7 +118,7 @@ uniapp 中 CLI +Typescript 模板有点问题，slot 类型报错，解决方案
 
 文档：https://cn.vuejs.org/guide/components/props#boolean-casting
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_dhbEKKShhFjdAZjG.png" width="600" />
+<img src="https://cdn.uwayfly.com/article/2025/11/own_mike_dhbEKKShhFjdAZjG.png" width="600" />
 
 ### 9. custom-style
 
@@ -161,7 +161,7 @@ Yak​​ 通常被直译为 ​​“牦牛”​​。
 - aspectFit - 纵横适应
 - widthFix - 宽度自适应
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_FhGJXHsf4bZWCJF5.png" width="600" />
+<img src="https://cdn.uwayfly.com/article/2025/11/own_mike_FhGJXHsf4bZWCJF5.png" width="600" />
 
 ### 16. tdesign-miniprogram 样式文件
 
@@ -172,8 +172,8 @@ Yak​​ 通常被直译为 ​​“牦牛”​​。
 
 ### 17. tdesign-uniapp 常用连接
 
-- 二维码图片，https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/tdesign-uniapp/tdesign-uniapp-qrcodes.png
-- 安卓包下载地址，https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/tdesign-uniapp/apk/tdesign-uniapp.apk
+- 二维码图片，https://cdn.uwayfly.com/tdesign-uniapp/tdesign-uniapp-qrcodes.png
+- 安卓包下载地址，https://cdn.uwayfly.com/tdesign-uniapp/apk/tdesign-uniapp.apk
 
 ### 18. 组件库上限
 
@@ -183,7 +183,7 @@ Yak​​ 通常被直译为 ​​“牦牛”​​。
 
 与页面、其他组件的影响。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_AKM2Afy7B8RhYwne.png" width="600" />
+<img src="https://cdn.uwayfly.com/article/2025/11/own_mike_AKM2Afy7B8RhYwne.png" width="600" />
 
 ### 20. `default: undefined`
 
@@ -195,7 +195,7 @@ Yak​​ 通常被直译为 ​​“牦牛”​​。
 'default' in a;
 ```
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_RsnFj3ek8ZFJNfT4.png" width="376" />
+<img src="https://cdn.uwayfly.com/article/2025/11/own_mike_RsnFj3ek8ZFJNfT4.png" width="376" />
 
 ### 21. 大仓
 

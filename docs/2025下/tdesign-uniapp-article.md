@@ -2,7 +2,7 @@
 
 跨端开发一直是前端领域的重要部分，旨在实现一套代码在多个平台运行。国内使用 [uniapp](https://uniapp.dcloud.net.cn/) 框架人数较多，一直有外部声音想要 uniapp 版本的 TDesign，如 TDesign Miniprogram 下的众多 [issue](https://github.com/Tencent/tdesign-miniprogram/issues?q=uniapp)。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/10/own_mike_z2BC3Qi7FE8DNNWx.png" width="600" />
+<img src="https://cdn.uwayfly.com/article/2025/10/own_mike_z2BC3Qi7FE8DNNWx.png" width="600" />
 
 原生小程序和 uniapp 有差异，有人在 uniapp 项目里用了原生小程序组件，需要魔改内部组件代码。
 
@@ -333,7 +333,7 @@ tdesign-uniapp 在 H5 下使用 `vite.config` 中的 `alias`，不使用 `worksp
 
 开发了 auto-import-resolver 插件，但是发现微信小程序下编译有问题，H5 下正常，推测是 uniapp 自己的问题。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_PEGTWZzYiQR36r7C.png" width="400" />
+<img src="https://cdn.uwayfly.com/article/2025/11/own_mike_PEGTWZzYiQR36r7C.png" width="400" />
 
 可以使用 [easycom](https://uniapp.dcloud.net.cn/collocation/pages.html#easycom) 模式。
 
@@ -373,21 +373,21 @@ const styleIsolationRE = [
 
 Stepper 中需显式声明 background 和 padding。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_Hce7tsxzWisb4MXZ.png" width="500" />
+<img src="https://cdn.uwayfly.com/article/2025/11/own_mike_Hce7tsxzWisb4MXZ.png" width="500" />
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_J8YPSmdtHBtKPQAs.png" width="500" />
+<img src="https://cdn.uwayfly.com/article/2025/11/own_mike_J8YPSmdtHBtKPQAs.png" width="500" />
 
 Search 中同样问题。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_nPmaDZpdMnwrxGjm.png" width="500" />
+<img src="https://cdn.uwayfly.com/article/2025/11/own_mike_nPmaDZpdMnwrxGjm.png" width="500" />
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_bBmbPbAYx7R8abDf.png" width="500" />
+<img src="https://cdn.uwayfly.com/article/2025/11/own_mike_bBmbPbAYx7R8abDf.png" width="500" />
 
 ### 7.3. disable-scroll
 
 滚动穿透问题，uniapp 有[通用方案](https://uniapp.dcloud.net.cn/tutorial/vue3-basics.html#%E4%BA%8B%E4%BB%B6%E4%BF%AE%E9%A5%B0%E7%AC%A6) `@touchmove.stop.prevent="noop"`，支付宝下无效，需要设置 `disable-scroll`。参考[文档](https://opendocs.alipay.com/support/01rb9a)。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_Rs2z2SHDRnm4a4aa.png" width="600" />
+<img src="https://cdn.uwayfly.com/article/2025/11/own_mike_Rs2z2SHDRnm4a4aa.png" width="600" />
 
 ⚠️ 注意，设置 `disable-scroll` 为 `true` 后，所有子元素的滚动都不能冒泡了，即便子元素设置的 `disable-scroll` 为 `false`，所以也尽可能减少 `disable-scroll` 属性的覆盖范围。
 
@@ -395,17 +395,17 @@ Search 中同样问题。
 
 避免 `less` 中两个 `:deep` 嵌套，其中一个不会被转化。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_t6jQCkeSjhYc2AYz.png" width="500" />
+<img src="https://cdn.uwayfly.com/article/2025/11/own_mike_t6jQCkeSjhYc2AYz.png" width="500" />
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_D643Bm7WjzhQX3jc.png" width="500" />
+<img src="https://cdn.uwayfly.com/article/2025/11/own_mike_D643Bm7WjzhQX3jc.png" width="500" />
 
 ### 7.5. scroll-view
 
 微信小程序 `scroll-view`，宽度 `100%`。支付宝小程序不是，需手动设置，不设置的话，撑不开。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_RYRrXDTrmrSdmCMh.png" width="500" />
+<img src="https://cdn.uwayfly.com/article/2025/11/own_mike_RYRrXDTrmrSdmCMh.png" width="500" />
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_NpK4EZ3p78tsQNda.png" width="500" />
+<img src="https://cdn.uwayfly.com/article/2025/11/own_mike_NpK4EZ3p78tsQNda.png" width="500" />
 
 
 ## 8. 抖音小程序
@@ -430,19 +430,19 @@ Search 中同样问题。
 
 抖音小程序给两个组件绑定父子关系也是最复杂的，其他小程序及H5可以通过 `provide/inject` 来收集 `parent`，抖音小程序中找不到（下面部分截图是放的 PressUI 组件库的）。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/6/own_mike_HHa8HeNminHbpC3j.png" width="600">
+<img src="https://cdn.uwayfly.com/article/2025/6/own_mike_HHa8HeNminHbpC3j.png" width="600">
 
 这里想到一个办法是递归调用 `$parent`，找最近的一个和目标组件名称相同的 `parent`。比如 `picker-item` 中就找组件名称为 `TPicker` 最近的父组件。
 
 但是，抖音小程序子孙组件的 `$parent` 竟然就是页面，页面的所有 `$children` 都是拉平的。基于此，想到的办法是从上往下遍历这个拉平的 `$children`，找距离子组件最近的一个父组件。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/6/own_mike_bmwwwRjGpQYYHhf8.png" width="600">
+<img src="https://cdn.uwayfly.com/article/2025/6/own_mike_bmwwwRjGpQYYHhf8.png" width="600">
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/6/own_mike_XSEkhMDNRdNmXEDp.png" width="600">
+<img src="https://cdn.uwayfly.com/article/2025/6/own_mike_XSEkhMDNRdNmXEDp.png" width="600">
 
 但是，页面的 `$children` 并不是"父子父子父子.."这样顺序排列的，而是"父父父子子子..."，导致 `$children` 收集有问题，要么多于实际，要么为空。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/6/own_mike_b6aXQpMmPxh3naGG.png" width="600">
+<img src="https://cdn.uwayfly.com/article/2025/6/own_mike_b6aXQpMmPxh3naGG.png" width="600">
 
 想到的办法是父子组件之间传递一个 `relationKey`，这个值是唯一的，找 `$parent` 时就不会找错了。
 
@@ -468,7 +468,7 @@ function findNearListParent(children = [], name) {
 
 此外，还有这种游离在依赖树之外的 `vm` 实例，也拿不到 `provide` 的值。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_DZRyKmZBRZRA2B6k.png" width="600" />
+<img src="https://cdn.uwayfly.com/article/2025/11/own_mike_DZRyKmZBRZRA2B6k.png" width="600" />
 
 这种主要发生在 Popup 组件内部的父子关系，比如 `dropdown-menu` 组件中的 `radio-group/radio`、 `cascader` 组件 `tab` 模式的 `tabs/tab-panel`。
 
@@ -480,11 +480,11 @@ Vue 中父子组件生命周期正常的执行顺序是：父组件先创建，�
 
 抖音小程序并不遵循这样的规律。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/6/own_mike_8rXrNdH7m6fmAaSd.png" width="600">
+<img src="https://cdn.uwayfly.com/article/2025/6/own_mike_8rXrNdH7m6fmAaSd.png" width="600">
 
 这个问题会导致父子组件的初始化数据出问题，之前在父组件 `mounted` 中执行的初始逻辑，都会因为还没收集完 `children`，而失败。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/6/own_mike_d3M8XdYzTBxHSRzh.png" width="370">
+<img src="https://cdn.uwayfly.com/article/2025/6/own_mike_d3M8XdYzTBxHSRzh.png" width="370">
 
 解决办法有两种，可用延时，也可用回调。回调更安全，延时可能跟机器性能有关。回调就是在子组件 `mounted` 的时候调用父组件的数据初始化方法。
 
@@ -496,7 +496,7 @@ Vue 中父子组件生命周期正常的执行顺序是：父组件先创建，�
 
 ### 9.2. 组件归类
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_4fNtPMKtDajWBTyW.png" width="600" />
+<img src="https://cdn.uwayfly.com/article/2025/11/own_mike_4fNtPMKtDajWBTyW.png" width="600" />
 
 导航类
 
@@ -529,7 +529,7 @@ Vue 中父子组件生命周期正常的执行顺序是：父组件先创建，�
 
 ### 9.4. 图标
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_4mZKcT6zYQNyJjrB.png" width="600" />
+<img src="https://cdn.uwayfly.com/article/2025/11/own_mike_4mZKcT6zYQNyJjrB.png" width="600" />
 
 上面是几个小程序开发者工具的图标
 
@@ -598,7 +598,7 @@ created() {
 - 右就是 `87 - clientRight`，右边最大是 87
 - `maxRange` 就是 74
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_mDk26PEERn43wxNX.png" width="600" />
+<img src="https://cdn.uwayfly.com/article/2025/11/own_mike_mDk26PEERn43wxNX.png" width="600" />
 
 图中分别是左、右、边框。
 

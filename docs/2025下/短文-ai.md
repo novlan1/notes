@@ -23,7 +23,7 @@ AI 目前做的比较好的事有：
 
 可以[点击这里](https://work.weixin.qq.com/wework_admin/common/openBotProfile/247b4d12471881dfb439db9ec9faa0c3f6)来体验，或者扫描下方二维码。
 
-<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/11/own_mike_GXMMKBaShPTXDxHK.png" width="350" />
+<img src="https://cdn.uwayfly.com/article/2025/11/own_mike_GXMMKBaShPTXDxHK.png" width="350" />
 
 即便企业微信不提供这个功能，自己做一个也很简单，司内已有不少实践，甚至做个 Web 版本的助手也是可以的。不过正如前面说的，越简单越持久，就用最简单的，不必表演。
 
