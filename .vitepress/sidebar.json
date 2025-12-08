@@ -123,6 +123,18 @@
         {
           "text": "代码圈复杂度",
           "link": "/docs/2025下/complexity.md"
+        },
+        {
+          "text": "非技术思考",
+          "link": "/docs/2025下/no-tech-thought.md"
+        },
+        {
+          "text": "非技术笔记",
+          "link": "/docs/2025下/tech-note.md"
+        },
+        {
+          "text": "技术笔记",
+          "link": "/docs/2025下/no-tech-note.md"
         }
       ]
     },
