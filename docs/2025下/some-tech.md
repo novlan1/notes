@@ -1,11 +1,9 @@
 在 React 函数组件中，每一次 UI 的变化，都是通过重新执行整个函数来完成的，这和传统的 Class 组件有很大区别：函数组件中并没有一个直接的方式在多次渲染之间维持一个状态。
 
 <br>
-<br>
 
 ---
 
-<br>
 <br>
 
 ```bash
@@ -17,11 +15,9 @@ https://github.com/Automattic/node-canvas/issues/1825
 安装失败 node-pre-gyp install --fallback-to-build --update-binary
 
 <br>
-<br>
 
 ---
 
-<br>
 <br>
 
 想拷贝目录里面的内容而不是目录本身，就用斜杠加个星号 `cp –R src/* target`，想拷贝目录本身，就啥也不带 `cp –R src target` 就行了。
@@ -29,11 +25,9 @@ https://github.com/Automattic/node-canvas/issues/1825
 前者会变成 `target/file1、target/file2`，后者会变成 `target/src`。
 
 <br>
-<br>
 
 ---
 
-<br>
 <br>
 
 1. `$uri`
@@ -51,11 +45,9 @@ nginx 中的 `$uri` 记录的是执行一系列内部重定向操作后最终传
 比如，完整URL链接：`http://www.alipay.com/alipay/index.html`，`$request_uri`：`/alipay/index.html#参数`
 
 <br>
-<br>
 
 ---
 
-<br>
 <br>
 
 依赖预构建有两个目的:
@@ -76,11 +68,9 @@ import React, { useState } from 'react'
 通过预构建 `lodash-es` 成为一个模块，我们就只需要一个 HTTP 请求了！
 
 <br>
-<br>
 
 ---
 
-<br>
 <br>
 
 定位兼容性问题，可以直接把 `vconsole` 放到 `index.html` 中，看看错误日志
@@ -94,51 +84,41 @@ import React, { useState } from 'react'
 ```
 
 <br>
-<br>
 
 ---
 
-<br>
 <br>
 
 `globalThis` 的 `polyfill` 和其他变量不一样，它自己本身是顶级变量，每个上下文都需要单独 `polyfill`，更好的做法是不用它。
 
 <br>
-<br>
 
 ---
 
-<br>
 <br>
 
 `input` 标签 ，`type="number"` 时，`value` 不能传递 `null`，否则会被 uni-app 过滤
 
 <br>
-<br>
 
 ---
 
-<br>
 <br>
 
 `0.56*100` 精度丢失，`56.00000000000001`
 
 <br>
-<br>
 
 ---
 
-<br>
 <br>
 
 在 GitHub 上查看文件时，可以按 “y” 键将 URL 更新为指向所查看文件精确版本的永久链接。
 
 <br>
-<br>
 
 ---
 
-<br>
 <br>
 
 Vue3 全局组件声明的时候，不能加 `as any`。
@@ -148,11 +128,9 @@ Vue3 全局组件声明的时候，不能加 `as any`。
 只能 `app.component('GlobalComponent', GlobalComponent);`
 
 <br>
-<br>
 
 ---
 
-<br>
 <br>
 
 Eslint 配置上 `parserOptions.project`，就会很慢。
@@ -160,11 +138,9 @@ Eslint 配置上 `parserOptions.project`，就会很慢。
 参考：https://github.com/typescript-eslint/typescript-eslint/issues/1828#issuecomment-607213862
 
 <br>
-<br>
 
 ---
 
-<br>
 <br>
 
 nginx 403，可能是由于启动用户和 nginx 工作用户不一致所致
@@ -172,11 +148,9 @@ nginx 403，可能是由于启动用户和 nginx 工作用户不一致所致
 参考：https://cloud.tencent.com/developer/article/1949092
 
 <br>
-<br>
 
 ---
 
-<br>
 <br>
 
 在 `src` 目录下找到包含 `@tencent/press-ui` 的文件，并打印文件名
@@ -186,11 +160,9 @@ grep -rl @tencent/press-ui src/
 ```
 
 <br>
-<br>
 
 ---
 
-<br>
 <br>
 
 ```bash
@@ -200,11 +172,9 @@ git clean -df
 删除工作目录树中未跟踪的文件
 
 <br>
-<br>
 
 ---
 
-<br>
 <br>
 
 - ifconfig，查看内网 IP 等信息
@@ -229,11 +199,9 @@ git clean -df
 - du -sh /opt/setups/，显示 /opt/setups/ 目录所占硬盘空间大小（s 表示 –summarize 仅显示总计，即当前目录的大小。h 表示 –human-readable 以 KB，MB，GB 为单位，提高信息的可读性）
 
 <br>
-<br>
 
 ---
 
-<br>
 <br>
 
 vim 删除所有内容
@@ -246,11 +214,9 @@ vim 删除所有内容
 或者，你也可以这样做：`ggdG`
 
 <br>
-<br>
 
 ---
 
-<br>
 <br>
 
 vim 显示行号
@@ -262,11 +228,9 @@ vim 显示不行号
 - `:set nonu` 或 `:set nonumber`
 
 <br>
-<br>
 
 ---
 
-<br>
 <br>
 
 独立分包模式（无需加载主包，性能更优）
@@ -286,11 +250,9 @@ vim 显示不行号
 - 公共插件须在主包引入，从而影响主包大小
 
 <br>
-<br>
 
 ---
 
-<br>
 <br>
 
 小程序 `swiper` 组件抽搐，原因是 `change` 事件中改变了 `current`，陷入了循环
@@ -298,11 +260,9 @@ vim 显示不行号
 - https://developers.weixin.qq.com/community/develop/article/doc/000e6c56ce8e6013b94ab5f6356013
 
 <br>
-<br>
 
 ---
 
-<br>
 <br>
 
 ```bash
@@ -328,11 +288,9 @@ aliases: dist-tags
 Modify package distribution tags.
 
 <br>
-<br>
 
 ---
 
-<br>
 <br>
 
 ```mermaid
@@ -450,3 +408,36 @@ graph TD
 
 1. tools/config/network 拿走，放到 plugin-light
 2. location/business 不动
+
+<br>
+
+---
+
+<br>
+
+`--` 就像一个参数隧道 ，它把你在命令行里，跟在 `--` 后面的所有参数，原封不动地扔给了 `vitest` 命令。
+
+```json
+"scripts": {
+  "test": "vitest",
+  "test:watch": "vitest --watch"
+}
+```
+
+```bash
+# 1. 只跑一次
+$ npm run test -- --run
+# 实际执行: vitest --run
+
+# 2. 跑watch模式
+$ npm run test -- --watch
+# 实际执行: vitest --watch
+
+# 3. 跑覆盖率
+$ npm run test -- --coverage
+# 实际执行: vitest --coverage
+
+# 4. 跑某个特定文件
+$ npm run test -- src/my-component.test.ts
+# 实际执行: vitest src/my-component.test.ts
+```
