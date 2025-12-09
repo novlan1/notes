@@ -1,3 +1,12 @@
+cli vue2 td uniapp
+
+- pnpm i less-loader -D
+- 设置 alias
+- 引入 theme，可以直接复制之前的 style/app.less
+
+-- 2025-12-09 08:35:03
+<br>
+
 surge --project ./packages/site/dist --domain https://preview-pr-1-tdesign-uniapp.surge.sh
 
 -- 2025-12-09 08:33:47
