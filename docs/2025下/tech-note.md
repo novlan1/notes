@@ -1,3 +1,17 @@
+最初我们支持>>>组合器，以使选择器“更深入”。但是，由于这不是官方的CSS组合器，因此某些CSS预处理器（如SASS）在解析它时会遇到问题。
+  我们后来改用了/deep/，它曾经是CSS中实际提出的新增功能（甚至在Chrome中原生支持），但后来被删除了。这给一些用户带来了困惑，因为他们担心/deep/在Vue SFC中使用会导致他们的代码在已删除该功能的浏览器中不受支持。但是，就像>>>一样，/deep/它仅被Vue的SFC编译器用作编译时提示来重写选择器，并在最终的CSS中被删除。
+  为了避免因删除组合器而产生的混淆/deep/，我们引入了另一个自定义组合器，::v-deep这次更明确地表明这是一个特定于Vue的扩展，并使用伪元素语法，以便任何预处理器都应该能够解析它。
+  出于兼容性原因，当前Vue2 SFC编译器仍支持深度组合器的先前版本，这又会让用户感到困惑。在v3中，我们不再支持>>>和/deep/。
+  当我们在为v3开发新的SFC编译器时，我们注意到CSS伪元素实际上在语义上不是组合器。伪元素接受参数更符合惯用的CSS，因此我们也以::v-deep()这种方式进行工作。目前仍支持将作为组合器的::v-deep用法，但它被视为已弃用并会引发警告。
+以上内容翻译自：https://github.com/vuejs/rfcs/blob/scoped-styles-changes/active-rfcs/0023-scoped-styles-changes.md#deep-selectors
+
+参考：https://juejin.cn/post/7413669480624357386
+
+
+
+-- 2025-12-09 08:15:02
+<br>
+
 ＜img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/12/own_mike_2ybpxGdyw8xNGncE.png" ＞
 
 uni-app设计的开发标准是：Vue.js的语法 + 小程序的API + 条件编译扩展平台个性化能力。其中：
