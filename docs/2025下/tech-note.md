@@ -1,3 +1,8 @@
+surge --project ./packages/site/dist --domain https://preview-pr-1-tdesign-uniapp.surge.sh
+
+-- 2025-12-09 08:33:47
+<br>
+
 路由模式修改涉及的地方
 
 - overview.md
