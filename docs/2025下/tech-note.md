@@ -1,3 +1,19 @@
+input 设置为 readonly 后 click无法触发，是因为 uniapp的内置组件input使用了disabled，而不是 readonly。disabled 的 input 没有 click事件。
+
+参考
+https://github.com/dcloudio/uni-app/pull/5871
+https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/readonly
+https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/disabled
+
+关键点‌：
+
+pointer-events: none; 确保input本身不会拦截点击事件。
+
+点击事件绑定在外层view上，即使input禁用也能触发。
+
+-- 2025-12-09 08:06:42
+<br>
+
 chat-list 新增消息时，页面元素抖动，加唯一key解决
 
 -- 2025-12-09 08:05:01
