@@ -1,3 +1,10 @@
+＜img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/12/own_mike_cZ7EmNfYk5yP6wT3.jpeg" ＞
+
+为实现小程序、H5两端的完整跨端，uni-app在H5平台完整模拟实现了小程序的逻辑层和视图层。
+
+-- 2025-12-09 08:12:25
+<br>
+
 input 设置为 readonly 后 click无法触发，是因为 uniapp的内置组件input使用了disabled，而不是 readonly。disabled 的 input 没有 click事件。
 
 参考
