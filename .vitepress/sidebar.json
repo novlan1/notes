@@ -130,11 +130,15 @@
         },
         {
           "text": "非技术笔记",
-          "link": "/docs/2025下/tech-note.md"
+          "link": "/docs/2025下/no-tech-note.md"
         },
         {
           "text": "技术笔记",
-          "link": "/docs/2025下/no-tech-note.md"
+          "link": "/docs/2025下/tech-note.md"
+        },
+        {
+          "text": "SEMVER 版本",
+          "link": "/docs/2025下/semver-version.md"
         }
       ]
     },
