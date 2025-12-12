@@ -135,10 +135,6 @@
         {
           "text": "技术笔记",
           "link": "/docs/2025下/tech-note.md"
-        },
-        {
-          "text": "SEMVER 版本",
-          "link": "/docs/2025下/semver-version.md"
         }
       ]
     },
