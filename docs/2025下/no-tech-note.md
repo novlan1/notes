@@ -1,3 +1,37 @@
+波杰克 当你伤了心就奔跑吧
+
+BoJack, when you get sad, you run straight ahead
+
+一往无前地奔跑不论发生什么
+
+and you keep running forward, no matter what.
+
+你的人哇中会有人
+There are people in you life
+
+想要阻止你 拖慢你
+
+who are gonna try to hold you back, slow you down,
+
+但别让他们得逞
+
+but you don't let them.
+
+不要停止奔跑 不要回顾来路
+
+Don't you stop running and don't you ever look behind you.
+
+来路无可眷恋
+
+There's nothing for you behind you.
+
+值得期待的只有前方
+
+All that exists is what's ahead.
+
+-- 2025-12-17 18:23:28
+<br>
+
 团队内部技术不在一个水平线上，事实上也不可能在一个水平线上。
 
 有些人的技术好，封装出来的组件确实很契合大多数的业务场景，有些人技术稍逊，封装出来的组件就不一定能契合项目。
