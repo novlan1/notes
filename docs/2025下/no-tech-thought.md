@@ -1,3 +1,13 @@
+【盲评】这是一个基于pnpm 的工具集仓库，提供Vite插件、Webpack 插件、Webpack Loader、ESLint插件、ESlint公共配置、项目公共配置等内容。
+
+-- 2025-12-15 19:48:57
+<br>
+
+记性越来越差了，`npx eslint  --ext .ts,.js,.vue . --quiet --fix` 这种命令都要回忆下了。
+
+-- 2025-12-12 21:53:31
+<br>
+
 家庭，能力，啥也没有
 
 
