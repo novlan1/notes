@@ -135,6 +135,10 @@
         {
           "text": "技术笔记",
           "link": "/docs/2025下/tech-note.md"
+        },
+        {
+          "text": "pnpm patch",
+          "link": "/docs/2025下/115.pnpm-patch.md"
         }
       ]
     },
