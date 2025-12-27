@@ -2,9 +2,9 @@
 
 ## 1. 基础层
 
-### 1.1. TipRequest
+### 1.1. BaseRequest
 
-- `TipRequest` 是抽象类
+- `BaseRequest` 是抽象类
 - `send`，调用抽象方法 `doSend`
 - 私有 `interceptBeforeSend`、`interceptAfterResponse`、`interceptError`
 - 管理 `requestInterceptors`、`responseInterceptors`、`errorInterceptors`
@@ -29,10 +29,10 @@ send
 end
 ```
 
-### 1.2. TipRequestFactory
+### 1.2. BaseRequestFactory
 
-- `TipRequestFactory` 是抽象类
-- 抽象方法 `create`，返回 `TipRequest`
+- `BaseRequestFactory` 是抽象类
+- 抽象方法 `create`，返回 `BaseRequest`
 - `create` 表示创建一个实例，用于一次执行请求发送
 
 ```mermaid
@@ -50,7 +50,7 @@ end
 
 ### 1.3. MpRequest
 
-- 继承自 `TipRequest`
+- 继承自 `BaseRequest`
 - 实现 `doSend`
 
 ```mermaid
@@ -73,13 +73,13 @@ end
 
 ### 1.4. MpRequestFactory
 
-- 继承自 `TipRequestFactory`
+- 继承自 `BaseRequestFactory`
 - `create` 方法返回 `new MpRequest()`
 
 ```mermaid
 graph LR
-WebRequestFactory --继承--> TipRequestFactory
-MpRequestFactory --继承--> TipRequestFactory
+WebRequestFactory --继承--> BaseRequestFactory
+MpRequestFactory --继承--> BaseRequestFactory
 
 subgraph WebRequestFactory
   createInWeb[create] --传递拦截器--> WebRequest["new WebRequest({...})"]
@@ -89,7 +89,7 @@ subgraph MpRequestFactory
   createInMp[create] --传递拦截器--> mpRequest["new MpRequest({...})"]
 end
 
-subgraph TipRequestFactory
+subgraph BaseRequestFactory
   createInBase[create]
 end
 ```
@@ -100,7 +100,7 @@ end
 - 核心方法包括 **`setRequestFactory`、`setDecorator`、`request`**
 
 ```ts
-public setRequestFactory(factory: TipRequestFactory) {
+public setRequestFactory(factory: BaseRequestFactory) {
   this.requestFactory = factory;
 }
 ```
@@ -108,7 +108,7 @@ public setRequestFactory(factory: TipRequestFactory) {
 - `request(param)` 即 `NetworkManager.instance.request(param)`
 
 ```ts
-public request(param: ITipRequestParam): Promise<any> {
+public request(param: IBaseRequestParam): Promise<any> {
   const request = this.requestFactory.create(param);
   if (this.requestDecorator) {
     return this.requestDecorator(() => request.send(param, this.customInterceptor), param);
@@ -183,6 +183,8 @@ initNetworkManager -.-> MpRequestFactory
 initNetworkManager -.-> AppRequestFactory
 initNetworkManager --> NetworkManager
 
-WebRequestFactory --> TipRequestFactory
+WebRequestFactory --> BaseRequestFactory[[BaseRequestFactory]]
 WebRequestFactory --> WebRequest
+
+WebRequest --> BaseRequest[[BaseRequest]]
 ```
