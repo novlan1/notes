@@ -169,6 +169,10 @@
         {
           "text": "网络框架解析",
           "link": "/docs/2025上/pmd-network.md"
+        },
+        {
+          "text": "小程序登录流程",
+          "link": "/docs/2025上/login-mp.md"
         }
       ]
     },
