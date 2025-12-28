@@ -1,3 +1,8 @@
+爹无能儿受罪，儿无能爹低头。残酷的现实规律。
+
+-- 2025-12-28 22:54:51
+<br>
+
 https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/12/own_mike_3QyFeMDjjWeEWAFe.png
 
 -- 2025-12-24 08:07:17
