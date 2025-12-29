@@ -1,6 +1,6 @@
 # 小程序登录
 
-整体流程
+## 整体流程
 
 ```mermaid
 graph TD
@@ -11,7 +11,7 @@ getCode --"code + appId + loginType"--> code2Ticket
 
 ```mermaid
 graph TD
-start[开始] --选择登录类型--> selectLoginTypeInWxMini
+loginMp[开始] --选择登录类型--> selectLoginTypeInWxMini
 
 selectLoginTypeInWxMini --> isOnlyWX{非QQ环境或<br/>只支持微信登录}
 
@@ -22,4 +22,11 @@ isOnlyWX --是-->  getWxCode --> uniLogin["uni.login"] --> wxCode
 selectWXQQLoginType --微信--> getWxCode
 selectWXQQLoginType --QQ--> pluginLogin["plugin.login"] --> qqCode
 ```
+
+理想情况下，将一个微信小程序支持在QQ环境中打开，只需要
+
+1. 申请QQ的一个 `appId`，申请转换权限
+2. `config.js` 填写 `login.qqAppIdInWxMini`
+
+框架自动判断，当在QQ内打开微信小程序时，弹出选择QQ/微信，执行对应的登录流程。
 

@@ -188,3 +188,10 @@ WebRequestFactory --> WebRequest
 
 WebRequest --> BaseRequest[[BaseRequest]]
 ```
+
+## 改动
+
+1. 不是 `igame` 依赖 `default`，是 `default` 依赖 `igame`，`igame` 是明确的，`default` 可以换
+2. 所有拦截器都支持异步操作
+3. 微信小程序登录支持选择QQ/微信，根据环境及配置判断
+4. 注意 `network` 有多余引入，`web` 环境也有引入 `MpRequestFactory`，但是只要项目支持 `tree-shaking` 问题不大，路径在 `packages/network/src/index.ts`
