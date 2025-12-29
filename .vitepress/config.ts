@@ -1,6 +1,7 @@
 import { withMermaid } from 'vitepress-plugin-mermaid';
 import sidebarConfig from './sidebar.json';
 import { getFooterMessage } from './footer';
+import { SIDEBAR_WORK_DOCS } from './sidebar-work-docs';
 
 
 // https://vitepress.dev/reference/site-config
@@ -91,9 +92,14 @@ export default withMermaid({
       label: '目录',
     },
 
-    sidebar: [
-      ...sidebarConfig.sidebar,
-    ],
+    sidebar: {
+      '/docs/': [
+        ...sidebarConfig.sidebar,
+      ],
+      '/docs/work/': [
+        SIDEBAR_WORK_DOCS
+      ],
+    },
 
     socialLinks: [{ icon: 'github', link: 'https://github.com/novlan1/notes/' }],
 

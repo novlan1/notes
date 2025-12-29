@@ -1,0 +1,38 @@
+export const SIDEBAR_WORK_DOCS =  {
+  text: '文档',
+  collapsed: false,
+  items: [
+    {
+      text: 'React Server 漏洞处理',
+      link: '/docs/work/109.react-server-security.md',
+    },
+    {
+      text: '【PixUI】开发者工具 404',
+      link: '/docs/work/110.pixui-404.md',
+    },
+    {
+      text: 'Git 推送限制',
+      link: '/docs/work/111.git-push-limit.md',
+    },
+    {
+      text: '电子流项目',
+      link: '/docs/work/112.quick-start-match-apply.md',
+    },
+    {
+      text: '【PixUI】调试工具',
+      link: '/docs/work/113.pixui-debug-popup.md',
+    },
+    {
+      text: '上传 MCP',
+      link: '/docs/work/114.upload-mcp.md',
+    },
+    {
+      text: 'Network V2 使用',
+      link: '/docs/work/115.network-v2.md',
+    },
+    {
+      text: '公共库压缩合并',
+      link: '/docs/work/116.squash-merge.md',
+    },
+  ],
+};
