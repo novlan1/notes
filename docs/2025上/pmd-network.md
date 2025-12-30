@@ -187,6 +187,23 @@ WebRequestFactory --> BaseRequestFactory[[BaseRequestFactory]]
 WebRequestFactory --> WebRequest
 
 WebRequest --> BaseRequest[[BaseRequest]]
+
+subgraph pmdNetwork[pmd-network]
+WebRequestFactory
+MpRequestFactory
+AppRequestFactory
+
+NetworkManager
+
+WebRequest
+BaseRequest
+BaseRequestFactory
+end
+
+subgraph pmdBusiness[pmd-business]
+post
+initNetworkManager
+end
 ```
 
 ## 改动
