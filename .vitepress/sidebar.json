@@ -143,6 +143,10 @@
         {
           "text": "mongo 聚合",
           "link": "/docs/2025下/mongo-aggregate.md"
+        },
+        {
+          "text": "pmd article",
+          "link": "/docs/2025下/pmd-article.md"
         }
       ]
     },

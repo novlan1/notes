@@ -1,0 +1,246 @@
+## 1. 开始
+
+记录下近期整理的 PMD NPM 包。
+
+## 2. 依赖关系
+
+优化前是蜘蛛网（2025.12.5）。
+
+```mermaid
+graph TD
+  widget --> tools
+  widget --> network
+  widget --> aegis
+
+  vue --> report
+  vue --> tools
+  vue --> config
+  vue --> aegis
+  vue --> types
+  vue --> location
+  vue --> widget
+  vue --> network
+  vue --> login
+
+  use --> tools
+  use --> widget
+
+  tools -- 反向 --> network
+  tools --> types
+  tools -- 反向 --> vue
+
+  report --> tools
+  report --> types
+  report --> config
+  report --> network
+
+  pixui --> network
+  pixui --> config
+
+  network --> types
+
+  netbar --> tools
+
+  login --> tools
+  login --> widget
+  login --> report
+  login --> types
+  login --> config
+  login --> network
+
+  location --> widget
+  location --> tools
+  location --> network
+
+  jsapi --> types
+  jsapi --> tools
+
+  config --> types
+
+  aegis --> tools
+
+  abtest --> types
+  abtest --> network
+  abtest --> aegis
+```
+
+优化后是清晰的三层结构。
+
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/12/own_mike_hT3MyBP56shhdpBe.png" width="900" />
+
+内部模块实际依赖关系：
+
+```mermaid
+graph TD
+%% widget --> network
+%% widget --> tools
+%% widget --> aegis
+%% widget --> business
+weixin --> network
+weixin --> tools
+%% vue --> business
+%% vue --> tools
+%% vue --> report
+%% vue --> aegis
+%% vue --> widget
+%% vue --> config
+%% vue --> share
+%% vue --> weixin
+use --> tools
+%% tools --> weixin
+%% tools --> game-config
+share --> tools
+share --> aegis
+report --> tools
+report --> network
+report --> config
+pixui --> network
+pixui --> config
+netbar --> tools
+login --> tools
+login --> report
+login --> config
+login --> network
+location --> tools
+location --> weixin
+location --> network
+jsapi --> tools
+%% config --> game-config
+config --> tools
+%% config --> vue
+business --> report
+business --> tools
+business --> config
+business --> aegis
+business --> location
+%% business --> widget
+business --> share
+business --> network
+business --> login
+aegis --> tools
+abtest --> tools
+abtest --> network
+abtest --> aegis
+
+
+subgraph base[ ]
+tools
+config
+network
+game-config
+aegis
+end
+
+subgraph businessModule[ ]
+business
+netbar
+end
+
+subgraph middle[ ]
+location
+report
+login
+pixui
+abtest
+jsapi
+use
+share
+weixin
+end
+```
+
+1. 总体三层结构，基础、业务中间层、业务上层
+2. 无反向依赖
+3. 独立的 `types` 已移除，放到对应的包之中
+
+## 3. 版本发布
+
+```mermaid
+graph LR
+  build[Build] --> bump[Bump Version]
+  bump --> changelog[Change Log]
+  changelog --> commit[Commit]
+  commit --> tag[Tag]
+  tag --> publish[Publish]
+  publish --> message[Message]
+```
+
+## 4. 版本更新策略
+
+```mermaid
+graph TD
+  start[获取下一版本] --> isPrerelease{type 为<br/>预发布}
+  isPrerelease --是--> isPrereleaseVersionExisted{已存在相同类型<br/>预发布版本}
+  isPrerelease --否--> releaseVersion["inc(latest, type)"]
+  isPrereleaseVersionExisted --是--> isSmallThanLatest{latest 大于<br/>之前预发布版本}
+  isSmallThanLatest --是--> getNextVersion["inc(latest, 'prepatch', type)"]
+  isSmallThanLatest --否--> getNextVersion2["inc(old, 'prerelease', type)"]
+  isPrereleaseVersionExisted --否--> getNextVersion3["inc(latest,'prerelease',type)"]
+```
+
+## 5. 网络框架梳理
+
+```mermaid
+graph LR
+business[业务] --> post
+business --> initNetworkManager
+
+initNetworkManager -.-> WebRequestFactory
+initNetworkManager -.-> MpRequestFactory
+initNetworkManager -.-> AppRequestFactory
+initNetworkManager --> NetworkManager
+
+WebRequestFactory --> BaseRequestFactory[[BaseRequestFactory]]
+WebRequestFactory --> WebRequest
+
+WebRequest --> BaseRequest[[BaseRequest]]
+
+subgraph pmdNetwork[pmd-network]
+WebRequestFactory
+MpRequestFactory
+AppRequestFactory
+
+NetworkManager
+
+WebRequest
+BaseRequest
+BaseRequestFactory
+end
+
+subgraph pmdBusiness[pmd-business]
+post
+initNetworkManager
+end
+```
+
+## 6. 小程序登录
+
+整体流程
+
+```mermaid
+graph TD
+getCode --"code + appId + loginType"--> code2Ticket
+```
+
+获取 code 流程
+
+```mermaid
+graph TD
+loginMp[开始] --选择登录类型--> selectLoginTypeInWxMini
+
+selectLoginTypeInWxMini --> isOnlyWX{非QQ环境或<br/>只支持微信登录}
+
+isOnlyWX --否--> selectWXQQLoginType{selectWXQQLoginType}
+
+isOnlyWX --是-->  getWxCode --> uniLogin["uni.login"] --> wxCode
+
+selectWXQQLoginType --微信--> getWxCode
+selectWXQQLoginType --QQ--> pluginLogin["plugin.login"] --> qqCode
+```
+
+理想情况下，将一个微信小程序支持在QQ环境中打开，只需要
+
+1. 申请QQ的一个 `appId`，以及转换权限
+2. `config.js` 填写 `login.qqAppIdInWxMini`
+
+框架自动判断，当在QQ内打开微信小程序时，弹出选择QQ/微信，执行对应的登录流程。
