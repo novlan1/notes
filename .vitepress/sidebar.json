@@ -143,10 +143,6 @@
         {
           "text": "mongo 聚合",
           "link": "/docs/2025下/mongo-aggregate.md"
-        },
-        {
-          "text": "pmd article",
-          "link": "/docs/2025下/pmd-article.md"
         }
       ]
     },
@@ -169,14 +165,6 @@
         {
           "text": "5月感悟",
           "link": "/docs/2025上/5月感悟.md"
-        },
-        {
-          "text": "网络框架解析",
-          "link": "/docs/2025上/pmd-network.md"
-        },
-        {
-          "text": "小程序登录流程",
-          "link": "/docs/2025上/login-mp.md"
         }
       ]
     },

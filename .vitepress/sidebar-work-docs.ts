@@ -34,5 +34,17 @@ export const SIDEBAR_WORK_DOCS =  {
       text: '公共库压缩合并',
       link: '/docs/work/116.squash-merge.md',
     },
+    {
+      text: '网络框架解析',
+      link: '/docs/work/117.pmd-network.md',
+    },
+    {
+      text: '小程序登录流程',
+      link: '/docs/work/118.login-mp.md',
+    },
+    {
+      text: 'PMD 文章',
+      link: '/docs/work/119.pmd-article.md',
+    },
   ],
 };
