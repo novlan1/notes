@@ -1,7 +1,7 @@
 import { withMermaid } from 'vitepress-plugin-mermaid';
 import sidebarConfig from './sidebar.json';
 import { getFooterMessage } from './footer';
-import { SIDEBAR_WORK_DOCS } from './sidebar-work-docs';
+import SIDEBAR_WORK_DOCS from './sidebar-work-docs.json';
 
 
 // https://vitepress.dev/reference/site-config
