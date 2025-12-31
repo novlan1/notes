@@ -3,6 +3,10 @@
   "collapsed": false,
   "items": [
     {
+      "text": "【PMD】梳理",
+      "link": "/docs/work/108.pmd-npm-change.md"
+    },
+    {
       "text": "React Server 漏洞处理",
       "link": "/docs/work/109.react-server-security.md"
     },
