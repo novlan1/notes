@@ -1,5 +1,6 @@
 |<p style="width:100px">描述</p>|<p style="width:600px">链接</p>|
 |---|---|
+|Typescript 教程|https://wangdoc.com/typescript/|
 |VConsolet Whitelist|https://tip-components-1251917893.cos.ap-guangzhou.myqcloud.com/white/vconsole.json|
 |PVP Whitelist|https://tip-components-1251917893.cos.ap-guangzhou.myqcloud.com/white/entrance-pvp.json|
 |GP Match|https://h5.igame.qq.com/pmd-mobile.match.gp-next.gp/|
