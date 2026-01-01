@@ -1,58 +1,62 @@
 {
-  "text": "文档",
-  "collapsed": false,
-  "items": [
+  "sidebar": [
     {
-      "text": "【PMD】梳理",
-      "link": "/docs/work/108.pmd-npm-change.md"
-    },
-    {
-      "text": "React Server 漏洞处理",
-      "link": "/docs/work/109.react-server-security.md"
-    },
-    {
-      "text": "【PixUI】开发者工具 404",
-      "link": "/docs/work/110.pixui-404.md"
-    },
-    {
-      "text": "Git 推送限制",
-      "link": "/docs/work/111.git-push-limit.md"
-    },
-    {
-      "text": "电子流项目",
-      "link": "/docs/work/112.quick-start-match-apply.md"
-    },
-    {
-      "text": "【PixUI】调试工具",
-      "link": "/docs/work/113.pixui-debug-popup.md"
-    },
-    {
-      "text": "上传 MCP",
-      "link": "/docs/work/114.upload-mcp.md"
-    },
-    {
-      "text": "【PMD】Network V2 使用",
-      "link": "/docs/work/115.network-v2.md"
-    },
-    {
-      "text": "公共库压缩合并",
-      "link": "/docs/work/116.squash-merge.md"
-    },
-    {
-      "text": "【PMD】网络框架解析",
-      "link": "/docs/work/117.pmd-network.md"
-    },
-    {
-      "text": "【PMD】小程序登录流程",
-      "link": "/docs/work/118.login-mp.md"
-    },
-    {
-      "text": "【PMD】优化文章",
-      "link": "/docs/work/119.pmd-article.md"
-    },
-    {
-      "text": "【PMD】Share V2 使用",
-      "link": "/docs/work/120.share-v2.md"
+      "text": "文档",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "【PMD】梳理",
+          "link": "/docs/work/108.pmd-npm-change.md"
+        },
+        {
+          "text": "React Server 漏洞处理",
+          "link": "/docs/work/109.react-server-security.md"
+        },
+        {
+          "text": "【PixUI】开发者工具 404",
+          "link": "/docs/work/110.pixui-404.md"
+        },
+        {
+          "text": "Git 推送限制",
+          "link": "/docs/work/111.git-push-limit.md"
+        },
+        {
+          "text": "电子流项目",
+          "link": "/docs/work/112.quick-start-match-apply.md"
+        },
+        {
+          "text": "【PixUI】调试工具",
+          "link": "/docs/work/113.pixui-debug-popup.md"
+        },
+        {
+          "text": "上传 MCP",
+          "link": "/docs/work/114.upload-mcp.md"
+        },
+        {
+          "text": "【PMD】Network V2 使用",
+          "link": "/docs/work/115.network-v2.md"
+        },
+        {
+          "text": "公共库压缩合并",
+          "link": "/docs/work/116.squash-merge.md"
+        },
+        {
+          "text": "【PMD】网络框架解析",
+          "link": "/docs/work/117.pmd-network.md"
+        },
+        {
+          "text": "【PMD】小程序登录流程",
+          "link": "/docs/work/118.login-mp.md"
+        },
+        {
+          "text": "【PMD】优化文章",
+          "link": "/docs/work/119.pmd-article.md"
+        },
+        {
+          "text": "【PMD】Share V2 使用",
+          "link": "/docs/work/120.share-v2.md"
+        }
+      ]
     }
   ]
 }

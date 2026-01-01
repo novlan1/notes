@@ -1,6 +1,16 @@
 {
   "sidebar": [
     {
+      "text": "2026上",
+      "collapsed": false,
+      "items": [
+        {
+          "text": "CDN 证书配置",
+          "link": "/docs/2026上/cdn-ssl.md"
+        }
+      ]
+    },
+    {
       "text": "2025下",
       "collapsed": false,
       "items": [
@@ -147,6 +157,26 @@
         {
           "text": "marked-uniapp",
           "link": "/docs/2025下/marked-uniapp.md"
+        },
+        {
+          "text": "Typescript 学习",
+          "link": "/docs/2025下/ts.md"
+        },
+        {
+          "text": "某需求分享功能",
+          "link": "/docs/2025下/share.md"
+        },
+        {
+          "text": "AI Start",
+          "link": "/docs/2025下/ai-start.md"
+        },
+        {
+          "text": "为什么 Vue 无需 Fiber",
+          "link": "/docs/2025下/why-vue-not-need-fiber.md"
+        },
+        {
+          "text": "短文 AI",
+          "link": "/docs/2025下/短文-ai.md"
         }
       ]
     },

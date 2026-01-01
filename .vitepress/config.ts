@@ -97,7 +97,7 @@ export default withMermaid({
         ...sidebarConfig.sidebar,
       ],
       '/docs/work/': [
-        SIDEBAR_WORK_DOCS
+        ...SIDEBAR_WORK_DOCS.sidebar,
       ],
     },
 
