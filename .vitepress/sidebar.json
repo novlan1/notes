@@ -7,6 +7,10 @@
         {
           "text": "CDN 证书配置",
           "link": "/docs/2026上/cdn-ssl.md"
+        },
+        {
+          "text": "Typescript 教程笔记",
+          "link": "/docs/2026上/typescript-wangdoc.md"
         }
       ]
     },
