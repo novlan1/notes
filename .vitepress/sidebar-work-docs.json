@@ -55,6 +55,10 @@
         {
           "text": "【PMD】Share V2 使用",
           "link": "/docs/work/120.share-v2.md"
+        },
+        {
+          "text": "静态资源 AI 全链路提效",
+          "link": "/docs/work/121.ai-all-asset.md"
         }
       ]
     }
