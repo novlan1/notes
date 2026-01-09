@@ -3,26 +3,35 @@
 layout: home
 
 hero:
-  name: '简单点'
-  text: 'Notes of Novlan1'
+  name: 'Notes'
+  text: 'Learning Running <br />Everything Keeping'
+  tagline: 'Powered by novlan1'
+  image:
+    src: https://cdn.uwayfly.com/press%2Fimg%2Fpress-ui-avatar-transparent.png
+    alt: Plugin Light
+
   actions:
     - theme: brand
+      text: '2026'
+      link: /docs/2026上/typescript-wangdoc
+    - theme: alt
       text: '2025'
-      link: /docs/2025下/内存占用过高
+      link: /docs/2025下/tdesign-uniapp-article
     - theme: alt
       text: '2024'
       link: /docs/2024下/TDesignMiniProgram中Cascader组件的性能优化
-    - theme: alt
-      text: '2023'
-      link: /docs/2023下/孪生项目的开发方式优化
 
 features:
   - title: novlan1
     details: 前端爱好者
+    icon: 🏃
   - title: Press UI
     details: 简单、易用的组件库
+    icon: 🚀
   - title: T Comm
     details: 简单、易用的工具库
+    icon: 🛠️
   - title: Plugin Light
     details: 简单、易用的工具集
+    icon: 🌈
 ---

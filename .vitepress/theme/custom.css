@@ -1,0 +1,7 @@
+@media (min-width: 960px) {
+  /* 首页 logo */
+  .image-container .image-src {
+    max-width: 200px;
+    max-height: 200px;
+  }
+}
