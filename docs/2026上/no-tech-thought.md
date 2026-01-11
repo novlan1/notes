@@ -1,3 +1,8 @@
+活是核心活，事是核心事，人是边缘人。
+
+-- 2026-01-11 14:11:16
+<br>
+
 https://cdn.uwayfly.com/article/2026/1/own_mike_W23JPrzb2DNskwP5.jpeg
 
 -- 2026-01-10 16:52:13
