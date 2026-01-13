@@ -63,6 +63,14 @@
         {
           "text": "静态资源 AI 全链路提效 - 文章",
           "link": "/docs/work/122.ai-all-asset-article.md"
+        },
+        {
+          "text": "NPM 发布 MCP",
+          "link": "/docs/work/123.npm-publish-mcp.md"
+        },
+        {
+          "text": "Nginx 解析失败",
+          "link": "/docs/work/124.nginx-error-504.md"
         }
       ]
     }
