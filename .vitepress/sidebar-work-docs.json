@@ -71,6 +71,10 @@
         {
           "text": "Nginx 解析失败",
           "link": "/docs/work/124.nginx-error-504.md"
+        },
+        {
+          "text": "小程序发布 MCP",
+          "link": "/docs/work/125.mp-publish-mcp.md"
         }
       ]
     }
