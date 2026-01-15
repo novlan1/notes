@@ -75,6 +75,10 @@
         {
           "text": "小程序发布 MCP",
           "link": "/docs/work/125.mp-publish-mcp.md"
+        },
+        {
+          "text": "密钥初始化流程",
+          "link": "/docs/work/126.rainbow-env-init.md"
         }
       ]
     }
