@@ -1,3 +1,15 @@
+将 regionSelect 的 regionOptions 改为受控，当搜索时，之前的 selected 不在 regionOptions 时，就更新 selected。这样可以在 搜到一个值，不点选择，直接点外层确定也不会违反直觉。
+
+search 输入框和 select 的回显用一个，即都是 input，这个之前的逻辑不变。
+
+handleSelect 时，更新 searchValue 为选中的值，这个之前的逻辑不变。
+
+展示 dropdown 时，清空 searchValue，来展示所有 regionOptions，这个之前的逻辑不变。
+
+
+-- 2026-01-17 00:53:15
+<br>
+
 monorepo 仓库的每次提交都应该只改动一个子包的，让 commit 信息更聚焦，生成的 changelog 更易读。
 
 -- 2026-01-15 01:01:13
