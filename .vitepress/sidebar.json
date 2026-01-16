@@ -11,6 +11,18 @@
         {
           "text": "Typescript 教程笔记",
           "link": "/docs/2026上/typescript-wangdoc.md"
+        },
+        {
+          "text": "非技术思考",
+          "link": "/docs/2026上/no-tech-thought.md"
+        },
+        {
+          "text": "非技术笔记",
+          "link": "/docs/2026上/no-tech-note.md"
+        },
+        {
+          "text": "技术笔记",
+          "link": "/docs/2026上/tech-note.md"
         }
       ]
     },

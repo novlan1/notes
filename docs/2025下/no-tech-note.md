@@ -3,7 +3,7 @@
 -- 2025-12-30 18:47:45
 <br>
 
-iOA 
+iOA
 
 i Ofhce-Automation（我的OA）。2012年，因安全可控，性能体验，办公开发支持等诉求，自研桌面客户端全面替换商业产品
 
@@ -28,7 +28,7 @@ i Ofhce-Automation（我的OA）。2012年，因安全可控，性能体验，�
 -- 2025-12-28 22:54:51
 <br>
 
-https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/12/own_mike_3QyFeMDjjWeEWAFe.png
+<img src="https://mike-1255355338.cos.ap-guangzhou.myqcloud.com/article/2025/12/own_mike_3QyFeMDjjWeEWAFe.png" width="600" />
 
 -- 2025-12-24 08:07:17
 <br>
@@ -138,6 +138,7 @@ All that exists is what's ahead.
 能让我们增值的苦，比如硬着头皮啃下一本晦涩的专业书，或者为了一个创新项目跟各方大佬死磕，这叫“淬炼”。而那些让自己贬值的消耗，比如无休止地内耗在部门墙里，或者用“拉通、对齐、抓手、赋能、闭环”的黑话填满每一个会议纪要，那不叫成长，那叫“驯化”。
 
 “驯化”的迹象是什么？
+
 - 汇报的PPT越来越精美，但自己独立思考和当面“SayNo”的欲望越来越低。
 - 熟练掌握了几十个内部工具的用法，但这些技能离开这个“生态””，瞬间归零。
 - 习惯了在群里@所有人来创造一种“我在做事”的假象，却忘了如何用真诚的语言与活生生的人交流。
@@ -146,46 +147,31 @@ All that exists is what's ahead.
 -- 2025-12-12 18:50:37
 <br>
 
-RPG - Role-Playing Game（角色扮演游戏）
-•玩家扮演角色推进剧情，如《最终幻想》《巫师3》
+RPG - Role-Playing Game（角色扮演游戏）玩家扮演角色推进剧情，如《最终幻想》《巫师3》
 
-ARPG - Action Role-Playing Game（动作角色扮演游戏）
-•结合动作与角色成长，如《暗黑破坏神》《原神》
+ARPG - Action Role-Playing Game（动作角色扮演游戏）结合动作与角色成长，如《暗黑破坏神》《原神》
 
-MMORPG - Massively Multiplayer Online RPG
-（大型多人在线角色扮演游戏）
-•如《魔兽世界》《剑网3》
+MMORPG - Massively Multiplayer Online RPG（大型多人在线角色扮演游戏）如《魔兽世界》《剑网3》
 
-SLG - Simulation & Strategy Game (*W&1= #Xib
-戏）
-•涵盖战争策略、经营模拟等，如《文明》《三国志战略版》
+SLG - Simulation & Strategy Game 涵盖战争策略、经营模拟等，如《文明》《三国志战略版》
 
-RTS - Real-Time Strategy（即时战略游戏）
-•实时操作与资源管理，如《星际争霸》《魔兽争霸》
+RTS - Real-Time Strategy（即时战略游戏）实时操作与资源管理，如《星际争霸》《魔兽争霸》
 
-MOBA - Multiplayer Online Battle Arena (5^
-在线战术竞技游戏）
+MOBA - Multiplayer Online Battle Arena (5^在线战术竞技游戏）
 
-FPS - First-Person Shooter（第一人称射击游戏）
-•如《CS:GO》《使命召唤》
+FPS - First-Person Shooter（第一人称射击游戏）如《CS:GO》《使命召唤》
 
-TPS - Third-Person Shooter（第三人称射击游戏）
-•如《战争机器》《荒野大镖客》
+TPS - Third-Person Shooter（第三人称射击游戏）如《战争机器》《荒野大镖客》
 
-SIM - Simulation Game 
-•如《模拟人生》《模拟城市》
+SIM - Simulation Game 如《模拟人生》《模拟城市》
 
-FTG - Fighting Game（格斗游戏）
-•如《街头霸王》《拳皇》
+FTG - Fighting Game（格斗游戏）如《街头霸王》《拳皇》
 
-PUZ - Puzzle Game（益智游戏）
-•如《糖果传奇》《俄罗斯方块》
+PUZ - Puzzle Game（益智游戏）如《糖果传奇》《俄罗斯方块》
 
-AVG - Adventure Game（冒险游戏）
-•如《塞尔达传说》《神秘海域》
+AVG - Adventure Game（冒险游戏）如《塞尔达传说》《神秘海域》
 
-SPG- Sports Game（体育游戏）
-如《FIFA》
+SPG- Sports Game（体育游戏）如《FIFA》
 
 
 -- 2025-12-12 18:47:56
