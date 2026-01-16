@@ -79,6 +79,10 @@
         {
           "text": "密钥初始化流程",
           "link": "/docs/work/126.rainbow-env-init.md"
+        },
+        {
+          "text": "调试",
+          "link": "/docs/work/127.pmg-debug.md"
         }
       ]
     }

@@ -3,6 +3,9 @@
 |Typescript 教程|https://wangdoc.com/typescript/|
 |VConsolet Whitelist|https://tip-components-1251917893.cos.ap-guangzhou.myqcloud.com/white/vconsole.json|
 |PVP Whitelist|https://tip-components-1251917893.cos.ap-guangzhou.myqcloud.com/white/entrance-pvp.json|
+|MpPvp Whitelist|https://tip-components-1251917893.cos.ap-guangzhou.myqcloud.com/white/mp-entrance-pvp.json|
+|MpPmd Whitelist|https://tip-components-1251917893.cos.ap-guangzhou.myqcloud.com/white/mp-entrance-pmd.json|
+|PMG Whitelist|https://cdn.partner.esports.pubgmobile.com/white/prod-debug-entrance.json|
 |GP Match|https://h5.igame.qq.com/pmd-mobile.match.gp-next.gp/|
 |GP Match Prerelease|https://h5-test.igame.qq.com/pmd-mobile.match.gp-next.gp/?tip_debug_cgi_env=prod|
 |Press UI NPMCharts|https://www.npmcharts.com/compare/press-ui?interval=1|
