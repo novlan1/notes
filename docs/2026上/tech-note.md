@@ -1,3 +1,44 @@
+popover 组件的 placement 取值有 left/right/top/bottom/top-let/bottom-right/left-top 等，共有 4 个主位置 + 2 * 4 个边边为主 = 12 个选项。
+
+内部把 -left|top 转为 -start，-right|bottom 转为 -end，好处是 API 简单，4个单词的排列组合。
+
+判断是否横向 isHorizontal、是否竖向 isVertical，横向是包含 top/bottom，竖向是包含 left/right，isBase 是4个主位置，isEnd 是包含 end。
+
+是否能正常放置 canPlace，如果是 isHorizontal
+
+```js
+if (placement.startsWith('top')) {
+ canPlace = triggerTop - contentHeight >= 0;
+} else if (placement.startsWith('bottom')) {
+ canPlace = triggerBottom + contentHeight <= windowHeight;
+}
+```
+
+top/left 计算
+
+```js
+const isTopBase = placement.startsWith('top');
+const isBottomBase = placement.startsWith('bottom');
+const isLeftBase = placement.startsWith('left');
+const isRightBase = placement.startsWith('right');
+
+if (isTopBase) {
+  top = triggerRect.top - contentRect.height;
+} else if (isBottomBase) {
+  top = triggerRect.top + triggerRect.height;
+} else if (isLeftBase) {
+  left = triggerRect.left - contentRect.width;
+} else if (isRightBase) {
+  left = triggerRect.left + triggerRect.width;
+} else {
+  top = triggerRect.top - contentRect.height;
+}
+```
+
+
+-- 2026-01-17 22:19:41
+<br>
+
 - 哪些任务交给 AI 最「划算」
 - 怎么让项目本身变得更「AI 友好」，提高一次命中率
 - 当生成不再是瓶颈时，工程师应该如何设计验证流程，把时间花在真正值钱的地方。
