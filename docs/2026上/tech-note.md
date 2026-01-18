@@ -1,3 +1,8 @@
+contentHeight 就是 popoverContentHeight，这样就好理解多了。
+
+-- 2026-01-18 09:56:41
+<br>
+
 popover 组件的 placement 取值有 left/right/top/bottom/top-let/bottom-right/left-top 等，共有 4 个主位置 + 2 * 4 个边边为主 = 12 个选项。
 
 内部把 -left|top 转为 -start，-right|bottom 转为 -end，好处是 API 简单，4个单词的排列组合。
