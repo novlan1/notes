@@ -1,3 +1,8 @@
+npx prettier scripts/generate-css-vars.mjs --write
+
+-- 2026-01-19 16:31:06
+<br>
+
 contentHeight 就是 popoverContentHeight，这样就好理解多了。
 
 -- 2026-01-18 09:56:41
