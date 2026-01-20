@@ -1,3 +1,8 @@
+操作记录 operation 的设计哲学应该是 1 有唯一的 pipelineId、pipelineRunId，且不应该变化 2. 不同类型的操作日志应该有统一的字段，类似于抽象类。
+
+-- 2026-01-20 22:21:57
+<br>
+
 将 regionSelect 的 regionOptions 改为受控，当搜索时，之前的 selected 不在 regionOptions 时，就更新 selected。这样可以在 搜到一个值，不点选择，直接点外层确定也不会违反直觉。
 
 search 输入框和 select 的回显用一个，即都是 input，这个之前的逻辑不变。
