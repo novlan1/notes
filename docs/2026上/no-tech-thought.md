@@ -1,3 +1,8 @@
+批量发布的核心字段 batchUpload，1. server 传给流水线、流水线再回传给 server 2. 操作日志 operation 的 batchUpload 只做留存，无实际作用
+
+-- 2026-01-20 22:24:41
+<br>
+
 操作记录 operation 的设计哲学应该是 1 有唯一的 pipelineId、pipelineRunId，且不应该变化 2. 不同类型的操作日志应该有统一的字段，类似于抽象类。
 
 -- 2026-01-20 22:21:57
