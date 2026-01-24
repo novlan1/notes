@@ -1,3 +1,18 @@
+这个 issue 有意思，[https://github.com/Tencent/tdesign-miniprogram/issues/3986](https://github.com/Tencent/tdesign-miniprogram/issues/3986)。
+
+```ts
+export function getMonthByOffset(date, offset) {
+  const _date = new Date(date);
+  _date.setMonth(_date.getMonth() + offset);
+  return _date;
+}
+```
+
+`getMonthByOffset(value, n)`，如果 value + n 月那一天没有 dd, 则会自动进入下一个月，也就是value+n+1。比如 10月31日 + 1月，会被处理成 12月，正常应该是 11 月。
+
+-- 2026-01-25 00:45:20
+<br>
+
 良心，有就是有，没有就是没有，不存在唤醒一说
 
 -- 2026-01-24 20:01:55
