@@ -1,3 +1,9 @@
+vue2+cli/vue3+cli/vue2+hx/vue3+hx 组件基础示例，vue3+cli/vue3+hx 社区模板；chat mr 合入；eslint问题；src/api合入
+
+
+-- 2026-01-25 04:14:53
+<br>
+
 今日已同步 td-mini 最新改动 v1.12.2（2026-01-21）。不含 chat。
 
 -- 2026-01-25 04:10:00
