@@ -1,3 +1,15 @@
+td-uniapp 中的示例页面，加上 demo-navbar 类名，就是白底黑色，否则就是透明底默认颜色。
+
+```css
+.demo-navbar {
+  --td-navbar-bg-color: var(--td-bg-color-container);
+  --td-navbar-color: var(--td-text-color-primary);
+}
+```
+
+-- 2026-01-25 03:54:35
+<br>
+
 这个 issue 有意思，[https://github.com/Tencent/tdesign-miniprogram/issues/3986](https://github.com/Tencent/tdesign-miniprogram/issues/3986)。
 
 ```ts
