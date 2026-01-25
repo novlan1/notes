@@ -1,3 +1,15 @@
+为什么小程序样式覆盖需要用 `:deep`，而 H5 不需要？
+
+原因是 H5 中节点会合并，或者说会替换成真正的子组件节点，可以看到下面的 `uni-button` 有两个 `data-v-xx`，而小程序不是。
+
+<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_WH8KwtHMYMYjaRCF.png" width="600"/>
+
+<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_SD2cwnRyY56zs3aF.png" width="600"/>
+
+
+-- 2026-01-25 19:54:49
+<br>
+
 文档中单组件“更新日志”有问题，加载不出来
 
 -- 2026-01-25 11:17:36
