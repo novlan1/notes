@@ -1,3 +1,8 @@
+其实用 `:deep(xx)` 也是有兼容性问题的，Vue2 需要换，不如直接用 customStyle
+
+-- 2026-01-25 23:13:45
+<br>
+
 packages/tdesign-uniapp/app/ 待删除
 
 -- 2026-01-25 21:13:23
