@@ -1,3 +1,10 @@
+要将所有的 :deep 改成 custom-style，工作量有点大，退而求其次，只在组件 less 中加 :deep，不加、不删、不改其他样式。有改动的，记录下来，比如 dialog.less 的改动如下：
+
+<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_iN8kjhBXpmwa4hyw.png" width="600" />
+
+-- 2026-01-26 00:28:41
+<br>
+
 其实用 `:deep(xx)` 也是有兼容性问题的，Vue2 需要换，不如直接用 customStyle
 
 -- 2026-01-25 23:13:45
