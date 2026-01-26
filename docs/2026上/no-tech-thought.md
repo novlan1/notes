@@ -1,3 +1,12 @@
+小程序长按图片，保存图片没反应？
+
+原因是没返回签名地址，比较坑的是没有提示。
+
+- 错误的：https://gamelife-1251917893.igcdn.cn/hpmatch/hpmatch_F6dFij4NT8R5.jpg
+- 正确的：https://gamelife-1251917893.igcdn.cn/hpmatch/hpmatch_F6dFij4NT8R5.jpg?q-sign-algorithm=sha1&q-ak=xx&q-sign-time=xx&q-key-time=xx&q-header-list=host&q-url-param-list=&q-signature=xx
+
+-- 2026-01-26 15:05:00
+
 https://github.com/Tencent/tdesign-miniprogram/pull/4112/changes
 https://github.com/Tencent/tdesign-miniprogram/pull/4124/changes
 
