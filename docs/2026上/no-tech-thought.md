@@ -10,9 +10,10 @@
 
 要验证 PR 的改动（pkg.pr.new），或者 npm 包内容
 
-1. 进入工程，cd packages/tdesign-uniapp/example
-2. 装包，如 pnpm i https://pkg.pr.new/Tencent/tdesign-miniprogram/tdesign-uniapp@4201
-3. 执行 dev 等命令，如 npm run dev:h5
+1. 进入工程，`cd packages/tdesign-uniapp/example`
+2. 去掉 `vite.config.ts` 中 `alias` 的配置
+3. 装包，如 `pnpm i https://pkg.pr.new/Tencent/tdesign-miniprogram/tdesign-uniapp@4201`
+4. 执行 `dev` 等命令，如 `npm run dev:h5`
 
 -- 2026-01-26 17:59:42
 <br>
