@@ -1,3 +1,12 @@
+地区选择那个，不能用 selectedIndex === optionIndex 判断当前是否选中，因为搜索框的存在，下拉框是会变的。
+
+比如你选了泰国，selectedIndex 为 0，搜索了 马来西亚，由于 selectedIndex 没变，所以导致 马来西来依然高亮，用户会误解。
+
+当然也可以在 searchValue 或者 options 改变的时候，更新下 selectedIndex。
+
+-- 2026-01-26 10:20:19
+<br>
+
 要将所有的 :deep 改成 custom-style，工作量有点大，退而求其次，只在组件 less 中加 :deep，不加、不删、不改其他样式。有改动的，记录下来，比如 dialog.less 的改动如下：
 
 <img src="https://cdn.uwayfly.com/article/2026/1/own_mike_iN8kjhBXpmwa4hyw.png" width="600" />
