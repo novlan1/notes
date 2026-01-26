@@ -1,3 +1,40 @@
+demo 同步
+
+一次性工作
+
+```mermaid
+graph TD
+pages --> demo
+components["components(pull-down-list)"] --> demo
+mixins --> demo
+styles["style(app.less)"] --> demo
+```
+
+需要监听的部分
+
+```mermaid
+graph TD
+uniapp-components --> _tdesign
+uniapp-pro-components/chat --> _tdesign-chat
+_example --> pages-more
+
+subgraph demo["demo"]
+_tdesign
+_tdesign-chat
+pages-more
+end
+```
+
+每个项目独特的部分
+
+```mermaid
+graph TD
+App.vue
+main.ts
+manifest.json
+pages.json
+```
+
 小程序长按图片，保存图片没反应？
 
 原因是没返回签名地址，比较坑的是没有提示。
