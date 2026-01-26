@@ -1,8 +1,3 @@
-test
-
--- 2026-01-26 15:38:50
-<br>
-
 demo 同步
 
 一次性工作
@@ -51,8 +46,8 @@ pages.json
 
 -- 2026-01-26 15:05:00
 
-https://github.com/Tencent/tdesign-miniprogram/pull/4112/changes
-https://github.com/Tencent/tdesign-miniprogram/pull/4124/changes
+- https://github.com/Tencent/tdesign-miniprogram/pull/4112/changes
+- https://github.com/Tencent/tdesign-miniprogram/pull/4124/changes
 
 这两个还要再看下
 
