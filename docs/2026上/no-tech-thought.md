@@ -1,3 +1,11 @@
+https://github.com/Tencent/tdesign-miniprogram/pull/4112/changes
+https://github.com/Tencent/tdesign-miniprogram/pull/4124/changes
+
+这两个还要再看下
+
+-- 2026-01-26 12:43:28
+<br>
+
 td-mini 同步 td-uniapp 的步骤：
 
 1. 可选，在 td-mini 大仓下进行 build 脚本的改造，去掉 `jsmin/jsonmin/wxmlmin` 的使用
