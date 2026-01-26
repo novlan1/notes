@@ -1,6 +1,6 @@
 demo 同步
 
-一次性工作
+一次性工作。
 
 ```mermaid
 graph TD
@@ -10,12 +10,20 @@ mixins --> demo
 styles["style(app.less)"] --> demo
 ```
 
-需要监听的部分
+这部分是从 `vue3-cli` 同步到 `app/vue2-cli` 等目录中的。
 
 ```mermaid
 graph TD
-uniapp-components --> _tdesign
-uniapp-pro-components/chat --> _tdesign-chat
+vue3-cli --> app
+vue3-cli --> vue2-cli
+```
+
+需要监听的部分，主要是组件和示例，组件目标是 `_tdesign`，或者 `uni_modules/tdesign-uniapp` 下。
+
+```mermaid
+graph TD
+uniapp-components --> _tdesign["_tdesign 或 uni_modules 下"]
+uniapp-pro-components/chat --> _tdesign-chat["_tdesign-chat"]
 _example --> pages-more
 
 subgraph demo["demo"]
@@ -23,6 +31,19 @@ _tdesign
 _tdesign-chat
 pages-more
 end
+```
+
+这部分是从 `uniapp-components` 等同步到 `vue3-cli/app/vue2-cli` 等目录中的。
+
+```mermaid
+graph TD
+uniapp-components --> vue3-cli
+uniapp-components --> app
+uniapp-components --> vue2-cli
+
+uniapp-chat-components --> vue3-cli
+uniapp-chat-components --> app
+uniapp-chat-components --> vue2-cli
 ```
 
 每个项目独特的部分
