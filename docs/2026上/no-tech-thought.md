@@ -1,3 +1,15 @@
+td-mini 同步 td-uniapp 的步骤：
+
+1. 可选，在 td-mini 大仓下进行 build 脚本的改造，去掉 `jsmin/jsonmin/wxmlmin` 的使用
+2. 执行 `npm run build`（或者 `npm run build -- --ignore-terser`），生成 `_example` 目录
+3. 复制 `_example` 目录到 `mini-to-uni` 工程下，进行覆盖
+4. 可选，删除之前的 `_example_uni`
+5. `mini-to-uni` 工程下执行 `node ./bin/wtu -i ./_example` 进行 uniapp 组件生成
+6. 手动 diff，结合 PR，Git 记录，更新 td-uniapp 组件库
+
+-- 2026-01-26 12:31:56
+<br>
+
 `1.t-grid-item__content--left` 需要加上 `width: 100%;box-sizing: border-box;`，否则边框位置不对。
 
 <img src="https://cdn.uwayfly.com/article/2026/1/own_mike_yp3AKExM7KJcsw3P.png" width="600"/>
