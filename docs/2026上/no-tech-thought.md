@@ -1,3 +1,12 @@
+plugin-light-const 的定位：
+
+1. 放配置信息、常量定义，比如 getCdnList
+2. 有点私密，不方便放 t-comm 里
+3. 如果是需要运行时和编译时都需要的函数，放到 t-comm 里，而不是 project-config-const 中
+
+-- 2026-01-28 00:53:47
+<br>
+
 <img src="https://cdn.uwayfly.com/article/2026/1/own_mike_j6ns8mCznzykDD6C.jpeg" width="800"/>
 
 -- 2026-01-27 20:51:48
