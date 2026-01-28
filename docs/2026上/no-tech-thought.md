@@ -1,3 +1,29 @@
+
+目前的构建包
+
+包名|	作用
+---|---
+cherry-markdown.js<br/>cherry-markdown.min.js | 完整包，较大，包含cherry所有功能（工具栏、左侧编辑器、右侧预览器）
+cherry-markdown.core.js	| 核心包，相比完整包，只少了mermaid功能，包大小小了50%以上（当然也可以在引入核心包后再传入mermaid，从而实现对mermaid的支持）
+cherry-markdown.engine.core.js	| 解析引擎包，可以理解为只提供了将md解析成html的api
+
+目标
+
+在纯流式渲染的场景下，每个包都很大，希望再提供一个针对纯流式渲染场景的构建包，包里去掉：1、editor（编辑器组件，但可能要保留一个textarea）、toolbar（工具栏组件，包括顶部工具栏、侧边栏、悬浮目录）、mermaid（这个包太大了，引导用户自己引入就好了）
+
+包名大概为：cherry-markdown.stream.js
+
+确认排除的依赖：
+
+- mermaid - 通过 rollup.stream.config.js 的 external 配置排除
+- codemirror - 通过 rollup.stream.config.js 的 external 配置排除
+- mathjax/katex - 没有打包进去，但在 Engine.js 中会动态加载（通过配置的 src 和 css）
+
+
+
+-- 2026-01-28 17:13:37
+<br>
+
 tdesign-vue-next/chat 中 `chat-markdown` 用了 tdesign-web-components 中的 `chat-message/content/markdown-content`，后者又用了 cherry-markdown 中的 `dist/addons/cherry-code-block-mermaid-plugin` 和 `dist/cherry-markdown.core`，不止是 engine，是 core！
 
 -- 2026-01-28 16:15:23
