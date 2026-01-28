@@ -1,3 +1,37 @@
+flowchart TB
+    subgraph 用户输入
+        A[Markdown 文本]
+    end
+    
+    subgraph Editor
+        B[CodeMirror]
+    end
+    
+    subgraph Engine
+        C[HookCenter]
+        D[语法 Hooks]
+        E[缓存]
+    end
+    
+    subgraph Previewer
+        F[HTML 渲染]
+    end
+    
+    A --> B
+    B --> |onChange| C
+    C --> D
+    D --> E
+    E --> F
+    
+    subgraph Toolbar
+        G[菜单操作]
+    end
+    
+    G --> |insert| B
+
+-- 2026-01-28 11:42:05
+<br>
+
 语法丰富、开箱即用、易于扩展且高性能的 Markdown 编辑器
 
 -- 2026-01-28 09:52:13
