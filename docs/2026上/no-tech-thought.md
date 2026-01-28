@@ -1,3 +1,8 @@
+tdesign-vue-next/chat 中 `chat-markdown` 用了 tdesign-web-components 中的 `chat-message/content/markdown-content`，后者又用了 cherry-markdown 中的 `dist/addons/cherry-code-block-mermaid-plugin` 和 `dist/cherry-markdown.core`，不止是 engine，是 core！
+
+-- 2026-01-28 16:15:23
+<br>
+
 # `packages/cherry-markdown/src/core` 目录详解
 
 ## 📁 目录结构
