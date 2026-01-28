@@ -1,3 +1,387 @@
+# [`packages/cherry-markdown/src/core`](command:gongfeng.gongfeng-copilot.chat.open-relative-path?%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%22%2C%22path%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%22%2C%22scheme%22%3A%22file%22%7D) 目录详解
+
+## 📁 目录结构
+
+```
+core/
+├── HookCenter.js          # 语法钩子注册中心
+├── HooksConfig.js         # 默认钩子配置列表
+├── SyntaxBase.js          # 行内语法基类
+├── ParagraphBase.js       # 块级语法基类
+├── SentenceBase.js        # 句子级钩子基类（已弃用）
+└── hooks/                 # 具体语法钩子实现
+    ├── 块级语法 (22个)
+    └── 行内语法 (15个)
+```
+
+---
+
+## 🎯 核心文件详解
+
+### 1. HookCenter.js - 语法钩子注册中心
+
+**作用**：管理所有 Markdown 语法钩子的注册、分类和优先级
+
+```mermaid
+flowchart TB
+    subgraph HookCenter
+        A[注册内置钩子] --> C[hookList]
+        B[注册自定义钩子] --> C
+        C --> D[sentence 行内钩子]
+        C --> E[paragraph 块级钩子]
+    end
+```
+
+**核心功能**：
+| 方法 | 说明 |
+|------|------|
+| `registerInternalHooks()` | 注册系统内置的语法钩子 |
+| `registerCustomHooks()` | 注册用户自定义的语法钩子 |
+| `register()` | 实际注册一个钩子实例 |
+| `getHookList()` | 获取所有钩子（按类型分组） |
+
+**关键逻辑**：
+```javascript
+// 钩子分为两类
+this.hookList = {
+  sentence: [],  // 行内语法钩子（如加粗、斜体）
+  paragraph: [], // 块级语法钩子（如标题、代码块）
+};
+```
+
+**自定义钩子支持**：
+- 可以指定 [`before`](command:gongfeng.gongfeng-copilot.chat.open-symbol-in-file?%5B%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22external%22%3A%22file%3A%2F%2F%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22path%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22scheme%22%3A%22file%22%7D%2C%22before%22%2C%5B%7B%22line%22%3A88%2C%22character%22%3A65%7D%2C%7B%22line%22%3A88%2C%22character%22%3A71%7D%5D%5D)/[`after`](command:gongfeng.gongfeng-copilot.chat.open-symbol-in-file?%5B%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22external%22%3A%22file%3A%2F%2F%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22path%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22scheme%22%3A%22file%22%7D%2C%22after%22%2C%5B%7B%22line%22%3A88%2C%22character%22%3A25%7D%2C%7B%22line%22%3A88%2C%22character%22%3A30%7D%5D%5D) 插入位置
+- 可以设置 `force: true` 覆盖同名内置钩子
+
+---
+
+### 2. HooksConfig.js - 默认钩子配置
+
+**作用**：定义所有内置语法钩子的**加载顺序**
+
+**执行顺序规则**：
+- [`beforeMakeHtml`](command:gongfeng.gongfeng-copilot.chat.open-symbol-in-file?%5B%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22external%22%3A%22file%3A%2F%2F%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22path%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22scheme%22%3A%22file%22%7D%2C%22beforeMakeHtml%22%2C%5B%7B%22line%22%3A125%2C%22character%22%3A2%7D%2C%7B%22line%22%3A132%2C%22character%22%3A3%7D%5D%5D)：按数组顺序**正序**执行
+- [`makeHtml`](command:gongfeng.gongfeng-copilot.chat.open-symbol-in-file?%5B%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22external%22%3A%22file%3A%2F%2F%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22path%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22scheme%22%3A%22file%22%7D%2C%22makeHtml%22%2C%5B%7B%22line%22%3A134%2C%22character%22%3A2%7D%2C%7B%22line%22%3A145%2C%22character%22%3A3%7D%5D%5D)：按数组顺序**正序**执行
+- [`afterMakeHtml`](command:gongfeng.gongfeng-copilot.chat.open-symbol-in-file?%5B%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22external%22%3A%22file%3A%2F%2F%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22path%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22scheme%22%3A%22file%22%7D%2C%22afterMakeHtml%22%2C%5B%7B%22line%22%3A147%2C%22character%22%3A2%7D%2C%7B%22line%22%3A154%2C%22character%22%3A3%7D%5D%5D)：按数组顺序**逆序**执行
+
+**钩子加载顺序**：
+```javascript
+const hooksConfig = [
+  // === 块级语法（先处理） ===
+  FrontMatter,     // YAML 前置元数据
+  CodeBlock,       // 代码块 ```
+  InlineCode,      // 行内代码 `
+  InlineMath,      // 行内公式 $
+  MathBlock,       // 块级公式 $$
+  AiFlowAutoClose, // AI 流式输出自动闭合
+  HtmlBlock,       // HTML 块
+  Footnote,        // 脚注 [^1]
+  CommentReference,// 注释引用
+  Transfer,        // 转义字符
+  Br,              // 换行
+  Table,           // 表格
+  Toc,             // 目录
+  Blockquote,      // 引用 >
+  Header,          // 标题 #
+  Hr,              // 水平线 ---
+  List,            // 列表
+  Detail,          // 折叠块 <details>
+  Panel,           // 面板
+  Paragraph,       // 普通段落
+  
+  // === 行内语法（后处理） ===
+  Emoji,           // 表情 :smile:
+  Image,           // 图片 ![]()
+  Link,            // 链接 []()
+  AutoLink,        // 自动链接
+  Emphasis,        // 强调 *斜体* **粗体**
+  BackgroundColor, // 背景色
+  Color,           // 文字颜色
+  Size,            // 字体大小
+  Sub,             // 下标
+  Sup,             // 上标
+  Ruby,            // 注音
+  Strikethrough,   // 删除线
+  Underline,       // 下划线
+  HighLight,       // 高亮
+  Suggester,       // @ 提及
+  Space,           // 连续空格
+];
+```
+
+---
+
+### 3. SyntaxBase.js - 行内语法基类
+
+**作用**：所有**行内语法**钩子的基类（如加粗、斜体、链接）
+
+**生命周期方法**：
+```javascript
+class SyntaxBase {
+  // 在主渲染前预处理
+  beforeMakeHtml(str) { return str; }
+  
+  // 核心渲染方法：Markdown → HTML
+  makeHtml(str) { return str; }
+  
+  // 渲染后处理
+  afterMakeHtml(str) { return str; }
+  
+  // 测试字符串是否匹配当前语法
+  test(str) { return this.RULE.reg.test(str); }
+  
+  // 定义匹配规则（子类必须重写）
+  rule(editorConfig) {
+    return { begin: '', end: '', content: '', reg: new RegExp('') };
+  }
+}
+```
+
+**类型定义**：
+```javascript
+export const HOOKS_TYPE_LIST = {
+  SEN: 'sentence',    // 行内语法
+  PAR: 'paragraph',   // 块级语法
+  DEFAULT: 'sentence',
+};
+```
+
+---
+
+### 4. ParagraphBase.js - 块级语法基类
+
+**作用**：所有**块级语法**钩子的基类（如标题、代码块、表格）
+
+**与 SyntaxBase 的区别**：
+| 特性 | SyntaxBase | ParagraphBase |
+|------|------------|---------------|
+| 类型 | sentence | paragraph |
+| 缓存机制 | ❌ | ✅ |
+| 换行处理 | ❌ | ✅ |
+| 行号计算 | ❌ | ✅ |
+
+**缓存机制**：
+```javascript
+// 缓存用于提升性能，避免重复渲染
+pushCache(str, sign, lineCount)  // 存入缓存
+popCache(sign)                   // 取出缓存
+restoreCache(html)               // 还原所有缓存
+checkCache(wholeMatch, ...)      // 检查是否命中缓存
+```
+
+**缓存键格式**：
+```
+~~C${cacheCounter}I${sign}_L${lineCount}$
+例如：~~C0Iabc123_L5$
+```
+
+**换行处理**：
+```javascript
+// 经典模式 vs 现代模式
+this.classicBr = true;  // 一个换行被忽略，两个换行分段
+this.classicBr = false; // 一个换行变<br>，两个换行分段
+```
+
+---
+
+### 5. SentenceBase.js - 句子级基类（已弃用）
+
+**作用**：早期版本的钩子基类，现已基本弃用
+
+```javascript
+class HookBase {
+  getType() {
+    const typeList = { 1: 'sentence', 2: 'paragraph', 3: 'page' };
+    return typeList[this.HOOKTYPE] || 'sentence';
+  }
+}
+```
+
+---
+
+## 📂 `hooks/` 子目录 - 具体语法实现
+
+### 块级语法钩子（22个）
+
+| 文件 | 钩子名 | 语法示例 | 说明 |
+|------|--------|----------|------|
+| Header.js | `header` | `# 标题` | 支持 ATX（#）和 Setext（===）两种风格 |
+| CodeBlock.js | `codeBlock` | ` ```js ` | 支持语法高亮、行号、复制、展开、自定义渲染器 |
+| Table.js | `table` | `\|a\|b\|` | 支持对齐、图表渲染（ECharts）|
+| List.js | [`list`](command:gongfeng.gongfeng-copilot.chat.open-symbol-in-file?%5B%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22external%22%3A%22file%3A%2F%2F%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22path%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22scheme%22%3A%22file%22%7D%2C%22list%22%2C%5B%7B%22line%22%3A74%2C%22character%22%3A33%7D%2C%7B%22line%22%3A74%2C%22character%22%3A37%7D%5D%5D) | `- item` | 支持有序、无序、任务列表、多种样式 |
+| Blockquote.js | `blockquote` | `> 引用` | 引用块 |
+| MathBlock.js | `mathBlock` | `$$ ... $$` | 块级数学公式（MathJax/KaTeX）|
+| Footnote.js | `footnote` | `[^1]` | 脚注 |
+| Toc.js | `toc` | `[[toc]]` | 自动生成目录 |
+| Hr.js | `hr` | `---` | 水平分割线 |
+| Br.js | [`br`](command:gongfeng.gongfeng-copilot.chat.open-symbol-in-file?%5B%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22external%22%3A%22file%3A%2F%2F%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22path%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22scheme%22%3A%22file%22%7D%2C%22br%22%2C%5B%7B%22line%22%3A45%2C%22character%22%3A22%7D%2C%7B%22line%22%3A45%2C%22character%22%3A24%7D%5D%5D) | 换行 | 换行处理 |
+| HtmlBlock.js | `htmlBlock` | `<div>` | HTML 块级元素 |
+| FrontMatter.js | `frontMatter` | `---\nyaml\n---` | YAML 元数据 |
+| Panel.js | `panel` | 自定义面板 | 信息/警告/错误面板 |
+| Detail.js | `detail` | `<details>` | 可折叠内容 |
+| Paragraph.js | `paragraph` | 普通文本 | 普通段落（兜底） |
+| CommentReference.js | `commentReference` | `[ref]: url` | 全局引用定义 |
+| Transfer.js | `transfer` | `\*` | 转义字符处理 |
+| AiFlowAutoClose.js | `aiFlowAutoClose` | - | AI 流式输出自动闭合 |
+| InlineCode.js | `inlineCode` | `` `code` `` | 行内代码（在块级处理）|
+| InlineMath.js | `inlineMath` | `$x^2$` | 行内公式（在块级处理）|
+
+### 行内语法钩子（15个）
+
+| 文件 | 钩子名 | 语法示例 | 说明 |
+|------|--------|----------|------|
+| Emphasis.js | `fontEmphasis` | `**粗体**` `*斜体*` | 支持 * 和 _ 两种符号 |
+| Image.js | `image` | `!alt` | 支持扩展属性、视频/音频 |
+| Link.js | `link` | [`text`](command:gongfeng.gongfeng-copilot.chat.open-symbol-in-file?%5B%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22external%22%3A%22file%3A%2F%2F%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22path%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22scheme%22%3A%22file%22%7D%2C%22text%22%2C%5B%7B%22line%22%3A68%2C%22character%22%3A33%7D%2C%7B%22line%22%3A68%2C%22character%22%3A37%7D%5D%5D) | 支持 target 属性 |
+| AutoLink.js | `autoLink` | `https://...` | 自动识别 URL |
+| Strikethrough.js | `strikethrough` | `~~删除~~` | 删除线 |
+| Underline.js | `underline` | - | 下划线 |
+| HighLight.js | `highLight` | `==高亮==` | 文字高亮 |
+| Color.js | `color` | - | 文字颜色 |
+| BackgroundColor.js | `backgroundColor` | - | 背景颜色 |
+| Size.js | `size` | - | 字体大小 |
+| Sub.js | `sub` | `H~2~O` | 下标 |
+| Sup.js | `sup` | `X^2^` | 上标 |
+| Ruby.js | `ruby` | - | 注音（ruby 标签）|
+| Emoji.js | `emoji` | `:smile:` | 表情符号 |
+| Suggester.js | `suggester` | `@user` | @ 提及/智能建议 |
+| Space.js | `space` | 多个空格 | 连续空格保留 |
+| SuggestList.js | - | - | Suggester 的辅助模块 |
+| Emoji.config.js | - | - | Emoji 配置数据 |
+
+---
+
+## 🔄 语法解析流程
+
+```mermaid
+flowchart TB
+    subgraph Input
+        A[Markdown 源码]
+    end
+    
+    subgraph "Engine 引擎"
+        direction TB
+        B1["1️⃣ paragraph hooks.beforeMakeHtml()<br/>块级预处理"]
+        B2["2️⃣ paragraph hooks.makeHtml()<br/>块级渲染"]
+        B3["3️⃣ sentence hooks.makeHtml()<br/>行内渲染"]
+        B4["4️⃣ paragraph hooks.afterMakeHtml()<br/>块级后处理（逆序）"]
+    end
+    
+    subgraph Output
+        C[HTML 输出]
+    end
+    
+    A --> B1 --> B2 --> B3 --> B4 --> C
+```
+
+---
+
+## 🛠️ 如何创建自定义语法钩子
+
+### 1. 行内语法示例
+
+```javascript
+import SyntaxBase from '@/core/SyntaxBase';
+
+class MyInlineHook extends SyntaxBase {
+  static HOOK_NAME = 'myInline';
+  
+  makeHtml(str) {
+    return str.replace(/\[\[(.+?)\]\]/g, '<mark>$1</mark>');
+  }
+  
+  rule() {
+    return {
+      begin: '\\[\\[',
+      content: '(.+?)',
+      end: '\\]\\]',
+      reg: /\[\[(.+?)\]\]/g,
+    };
+  }
+}
+```
+
+### 2. 块级语法示例
+
+```javascript
+import ParagraphBase from '@/core/ParagraphBase';
+
+class MyBlockHook extends ParagraphBase {
+  static HOOK_NAME = 'myBlock';
+  
+  constructor() {
+    super({ needCache: true }); // 启用缓存
+  }
+  
+  makeHtml(str, sentenceMakeFunc) {
+    return str.replace(/:::(\w+)\n([\s\S]+?)\n:::/g, (match, type, content) => {
+      const { html } = sentenceMakeFunc(content);
+      return this.pushCache(`<div class="${type}">${html}</div>`, this.sign);
+    });
+  }
+}
+```
+
+---
+
+## 📊 核心类继承关系
+
+```mermaid
+classDiagram
+    class SyntaxBase {
+        +static HOOK_NAME
+        +static HOOK_TYPE = "sentence"
+        +RULE
+        +beforeMakeHtml(str)
+        +makeHtml(str)
+        +afterMakeHtml(str)
+        +test(str)
+        +rule()
+    }
+    
+    class ParagraphBase {
+        +static HOOK_TYPE = "paragraph"
+        +needCache
+        +cache
+        +pushCache()
+        +popCache()
+        +restoreCache()
+        +getLineCount()
+    }
+    
+    SyntaxBase <|-- ParagraphBase
+    SyntaxBase <|-- Emphasis
+    SyntaxBase <|-- Link
+    SyntaxBase <|-- Image
+    ParagraphBase <|-- Header
+    ParagraphBase <|-- CodeBlock
+    ParagraphBase <|-- Table
+    ParagraphBase <|-- List
+```
+
+---
+
+## 📝 总结
+
+`core` 目录是 Cherry Markdown 的**语法解析核心**：
+
+1. **HookCenter** - 统一管理所有语法钩子的注册和调度
+2. **HooksConfig** - 定义语法处理的优先级顺序
+3. **SyntaxBase** - 行内语法的基类（轻量、无缓存）
+4. **ParagraphBase** - 块级语法的基类（支持缓存、行号计算）
+5. **hooks/** - 37 个具体语法实现
+
+**设计亮点**：
+- 🔌 **插件化**：支持自定义语法扩展
+- ⚡ **高性能**：块级语法支持缓存
+- 🎯 **优先级**：通过配置数组控制处理顺序
+- 🔄 **生命周期**：[`beforeMakeHtml`](command:gongfeng.gongfeng-copilot.chat.open-symbol-in-file?%5B%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22external%22%3A%22file%3A%2F%2F%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22path%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22scheme%22%3A%22file%22%7D%2C%22beforeMakeHtml%22%2C%5B%7B%22line%22%3A125%2C%22character%22%3A2%7D%2C%7B%22line%22%3A132%2C%22character%22%3A3%7D%5D%5D) → [`makeHtml`](command:gongfeng.gongfeng-copilot.chat.open-symbol-in-file?%5B%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22external%22%3A%22file%3A%2F%2F%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22path%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22scheme%22%3A%22file%22%7D%2C%22makeHtml%22%2C%5B%7B%22line%22%3A134%2C%22character%22%3A2%7D%2C%7B%22line%22%3A145%2C%22character%22%3A3%7D%5D%5D) → [`afterMakeHtml`](command:gongfeng.gongfeng-copilot.chat.open-symbol-in-file?%5B%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22external%22%3A%22file%3A%2F%2F%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22path%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Fcherry-markdown%2Fpackages%2Fcherry-markdown%2Fsrc%2Fcore%2FParagraphBase.js%22%2C%22scheme%22%3A%22file%22%7D%2C%22afterMakeHtml%22%2C%5B%7B%22line%22%3A147%2C%22character%22%3A2%7D%2C%7B%22line%22%3A154%2C%22character%22%3A3%7D%5D%5D)
+
+
+
+-- 2026-01-28 15:18:41
+<br>
+
 ```mermaid
 flowchart TB
     subgraph 用户输入
