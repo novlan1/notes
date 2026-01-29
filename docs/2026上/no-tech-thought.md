@@ -1,3 +1,14 @@
+<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_HGGZCNeWMmiQDBQ2.png" width="800"/>
+
+<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_mart46DzByWDjDYs.png" width="800"/>
+
+tsconfig.json用根目录的。
+
+tdesign-miniprogram 依赖版本太低。
+
+-- 2026-01-29 11:36:49
+<br>
+
 <img src="https://cdn.uwayfly.com/article/2026/1/own_mike_wPyZEkTCdwZ2hW5K.jpg" width="800"/>
 
 -- 2026-01-29 11:36:10
