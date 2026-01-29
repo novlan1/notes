@@ -1,3 +1,21 @@
+pixui 中使用 vConsole 的卡点
+
+- parentElement
+- initCustomEvent
+- css variables
+
+```js
+return new CustomEvent(type, {
+    detail,
+    bubbles,
+    cancelable
+  })
+```
+
+
+-- 2026-01-29 11:38:02
+<br>
+
 <img src="https://cdn.uwayfly.com/article/2026/1/own_mike_HGGZCNeWMmiQDBQ2.png" width="800"/>
 
 <img src="https://cdn.uwayfly.com/article/2026/1/own_mike_mart46DzByWDjDYs.png" width="800"/>
