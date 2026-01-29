@@ -1,3 +1,12 @@
+```sh
+grep "\[webHookData\]" /root/.pm2/logs/rd-platform-svr-out.log -A 200 -B 20
+
+grep "\[nextSubProjectName\]" /root/.pm2/logs/rd-platform-svr-out.log -A 5 -B 5
+```
+
+-- 2026-01-29 11:41:41
+<br>
+
 pixui 中使用 vConsole 的卡点
 
 - parentElement
