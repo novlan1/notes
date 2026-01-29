@@ -1,3 +1,8 @@
+不管分销转换产品、游戏还是其他维度，关键词TIP_STYLE_NAME可以代替任何东西，凡是需要编译时进行单独打包的都可以用这个。
+
+-- 2026-01-29 11:44:17
+<br>
+
 ```sh
 grep "\[webHookData\]" /root/.pm2/logs/rd-platform-svr-out.log -A 200 -B 20
 
