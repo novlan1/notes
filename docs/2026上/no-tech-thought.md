@@ -1,3 +1,19 @@
+```sh
+pip3 install lizard -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
+```
+```sh
+lizard  -x "**/node_modules/*"
+```
+
+python2 装这个版本 
+
+```sh
+pip install lizard==1.17.10
+```
+
+-- 2026-01-29 11:53:46
+<br>
+
 pandoraShowEntrance
 
 -- 2026-01-29 11:49:32
