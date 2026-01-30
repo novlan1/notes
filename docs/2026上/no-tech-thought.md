@@ -1,3 +1,8 @@
+通过 scp 同步服务 nginx 配置，下载下来，改好，再上传，还有 git 记录。
+
+-- 2026-01-30 08:04:38
+<br>
+
 <img src="https://cdn.uwayfly.com/article/2026/1/own_mike_bJM4BbiMH853QchF.png" width="800"/>
 
 -- 2026-01-29 11:54:48
