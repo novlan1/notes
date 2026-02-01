@@ -23,6 +23,10 @@
         {
           "text": "技术笔记",
           "link": "/docs/2026上/tech-note.md"
+        },
+        {
+          "text": "Cherry Markdown 支持流式输出包",
+          "link": "/docs/2026上/cherry-markdown-stream.md"
         }
       ]
     },
