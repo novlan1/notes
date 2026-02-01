@@ -1,3 +1,9 @@
+我们通常会从三个角度看游戏：美学（包含视听元素）、玩法（包含交互设计），还有叙事（情感承载）。这三者结合，才构成完整的游戏体验。游戏是所有媒介里面，能够最长时间持有人的深度关注，这是游戏最特别的地方。
+
+
+-- 2026-02-01 13:53:57
+<br>
+
 游戏就是"一系列有趣的选择("Game is a series of interesting decisions“.——Sid Meier)。
 
 另一个定义："易于上手，难于精通（"Easy to Learn/play,hard to master"_Nolan Bushnell)。
