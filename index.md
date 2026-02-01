@@ -13,7 +13,7 @@ hero:
   actions:
     - theme: brand
       text: '2026'
-      link: /docs/2026上/typescript-wangdoc
+      link: /docs/2026上/cherry-markdown-stream
     - theme: alt
       text: '2025'
       link: /docs/2025下/tdesign-uniapp-article
