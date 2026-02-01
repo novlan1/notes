@@ -1,3 +1,10 @@
+游戏就是"一系列有趣的选择("Game is a series of interesting decisions“.——Sid Meier)。
+
+另一个定义："易于上手，难于精通（"Easy to Learn/play,hard to master"_Nolan Bushnell)。
+
+-- 2026-02-01 13:52:53
+<br>
+
 游戏是叫好又叫座。叫座包括生意和产品维度，叫好指的是作品维度。生意的关键词是商业价值、收入、KPI，产品的关键词是用户价值、体验、活跃，作品的关键词是内容创作、表达、影响。
 
 -- 2026-02-01 13:51:21
