@@ -1,3 +1,47 @@
+
+## 修复说明
+
+### 1. 移除了 `"type": "module"`
+当同时提供 ESM 和 CommonJS 两种格式时，不应设置 `type: module`，而应通过 `exports` 字段来声明不同格式的入口。
+
+### 2. 修正了入口文件路径
+- `main`: `dist/index.js` → `dist/index.cjs`（CommonJS 入口）
+- `module`: `dist/index.mjs` → `dist/index.js`（ESM 入口，实际文件名）
+
+### 3. 添加了 `exports` 字段
+```json
+"exports": {
+  ".": {
+    "import": {
+      "types": "./dist/types/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "require": {
+      "types": "./dist/types/index.d.ts",
+      "default": "./dist/index.cjs"
+    }
+  },
+  "./dist/index.css": "./dist/index.css",
+  "./style": "./dist/index.css"
+}
+```
+这样 Node.js 和打包工具会根据导入方式自动选择正确的模块格式：
+- ESM 项目（`import`）→ 使用 `dist/index.js`
+- CJS 项目（`require`）→ 使用 `dist/index.cjs`
+
+### 4. 添加了 `sideEffects` 字段
+```json
+"sideEffects": [
+  "dist/index.css",
+  "**/*.css"
+]
+```
+告知打包工具 CSS 文件有副作用，防止被 tree-shaking 错误删除。
+
+
+-- 2026-02-01 11:51:37
+<br>
+
 - 正向先行断言，匹配后面紧跟pattern的位置，?=pattern
 - 负向先行，匹配后面不紧跟…?!pattern
 - 正向后行，匹配前面…?<pattetn
