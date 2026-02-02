@@ -1,3 +1,33 @@
+```ts
+export const LANG_CDN_MAP = {
+  en: 'en', // 英语 English
+  ru: 'ru', // 俄语 Russian
+
+  pt: 'pt-BR', // 葡萄牙语（巴西） Portuguese (Brazil)
+  th: 'th', // 泰语 Thai
+  vi: 'vi', // 越南语 Vietnamese
+
+  zh: 'zh', // 简体中文 Simplified Chinese
+  HK: 'zh-HK', // 繁体中文（香港） Traditional Chinese (Hong Kong)
+  TW: 'zh-TW', // 繁体中文（台湾） Traditional Chinese (Taiwan)
+
+  de: 'de', // 德语 German
+  id: 'id', // 印尼语 Indonesian
+  fr: 'fr', // 法语 French
+
+  es: 'es', // 西班牙语 Spanish
+  tr: 'tr', // 土耳其语 Turkish
+  ar: 'ar', // 阿拉伯语 Arabic
+
+  ms: 'ms', // 马来语 Malay
+  uz: 'uz', // 乌兹别克语 Uzbek
+  ur: 'ur', // 乌尔都语 Urdu
+};
+```
+
+-- 2026-02-02 11:54:47
+<br>
+
 **激活函数**只是对普遍应用在神经网络中，可以进行**非线性转换**的**所有数学函数**的统称。
 
 最早使用的激活函数名为“**阶跃函数**”，虽然它名字听起来很“生僻”，但如果我告诉你，输入信号经过阶跃函数的变换后，只会输出0或者1两个数字，想必你一定会觉得它还是很“平易近人”的。
