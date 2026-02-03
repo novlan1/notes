@@ -1,3 +1,16 @@
+语法对比
+
+| 写法 | Vue 2 | Vue 3 |
+|------|-------|-------|
+| `v-model:visible="visible"` | ❌ 不支持 | ✅ 支持 |
+| `:visible.sync="visible"` | ✅ 支持 | ❌ 已移除 |
+| `:visible="visible" @update:visible="..."` | ✅ 支持 | ✅ 支持 |
+
+使用 `:visible` + `@update:visible` 的手动绑定方式可以**同时兼容 Vue 2 和 Vue 3**。
+
+-- 2026-02-03 15:52:33
+<br>
+
 
 ```javascript
 newProps[key] = {
