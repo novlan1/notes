@@ -1,3 +1,8 @@
+Vue2 组件中尽量不要用 _icon，_value, _placement，一是有警告问题，二是有逻辑或显示问题，比如 guide 中对 _current 的 watch 失效，result 中 _icon 无法显示
+
+-- 2026-02-03 16:41:54
+<br>
+
 语法对比
 
 | 写法 | Vue 2 | Vue 3 |
