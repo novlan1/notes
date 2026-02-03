@@ -1,3 +1,108 @@
+
+ ✅ Robot 子 Agent 系统已完成
+
+我已经重新检查并确认了整个系统结构完整。以下是文件结构和功能说明：
+
+📁 文件结构
+
+```
+src/next-admin-svr/robot/
+├── index.ts                          # 模块导出入口
+├── types.ts                          # 类型定义
+├── orchestrator.ts                   # 编排器（核心调度）
+└── agents/
+    ├── index.ts                      # Agents 导出入口
+    ├── intent-recognition-agent.ts   # 意图识别 Agent
+    ├── project-search-agent.ts       # 项目搜索 Agent
+    └── publish-agent.ts              # 发布 Agent
+```
+
+### 🔄 工作流程
+
+```mermaid
+graph TD
+    A[用户输入] --> B[RobotOrchestrator]
+    B --> C[IntentRecognitionAgent]
+    C --> D{意图类型}
+    D -->|publish| E[ProjectSearchAgent]
+    E --> F[PublishAgent]
+    D -->|query_project| G[ProjectSearchAgent]
+    D -->|help| H[返回帮助信息]
+    D -->|unknown| I[提示无法识别]
+    F --> J[返回发布结果]
+    G --> K[返回项目列表]
+```
+
+🎯 各 Agent 职责
+
+| Agent | 职责 | 实现方式 |
+|-------|------|---------|
+| **IntentRecognitionAgent** | 解析用户意图 | 正则匹配 + AI（`@tencent-ai/agent-sdk`） |
+| **ProjectSearchAgent** | 模糊匹配项目 | 数据库查询 + 评分算法 |
+| **PublishAgent** | 执行发布操作 | 调用 `mcpPublish` |
+
+💬 支持的命令
+
+```
+1. 发布 <项目名> [分支名] [发布原因]
+   例: 发布 gp-next develop
+   例: 发布 gp-next release 修复bug
+
+2. 查询 <项目名>
+   例: 查询 gp-next
+
+3. 帮助 / help
+```
+
+🔌 集成方式
+
+路由文件 robot.ts 已集成：
+
+```typescript
+import { RobotOrchestrator } from '../robot';
+
+const orchestrator = new RobotOrchestrator({
+  useAI: true, // 启用 AI 意图识别
+});
+
+router.post('/', async (req, res) => {
+  const response = await orchestrator.handleMessage(messageText, {
+    staffname,
+    messageId: req.body.msgid,
+  });
+  res.send(response);
+});
+```
+
+ 📝 扩展新功能
+
+后续要添加新功能，只需：
+
+1. **定义新的意图类型**：在 `types.ts` 的 `IntentType` 枚举中添加
+2. **创建新的 Agent**：在 `agents/` 目录下创建新的 Agent 类
+3. **注册到编排器**：在 `orchestrator.ts` 中添加处理流程
+
+例如，添加"回滚"功能：
+
+```typescript
+// 1. types.ts
+export enum IntentType {
+  // ...
+  ROLLBACK = 'rollback',  // 新增
+}
+
+// 2. agents/rollback-agent.ts
+export class RollbackAgent implements IAgent<RollbackParams, RollbackResult> { ... }
+
+// 3. orchestrator.ts handleMessage 中添加 case
+case IntentType.ROLLBACK:
+  return this.handleRollbackFlow(intent, context);
+```
+
+
+-- 2026-02-03 10:14:17
+<br>
+
 ```mermaid
 graph TD
     A[用户输入] --> B[RobotOrchestrator]
