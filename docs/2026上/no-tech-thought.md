@@ -1,4 +1,38 @@
 
+```javascript
+newProps[key] = {
+  type: [null, ...newType],
+  default: null,
+};
+```
+
+在 Vue 2 中，`type` 数组中包含 `null` 会导致 `Right-hand side of 'instanceof' is not an object` 错误，因为 Vue 2 会对 `type` 数组中的每个元素执行 `instanceof` 检查，而 `null` 不是一个有效的构造函数。
+
+**解决方案**：将 `null` 从 `type` 数组中移除，只保留有效的类型构造函数。如果需要允许 `null` 值，可以通过 `default: null` 和 `validator` 来处理。
+[编辑文件中]
+已修复！将第 166 行的：
+
+```javascript
+type: [null, ...newType],
+```
+
+修改为：
+
+```javascript
+type: newType,
+```
+
+**原因说明**：
+- Vue 2 在进行 prop 类型检查时，会遍历 `type` 数组并对每个元素执行 `instanceof` 检查
+- `null` 不是一个有效的构造函数，所以 `value instanceof null` 会抛出 `Right-hand side of 'instanceof' is not an object` 错误
+- Vue 3 对此做了处理，允许 `type` 中包含 `null`，但 Vue 2 不支持
+
+修复后，`default: null` 仍然保留，这样 prop 的默认值依然是 `null`，只是类型检查时不再包含 `null`。
+
+-- 2026-02-03 15:50:41
+<br>
+
+
  ✅ Robot 子 Agent 系统已完成
 
 我已经重新检查并确认了整个系统结构完整。以下是文件结构和功能说明：
