@@ -1,3 +1,20 @@
+```mermaid
+graph TD
+    A[用户输入] --> B[RobotOrchestrator]
+    B --> C[IntentRecognitionAgent]
+    C --> D{意图类型}
+    D -->|publish| E[ProjectSearchAgent]
+    E --> F[PublishAgent]
+    D -->|query_project| G[ProjectSearchAgent]
+    D -->|help| H[返回帮助信息]
+    D -->|unknown| I[提示无法识别]
+    F --> J[返回发布结果]
+    G --> K[返回项目列表]
+```
+
+-- 2026-02-03 10:11:43
+<br>
+
 如果你现在不花时间，去创造你想要的生活，你将被迫花时间，去应付你不想要的生活。
 
 成功的路上没有人会叫你起床，也没有人会为你买单。
