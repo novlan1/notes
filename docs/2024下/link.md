@@ -15,7 +15,10 @@
 |Plugin Light Docs|https://novlan1.github.io/docs/plugin-light/|
 |Press Next Demo|https://novlan1.github.io/press-next-demo/|
 |Press Plus Demo|https://novlan1.github.io/press-plus-demo/|
-|TDesign UniApp Doc|https://novlan1.github.io/tdesign-uniapp/|
+|TDesign UniApp Doc|https://uwayfly.com/tdesign-uniapp/|
+|TDesign UniApp Doc|https://tdesign.tencent.com/uniapp/|
+|TDesign UniApp Demo|https://tdesign.tencent.com/uniapp/live|
+|TDesign UniApp Chat Doc|https://tdesign.tencent.com/uniapp-chat/|
 |TDesign UniApp Vue2|https://novlan1.github.io/tdesign-uniapp-vue2-cli-demo/|
 |赛宝|https://h5.nes.smoba.qq.com/pvpesport.next.user/|
 |赛宝 Prerelease|https://h5-test.nes.smoba.qq.com/pvpesport.next.user.develop/?tip_debug_cgi_env=prod|
