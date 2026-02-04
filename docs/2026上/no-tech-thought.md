@@ -1,3 +1,10 @@
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_2WHXJahmHsCJQnxA.jpeg" width="800"/>
+
+任务、上下文、范例、角色、格式、语气
+
+-- 2026-02-04 18:30:45
+<br>
+
 <img src="https://cdn.uwayfly.com/article/2026/2/own_mike_wEH8H2G7bpHpWD4f.jpeg" width="800"/>
 
 提示工程师
