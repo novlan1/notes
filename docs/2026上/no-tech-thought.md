@@ -1,3 +1,10 @@
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_sEN5s6KWJadzApdc.png" width="800"/>
+
+Vue2 中数组类型的 prop，也要用函数返回。
+
+-- 2026-02-04 09:46:19
+<br>
+
 Vue2 组件中尽量不要用 _icon，_value, _placement，一是有警告问题，二是有逻辑或显示问题，比如 guide 中对 _current 的 watch 失效，result 中 _icon 无法显示
 
 -- 2026-02-03 16:41:54
