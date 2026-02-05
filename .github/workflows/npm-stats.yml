@@ -1,0 +1,55 @@
+# NPM 下载量统计任务
+name: NPM Download Statistics
+
+# 触发条件
+on:
+  # 定时任务：每5分钟执行一次（测试用，正式使用时建议改为每天执行）
+  # 当前设置：每5分钟执行一次
+  # 正式环境建议：'0 1 * * *' (每天早上 9:00 北京时间)
+  schedule:
+    - cron: '*/5 * * * *'
+  
+  # 支持手动触发（推荐：可以立即看到效果）
+  workflow_dispatch:
+
+# 任务
+jobs:
+  npm-stats:
+    # 服务器环境：最新版 Ubuntu
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [20]
+    
+    steps:
+      # 拉取代码
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+
+      # 设置 Node.js 环境
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      # 安装 pnpm
+      - name: Install pnpm
+        run: npm install -g pnpm@9
+
+      # 安装依赖
+      - name: Install Dependencies
+        run: pnpm install
+
+      # 运行统计脚本
+      - name: Run NPM Stats Script
+        env:
+          WX_ROBOT_KEY: ${{ secrets.WX_ROBOT_KEY }}
+        run: node scripts/npm-stats/npm-download-stats.js
+
+      # 如果失败，发送通知（可选）
+      - name: Notify on Failure
+        if: failure()
+        run: echo "NPM stats job failed. Please check the logs."

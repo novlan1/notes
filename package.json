@@ -7,7 +7,8 @@
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview",
     "check": "node scripts/check/check.js",
-    "extra:install": "bash scripts/install/extra-install.sh"
+    "extra:install": "bash scripts/install/extra-install.sh",
+    "stats": "node scripts/npm-stats/npm-download-stats.js"
   },
   "type": "module",
   "devDependencies": {
@@ -48,7 +49,7 @@
     "press-ui-next": "^0.0.18",
     "share-light": "^0.0.5",
     "swiper-next": "^0.1.1",
-    "t-comm": "^1.5.20",
+    "t-comm": "^3.0.25",
     "tdesign-uniapp": "^0.2.5",
     "vconsole-helper": "^0.0.4",
     "viewerjs": "^1.11.7",

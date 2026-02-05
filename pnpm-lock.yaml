@@ -57,8 +57,8 @@ importers:
         specifier: ^0.1.1
         version: 0.1.1
       t-comm:
-        specifier: ^1.5.20
-        version: 1.5.20
+        specifier: ^3.0.25
+        version: 3.0.25
       tdesign-uniapp:
         specifier: ^0.2.5
         version: 0.2.5
@@ -110,7 +110,7 @@ importers:
         version: 1.0.9(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.1.6))(eslint@8.57.1)(typescript@5.1.6))(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.1.6))(prettier@3.5.3)(typescript@5.1.6)
       eslint-config-rookie:
         specifier: ^1.1.2
-        version: 1.1.2(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.1.6))(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.31.0)(eslint@8.57.1))(eslint@8.57.1)
+        version: 1.1.2(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.1.6))(eslint-import-resolver-typescript@2.7.1)(eslint@8.57.1)
       eslint-plugin-light:
         specifier: ^1.0.4
         version: 1.0.4(@babel/eslint-parser@7.27.0(@babel/core@7.26.10)(eslint@8.57.1))(eslint@8.57.1)
@@ -128,10 +128,10 @@ importers:
         version: 5.1.6
       vitepress:
         specifier: ^1.6.3
-        version: 1.6.3(@algolia/client-search@5.23.4)(@types/node@22.15.3)(async-validator@4.2.5)(axios@1.9.0)(postcss@7.0.39)(search-insights@2.17.3)(sortablejs@1.15.6)(sugarss@2.0.0)(terser@5.39.0)(typescript@5.1.6)
+        version: 1.6.3(@algolia/client-search@5.23.4)(@types/node@22.15.3)(async-validator@4.2.5)(axios@1.9.0)(postcss@5.2.18)(search-insights@2.17.3)(sortablejs@1.15.6)(sugarss@2.0.0)(terser@5.39.0)(typescript@5.1.6)
       vitepress-plugin-mermaid:
         specifier: ^2.0.17
-        version: 2.0.17(mermaid@11.12.2)(vitepress@1.6.3(@algolia/client-search@5.23.4)(@types/node@22.15.3)(async-validator@4.2.5)(axios@1.9.0)(postcss@7.0.39)(search-insights@2.17.3)(sortablejs@1.15.6)(sugarss@2.0.0)(terser@5.39.0)(typescript@5.1.6))
+        version: 2.0.17(mermaid@11.12.2)(vitepress@1.6.3(@algolia/client-search@5.23.4)(@types/node@22.15.3)(async-validator@4.2.5)(axios@1.9.0)(postcss@5.2.18)(search-insights@2.17.3)(sortablejs@1.15.6)(sugarss@2.0.0)(terser@5.39.0)(typescript@5.1.6))
 
 packages:
 
@@ -1579,6 +1579,7 @@ packages:
     resolution: {integrity: sha512-HZvjpiUmSNx5zFgwtQAV1GaGazT2RWvqeDi0hV+AtC8unqqDSsaFjPxfsO6qPtKRRg25SisACWnJ37Yio8ttaw==}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-win32-arm64-msvc@4.40.0':
     resolution: {integrity: sha512-UtZQQI5k/b8d7d3i9AZmA/t+Q4tk3hOC0tMOMSq2GlMYOfxbesxG4mJSeDp0EHs30N9bsfwUvs3zF4v/RzOeTQ==}
@@ -6549,6 +6550,11 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  semver@7.7.3:
+    resolution: {integrity: sha512-SdsKMrI9TdgjdweUSR9MweHA4EJ8YxHn8DFaDisvhVlUOe4BF1tLD7GAj0lIqWVl+dPb/rExr0Btby5loQm20Q==}
+    engines: {node: '>=10'}
+    hasBin: true
+
   send@0.19.0:
     resolution: {integrity: sha512-dW41u5VfLXu8SJh5bwRmyYUbAoSB3c9uQh6L8h/KtsFREPWpbX1lrljJo186Jc4nmci/sGUZ9a0a0J2zgfq2hw==}
     engines: {node: '>= 0.8.0'}
@@ -6936,6 +6942,10 @@ packages:
 
   t-comm@1.5.20:
     resolution: {integrity: sha512-YZthr7agnY93WfJ/xyK7LQ1YOCbJBEBSFc9Mqc7gnXBZHfVShFrVWgiZZV4n/H4fDGgCeRlf78fhWwBOoHc/0w==}
+    hasBin: true
+
+  t-comm@3.0.25:
+    resolution: {integrity: sha512-vRhs6Gq6q7UW/U1b63nmL6cIhYcjTZmwx/B6Vp3fjOh7lzJvmEo2De4qwi/tpBjxNFilEADVnM4OML7T00H3lA==}
     hasBin: true
 
   tabbable@6.2.0:
@@ -9807,18 +9817,18 @@ snapshots:
 
   '@sindresorhus/is@0.7.0': {}
 
-  '@stylelint/postcss-css-in-js@0.37.3(postcss-syntax@0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2(postcss@7.0.39))(postcss@7.0.39))(postcss-less@3.1.4)(postcss-scss@2.1.1)(postcss@7.0.39))(postcss@7.0.39)':
+  '@stylelint/postcss-css-in-js@0.37.3(postcss-syntax@0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2(postcss@5.2.18))(postcss@7.0.39))(postcss-less@3.1.4)(postcss-scss@2.1.1)(postcss@7.0.39))(postcss@7.0.39)':
     dependencies:
       '@babel/core': 7.26.10
       postcss: 7.0.39
-      postcss-syntax: 0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2(postcss@7.0.39))(postcss@7.0.39))(postcss-less@3.1.4)(postcss-scss@2.1.1)(postcss@7.0.39)
+      postcss-syntax: 0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2(postcss@5.2.18))(postcss@7.0.39))(postcss-less@3.1.4)(postcss-scss@2.1.1)(postcss@7.0.39)
     transitivePeerDependencies:
       - supports-color
 
-  '@stylelint/postcss-markdown@0.36.2(postcss-syntax@0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2(postcss@7.0.39))(postcss@7.0.39))(postcss-less@3.1.4)(postcss-scss@2.1.1)(postcss@7.0.39))(postcss@7.0.39)':
+  '@stylelint/postcss-markdown@0.36.2(postcss-syntax@0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2(postcss@5.2.18))(postcss@7.0.39))(postcss-less@3.1.4)(postcss-scss@2.1.1)(postcss@7.0.39))(postcss@7.0.39)':
     dependencies:
       postcss: 7.0.39
-      postcss-syntax: 0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2(postcss@7.0.39))(postcss@7.0.39))(postcss-less@3.1.4)(postcss-scss@2.1.1)(postcss@7.0.39)
+      postcss-syntax: 0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2(postcss@5.2.18))(postcss@7.0.39))(postcss-less@3.1.4)(postcss-scss@2.1.1)(postcss@7.0.39)
       remark: 13.0.0
       unist-util-find-all-after: 3.0.2
     transitivePeerDependencies:
@@ -10373,7 +10383,7 @@ snapshots:
     dependencies:
       rfdc: 1.4.1
 
-  '@vue/eslint-config-standard@8.0.1(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.1.6))(eslint-import-resolver-typescript@2.7.1)(eslint-plugin-vue@9.33.0(eslint@8.57.1))(eslint@8.57.1)':
+  '@vue/eslint-config-standard@8.0.1(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.1.6))(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.31.0)(eslint@8.57.1))(eslint-plugin-vue@9.33.0(eslint@8.57.1))(eslint@8.57.1)':
     dependencies:
       eslint: 8.57.1
       eslint-config-standard: 17.1.0(eslint-plugin-import@2.31.0)(eslint-plugin-n@15.7.0(eslint@8.57.1))(eslint-plugin-promise@6.6.0(eslint@8.57.1))(eslint@8.57.1)
@@ -12398,7 +12408,7 @@ snapshots:
       '@babel/eslint-parser': 7.27.0(@babel/core@7.26.10)(eslint@8.57.1)
       '@babel/preset-react': 7.26.3(@babel/core@7.26.10)
       '@stylistic/eslint-plugin-jsx': 3.1.0(eslint@8.57.1)
-      '@vue/eslint-config-standard': 8.0.1(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.1.6))(eslint-import-resolver-typescript@2.7.1)(eslint-plugin-vue@9.33.0(eslint@8.57.1))(eslint@8.57.1)
+      '@vue/eslint-config-standard': 8.0.1(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.1.6))(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.31.0)(eslint@8.57.1))(eslint-plugin-vue@9.33.0(eslint@8.57.1))(eslint@8.57.1)
       '@vue/eslint-config-typescript': 12.0.0(eslint-plugin-vue@9.33.0(eslint@8.57.1))(eslint@8.57.1)(typescript@5.1.6)
       eslint: 8.57.1
       eslint-config-airbnb-base: 15.0.0(eslint-plugin-import@2.31.0)(eslint@8.57.1)
@@ -12430,7 +12440,7 @@ snapshots:
       '@typescript-eslint/parser': 5.62.0(eslint@8.57.1)(typescript@5.1.6)
       '@vue/eslint-config-typescript': 12.0.0(eslint-plugin-vue@9.33.0(eslint@8.57.1))(eslint@8.57.1)(typescript@5.1.6)
       eslint: 8.57.1
-      eslint-config-rookie: 1.1.2(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.1.6))(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.31.0)(eslint@8.57.1))(eslint@8.57.1)
+      eslint-config-rookie: 1.1.2(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.1.6))(eslint-import-resolver-typescript@2.7.1)(eslint@8.57.1)
       eslint-import-resolver-typescript: 2.7.1(eslint-plugin-import@2.31.0)(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.1.6))(eslint-import-resolver-typescript@2.7.1)(eslint@8.57.1)
       eslint-plugin-jest: 26.9.0(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.1.6))(eslint@8.57.1)(typescript@5.1.6))(eslint@8.57.1)(typescript@5.1.6)
@@ -12449,7 +12459,7 @@ snapshots:
     dependencies:
       eslint: 8.57.1
 
-  eslint-config-rookie@1.1.2(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.1.6))(eslint-import-resolver-typescript@2.7.1(eslint-plugin-import@2.31.0)(eslint@8.57.1))(eslint@8.57.1):
+  eslint-config-rookie@1.1.2(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.1.6))(eslint-import-resolver-typescript@2.7.1)(eslint@8.57.1):
     dependencies:
       '@babel/core': 7.26.10
       '@babel/eslint-parser': 7.27.0(@babel/core@7.26.10)(eslint@8.57.1)
@@ -14958,11 +14968,11 @@ snapshots:
 
   possible-typed-array-names@1.1.0: {}
 
-  postcss-html@0.36.0(postcss-syntax@0.36.2(postcss@7.0.39))(postcss@7.0.39):
+  postcss-html@0.36.0(postcss-syntax@0.36.2(postcss@5.2.18))(postcss@7.0.39):
     dependencies:
       htmlparser2: 3.10.1
       postcss: 7.0.39
-      postcss-syntax: 0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2(postcss@7.0.39))(postcss@7.0.39))(postcss-less@3.1.4)(postcss-scss@2.1.1)(postcss@7.0.39)
+      postcss-syntax: 0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2(postcss@5.2.18))(postcss@7.0.39))(postcss-less@3.1.4)(postcss-scss@2.1.1)(postcss@7.0.39)
 
   postcss-import@15.1.0(postcss@8.5.3):
     dependencies:
@@ -15023,11 +15033,11 @@ snapshots:
       lodash: 4.17.21
       postcss: 7.0.39
 
-  postcss-syntax@0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2(postcss@7.0.39))(postcss@7.0.39))(postcss-less@3.1.4)(postcss-scss@2.1.1)(postcss@7.0.39):
+  postcss-syntax@0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2(postcss@5.2.18))(postcss@7.0.39))(postcss-less@3.1.4)(postcss-scss@2.1.1)(postcss@7.0.39):
     dependencies:
       postcss: 7.0.39
     optionalDependencies:
-      postcss-html: 0.36.0(postcss-syntax@0.36.2(postcss@7.0.39))(postcss@7.0.39)
+      postcss-html: 0.36.0(postcss-syntax@0.36.2(postcss@5.2.18))(postcss@7.0.39)
       postcss-less: 3.1.4
       postcss-scss: 2.1.1
 
@@ -15696,6 +15706,8 @@ snapshots:
 
   semver@7.7.1: {}
 
+  semver@7.7.3: {}
+
   send@0.19.0:
     dependencies:
       debug: 2.6.9
@@ -16118,8 +16130,8 @@ snapshots:
 
   stylelint@13.13.1:
     dependencies:
-      '@stylelint/postcss-css-in-js': 0.37.3(postcss-syntax@0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2(postcss@7.0.39))(postcss@7.0.39))(postcss-less@3.1.4)(postcss-scss@2.1.1)(postcss@7.0.39))(postcss@7.0.39)
-      '@stylelint/postcss-markdown': 0.36.2(postcss-syntax@0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2(postcss@7.0.39))(postcss@7.0.39))(postcss-less@3.1.4)(postcss-scss@2.1.1)(postcss@7.0.39))(postcss@7.0.39)
+      '@stylelint/postcss-css-in-js': 0.37.3(postcss-syntax@0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2(postcss@5.2.18))(postcss@7.0.39))(postcss-less@3.1.4)(postcss-scss@2.1.1)(postcss@7.0.39))(postcss@7.0.39)
+      '@stylelint/postcss-markdown': 0.36.2(postcss-syntax@0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2(postcss@5.2.18))(postcss@7.0.39))(postcss-less@3.1.4)(postcss-scss@2.1.1)(postcss@7.0.39))(postcss@7.0.39)
       autoprefixer: 9.8.8
       balanced-match: 2.0.0
       chalk: 4.1.2
@@ -16145,7 +16157,7 @@ snapshots:
       micromatch: 4.0.8
       normalize-selector: 0.2.0
       postcss: 7.0.39
-      postcss-html: 0.36.0(postcss-syntax@0.36.2(postcss@7.0.39))(postcss@7.0.39)
+      postcss-html: 0.36.0(postcss-syntax@0.36.2(postcss@5.2.18))(postcss@7.0.39)
       postcss-less: 3.1.4
       postcss-media-query-parser: 0.2.3
       postcss-resolve-nested-selector: 0.1.6
@@ -16153,7 +16165,7 @@ snapshots:
       postcss-sass: 0.4.4
       postcss-scss: 2.1.1
       postcss-selector-parser: 6.1.2
-      postcss-syntax: 0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2(postcss@7.0.39))(postcss@7.0.39))(postcss-less@3.1.4)(postcss-scss@2.1.1)(postcss@7.0.39)
+      postcss-syntax: 0.36.2(postcss-html@0.36.0(postcss-syntax@0.36.2(postcss@5.2.18))(postcss@7.0.39))(postcss-less@3.1.4)(postcss-scss@2.1.1)(postcss@7.0.39)
       postcss-value-parser: 4.2.0
       resolve-from: 5.0.0
       slash: 3.0.0
@@ -16257,6 +16269,20 @@ snapshots:
       cron-parser: 4.9.0
       qs: 6.14.0
       request: 2.88.2
+      tar: 6.2.1
+    transitivePeerDependencies:
+      - debug
+
+  t-comm@3.0.25:
+    dependencies:
+      '@babel/runtime': 7.27.1
+      axios: 1.9.0(debug@4.4.0)
+      cheerio: 1.0.0
+      commander: 10.0.1
+      cron-parser: 4.9.0
+      qs: 6.14.0
+      request: 2.88.2
+      semver: 7.7.3
       tar: 6.2.1
     transitivePeerDependencies:
       - debug
@@ -16954,14 +16980,14 @@ snapshots:
     dependencies:
       viewerjs: 1.11.7
 
-  vitepress-plugin-mermaid@2.0.17(mermaid@11.12.2)(vitepress@1.6.3(@algolia/client-search@5.23.4)(@types/node@22.15.3)(async-validator@4.2.5)(axios@1.9.0)(postcss@7.0.39)(search-insights@2.17.3)(sortablejs@1.15.6)(sugarss@2.0.0)(terser@5.39.0)(typescript@5.1.6)):
+  vitepress-plugin-mermaid@2.0.17(mermaid@11.12.2)(vitepress@1.6.3(@algolia/client-search@5.23.4)(@types/node@22.15.3)(async-validator@4.2.5)(axios@1.9.0)(postcss@5.2.18)(search-insights@2.17.3)(sortablejs@1.15.6)(sugarss@2.0.0)(terser@5.39.0)(typescript@5.1.6)):
     dependencies:
       mermaid: 11.12.2
-      vitepress: 1.6.3(@algolia/client-search@5.23.4)(@types/node@22.15.3)(async-validator@4.2.5)(axios@1.9.0)(postcss@7.0.39)(search-insights@2.17.3)(sortablejs@1.15.6)(sugarss@2.0.0)(terser@5.39.0)(typescript@5.1.6)
+      vitepress: 1.6.3(@algolia/client-search@5.23.4)(@types/node@22.15.3)(async-validator@4.2.5)(axios@1.9.0)(postcss@5.2.18)(search-insights@2.17.3)(sortablejs@1.15.6)(sugarss@2.0.0)(terser@5.39.0)(typescript@5.1.6)
     optionalDependencies:
       '@mermaid-js/mermaid-mindmap': 9.3.0
 
-  vitepress@1.6.3(@algolia/client-search@5.23.4)(@types/node@22.15.3)(async-validator@4.2.5)(axios@1.9.0)(postcss@7.0.39)(search-insights@2.17.3)(sortablejs@1.15.6)(sugarss@2.0.0)(terser@5.39.0)(typescript@5.1.6):
+  vitepress@1.6.3(@algolia/client-search@5.23.4)(@types/node@22.15.3)(async-validator@4.2.5)(axios@1.9.0)(postcss@5.2.18)(search-insights@2.17.3)(sortablejs@1.15.6)(sugarss@2.0.0)(terser@5.39.0)(typescript@5.1.6):
     dependencies:
       '@docsearch/css': 3.8.2
       '@docsearch/js': 3.8.2(@algolia/client-search@5.23.4)(search-insights@2.17.3)
@@ -16982,7 +17008,7 @@ snapshots:
       vite: 5.4.18(@types/node@22.15.3)(sugarss@2.0.0)(terser@5.39.0)
       vue: 3.5.13(typescript@5.1.6)
     optionalDependencies:
-      postcss: 7.0.39
+      postcss: 5.2.18
     transitivePeerDependencies:
       - '@algolia/client-search'
       - '@types/node'
