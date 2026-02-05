@@ -1,3 +1,40 @@
+好的，这是将消息流程图转换为 Mermaid 格式：
+
+```mermaid
+sequenceDiagram
+    participant Mock as Mock WebSocket
+    participant App as App.vue
+    participant Message as message/index.vue
+    participant Chat as chat/index.vue
+
+    Mock->>App: 1. 发送消息
+    Note over App: socket.onMessage 接收<br/>（唯一的 onMessage 回调）
+    App->>App: 解析消息
+    App->>App: 更新未读计数
+    App->>Message: 2. uni.$emit('onChatMessage', { userId, message })
+    App->>Chat: 2. uni.$emit('onChatMessage', { userId, message })
+    Note over Message: uni.$on('onChatMessage')<br/>更新消息列表
+    Note over Chat: uni.$on('onChatMessage')<br/>更新聊天界面、loading 状态
+```
+
+或者使用流程图格式：
+
+```mermaid
+flowchart TD
+    A["1. Mock WebSocket 发送消息"] --> B["2. App.vue socket.onMessage 接收<br/>（唯一的 onMessage 回调）"]
+    B --> B1["解析消息"]
+    B1 --> B2["uni.$emit('onChatMessage', { userId, message })"]
+    B2 --> B3["更新未读计数"]
+    B3 --> C["3. 各页面通过 uni.$on('onChatMessage') 接收消息"]
+    C --> D["message/index.vue<br/>更新消息列表"]
+    C --> E["chat/index.vue<br/>更新聊天界面、loading 状态"]
+```
+
+你可以根据需要选择使用时序图（sequenceDiagram）或流程图（flowchart）格式。
+
+-- 2026-02-05 17:45:31
+<br>
+
 <img src="https://cdn.uwayfly.com/article/2026/2/own_mike_2WHXJahmHsCJQnxA.jpeg" width="800"/>
 
 任务、上下文、范例、角色、格式、语气
