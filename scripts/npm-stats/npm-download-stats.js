@@ -100,7 +100,7 @@ function generateMarkdownReport(dailyStats, weeklyStats, monthlyStats) {
     day: '2-digit',
   });
 
-  let markdown = `# NPM 下载量统计报告\n\n`;
+  let markdown = `# NPM 下载量统计报告<@guowangyang>\n\n`;
   markdown += `> 统计时间：${dateStr}\n\n`;
 
   // 每日统计

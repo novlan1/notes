@@ -7,8 +7,8 @@ on:
   # 当前设置：每5分钟执行一次
   # 正式环境建议：'0 1 * * *' (每天早上 9:00 北京时间)
   schedule:
-    - cron: '*/5 * * * *'
-  
+    - cron: '0 1 * * *'
+
   # 支持手动触发（推荐：可以立即看到效果）
   workflow_dispatch:
 
@@ -17,11 +17,11 @@ jobs:
   npm-stats:
     # 服务器环境：最新版 Ubuntu
     runs-on: ubuntu-latest
-    
+
     strategy:
       matrix:
         node-version: [20]
-    
+
     steps:
       # 拉取代码
       - name: Checkout
