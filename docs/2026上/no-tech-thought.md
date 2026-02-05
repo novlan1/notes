@@ -1,3 +1,10 @@
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_b3pBwZn4MpyGN85H.png" width="800"/>
+
+活动报名模板
+
+-- 2026-02-06 02:22:47
+<br>
+
 <img src="https://cdn.uwayfly.com/article/2026/2/own_mike_ccszGQCbrFP7h4dB.png" width="800"/>
 
 社区内容模板、零售电商模板、组件库模板
