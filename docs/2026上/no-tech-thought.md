@@ -1,3 +1,8 @@
+SVM 的核心思想是，找到一个最优的决策边界，或者称为“超平面”，这个边界能够以最大的间隔将不同类别的数据分开。
+
+-- 2026-02-06 13:27:40
+<br>
+
 <img src="https://cdn.uwayfly.com/article/2026/2/own_mike_b3pBwZn4MpyGN85H.png" width="800"/>
 
 活动报名模板
