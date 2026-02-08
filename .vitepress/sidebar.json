@@ -27,6 +27,14 @@
         {
           "text": "Cherry Markdown 支持流式输出包",
           "link": "/docs/2026上/cherry-markdown-stream.md"
+        },
+        {
+          "text": "@tdesign/uniapp 图标瘦身",
+          "link": "/docs/2026上/tdesign-uniapp中的图标瘦身.md"
+        },
+        {
+          "text": "@tdesign/uniapp 的 Vue2.x 适配说明",
+          "link": "/docs/2026上/tdesign-uniapp-vue2.md"
         }
       ]
     },
