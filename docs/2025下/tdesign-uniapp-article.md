@@ -1,3 +1,7 @@
+> 🎉 [TDesign Uniapp](https://tdesign.tencent.com/uniapp/overview) 已经合入 [TDesign Miniprogram](https://github.com/Tencent/tdesign-miniprogram) 官方仓库大仓。文档将在 [TDesign](https://tdesign.tencent.com/uniapp/overview) 官方站点维护。
+>
+> ⚠️ tdesign-uniapp 包名变更为 [@tdesign/uniapp](https://www.npmjs.com/package/@tdesign/uniapp)，tdesign-uniapp-chat 包名变更为 [@tdesign/uniapp-chat](https://www.npmjs.com/package/@tdesign/uniapp-chat)
+
 ## 1. 背景
 
 跨端开发一直是前端领域的重要部分，旨在实现一套代码在多个平台运行。国内使用 [uniapp](https://uniapp.dcloud.net.cn/) 框架人数较多，一直有外部声音想要 uniapp 版本的 TDesign，如 TDesign Miniprogram 下的众多 [issue](https://github.com/Tencent/tdesign-miniprogram/issues?q=uniapp)。
