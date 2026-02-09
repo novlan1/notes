@@ -134,4 +134,16 @@ export default defineConfig({
 
 <img src="https://cdn.uwayfly.com/article/2026/2/own_mike_dsdB5TmAaedmkPr5.png" width="900">
 
+## 7. FAQ
+
+1. 如何快速拿到业务中使用的图标列表
+
+可以用下面的命令获取：
+
+```bash
+grep -rho 'icon="[^"]*"\|left-icon="[^"]*"\|name="[^"]*"' src --include="*.vue" | sort | uniq
+```
+
+不过这个可能会漏掉一些动态图标，需要手动检查。
+
 
