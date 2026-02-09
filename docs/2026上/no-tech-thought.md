@@ -1,3 +1,10 @@
+- 模型训练过程就是不断前向传播、损失计算、反向传播、参数更新的过程。
+
+- 模型推理就是根据训练好的参数，进行前向传播的过程。
+
+-- 2026-02-09 08:07:59
+<br>
+
 pnpm create uni 本质上是 pnpm exec create-uni 的简写，npm/pnpm/yarn 都遵循一个通用约定：
 
 `[包管理器] create <name> ≈ [包管理器] exec create-<name>`
