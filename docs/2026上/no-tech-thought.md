@@ -1,3 +1,14 @@
+面对冲突，一般人会有以下三种反应：
+
+1. 不作为，逃避
+2. 期待领导解决
+3. 对抗，导致关系破裂
+
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_mjTdXmnMcnBsmKnb.png" width="800"/>
+
+-- 2026-02-10 15:34:44
+<br>
+
 <img src="https://cdn.uwayfly.com/article/2026/2/own_mike_xtncZ5fwF7Jzh3Sh.png" width="800"/>
 
 -- 2026-02-10 12:36:01
