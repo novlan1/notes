@@ -1,3 +1,8 @@
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_xtncZ5fwF7Jzh3Sh.png" width="800"/>
+
+-- 2026-02-10 12:36:01
+<br>
+
 先有行动，才有自信。而不是先有自信，才有行动。
 
 <img src="https://cdn.uwayfly.com/article/2026/2/own_mike_xdkpdHtCfMbanCFc.png" width="800"/>
