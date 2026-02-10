@@ -1,3 +1,38 @@
+先有行动，才有自信。而不是先有自信，才有行动。
+
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_xdkpdHtCfMbanCFc.png" width="800"/>
+
+-- 2026-02-10 11:22:32
+<br>
+
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_kkRsPrfZsPGFancc.png" width="800"/>
+
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_rewsrpFi4dx5nGks.png" width="800"/>
+
+-- 2026-02-10 10:58:45
+<br>
+
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_kEmSSwe33dQBExXs.png" width="800"/>
+
+一方面不屑，另一方面又嫉妒。
+
+-- 2026-02-10 10:47:00
+<br>
+
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_aTBrcpbfNyhhQChE.png" width="800"/>
+
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_3sK8JhtJ6dtK6ehw.png" width="800"/>
+
+-- 2026-02-10 10:43:08
+<br>
+
+- 认知上的误区：只要我努力工作，就一定会升职
+- 知识上的盲点：曝光很重要，但是不知道该怎么做
+- 心理上的门槛：和人交往就是搞关系，和领导接触就是溜须拍马，不屑去做
+
+-- 2026-02-10 10:35:25
+<br>
+
 泼妇是一种生存手段，有时是唯一的一种。
 
 -- 2026-02-09 13:32:53
