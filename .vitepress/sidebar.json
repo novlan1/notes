@@ -35,6 +35,10 @@
         {
           "text": "@tdesign/uniapp 的 Vue2.x 适配说明",
           "link": "/docs/2026上/tdesign-uniapp-vue2.md"
+        },
+        {
+          "text": "TDesign E2E 测试",
+          "link": "/docs/2026上/tdesign-e2e-test.md"
         }
       ]
     },
