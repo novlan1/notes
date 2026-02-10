@@ -1,3 +1,10 @@
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_aTBrcpbfNyhhQChE.png" width="800"/>
+
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_3sK8JhtJ6dtK6ehw.png" width="800"/>
+
+-- 2026-02-10 10:43:08
+<br>
+
 - 认知上的误区：只要我努力工作，就一定会升职
 - 知识上的盲点：曝光很重要，但是不知道该怎么做
 - 心理上的门槛：和人交往就是搞关系，和领导接触就是溜须拍马，不屑去做
