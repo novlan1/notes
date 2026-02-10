@@ -1,6 +1,6 @@
 <!-- # TDesign E2E —— 一套配置驱动、可扩展的端到端测试框架 -->
 
-## 一、项目背景
+## 1. 项目背景
 
 [TDesign](https://tdesign.tencent.com/) 是腾讯开源的企业级设计体系，覆盖了 Vue Next、UniApp、小程序、Mobile Vue 等多个技术栈，其官网承载着大量组件文档页面。随着站点规模增长，一个核心风险始终存在——**页面发布后白屏**或**关键元素丢失**。手工巡检不现实，传统的单元测试又覆盖不到真实浏览器的渲染链路。
 
@@ -8,7 +8,7 @@
 
 ---
 
-## 二、整体架构
+## 2. 整体架构
 
 项目采用 **"配置层 → 引擎层 → 工具层"** 三层架构，各层职责清晰、互不耦合：
 
@@ -41,7 +41,7 @@ graph TB
     spec --> CI
 ```
 
-### 2.1 配置层：声明式描述"测什么"
+### 2.1. 配置层：声明式描述"测什么"
 
 配置层是用户唯一需要关注的部分。核心类型 `PageConfig` 定义了一个测试用例的完整描述：
 
@@ -60,7 +60,7 @@ interface PageConfig {
 
 使用者只需填写配置对象，**不需要编写任何 `test()`、`expect()` 代码**。框架会自动将每条配置映射为一个独立的 Jest 测试用例。
 
-### 2.2 引擎层：自动化遍历 + 用例生成
+### 2.2. 引擎层：自动化遍历 + 用例生成
 
 `tdesign.spec.ts` 是整个框架的"心脏"，核心逻辑仅约 120 行，但完成了以下工作：
 
@@ -71,7 +71,7 @@ interface PageConfig {
 
 这种设计让引擎层成为"不可变的骨架"——**新增测试用例永远不需要修改引擎代码**。
 
-### 2.3 工具层：对抗 Web Components 的深度穿透
+### 2.3. 工具层：对抗 Web Components 的深度穿透
 
 TDesign 官网大量使用了 Web Components + Shadow DOM（如 `<td-header>`、`<td-doc-layout>`），传统的 `document.querySelector` 无法穿透 Shadow DOM 边界。
 
@@ -102,9 +102,9 @@ deepQuerySelector(page, selector)
 
 ---
 
-## 三、灵活的配置方式
+## 3. 灵活的配置方式
 
-### 3.1 五种操作类型覆盖主流交互
+### 3.1. 五种操作类型覆盖主流交互
 
 框架内置了 5 种操作类型，通过组合使用可以模拟几乎所有用户交互场景：
 
@@ -118,7 +118,7 @@ deepQuerySelector(page, selector)
 
 操作支持 `waitBefore` / `waitAfter` 精细控制时序，也支持链式组合——先滚动、再点击、再输入，一气呵成。
 
-### 3.2 Shadow DOM 穿透选择器
+### 3.2. Shadow DOM 穿透选择器
 
 针对 Web Components，框架设计了直观的 `>>>` 穿透语法：
 
@@ -129,7 +129,7 @@ selector: 'td-header >>> .TDesign-header-nav'
 
 普通选择器则自动递归穿透所有层级的 Shadow DOM，开发者无需关心元素在哪一层。
 
-### 3.3 操作后校验
+### 3.3. 操作后校验
 
 每条配置可以附带 `afterActionCheck`，在操作执行后自动验证：
 
@@ -139,9 +139,9 @@ selector: 'td-header >>> .TDesign-header-nav'
 
 ---
 
-## 四、可扩展性设计
+## 4. 可扩展性设计
 
-### 4.1 模块化拆分
+### 4.1. 模块化拆分
 
 配置按 TDesign 子站拆分为独立模块，存放在 `tests/config/modules/` 目录下：
 
@@ -167,7 +167,7 @@ const config: PageConfig[] = [
 ];
 ```
 
-### 4.2 新增模块只需 3 步
+### 4.2. 新增模块只需 3 步
 
 以新增 React 模块为例：
 
@@ -177,7 +177,7 @@ const config: PageConfig[] = [
 
 整个过程不需要修改引擎代码、不需要新建测试文件、不需要改动 CI 配置。
 
-### 4.3 新增操作类型
+### 4.3. 新增操作类型
 
 如果未来需要支持新的交互（如拖拽、长按），只需：
 
@@ -188,9 +188,9 @@ const config: PageConfig[] = [
 
 ---
 
-## 五、易维护性
+## 5. 易维护性
 
-### 5.1 TypeScript 全链路类型安全
+### 5.1. TypeScript 全链路类型安全
 
 从配置定义到引擎消费，全程 TypeScript 强类型。`PageConfig` 接口确保：
 
@@ -200,7 +200,7 @@ const config: PageConfig[] = [
 
 类型系统充当了"活文档"，开发者阅读接口定义即可理解所有配置项。
 
-### 5.2 配置与代码完全解耦
+### 5.2. 配置与代码完全解耦
 
 这是项目最核心的设计理念：**测试逻辑是稳定的框架代码，测试内容是可变的配置数据**。
 
@@ -210,9 +210,9 @@ const config: PageConfig[] = [
 
 三个变更方向互不干扰，团队中不同角色可以并行工作。
 
-### 5.3 自动化 CI/CD + 告警闭环
+### 5.3. 自动化 CI/CD + 告警闭环
 
-项目集成了 [GitHub Actions 工作流](/Users/guowangyang/Documents/github/tdesign-e2e/.github/workflows/e2e-test.yml)，实现了完整的自动化闭环：
+项目集成了 [GitHub Actions 工作流](https://github.com/TDesignOteam/tdesign-e2e-test/actions)，实现了完整的自动化闭环：
 
 ```mermaid
 graph LR
@@ -226,7 +226,7 @@ graph LR
 
 `notify.ts` 通知脚本会自动解析 Jest JSON 输出，提取失败用例的名称和错误信息，格式化为 Markdown 消息推送到企业微信，包含直达 Actions 日志的链接。
 
-### 5.4 容错设计
+### 5.4. 容错设计
 
 框架在多处做了容错处理，保证单个用例失败不会拖垮整个测试：
 
@@ -238,7 +238,147 @@ graph LR
 
 ---
 
-## 六、技术亮点总结
+## 6. 🔍 核心检测流程
+
+### 6.1. 白屏检测流程
+
+白屏检测通过 4 层递进策略判断页面是否正常渲染，任一层检测失败即判定为白屏：
+
+```mermaid
+flowchart TD
+    Start(["开始白屏检测"]) --> Step1{"1️⃣ body.children.length > 0？"}
+
+    Step1 -->|❌ 无子元素| Fail1["❌ 判定白屏<br>页面 body 没有子元素"]
+    Step1 -->|✅ 有子元素| Step2{"2️⃣ body.innerHTML.length > 50？"}
+
+    Step2 -->|❌ 内容过短| Fail2["❌ 判定白屏<br>页面内容长度过短"]
+    Step2 -->|✅ 内容充足| Step3{"3️⃣ 存在可见内容？<br>递归穿透 Shadow DOM 检查：<br>文字 / 图片 / canvas / svg / video"}
+
+    Step3 -->|❌ 无可见内容| Fail3["❌ 判定白屏<br>页面没有可见内容"]
+    Step3 -->|✅ 有可见内容| Step4{"4️⃣ 存在应用根挂载点？<br>#app / #root / #__nuxt / #__next<br>或 Web Components 自定义元素"}
+
+    Step4 -->|❌ 无挂载点| Fail4["❌ 判定白屏<br>找不到应用根挂载点"]
+    Step4 -->|✅ 有挂载点| Pass(["✅ 白屏检测通过"])
+
+    style Fail1 fill:#ffcccc,stroke:#cc0000
+    style Fail2 fill:#ffcccc,stroke:#cc0000
+    style Fail3 fill:#ffcccc,stroke:#cc0000
+    style Fail4 fill:#ffcccc,stroke:#cc0000
+    style Pass fill:#ccffcc,stroke:#009900
+```
+
+### 6.2. 元素丢失检测流程
+
+元素检测支持 Shadow DOM 穿透查找，通过轮询等待机制确保元素可见：
+
+```mermaid
+flowchart TD
+    Start(["开始元素丢失检测<br>expectedSelectors 列表"]) --> Loop{"遍历每个 selector"}
+
+    Loop --> WaitVisible["waitForVisible<br>超时时间：10s，轮询间隔：300ms"]
+
+    WaitVisible --> DeepQuery["deepQuerySelector<br>递归穿透 Shadow DOM 查找元素"]
+
+    DeepQuery --> Found{"元素存在？"}
+    Found -->|❌ 未找到| Retry{"是否超时？"}
+    Retry -->|未超时| Sleep["等待 300ms"] --> DeepQuery
+    Retry -->|已超时 10s| Fail["❌ 检测失败<br>期望元素不存在或不可见"]
+
+    Found -->|✅ 找到| CheckVisible{"元素可见？<br>rect.width > 0<br>rect.height > 0<br>visibility ≠ hidden<br>display ≠ none<br>opacity ≠ 0"}
+
+    CheckVisible -->|❌ 不可见| Retry
+    CheckVisible -->|✅ 可见| Next{"还有下一个 selector？"}
+
+    Next -->|是| Loop
+    Next -->|否| Pass(["✅ 所有元素检测通过"])
+
+    style Fail fill:#ffcccc,stroke:#cc0000
+    style Pass fill:#ccffcc,stroke:#009900
+```
+
+### 6.3. 执行操作序列流程
+
+操作序列按配置顺序逐一执行，支持 5 种操作类型和时序控制：
+
+```mermaid
+flowchart TD
+    Start(["开始执行操作序列<br>actions 列表"]) --> Loop{"遍历每个 action"}
+
+    Loop --> WaitBefore{"waitBefore > 0？"}
+    WaitBefore -->|是| DelayBefore["⏳ 等待 waitBefore 毫秒"] --> Switch
+    WaitBefore -->|否| Switch
+
+    Switch{"action.type"} -->|click| Click
+    Switch -->|hover| Hover
+    Switch -->|navigate| Navigate
+    Switch -->|scroll| Scroll
+    Switch -->|input| Input
+
+    subgraph Click ["🖱️ click 操作"]
+        C1["waitForVisible 等待元素可见"] --> C2["deepQuerySelector 穿透查找"]
+        C2 --> C3["scrollIntoView 滚动到视口"]
+        C3 --> C4["计算元素中心坐标"]
+        C4 --> C5["page.mouse.click 真实鼠标点击"]
+        C5 --> C6{"是 a 标签 / 有 href？"}
+        C6 -->|是| C7["等待导航完成 + 网络空闲"]
+        C6 -->|否| C8["等待 1s 渲染"]
+    end
+
+    subgraph Hover ["🎯 hover 操作"]
+        H1["waitForVisible 等待元素可见"] --> H2["deepQuerySelector 穿透查找"]
+        H2 --> H3["获取元素中心坐标"]
+        H3 --> H4["page.mouse.move 移动鼠标"]
+    end
+
+    subgraph Navigate ["🔀 navigate 操作"]
+        N1["page.goto targetUrl"]
+        N1 --> N2["等待 domcontentloaded"]
+    end
+
+    subgraph Scroll ["📜 scroll 操作"]
+        S1["window.scrollBy<br>滚动 scrollY 像素（默认 500）"]
+    end
+
+    subgraph Input ["⌨️ input 操作"]
+        I1["waitForVisible 等待元素可见"] --> I2["deepQuerySelector 穿透查找"]
+        I2 --> I3["focus 聚焦 + 清空内容"]
+        I3 --> I4["page.keyboard.type 逐字输入"]
+    end
+
+    C7 --> WaitAfter
+    C8 --> WaitAfter
+    H4 --> WaitAfter
+    N2 --> WaitAfter
+    S1 --> WaitAfter
+    I4 --> WaitAfter
+
+    WaitAfter{"waitAfter > 0？"}
+    WaitAfter -->|是| DelayAfter["⏳ 等待 waitAfter 毫秒"] --> Next
+    WaitAfter -->|否| Next
+
+    Next{"还有下一个 action？"}
+    Next -->|是| Loop
+    Next -->|否| CheckAfter{"afterActionCheck？"}
+
+    CheckAfter -->|是| AfterCheck
+    CheckAfter -->|否| Pass(["✅ 操作序列执行完毕"])
+
+    subgraph AfterCheck ["🔍 操作后检查"]
+        AC1{"whiteScreenCheck？"} -->|是| AC2["执行白屏检测"]
+        AC1 -->|否| AC3
+        AC2 --> AC3{"expectedSelectors？"}
+        AC3 -->|是| AC4["执行元素丢失检测"]
+        AC3 -->|否| AC5
+        AC4 --> AC5{"expectedUrlPattern？"}
+        AC5 -->|是| AC6["正则匹配当前 URL"]
+        AC5 -->|否| AC7(["✅ 操作后检查通过"])
+        AC6 --> AC7
+    end
+
+    style Pass fill:#ccffcc,stroke:#009900
+```
+
+## 7. 技术亮点总结
 
 | 亮点 | 说明 |
 |------|------|
@@ -252,7 +392,7 @@ graph LR
 
 ---
 
-## 七、适用场景
+## 8. 适用场景
 
 - **组件库官网巡检**：防止发布后白屏、关键文档元素丢失
 - **多框架站点监控**：一套框架覆盖 Vue / UniApp / 小程序 / 移动端等所有子站

@@ -141,7 +141,7 @@ export default defineConfig({
 可以用下面的命令获取：
 
 ```bash
-grep -rho 'icon="[^"]*"\|left-icon="[^"]*"\|name="[^"]*"' src --include="*.vue" | sort | uniq
+grep -rho 'icon="[^"]*"\|left-icon="[^"]*"\|right-icon="[^"]*"\|name="[^"]*"' src --include="*.vue" | sort | uniq
 ```
 
 不过这个可能会漏掉一些动态图标，需要手动检查。
