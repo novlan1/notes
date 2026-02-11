@@ -1,3 +1,93 @@
+为什么 `import * as fs from 'fs'` 没问题，`import { execSync, spawnSync } from 'child_process';` 在浏览器中就有问题，是 `vite` 做了什么吗
+
+核心原因如下。
+
+`fs` 和 `child_process` 都是 **Node.js 内置模块**，它们在浏览器环境中都是不存在的。但为什么表现不同呢？这主要是因为 **Vite（以及底层的 Rollup/esbuild）对不同模块的处理策略不同**。
+
+1. `fs` 模块的处理
+
+当你在浏览器代码中 `import * as fs from 'fs'` 时：
+
+- **Vite 会自动将 `fs` 模块"空化"（shimmed/polyfilled）**
+- 对于 `fs` 这类常见的 Node.js 模块，Vite/Rollup 默认会提供一个**空的 polyfill**
+- 导入不会报错，但 `fs` 对象会是一个空对象 `{}`，调用任何方法都会失败
+
+你可以验证：
+```ts
+import * as fs from 'fs';
+console.log(fs); // 在浏览器中会输出 {} 或 undefined
+```
+
+2. `child_process` 模块的处理
+
+而 `child_process` 模块：
+
+- **Vite 默认不会为它提供 polyfill**
+- 当你尝试导入时，打包工具找不到这个模块，就会直接报错
+- 这是因为 `child_process` 涉及系统进程操作，根本无法在浏览器中模拟
+
+3. Vite 的具体处理机制
+
+Vite 使用了 `@rollup/plugin-node-resolve` 插件，它有一个 `browser` 字段处理逻辑：
+
+```js
+// Vite 内部大致的处理逻辑
+{
+  // 这些模块会被替换为空模块
+  "fs": false,        // 被 shimmed 为空
+  "path": "path-browserify",  // 有 polyfill
+  "child_process": undefined  // 没有处理 → 报错
+}
+```
+
+4. 为什么这样设计？
+
+| 模块 | 浏览器 Polyfill | 原因 |
+|------|----------------|------|
+| `fs` | 空对象 `{}` | 某些库可能条件引入，空化可以避免打包失败 |
+| `path` | `path-browserify` | 路径操作可以在浏览器模拟 |
+| `child_process` | ❌ 无 | 进程操作完全无法模拟，直接报错更清晰 |
+
+解决方案
+
+如果你的代码中确实需要在浏览器中引用这些模块（比如共享代码），可以在 `vite.config.ts` 中配置：
+
+```ts
+export default defineConfig({
+  resolve: {
+    alias: {
+      // 将 child_process 也替换为空模块
+      'child_process': 'rollup-plugin-node-polyfills/polyfills/empty'
+    }
+  },
+  // 或者使用 define 将其标记为外部模块
+  define: {
+    'process.env': {}
+  }
+})
+```
+
+或者使用条件导入：
+
+```ts
+// 只在 Node.js 环境中导入
+if (typeof window === 'undefined') {
+  const { execSync } = await import('child_process');
+}
+```
+
+总结
+
+| 问题 | 答案 |
+|------|------|
+| `fs` 为什么不报错？ | Vite 默认将其 shimmed 为空对象 |
+| `child_process` 为什么报错？ | Vite 没有为它提供 polyfill |
+| 是 Vite 做的吗？ | 是的，Vite + Rollup 的模块解析策略决定的 |
+
+
+-- 2026-02-11 10:56:30
+<br>
+
 - 难点，逆转化，多端适配，充分测试，e2e测试
 - Press UI 和 TDesign Uniapp 有哪些业务在使用，知名业务，影响力
 - 带过哪些人，有8/9级的吗
