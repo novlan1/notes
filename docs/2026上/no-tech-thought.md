@@ -1,5 +1,5 @@
 - 难点，逆转化，多端适配，充分测试，e2e测试
-- Press ui 和 td uniapp 有哪些业务在使用，知名业务，影响力
+- Press UI 和 TDesign Uniapp 有哪些业务在使用，知名业务，影响力
 - 带过哪些人，有8/9级的吗
 
 -- 2026-02-10 20:53:38
@@ -15,7 +15,7 @@ https://www.codebuddy.cn/docs/cli/mcp
 -- 2026-02-10 20:34:37
 <br>
 
-算力就是生产力。算力的富足将我们带入计算时代。算力重新锚定了科技创新的坐标，
+算力就是生产力。算力的富足将我们带入计算时代。算力重新锚定了科技创新的坐标。
 
 -- 2026-02-10 20:34:18
 <br>
@@ -55,40 +55,40 @@ https://www.codebuddy.cn/docs/cli/mcp
 2. 期待领导解决
 3. 对抗，导致关系破裂
 
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_mjTdXmnMcnBsmKnb.png" width="800"/>
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_mjTdXmnMcnBsmKnb.png" width="500"/>
 
 -- 2026-02-10 15:34:44
 <br>
 
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_xtncZ5fwF7Jzh3Sh.png" width="800"/>
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_xtncZ5fwF7Jzh3Sh.png" width="500"/>
 
 -- 2026-02-10 12:36:01
 <br>
 
 先有行动，才有自信。而不是先有自信，才有行动。
 
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_xdkpdHtCfMbanCFc.png" width="800"/>
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_xdkpdHtCfMbanCFc.png" width="500"/>
 
 -- 2026-02-10 11:22:32
 <br>
 
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_kkRsPrfZsPGFancc.png" width="800"/>
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_kkRsPrfZsPGFancc.png" width="500"/>
 
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_rewsrpFi4dx5nGks.png" width="800"/>
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_rewsrpFi4dx5nGks.png" width="500"/>
 
 -- 2026-02-10 10:58:45
 <br>
 
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_kEmSSwe33dQBExXs.png" width="800"/>
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_kEmSSwe33dQBExXs.png" width="500"/>
 
 一方面不屑，另一方面又嫉妒。
 
 -- 2026-02-10 10:47:00
 <br>
 
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_aTBrcpbfNyhhQChE.png" width="800"/>
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_aTBrcpbfNyhhQChE.png" width="500"/>
 
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_3sK8JhtJ6dtK6ehw.png" width="800"/>
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_3sK8JhtJ6dtK6ehw.png" width="500"/>
 
 -- 2026-02-10 10:43:08
 <br>
@@ -153,14 +153,14 @@ SVM 的核心思想是，找到一个最优的决策边界，或者称为“超�
 -- 2026-02-06 13:27:40
 <br>
 
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_b3pBwZn4MpyGN85H.png" width="800"/>
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_b3pBwZn4MpyGN85H.png" width="500"/>
 
 活动报名模板
 
 -- 2026-02-06 02:22:47
 <br>
 
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_ccszGQCbrFP7h4dB.png" width="800"/>
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_ccszGQCbrFP7h4dB.png" width="500"/>
 
 社区内容模板、零售电商模板、组件库模板
 
@@ -209,14 +209,14 @@ flowchart TD
 -- 2026-02-05 17:45:31
 <br>
 
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_2WHXJahmHsCJQnxA.jpeg" width="800"/>
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_2WHXJahmHsCJQnxA.jpeg" width="500"/>
 
 任务、上下文、范例、角色、格式、语气
 
 -- 2026-02-04 18:30:45
 <br>
 
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_wEH8H2G7bpHpWD4f.jpeg" width="800"/>
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_wEH8H2G7bpHpWD4f.jpeg" width="500"/>
 
 提示工程师
 
@@ -232,7 +232,7 @@ flowchart TD
 -- 2026-02-04 17:22:03
 <br>
 
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_sEN5s6KWJadzApdc.png" width="800"/>
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_sEN5s6KWJadzApdc.png" width="500"/>
 
 Vue2 中数组类型的 prop，也要用函数返回。
 
@@ -291,10 +291,9 @@ type: newType,
 -- 2026-02-03 15:50:41
 <br>
 
+✅ Robot 子 Agent 系统已完成
 
- ✅ Robot 子 Agent 系统已完成
-
-我已经重新检查并确认了整个系统结构完整。以下是文件结构和功能说明：
+已经重新检查并确认了整个系统结构完整。以下是文件结构和功能说明：
 
 📁 文件结构
 
@@ -488,12 +487,12 @@ command:gongfeng[^)]+ 替换为
 -- 2026-01-30 08:04:38
 <br>
 
-<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_bJM4BbiMH853QchF.png" width="800"/>
+<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_bJM4BbiMH853QchF.png" width="500"/>
 
 -- 2026-01-29 11:54:48
 <br>
 
-<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_fNPQxPzGXmMyA4FX.png" width="800"/>
+<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_fNPQxPzGXmMyA4FX.png" width="500"/>
 
 -- 2026-01-29 11:54:33
 <br>
@@ -571,9 +570,9 @@ return new CustomEvent(type, {
 -- 2026-01-29 11:38:02
 <br>
 
-<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_HGGZCNeWMmiQDBQ2.png" width="800"/>
+<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_HGGZCNeWMmiQDBQ2.png" width="500"/>
 
-<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_mart46DzByWDjDYs.png" width="800"/>
+<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_mart46DzByWDjDYs.png" width="500"/>
 
 tsconfig.json用根目录的。
 
@@ -582,7 +581,7 @@ tdesign-miniprogram 依赖版本太低。
 -- 2026-01-29 11:36:49
 <br>
 
-<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_wPyZEkTCdwZ2hW5K.jpg" width="800"/>
+<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_wPyZEkTCdwZ2hW5K.jpg" width="500"/>
 
 -- 2026-01-29 11:36:10
 <br>
@@ -595,11 +594,7 @@ https://image-1251917893.cos.ap-guangzhou.myqcloud.com/next-svr/files/2025/10/ow
 https://image-1251917893.file.myqcloud.com/igame/html/auto-scheme-mp.html?scheme=weixin%3A%2F%2Fdl%2Fbusiness%2F%3Fappid%3Dwx92e3eeeae1a636de%26path%3Dviews%2Fmatch-reward-claim%2Findex%26env_version%3Dtrial%26query%3DgameId%253D123
 
 -- 2026-01-29 11:35:08
-<br>
 
-test
-
--- 2026-01-29 11:16:11
 <br>
 
 
@@ -633,7 +628,7 @@ tdesign-vue-next/chat 中 `chat-markdown` 用了 tdesign-web-components 中的 `
 -- 2026-01-28 16:15:23
 <br>
 
-# `packages/cherry-markdown/src/core` 目录详解
+`packages/cherry-markdown/src/core` 目录详解
 
 📁 目录结构
 
@@ -1074,19 +1069,19 @@ plugin-light-const 的定位：
 -- 2026-01-28 00:53:47
 <br>
 
-<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_j6ns8mCznzykDD6C.jpeg" width="800"/>
+<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_j6ns8mCznzykDD6C.jpeg" width="500"/>
 
 -- 2026-01-27 20:51:48
 <br>
 
-<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_h3GAYxppek365kMj.jpeg" width="800"/>
+<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_h3GAYxppek365kMj.jpeg" width="500"/>
 
 -- 2026-01-27 20:51:11
 <br>
 
-<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_z7cBFHRmHpaCQAYi.png" width="800"/>
+<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_z7cBFHRmHpaCQAYi.png" width="500"/>
 
-<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_pWbdCkR5hG83fPWr.png" width="800"/>
+<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_pWbdCkR5hG83fPWr.png" width="500"/>
 
 -- 2026-01-27 16:51:55
 <br>
@@ -1212,9 +1207,9 @@ td-mini 同步 td-uniapp 的步骤：
 
 `1.t-grid-item__content--left` 需要加上 `width: 100%;box-sizing: border-box;`，否则边框位置不对。
 
-<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_yp3AKExM7KJcsw3P.png" width="600"/>
+<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_yp3AKExM7KJcsw3P.png" width="500"/>
 
-<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_fsAZtkaXdnGTDWM6.png" width="600"/>
+<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_fsAZtkaXdnGTDWM6.png" width="500"/>
 
 -- 2026-01-26 12:02:44
 <br>
@@ -1237,7 +1232,7 @@ td-mini 同步 td-uniapp 的步骤：
 
 要将所有的 :deep 改成 custom-style，工作量有点大，退而求其次，只在组件 less 中加 :deep，不加、不删、不改其他样式。有改动的，记录下来，比如 dialog.less 的改动如下：
 
-<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_iN8kjhBXpmwa4hyw.png" width="600" />
+<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_iN8kjhBXpmwa4hyw.png" width="500" />
 
 -- 2026-01-26 00:28:41
 <br>
@@ -1256,9 +1251,9 @@ packages/tdesign-uniapp/app/ 待删除
 
 原因是 H5 中节点会合并，或者说会替换成真正的子组件节点，可以看到下面的 `uni-button` 有两个 `data-v-xx`，而小程序不是。
 
-<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_WH8KwtHMYMYjaRCF.png" width="600"/>
+<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_WH8KwtHMYMYjaRCF.png" width="500"/>
 
-<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_SD2cwnRyY56zs3aF.png" width="600"/>
+<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_SD2cwnRyY56zs3aF.png" width="500"/>
 
 
 -- 2026-01-25 19:54:49
@@ -1392,12 +1387,12 @@ monorepo 仓库的每次提交都应该只改动一个子包的，让 commit 信
 -- 2026-01-11 14:11:16
 <br>
 
-<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_W23JPrzb2DNskwP5.jpeg" width="600"/>
+<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_W23JPrzb2DNskwP5.jpeg" width="500"/>
 
 -- 2026-01-10 16:52:13
 <br>
 
-<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_C4zB7wssYdeXkndW.jpeg" width="600"/>
+<img src="https://cdn.uwayfly.com/article/2026/1/own_mike_C4zB7wssYdeXkndW.jpeg" width="500"/>
 
 -- 2026-01-10 16:51:16
 <br>
