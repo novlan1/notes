@@ -1,3 +1,19 @@
+之前运行时的引入方式是 `import { xxx } from 't-comm/lib/xx/xx'`，包体积大小：
+
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_tHkbscMFa2a42Wsm.png" width="800"/>
+
+对 `t-comm` 改造，支持浏览器环境。业务中使用 `import { xxx } from 't-comm'` 后，包体积增加了 `30KB`。
+
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_FeMNSR7hZGk8DEiG.png" width="800"/>
+
+尝试将 `package.json` 中的 `module` 由 `lib/index.esm.js` 改成 `es/index.mjs` 后，包体积恢复之前的大小：
+
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_tHkbscMFa2a42Wsm.png" width="800"/>
+
+
+-- 2026-02-11 12:36:02
+<br>
+
 增量思维，听出更多信息，找出更多选项。本质是不是一种“学习”？学习是最体现增量思维的活动了。
 
 -- 2026-02-11 11:29:40
