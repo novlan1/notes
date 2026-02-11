@@ -1,3 +1,15 @@
+📊 产物对比表
+
+| 产物 | 格式 | 目录结构 | 文件数量 | 使用场景 |
+|------|------|----------|----------|----------|
+| **lib/*.js** | CommonJS | 保留 | 多文件 | Node.js 环境 |
+| **lib/index.esm.js** | ES Module | 单文件 | 1 个 | 现代打包工具（单文件） |
+| **es/*.mjs** | ES Module | 保留 | 多文件 | 现代打包工具（按需引入） |
+
+
+-- 2026-02-11 12:44:11
+<br>
+
 之前运行时的引入方式是 `import { xxx } from 't-comm/lib/xx/xx'`，包体积大小：
 
 <img src="https://cdn.uwayfly.com/article/2026/2/own_mike_tHkbscMFa2a42Wsm.png" width="800"/>
