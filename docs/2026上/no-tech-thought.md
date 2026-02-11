@@ -1,3 +1,8 @@
+增量思维，听出更多信息，找出更多选项。本质是不是一种“学习”？学习是最体现增量思维的活动了。
+
+-- 2026-02-11 11:29:40
+<br>
+
 为什么 `import * as fs from 'fs'` 没问题，`import { execSync, spawnSync } from 'child_process';` 在浏览器中就有问题，是 `vite` 做了什么吗
 
 核心原因如下。
