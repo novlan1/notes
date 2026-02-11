@@ -1,3 +1,5 @@
+<!-- 引言: 插件高度可配置；图标大小锐减 95%；AI 工具辅助搜索使用的图标 -->
+
 ## 1. 背景
 
 随着 [tdesign-icons](https://tdesign.tencent.com/icons/) 图标的不断丰富，[@tdesign/uniapp](https://github.com/Tencent/tdesign-miniprogram/blob/develop/packages/uniapp-components/common/style/icons.less) 包的图标文件大小也不断变大。但是普通业务一般并不需要同时使用这么多图标，并且小程序等场景图标只能使用 `iconfont` 等，不支持动态加载，所以需要一种方式减包、瘦身。
