@@ -1,3 +1,10 @@
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_84wtHAPysCtMx3H4.gif" width="500"/>
+
+ti18n-mcp
+
+-- 2026-02-12 21:42:25
+<br>
+
 如果面临一个两难的沟通场景，可以体现增量思维的是，“在现有选项外增加新的选择”。
 
 -- 2026-02-12 17:01:23
