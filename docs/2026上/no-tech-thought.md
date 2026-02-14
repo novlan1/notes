@@ -1,3 +1,34 @@
+```mermaid
+flowchart LR
+    subgraph Local["本地调用"]
+        Cursor["Cursor IDE"]
+        Claude["Claude Desktop"]
+    end
+    
+    subgraph Remote["远程/Web调用"]
+        Browser["浏览器"]
+        RemoteService["远程服务"]
+    end
+    
+    subgraph Server["MCP Server"]
+        STDIO["stdio.ts<br/>进程通信"]
+        HTTP["http.ts<br/>HTTP :9000"]
+        Core["createMcpServer()<br/>核心逻辑"]
+    end
+    
+    Cursor -->|"stdin/stdout"| STDIO
+    Claude -->|"stdin/stdout"| STDIO
+    
+    Browser -->|"POST /mcp"| HTTP
+    RemoteService -->|"POST /mcp"| HTTP
+    
+    STDIO --> Core
+    HTTP --> Core
+```
+
+-- 2026-02-14 14:58:30
+<br>
+
 6. 组件列表 https://tdesign.gtimg.com/mcp/web-components.json
 
 -- 2026-02-14 14:50:02
