@@ -1,3 +1,8 @@
+6. 组件列表 https://tdesign.gtimg.com/mcp/web-components.json
+
+-- 2026-02-14 14:50:02
+<br>
+
 1. 组件列表 https://tdesign.gtimg.com/mcp/tdesign-vue-next/index.json
 2. dom 结构 https://tdesign.gtimg.com/mcp/tdesign-web-dom/avatar.html
 3. 文档 https://tdesign.gtimg.com/mcp/tdesign-vue-next/button/api.md
