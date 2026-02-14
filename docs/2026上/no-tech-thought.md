@@ -1,3 +1,12 @@
+1. 组件列表 https://tdesign.gtimg.com/mcp/tdesign-vue-next/index.json
+2. dom 结构 https://tdesign.gtimg.com/mcp/tdesign-web-dom/avatar.html
+3. 文档 https://tdesign.gtimg.com/mcp/tdesign-vue-next/button/api.md
+4. 示例 https://tdesign.gtimg.com/mcp/tdesign-react/button/Demo.tsx，https://tdesign.gtimg.com/mcp/tdesign-vue-next/button/Demo.vue
+5. changelog https://static.tdesign.tencent.com/vue-next/changelog.json
+
+-- 2026-02-14 14:48:53
+<br>
+
 <img src="https://cdn.uwayfly.com/article/2026/2/own_mike_84wtHAPysCtMx3H4.gif" width="500"/>
 
 ti18n-mcp
