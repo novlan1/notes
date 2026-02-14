@@ -1,4 +1,41 @@
 ```mermaid
+flowchart TB
+    subgraph ThisRepo["本项目 tdesign-mcp-server"]
+        Scripts["packages/scripts"]
+        DocsOutput["packages/docs/"]
+    end
+    
+    subgraph CDN1["tdesign.gtimg.com/mcp/"]
+        McpDocs["组件列表、API、Demo、DOM"]
+    end
+    
+    subgraph CDN2["static.tdesign.tencent.com/"]
+        Changelog["各端 changelog.json"]
+    end
+    
+    subgraph CDN3["tdesign.gtimg.com/site/"]
+        Images["公共图片资源"]
+    end
+    
+    Scripts -->|"生成"| DocsOutput
+    DocsOutput -->|"手动上传"| CDN1
+    
+    OtherRepo["TDesign 各端仓库 CI"] -->|"自动部署"| CDN2
+    OtherRepo -->|"自动部署"| CDN3
+```
+
+
+| CDN 地址 | 维护者 | 上传方式 |
+|---------|-------|---------|
+| `tdesign.gtimg.com/mcp/` | 本项目 | 手动上传 |
+| `static.tdesign.tencent.com/` | TDesign 官方 | CI 自动部署 |
+| `tdesign.gtimg.com/site/` | TDesign 官方 | CI 自动部署 |
+
+
+-- 2026-02-14 15:11:39
+<br>
+
+```mermaid
 flowchart LR
     subgraph Local["本地调用"]
         Cursor["Cursor IDE"]
