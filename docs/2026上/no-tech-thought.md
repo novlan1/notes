@@ -1,3 +1,8 @@
+据可查的资料显示，产品经理（Product Manager）诞生于 20 世纪二三十年代的宝洁，产品经理做的事情呢，听起来和项目经理（Project Manager）很像。没错，这两个“经理”都是一个跨职能部门的负责人，通常都没有实权，而且需要做很多沟通协调的事情。
+
+-- 2026-02-17 10:15:55
+<br>
+
 ```mermaid
 flowchart TB
     subgraph ThisRepo["本项目 tdesign-mcp-server"]
