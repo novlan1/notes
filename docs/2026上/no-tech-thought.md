@@ -1,51 +1,3 @@
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_3HHc5a2ysykyWPDD.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_akmPjsA4aX7AeBp6.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_YzBxs3cwZanFpGNf.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_7JHjF4zBe4DSb2Hx.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_kYRNMTP5ENKBEGFW.jpeg" width="500"/>	
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_jRXt3wJfQ4XZXkWb.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_fJQPfeXbErCcPEPd.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_eiwNzSn7xbNktPzx.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_8xjEHGpW2eBRsS4y.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_tCxNfYcJZxnKYcXN.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_4sTErnrQXk6khtXT.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_BpjaZ3dfHWDEXTEk.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_DTWtRtRe6sEwCixr.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_wPnaEKYDjAinMKdF.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_hNexWrznpCXTGk7X.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_HdY5ifBdXXfMQw2s.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_bT4EPSXieShifKPH.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_bAeFCnZiWT7jPcaw.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_hQCw4YWii2kxFMPG.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_RWTA44KsiYBmEwhY.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_RNhWhYhGDW5Ywikj.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_DF6FwRzGRBNrybFb.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_atk7mTkAFkecJfiX.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_tRC8m4GP8EYa74nH.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_sF3h8RCdjiCZh3kh.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_4HsDE377QXKjNcfn.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_dcQPjMb87tYBeK6W.jpeg" width="500"/>
-
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_Pf2FyArPF5wSSHn6.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_dPcTw2Jt4Yf4ERRd.png" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_SExzGySdtwDMn7Wd.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_28A2Wak7YYcyZ6Bn.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_Xz6jHiEFpyC82nEJ.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_G5T8mbXp8ZD4JkAA.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_85FDAkQjmWFZtQCx.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_bxCi3YHBy7hEfayW.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_PtfARAkNDsd4MXy2.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_rMZsf64Wdh8n84Ep.jpeg" width="500"/>
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_4addhTCHzWEkYSbh.jpeg" width="500"/>
-
--- 2026-02-21 15:01:30
-<br>
-
-<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_KhK6n5Csyi8eNQB3.jpeg" width="500"/>
-
--- 2026-02-21 09:55:32
-<br>
-
 社会学里有一个观点——语言会影响人的思维，在我看来，类似的道理，一个组织使用的软件工具，也会影响组织的文化，进而塑造组织行为，决定组织效率。
 
 -- 2026-02-20 23:18:59
@@ -470,22 +422,22 @@ flowchart TB
         Scripts["packages/scripts"]
         DocsOutput["packages/docs/"]
     end
-    
+
     subgraph CDN1["tdesign.gtimg.com/mcp/"]
         McpDocs["组件列表、API、Demo、DOM"]
     end
-    
+
     subgraph CDN2["static.tdesign.tencent.com/"]
         Changelog["各端 changelog.json"]
     end
-    
+
     subgraph CDN3["tdesign.gtimg.com/site/"]
         Images["公共图片资源"]
     end
-    
+
     Scripts -->|"生成"| DocsOutput
     DocsOutput -->|"手动上传"| CDN1
-    
+
     OtherRepo["TDesign 各端仓库 CI"] -->|"自动部署"| CDN2
     OtherRepo -->|"自动部署"| CDN3
 ```
@@ -507,24 +459,24 @@ flowchart LR
         Cursor["Cursor IDE"]
         Claude["Claude Desktop"]
     end
-    
+
     subgraph Remote["远程/Web调用"]
         Browser["浏览器"]
         RemoteService["远程服务"]
     end
-    
+
     subgraph Server["MCP Server"]
         STDIO["stdio.ts<br/>进程通信"]
         HTTP["http.ts<br/>HTTP :9000"]
         Core["createMcpServer()<br/>核心逻辑"]
     end
-    
+
     Cursor -->|"stdin/stdout"| STDIO
     Claude -->|"stdin/stdout"| STDIO
-    
+
     Browser -->|"POST /mcp"| HTTP
     RemoteService -->|"POST /mcp"| HTTP
-    
+
     STDIO --> Core
     HTTP --> Core
 ```
