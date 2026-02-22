@@ -1,3 +1,57 @@
+这个 MCP 确实有两个明显的问题：
+
+## 问题一：没有生成中间文档（缺少文档预处理/中间层）
+
+当前的 `get-component-docs` 工具（`docs.ts`）和 `get-component-source` 工具（`source.ts`）都是 **直接把原始的 Markdown 文档或 Vue 源码原封不动返回** 给 LLM 的。
+
+以 `press-button` 为例，文档有 12KB，如果用户一次查询多个组件，比如表单页面涉及 `press-field`（14KB）、`press-form`（18KB）、`press-button`（12KB）等，token 消耗会非常大。
+
+**应该做的**：在构建阶段预生成一份精简的「中间文档」，比如：
+- 提取组件的 Props 表格、Events、Slots 等结构化信息
+- 去掉示例代码中的冗余部分
+- 生成一份 JSON 格式的 API 摘要
+
+**这样 LLM 消耗的 token 少，响应更快也更准确**。
+
+## 问题二：读取本地文件，NPM 包发布后无法使用
+
+当前所有数据来源都是 **读取本地文件系统**：
+
+```typescript
+// helpers/index.ts
+export function getDocsDir(): string {
+  return path.join(getProjectRoot(), 'docs/components/press');
+}
+
+export function getPackagesDir(): string {
+  return path.join(getProjectRoot(), 'src/packages');
+}
+```
+
+`get-component-list` 用 `fs.readdir` 读目录、`get-component-docs` 用 `readLocalFile` 读 Markdown、`get-component-source` 用 `readLocalFile` 读 Vue 文件。
+
+但看 `package.json` 的 `files` 字段只包含 `["dist", "README.md"]`，**文档和源码根本不会被打包进 npm 发布物里**。也就是说：
+
+- ✅ **本地开发时可用**（因为文档和源码就在旁边的目录里）
+- ❌ **通过 NPM 安装后完全不可用**（`dist/` 目录里不包含文档和源码，读取路径全部失效）
+
+## 建议方案
+
+有几种修复思路，你看想用哪种：
+
+### 方案 A：构建时内嵌（推荐）
+在 `rollup` 构建阶段，把文档和源码的内容预处理后内嵌到 JS 产物中（比如生成一个 `data.json`），打包进 `dist/`。这样 NPM 发布后也能用，同时也顺带解决了中间文档的问题——可以在构建时做精简。
+
+### 方案 B：远程获取
+把文档和源码部署到 CDN 或 API 服务，MCP 通过 HTTP 请求获取，而不是读取本地文件。
+
+### 方案 C：把文档也打包进 files
+修改 `package.json` 的 `files` 字段，把 `docs/` 和 `src/packages/` 也包含进去，但这样会让包体积很大，而且还是没有中间文档精简的能力。
+
+
+-- 2026-02-22 15:29:14
+<br>
+
 明天、后天或者明年、后年肯定没人记得你，论如何不在乎别人的目光。
 
 -- 2026-02-21 19:33:27
