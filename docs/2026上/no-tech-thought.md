@@ -1,3 +1,10 @@
+“妈妈的花长锈了”
+
+<img src="https://cdn.uwayfly.com/article/2026/2/own_mike_8dJK7Yf3GCmDFaGr.jpeg" width="500"/>
+
+-- 2026-02-22 19:35:28
+<br>
+
 这个 MCP 确实有两个明显的问题：
 
 ## 问题一：没有生成中间文档（缺少文档预处理/中间层）
