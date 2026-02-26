@@ -15,12 +15,13 @@
 |Plugin Light Docs|https://novlan1.github.io/docs/plugin-light/|
 |Press Next Demo|https://novlan1.github.io/press-next-demo/|
 |Press Plus Demo|https://novlan1.github.io/press-plus-demo/|
-|TDesign UniApp Doc|https://uwayfly.com/tdesign-uniapp/|
+|TDesign UniApp Doc Origin|https://uwayfly.com/tdesign-uniapp/|
 |TDesign UniApp Doc|https://tdesign.tencent.com/uniapp/|
 |TDesign UniApp Demo|https://tdesign.tencent.com/uniapp/live|
 |TDesign UniApp Chat Doc|https://tdesign.tencent.com/uniapp-chat/|
-|TDesign UniApp Vue2|https://novlan1.github.io/tdesign-uniapp-vue2-cli-demo/|
 |TDesign UniApp Starter|https://tdesignoteam.github.io/tdesign-uniapp-starter/|
+|TDesign UniApp Starter Apply|https://tdesignoteam.github.io/tdesign-uniapp-starter-apply/|
+|TDesign UniApp Starter Vue2|https://tdesignoteam.github.io/tdesign-uniapp-starter-vue2-cli/|
 |赛宝|https://h5.nes.smoba.qq.com/pvpesport.next.user/|
 |赛宝 Prerelease|https://h5-test.nes.smoba.qq.com/pvpesport.next.user.develop/?tip_debug_cgi_env=prod|
 |GD|https://image-1251917893.file.myqcloud.com/igame/html/auto-scheme-mp.html?scheme=weixin%3A%2F%2Fdl%2Fbusiness%2F%3Fappid%3Dwx92e3eeeae1a636de%26path%3Dviews%2Fmatch-reward-claim%2Findex%26env_version%3Drelease%26query%3DgameId%253D123|
