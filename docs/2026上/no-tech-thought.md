@@ -1,3 +1,8 @@
+https://github.com/Tencent/tdesign-miniprogram/pull/4282 form的样式，小程序并不稳定，要以 uniapp 自己的判断为准，miniprogram 的更新作为参考，校验完成后才能合。
+
+-- 2026-02-26 15:54:59
+<br>
+
 favicon.ico 需要使用远程的，而不是 static 目录下的，否则 GitHub pages 部署后找不到。
 
 ```diff
