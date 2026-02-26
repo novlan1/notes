@@ -1,3 +1,8 @@
+tdesign-uniapp-starter-vue3-hx 和 tdesign-uniapp-starter-vue2-hx 的预览应该也要上传。在 HBuilderX 中进行打包，切换到 docs 分支，将刚才的产物提交、push 即可。
+
+-- 2026-02-26 17:24:31
+<br>
+
 https://github.com/Tencent/tdesign-miniprogram/pull/4282 form的样式，小程序并不稳定，要以 uniapp 自己的判断为准，miniprogram 的更新作为参考，校验完成后才能合。
 
 -- 2026-02-26 15:54:59
