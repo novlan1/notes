@@ -1,3 +1,13 @@
+favicon.ico 需要使用远程的，而不是 static 目录下的，否则 GitHub pages 部署后找不到。
+
+```diff
++ <link rel="icon" href="https://tdesign.tencent.com/favicon.ico" />
+- <link rel="icon" href="/static/favicon.ico" />
+```
+
+-- 2026-02-26 15:12:53
+<br>
+
 <img src="https://cdn.uwayfly.com/article/2026/2/own_mike_MC4RXjczGAjH4Qj8.png" width="500"/>
 
 几个模板项目。
