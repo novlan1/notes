@@ -1,3 +1,10 @@
+vue2 hx 模式要修改 index.html 中的 favicon.icon、language 等，需要在 manifest.json 中配置 h5.template，否则不生效。
+
+参考 https://uniapp.dcloud.net.cn/collocation/manifest.html#h5
+
+-- 2026-02-27 02:32:04
+<br>
+
 第一，最好的模型就是这个时代最大的信息差，从花费20刀开始。无论国内多少炸场、掀桌子、炸榜。目前最好的AI工具还是国外三巨头，这不是工具便好，而是认知分流，时间区间拉长，用谷歌的人认知大概率比百度的高、用ChatGPT、Claude、Gemini大概率比用其他的高。
 
 第二，打破认知防御。不要当评委，当教练。给AI你的完整context——你的知识、你的标准、你的判断逻辑。你给得越多，它越像你的延伸。不是用工具，是在训练一个懂你的分身。
