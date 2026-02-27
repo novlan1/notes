@@ -1,3 +1,8 @@
+大局观
+
+-- 2026-02-28 07:14:14
+<br>
+
 vue2 hx 模式要修改 index.html 中的 favicon.icon、language 等，需要在 manifest.json 中配置 h5.template，否则不生效。
 
 参考 https://uniapp.dcloud.net.cn/collocation/manifest.html#h5
