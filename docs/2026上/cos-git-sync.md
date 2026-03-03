@@ -108,7 +108,7 @@ COS 流通过**配置驱动**实现了海外多语言目录的自动同步。
   "cdnPrefix": "https://cdn.esports.t.com",
   "domainDir": "cdn.esports.t.com",
   "teo": {
-    "zoneId": "zone-3goctdpigxku"
+    "zoneId": "zone-x"
   }
 }
 ```
