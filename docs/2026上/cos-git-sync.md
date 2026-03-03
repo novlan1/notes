@@ -105,8 +105,8 @@ COS 流通过**配置驱动**实现了海外多语言目录的自动同步。
   "region": "ap-singapore",
   "secretId": "x",
   "secretKey": "x",
-  "cdnPrefix": "https://cdn.esports.tencent.com",
-  "domainDir": "cdn.esports.tencent.com",
+  "cdnPrefix": "https://cdn.esports.t.com",
+  "domainDir": "cdn.esports.t.com",
   "teo": {
     "zoneId": "zone-3goctdpigxku"
   }
@@ -196,7 +196,7 @@ async function getCdnInfo() {
       groupName: 'secret',
     },
     key: 'cdn_info',
-    sdk: require('@tencent/rainbow-node-sdk'),
+    sdk: require('@t/rainbow-node-sdk'),
   });
   // 返回 cdnList（各 Bucket 信息）和 gitWoaToken
 }
@@ -211,7 +211,7 @@ async function getCdnInfo() {
 ```js
 module.exports = {
   getBucketLitPrefixList: {
-    'cdn.esports.tencent.com': ['pmd-icon/', 'pmd-font/'],
+    'cdn.esports.t.com': ['pmd-icon/', 'pmd-font/'],
     'cdn.nes.xglobal.com': ['pmd-icon/', 'pmd-font/'],
     'cdn.p.esports.x.com': ['pmd-icon/', 'pmd-font/'],
     'image-x': ['general-match/', 'pmd-icon/', 'pmd-font/', 'white/', 'igame/npm/'],
@@ -264,7 +264,7 @@ function pushToGit(gitWoaToken) {
 
 COS 流天然支持多域名、多 Bucket 的海内外资源管理：
 
-- 🇨🇳 国内：`cdn.esports.tencent.com`、`cdn.dfpcevos.igame.tencent.com`
+- 🇨🇳 国内：`cdn.esports.t.com`、`cdn.dfpcevos.igame.t.com`
 - 🌍 海外：`cdn.nes.xglobal.com`（包含 h-match 的 14 种语言构建产物）
 - 🎮 X：`cdn.p.esports.x.com`（`os-x/` 下覆盖 16 种语言目录）
 - 🏠 网吧：`download.ecafe.game`
@@ -289,7 +289,7 @@ COS 流天然支持多域名、多 Bucket 的海内外资源管理：
 ### 5.3 易维护
 
 1. **密钥零硬编码**：所有敏感信息存储在 Rainbow 配置中心，统一管理、动态获取。
-2. **依赖收敛**：核心工具函数封装在 `@tencent/t-comm` 中（`getCosBucket`、`downloadCosObject`、`fetchRainbowConfigFromSdk`、`execCommand`），脚本本身只负责编排逻辑。
+2. **依赖收敛**：核心工具函数封装在 `@t/t-comm` 中（`getCosBucket`、`downloadCosObject`、`fetchRainbowConfigFromSdk`、`execCommand`），脚本本身只负责编排逻辑。
 3. **日志完善**：每个关键步骤都有日志输出，便于排查问题。
 4. **防循环机制**：`[ignoreSyncToCos]` 标记避免双向同步死循环。
 5. **流水线驱动**：由蓝盾流水线定时执行，无需人工干预。
