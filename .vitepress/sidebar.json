@@ -55,6 +55,10 @@
         {
           "text": "从源码追踪 uni-app H5 平台 `uni-image > img` 样式丢失之谜",
           "link": "/docs/2026上/uni-image-img-style.md"
+        },
+        {
+          "text": "cos流-git与cos双向同步技术方案",
+          "link": "/docs/2026上/cos-git-sync.md"
         }
       ]
     },
