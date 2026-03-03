@@ -51,6 +51,10 @@
         {
           "text": "零成本知识沉淀",
           "link": "/docs/2026上/knowledge-consolidation.md"
+        },
+        {
+          "text": "从源码追踪 uni-app H5 平台 `uni-image > img` 样式丢失之谜",
+          "link": "/docs/2026上/uni-image-img-style.md"
         }
       ]
     },
