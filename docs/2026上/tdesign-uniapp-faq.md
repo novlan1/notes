@@ -83,3 +83,19 @@ net::ERR_CACHE_MISS
 1. [issue#3078](https://github.com/Tencent/tdesign-miniprogram/issues/3078)
 2. [issue#2674](https://github.com/Tencent/tdesign-miniprogram/issues/2674)
 3. [issue#489](https://github.com/Tencent/tdesign-miniprogram/issues/489)
+
+### 2.7. 插槽类型报错
+
+报错如下：
+
+```
+Property 'description' does not exist on type '{}'.
+```
+
+<img src="https://cdn.uwayfly.com/article/2026/3/own_mike_GkHMbCKWxGERyhQJ.png" width="600" />
+
+<img src="https://cdn.uwayfly.com/article/2026/3/own_mike_ZKMS3XyGHjtSnCGC.png" width="600" />
+
+原因：`tsconfig.json` 中 `compilerOptions.moduleResolution` 配置了 `node` 等字段，未识别到 `@tdesign/uniapp` 中的 `exports`。
+
+解决办法：修改 `tsconfig.json` 中 `compilerOptions.moduleResolution` 为 `bundler`。可参考 [tdesign-uniapp-starter](https://github.com/TDesignOteam/tdesign-uniapp-starter/)。
