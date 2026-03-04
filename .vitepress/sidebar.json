@@ -59,6 +59,10 @@
         {
           "text": "cos流-git与cos双向同步技术方案",
           "link": "/docs/2026上/cos-git-sync.md"
+        },
+        {
+          "text": "@tdesign/uniapp 中 init 命令和 build 命令对比",
+          "link": "/docs/2026上/tdesign-uniapp-init.md"
         }
       ]
     },
