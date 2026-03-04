@@ -4,7 +4,7 @@ const VUE2_HX_ROOT = '/Users/guowangyang/Documents/github/tdesign-uniapp-starter
 const CONFIG = {
   VUE3_HX_ROOT,
   VUE2_HX_ROOT,
-  root: VUE3_HX_ROOT,
+  root: VUE2_HX_ROOT,
   dist: 'unpackage/dist/build/web',
   branch: 'docs',
   whiteListInDocsBranch: [

@@ -109,7 +109,7 @@ function main() {
     run(`git checkout ${currentBranch}`);
   } catch (err) {
     console.error('发布失败:', err.message);
-    try { run('git checkout -'); } catch {}
+    // try { run('git checkout -'); } catch {}
     process.exit(1);
   } finally {
     console.log(`清理临时目录: ${tempDir}`);
