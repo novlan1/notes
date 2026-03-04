@@ -1,3 +1,94 @@
+
+## Button 渐变（transition）效果分析
+
+### 根本原因
+
+`button.less` 第 250 行定义了：
+
+```css
+transition: all 0.3s;
+```
+
+这个 `transition: all` 是一切问题的根源。它意味着 **该元素上所有可动画 CSS 属性的变化都会有 0.3 秒的过渡动画**，包括 `color`、`background-color`、`border-color`、`opacity` 等。
+
+### 触发链路
+
+当 `disabled` 属性发生变化时，触发路径如下：
+
+```mermaid
+flowchart TD
+    A["disabled 属性变化"] --> B["watch: disabled → setClass()"]
+    B --> C["className 中添加/移除<br>t-button--disabled 类名"]
+    C --> D["CSS 样式切换"]
+    D --> E["background-color 变化<br>color 变化<br>border-color 变化"]
+    E --> F["transition: all 0.3s<br>所有属性变化都有 0.3s 渐变"]
+    F --> G["❌ 用户看到 disabled 状态<br>缓慢渐变，而非瞬间切换"]
+```
+
+具体来说：
+
+1. **Vue 组件层**：`button.vue` 中 `watch` 监听 `disabled` 变化 → 调用 `setClass()` → 动态添加/移除 `t-button--disabled` 类名
+
+2. **CSS 层**：`t-button--disabled` 类名会改变以下属性（以 primary 主题为例）：
+   - `color`: 正常色 → `@button-primary-disabled-color`
+   - `background-color`: 正常色 → `@button-primary-disabled-bg`（`@brand-color-disabled`）
+   - `border-color`: 正常色 → `@button-primary-disabled-border-color`
+
+3. **过渡效果**：由于 `transition: all 0.3s` 的存在，上述 color/background/border 的变化会在 0.3 秒内平滑过渡，产生**渐变效果**
+
+### 为什么说是"突变"
+
+Issue #4291 描述的应该是：**这个渐变效果本身就不符合预期**。对于 `disabled` 状态的切换，用户期望的是**瞬间**变为禁用态外观，而不是看到颜色慢慢渐变过去。这里所谓的"突变"可能是指：
+
+- 在某些场景下（比如点击后立即 disable），用户能**明显感知**到颜色从正常态"慢慢褪色"到禁用态，体验不佳
+- `transition: all` 过于粗暴，它不应该影响 disabled 状态切换，**本意只是为了 hover 按压态的过渡效果**
+
+### 解决方案
+
+`transition: all 0.3s` 应该限定作用范围，而不是对所有属性生效。有两种方式：
+
+**方案一：精确指定 transition 属性**（推荐）
+
+```less
+// 只对 hover 按压态需要的属性做过渡
+transition: background-color 0.3s, border-color 0.3s;
+```
+
+**方案二：在 disabled 类上覆盖 transition**
+
+```less
+&.@{button}--disabled {
+  transition: none;  // 禁用态不需要过渡动画
+  // ...existing styles...
+}
+```
+
+**方案三：结合两者**
+
+```less
+.@{button} {
+  transition: background-color 0.3s, border-color 0.3s;
+  
+  &.@{button}--disabled {
+    transition: none;
+  }
+}
+```
+
+### 小结
+
+| 属性 | 说明 |
+|------|------|
+| **问题根源** | `transition: all 0.3s`（button.less L250） |
+| **触发方式** | `disabled` / `loading` / `theme` 等属性变化 → `setClass()` 动态切换类名 → CSS 属性变化被 transition 捕获 |
+| **影响范围** | 所有 button 状态切换（disabled、loading、theme 切换等）都会有 0.3s 渐变 |
+| **本意** | 仅为 hover 按压态提供平滑过渡 |
+| **建议** | 将 `transition: all` 改为精确属性，或在 disabled 类上设置 `transition: none` |
+
+
+-- 2026-03-04 01:15:05
+<br>
+
 赚钱的第一性原理是创造价值，而不是出卖时间。创造价值的第一性原理是解决问题，而不是付出劳动力。解决问题的第一性原理是识别真正的需求，然后快速实践反馈迅速迭代。快速迭代的第一性原理是验证模型，从而可以更好的进行系统复制。系统复制的第一性原理是杠杆思维，只有使用杠杆放大系统你才能真正摆脱苦力，并走向真正的自由。
 
 -- 2026-03-03 13:09:40
