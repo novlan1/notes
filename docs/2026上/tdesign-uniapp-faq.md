@@ -71,3 +71,15 @@ net::ERR_CACHE_MISS
 原因：微信开发者工具的 bug，忽略即可。
 
 参考：[wx.loadFontFace 文档](https://developers.weixin.qq.com/miniprogram/dev/api/ui/font/wx.loadFontFace.html)
+
+### 2.6. Input 组件内容抖动
+
+小程序下，在 Popup 或 Dialog 等组件中，Input 组件中内容可能会抖动。
+
+原因：本质是小程序自己的问题，可以设置组件的 `transition:none;` 禁用动画，或者在 Popup/Dialog 组件中，延迟显示 Input 组件。
+
+参考：
+
+1. [issue#3078](https://github.com/Tencent/tdesign-miniprogram/issues/3078)
+2. [issue#2674](https://github.com/Tencent/tdesign-miniprogram/issues/2674)
+3. [issue#489](https://github.com/Tencent/tdesign-miniprogram/issues/489)
