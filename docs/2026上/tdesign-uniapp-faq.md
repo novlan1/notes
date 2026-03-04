@@ -70,5 +70,4 @@ net::ERR_CACHE_MISS
 
 原因：微信开发者工具的 bug，忽略即可。
 
-
 参考：[wx.loadFontFace 文档](https://developers.weixin.qq.com/miniprogram/dev/api/ui/font/wx.loadFontFace.html)
