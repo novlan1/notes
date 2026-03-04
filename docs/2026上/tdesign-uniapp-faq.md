@@ -55,3 +55,20 @@ Toast({
 ### 2.4. Vue2 下的适配
 
 参考[这篇文章](https://juejin.cn/post/7602901195154030644)。
+
+### 2.5. 报错 Failed to load font
+
+微信开发者工具报错
+
+```
+[渲染层网络层错误] Failed to load font https://tdesign.gtimg.com/icon/0.4.1/fonts/t.woff
+net::ERR_CACHE_MISS
+(env: macOS,mp,2.01.2510270; lib: 3.14.2)
+```
+
+<img src="https://cdn.uwayfly.com/article/2026/3/own_mike_yPaRHdteSeCnbZc7.png" width="600" />
+
+原因：微信开发者工具的 bug，忽略即可。
+
+
+参考：[wx.loadFontFace 文档](https://developers.weixin.qq.com/miniprogram/dev/api/ui/font/wx.loadFontFace.html)
