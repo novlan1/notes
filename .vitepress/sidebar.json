@@ -63,6 +63,10 @@
         {
           "text": "@tdesign/uniapp 中 init 命令和 build 命令对比",
           "link": "/docs/2026上/tdesign-uniapp-init.md"
+        },
+        {
+          "text": "@tdesign/uniapp 中类型导出",
+          "link": "/docs/2026上/tdesign-uniapp-exports-global.md"
         }
       ]
     },
