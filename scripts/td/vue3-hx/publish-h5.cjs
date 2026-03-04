@@ -1,12 +1,26 @@
-// node scripts/td/vue3-hx/publish-h5.cjs
-// tdesign-uniapp-starter-vue3-hx 下的打包产物，放到 docs 分支
-// 然后推送到 github，进行 pages 构建
+// node scripts/td/vue3-hx/publish-h5.cjs --vue3
+// node scripts/td/vue3-hx/publish-h5.cjs --vue2
+//
+// 将指定项目的打包产物，放到 docs 分支，然后推送到 github 进行 pages 构建
+// 要求：当前项目必须在 develop 分支上才能执行
 
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
-const CONFIG = require('./config.cjs');
+const { getConfig } = require('./config.cjs');
+
+/** 解析命令行参数，获取版本 */
+function parseVersion() {
+  const args = process.argv.slice(2);
+  if (args.includes('--vue3')) return 'vue3';
+  if (args.includes('--vue2')) return 'vue2';
+  console.error('错误：请指定版本参数 --vue2 或 --vue3');
+  process.exit(1);
+}
+
+const version = parseVersion();
+const CONFIG = getConfig(version);
 
 function run(cmd, options = {}) {
   console.log(`> ${cmd}`);
@@ -82,6 +96,15 @@ function commitAndPush() {
 }
 
 function main() {
+  const currentBranch = getCurrentBranch();
+  console.log(`📦 版本: ${version} | 项目: ${path.basename(CONFIG.root)}`);
+  console.log(`当前分支: ${currentBranch}`);
+
+  if (currentBranch !== 'develop') {
+    console.error(`❌ 当前分支为 ${currentBranch}，只能在 develop 分支上执行发布操作`);
+    process.exit(1);
+  }
+
   const distPath = path.join(CONFIG.root, CONFIG.dist);
 
   if (!fs.existsSync(distPath)) {
@@ -90,8 +113,6 @@ function main() {
   }
 
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'publish-h5-'));
-  const currentBranch = getCurrentBranch();
-  console.log(`当前分支: ${currentBranch}`);
 
   try {
     console.log(`复制 dist 到临时目录: ${tempDir}`);

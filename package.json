@@ -8,7 +8,10 @@
     "docs:preview": "vitepress preview",
     "check": "node scripts/check/check.js",
     "extra:install": "bash scripts/install/extra-install.sh",
-    "stats": "node scripts/npm-stats/npm-download-stats.js"
+    "stats": "node scripts/npm-stats/npm-download-stats.js",
+    "td:hx": "node scripts/td/vue3-hx/publish-h5.cjs",
+    "td:dep": "npm run td:deps",
+    "td:deps": "node scripts/td/install-deps.cjs"
   },
   "type": "module",
   "devDependencies": {
