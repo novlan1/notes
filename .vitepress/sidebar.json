@@ -67,6 +67,14 @@
         {
           "text": "@tdesign/uniapp 中类型导出",
           "link": "/docs/2026上/tdesign-uniapp-exports-global.md"
+        },
+        {
+          "text": "Stepper 小数输入精度丢失 Bug 修复",
+          "link": "/docs/2026上/td-stepper-skill.md"
+        },
+        {
+          "text": "机器人消息录入",
+          "link": "/docs/2026上/robot-knowledge-entry.md"
         }
       ]
     },
