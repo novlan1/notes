@@ -1,3 +1,16 @@
+@brand-color 和 @brand-color-7 在浅色模式下效果是一样的，因为它们的值是一样：
+
+https://github.com/Tencent/tdesign-common/blob/develop/style/web/theme/_light.less#L69
+
+但在暗色模式下却不是相等的：
+
+https://github.com/Tencent/tdesign-common/blob/develop/style/web/theme/_dark.less#L68
+
+为了在浅色和暗色模式下都达到最好的展示效果，两种模式下会分别取浅色/暗色两套色板不同色阶的位置颜色，但语义化的 Token 含义是稳定的，就是 @brand-color 它表示了整个组件库的主色调。当你在组件样式中使用了 @brand-color 时，就可以在不同默认切换时自动使用最合适的色板值。
+
+-- 2026-03-11 15:11:08
+<br>
+
 基础组件库短期内无法被AI取代。业务需要全局设计风格统一，边界兼容性问题AI考虑不全，超复杂逻辑AI考虑不全，组件复用利于降低包体积、提升性能，性能问题AI考虑不全。上面所有问题都考虑全面费token。
 
 -- 2026-03-11 08:46:31
