@@ -99,3 +99,11 @@ Property 'description' does not exist on type '{}'.
 原因：`tsconfig.json` 中 `compilerOptions.moduleResolution` 配置了 `node` 等字段，未识别到 `@tdesign/uniapp` 中的 `exports`。
 
 解决办法：修改 `tsconfig.json` 中 `compilerOptions.moduleResolution` 为 `bundler`。可参考 [tdesign-uniapp-starter](https://github.com/TDesignOteam/tdesign-uniapp-starter/)。
+
+### 2.8. PC 浏览器环境下的拖动
+
+PC 环境下，可以通过加载 `touch-emulator` 脚本来适配。
+
+脚本地址: https://tdesign.gtimg.com/js/touch-emulator.js, 你可以放到自己的 CDN 上。
+
+
