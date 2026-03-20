@@ -46,7 +46,7 @@ function getInstallCommands(options) {
     // PR 版本：第一个用 pnpm，第二个用 npm（pkg.pr.new 对 pnpm 支持不稳定）
     return [
       `pnpm i https://pkg.pr.new/@tdesign/uniapp@${options.prNumber}`,
-      `npm i https://pkg.pr.new/@tdesign/uniapp-chat@${options.prNumber}`,
+      `pnpm i https://pkg.pr.new/@tdesign/uniapp-chat@${options.prNumber}`,
     ];
   }
 
