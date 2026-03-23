@@ -14,15 +14,15 @@
         },
         {
           "text": "非技术思考",
-          "link": "/docs/2026上/no-tech-thought.md"
+          "link": "/docs/2026上/note-no-tech-thought.md"
         },
         {
           "text": "非技术笔记",
-          "link": "/docs/2026上/no-tech-note.md"
+          "link": "/docs/2026上/note-no-tech.md"
         },
         {
           "text": "技术笔记",
-          "link": "/docs/2026上/tech-note.md"
+          "link": "/docs/2026上/note-tech.md"
         },
         {
           "text": "Cherry Markdown 支持流式输出包",
@@ -75,6 +75,22 @@
         {
           "text": "机器人消息录入",
           "link": "/docs/2026上/robot-knowledge-entry.md"
+        },
+        {
+          "text": "TDesign 碎片笔记",
+          "link": "/docs/2026上/note-tdesign-library.md"
+        },
+        {
+          "text": "AI 碎片笔记",
+          "link": "/docs/2026上/note-ai-module.md"
+        },
+        {
+          "text": "PUBGM 碎片笔记",
+          "link": "/docs/2026上/note-pubgm-match.md"
+        },
+        {
+          "text": "TDesign Vue2 开发踩坑",
+          "link": "/docs/2026上/tdesign-uniapp-vue2-inner.md"
         }
       ]
     },
