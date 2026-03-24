@@ -1,3 +1,20 @@
+```bash
+# 上周总下载量
+curl -s https://api.npmjs.org/downloads/point/last-week/@tdesign/uniapp
+
+# 昨天总下载量
+curl -s https://api.npmjs.org/downloads/point/last-day/@tdesign/uniapp
+
+# 上周下载明细
+curl -s https://api.npmjs.org/downloads/range/last-week/@tdesign/uniapp
+
+# 指定日期
+curl -s https://api.npmjs.org/downloads/point/2026-03-22-2026-03-23/@tdesign/uniapp
+```
+
+-- 2026-03-24 09:37:05
+<br>
+
 npm 的下载量统计不是实时更新的：
 
 - 按天聚合：数据以 UTC 天 为粒度统计，不是每分钟更新
