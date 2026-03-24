@@ -798,6 +798,12 @@ function validateProp (key, propsOptions, propsData, vm) {
 
 ## 5. 小程序下空字符串解析为 true 问题
 
+<img src="https://cdn.uwayfly.com/article/2026/3/own_mike_WKWTnmiFGSikPiGa.png" width="400" />
+
+<img src="https://cdn.uwayfly.com/article/2026/3/own_mike_PWZz5DzW7m3Gs4Sm.png" width="500" />
+
+<img src="https://cdn.uwayfly.com/article/2026/3/own_mike_AAyDhtbs7eCQCBrX.png" width="700" />
+
 ```html
 <t-demo desc="" />
 ```
@@ -810,7 +816,7 @@ function validateProp (key, propsOptions, propsData, vm) {
 
 Vue2 + uni-app 编译小程序时，模板经历了一条**独特的三段式编译链路**：Vue 模板 → render 函数 → wxml。问题出在第三段。
 
-##### 第一段：HTML 解析器正确解析
+第一段：HTML 解析器正确解析
 
 📄 `@dcloudio/vue-cli-plugin-uni/packages/vue-template-compiler/build.js` [L476-L486](https://github.com/dcloudio/uni-app/blob/v_4.65-vue2/packages/vue-cli-plugin-uni/packages/vue-template-compiler/build.js#L476-L486):
 
@@ -826,7 +832,7 @@ attrs[i] = {
 
 `desc=""` 经正则匹配后 `args[3] = ""`（空字符串），`bool = false`。**解析正确**，不会被标记为布尔属性。
 
-##### 第二段：render 函数生成正确
+第二段：render 函数生成正确
 
 📄 `vue-template-compiler/build.js` [L3220](https://github.com/dcloudio/uni-app/blob/v_4.65-vue2/packages/vue-cli-plugin-uni/packages/vue-template-compiler/build.js#L3220):
 
@@ -837,7 +843,7 @@ addAttr(el, name, JSON.stringify(value), list[i]);
 
 `JSON.stringify("") = '""'`，生成的 render 函数为 `_c('t-demo',{attrs:{"desc":""}})`。**编码正确**。
 
-##### 第三段（根因）：wxml 生成时空值被丢弃
+第三段（根因）：wxml 生成时空值被丢弃
 
 uni-template-compiler 将 render 函数 AST 转换为 wxml 模板，分两步出了问题：
 
@@ -957,3 +963,16 @@ export default {
 
 - 当 `export default { ...uniComponent(...) }` 时，虽然展开的内容也是 `any`，但外层是一个对象字面量，`Vue/TypeScript` 能将其推断为一个合法的 Vue 组件选项对象（`ComponentOptions`），从而提供具体类型。
 
+## 7. style/class 不支持一些语法
+
+不支持方法、模板字符串等。
+
+如图
+
+<img src="https://cdn.uwayfly.com/article/2026/3/own_mike_aJYhCwAfNcHsrm3c.png" width="700" />
+
+<img src="https://cdn.uwayfly.com/article/2026/3/own_mike_KAKrTBxY6GDh7b5Y.png" width="700" />
+
+<img src="https://cdn.uwayfly.com/article/2026/3/own_mike_keEnnK3FW8ckr8HG.png" width="700" />
+
+解决方式，前面加上 `'' + xx`。
