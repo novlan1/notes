@@ -796,64 +796,6 @@ function validateProp (key, propsOptions, propsData, vm) {
 
 在 Vue 2 + uni-app 微信小程序环境下，props 的 `default: undefined` 是无效的。根本原因有二：一是 [`state/index.js`](https://github.com/dcloudio/uni-app/blob/v_4.65-vue2/src/core/runtime/mp/polyfill/state/index.js) 中通过 `JSON.parse(JSON.stringify(...))` 初始化组件数据时，`undefined` 字段被直接丢弃；二是 [`state/properties.js`](https://github.com/dcloudio/uni-app/blob/v_4.65-vue2/src/core/runtime/mp/polyfill/state/properties.js) 中 `validateProp` 以 `value !== undefined` 判断是否传值，`undefined` 被视为"未传值"而回退到类型默认值。因此必须使用 `default: null`。而 Vue 3 + uni-app 彻底改变了架构——[`renderProps.ts`](https://github.com/dcloudio/uni-app/blob/v_4.87-vue3/packages/uni-mp-vue/src/helpers/renderProps.ts) 通过 **内存缓存 + ID 引用** 传递 props 对象，完全绕过了 JSON 序列化，`undefined` 不再丢失。TDesign 组件库统一采用 `type: [Boolean, null]` + `default: null` 的写法，是为了同时兼容两个版本。
 
-```mermaid
-flowchart TD
-    A["👤 用户在页面中使用<br>&lt;config-provider :globalConfig='enUS'&gt;"]
-
-    B["config-provider.vue<br>watch.globalConfig()"]
-    C["configStore.switchLocale(globalConfig)"]
-    D["configStore.currentLocale.value = locale<br>(ReactiveState 触发订阅)"]
-
-    E["using-config mixin 的<br>subscribeLocale 回调触发"]
-    F["updateLocale() 执行"]
-    G["getComponentLocale() 合并三层"]
-
-    H["第1层：defaultLocale<br>zh_CN.js 中对应组件的默认值"]
-    I["第2层：globalLocale<br>configStore.currentLocale 中<br>对应组件的值"]
-    J["第3层：componentLocale<br>组件 prop（如 localeText）"]
-
-    K["合并结果 → this.globalConfig"]
-    L["模板中使用 globalConfig.xxx 渲染"]
-
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-    E --> F
-    F --> G
-    G --> H
-    G --> I
-    G --> J
-    H --> K
-    I --> K
-    J --> K
-    K --> L
-
-    style A fill:#E8F5E9,stroke:#2E7D32,color:#1B5E20
-    style B fill:#FFF3E0,stroke:#E65100,color:#BF360C
-    style C fill:#E3F2FD,stroke:#1565C0,color:#0D47A1
-    style D fill:#E3F2FD,stroke:#1565C0,color:#0D47A1
-    style E fill:#F3E5F5,stroke:#7B1FA2,color:#4A148C
-    style F fill:#F3E5F5,stroke:#7B1FA2,color:#4A148C
-    style G fill:#F3E5F5,stroke:#7B1FA2,color:#4A148C
-    style H fill:#FFF9C4,stroke:#F9A825,color:#F57F17
-    style I fill:#E3F2FD,stroke:#1565C0,color:#0D47A1
-    style J fill:#FFF3E0,stroke:#E65100,color:#BF360C
-    style K fill:#FFEBEE,stroke:#C62828,color:#B71C1C
-    style L fill:#E8F5E9,stroke:#2E7D32,color:#1B5E20
-```
-
-**颜色图例说明：**
-
-| 颜色 | 含义 | 对应节点 |
-|------|------|---------|
-| 🟢 绿色 | **用户/页面层** | 用户使用、模板渲染 |
-| 🟠 橙色 | **组件层**（config-provider / 业务组件 prop） | watch 监听、componentLocale |
-| 🔵 蓝色 | **Store 层**（configStore / ReactiveState） | switchLocale、currentLocale、globalLocale |
-| 🟣 紫色 | **Mixin 层**（using-config） | subscribeLocale、updateLocale、getComponentLocale |
-| 🟡 黄色 | **Locale 语言包**（默认值） | zh_CN.js defaultLocale |
-| 🔴 红色 | **合并结果** | this.globalConfig 最终输出 |
-
 ## 5. 小程序下空字符串解析为 true 问题
 
 ```html
