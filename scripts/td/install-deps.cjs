@@ -1,5 +1,5 @@
 // node scripts/td/install-deps.cjs
-// node scripts/td/install-deps.cjs --pr 4309
+// node scripts/td/install-deps.cjs --pr 4368
 //
 // 不传参数：安装最新版本
 //   pnpm i @tdesign/uniapp@latest
@@ -75,6 +75,8 @@ function main() {
     console.log(`\n${'='.repeat(50)}`);
     console.log(`📁 ${project}`);
     console.log('='.repeat(50));
+
+    run('pnpm store prune', projectPath);
 
     for (const cmd of commands) {
       run(cmd, projectPath);

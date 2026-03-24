@@ -6,5 +6,5 @@ net-cli@latest  stylelint-config-common@latest -D
 
 pnpm i t-comm@latest press-ui@latest press-plus@latest press-next@latest press-ui-next@latest swiper-next@latest \
 press-tdesign-vue-next@latest press-element-plus@latest press-shared@latest press-hooks@latest \
-ebus-light@latest share-light@latest vconsole-helper@latest \
+ebus-light@latest share-light@latest vconsole-helper@latest @tdesign/uniapp@latest @tdesign/uniapp-chat@latest \
 press-swiper@latest mime-light@latest vue-next-lazyload@latest

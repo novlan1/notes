@@ -16,17 +16,8 @@
 
 解决方案类似
 
-1. 在 [postcss.config.js](https://github.com/novlan1/tdesign-uniapp-vue2-cli-starter/blob/master/postcss.config.js) 中增加一些插件，与 CLI 模式有差异
-2. 先临时修改 uni_modules/tdesign-uniapp/components 组件样式引入方式
+- 在 [postcss.config.js](https://github.com/novlan1/tdesign-uniapp-vue2-cli-starter/blob/master/postcss.config.js) 中增加一些插件，与 CLI 模式有差异
 
-```diff
-- <style scoped>
--  @import './button.css';
-+ <style scoped src="./button.css">
-</style>
-```
-
-第2条是临时方案，下一个版本优化下。
 
 ### 4. 示例项目
 
