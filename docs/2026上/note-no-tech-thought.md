@@ -1,3 +1,11 @@
+```sh
+# 下载 protoc 文件
+scp group-new:/root/guowangyang/protoc-gen-http-ts/main /Users/guowangyang/Documents/git-woa/gen-proto-ts/main
+```
+
+-- 2026-03-24 10:03:17
+<br>
+
 ```bash
 # 上周总下载量
 curl -s https://api.npmjs.org/downloads/point/last-week/@tdesign/uniapp
