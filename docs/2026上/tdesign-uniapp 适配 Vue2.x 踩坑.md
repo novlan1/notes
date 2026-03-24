@@ -456,6 +456,17 @@ created() {
 <t-badge :max-count="badgeProps.maxCount || 99" />
 ```
 
+```js
+showErrorMessage: {
+  type: [Boolean, null],
+  default: null as TdFormItemProps['showErrorMessage'],
+},
+```
+
+```ts
+showErrorMessage?: boolean | null;
+```
+
 直觉上，`|| 99` 似乎是多余的——组件 props 中已经定义了 `default: 99`，传 `undefined` 应该会自动使用默认值才对。但如果去掉这个兜底：
 
 ```vue
