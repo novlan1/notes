@@ -9,6 +9,7 @@
     "check": "node scripts/check/check.js",
     "extra:install": "bash scripts/install/extra-install.sh",
     "stats": "node scripts/npm-stats/npm-download-stats.js",
+    "td:hx": "npm run td:hx:vue3 && npm run td:hx:vue2",
     "td:hx:vue2": "node scripts/td/vue3-hx/publish-h5.cjs --vue2",
     "td:hx:vue3": "node scripts/td/vue3-hx/publish-h5.cjs --vue3",
     "td:dep": "npm run td:deps",
