@@ -2,6 +2,13 @@
 npm deprecate tdesign-uniapp "This package has been renamed to @tdesign/uniapp. Please install @tdesign/uniapp instead. See https://tdesign.tencent.com/uniapp/getting-started/ for more details."
 ```
 
+-- 2026-03-25 10:24:01
+<br>
+
+```bash
+npm deprecate tdesign-uniapp "This package has been renamed to @tdesign/uniapp. Please install @tdesign/uniapp instead. See https://tdesign.tencent.com/uniapp/getting-started/ for more details."
+```
+
 -- 2026-03-25 10:22:06
 <br>
 
