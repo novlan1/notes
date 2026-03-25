@@ -40,12 +40,21 @@ npm run td:deps --pr 1
 
 @tdesign/uniapp 发布 checklist
 
+1. 同步，有一次性同步，也可以实时同步
+2. 构建
+3. 验证
+
+具体就是
+
 1. tdesign-uniapp-starter, tdesign-uniapp-starter-apply，tdesign-uniapp-starter-vue2-cli
+    - vue2-cli 可能需要同步 uniapp 中的 `pages.json`
     - 更新构建无问题
     - H5 需要发到 `github pages`，点开看看
     - 小程序需要发到开发者工具，点开看看
 2. tdesign-uniapp-starter-vue3-hx, tdesign-uniapp-starter-vue2-hx
+    - 可能都需要同步 uniapp 中的 `pages.json`
     - tdesign-uniapp-starter-vue3-hx 需要执行 `npm run init`，进行 `replace-alias`
     - 更新构建无问题
     - H5 需要在 HX 中构建，然后 `notes` 下执行 `npm run td:hx:vue2` 和 `npm run td:hx:vue`
     - H5 发布到 `github pages`，点开看看
+    - Vue3 hx 需要主仓库的 dist 文件，vue2 hx等不需要
