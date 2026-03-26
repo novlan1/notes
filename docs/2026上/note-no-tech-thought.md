@@ -1020,6 +1020,9 @@ https://image-1251917893.file.myqcloud.com/igame/html/auto-scheme-mp.html?scheme
 
 - 配置地址 `game://?module=1000096`
 
+- `game://?module=1000096&from_type=fixed`
+- `game://?module=1000096&from_type=operational`
+
 -- 2026-01-26 11:06:55
 <br>
 
