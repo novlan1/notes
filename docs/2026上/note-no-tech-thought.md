@@ -1,3 +1,14 @@
+```bash
+# 撤回废弃
+npm deprecate tdesign-uniapp-chat ""
+
+# 重新废弃
+npm deprecate "tdesign-uniapp-chat@*" "This package has been renamed to @tdesign/uniapp-chat. Please install @tdesign/uniapp-chat instead. See https://tdesign.tencent.com/uniapp-chat/getting-started/ for more details."
+```
+
+-- 2026-03-27 15:57:07
+<br>
+
 test
 
 -- 2026-03-25 12:42:21
