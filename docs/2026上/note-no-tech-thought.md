@@ -10,43 +10,6 @@ novlan1
 
 ---
 
-> **2026-03-29** — test
->
-> 1
-
----
----
-
-> **2026-03-25** — test
->
-> test
-
----
-
-> **2026-03-25** — bash 代码片段
->
-> ```bash
-> npm deprecate tdesign-uniapp "This package has been renamed to @tdesign/uniapp. Please install @tdesign/uniapp instead. See https://tdesign.tencent.com/uniapp/getting-started/ for more details."
-> ```
-
----
-
-> **2026-03-25** — bash 代码片段
->
-> ```bash
-> npm deprecate tdesign-uniapp "This package has been renamed to @tdesign/uniapp. Please install @tdesign/uniapp instead. See https://tdesign.tencent.com/uniapp/getting-started/ for more details."
-> ```
-
----
-
-> **2026-03-25** — bash 代码片段
->
-> ```bash
-> npm deprecate tdesign-uniapp "This package has been renamed to @tdesign/uniapp. Please install @tdesign/uniapp instead. See https://tdesign.tencent.com/uniapp/getting-started/ for more details."
-> ```
-
----
-
 > **2026-03-25** — bash 代码片段
 >
 > ```bash
