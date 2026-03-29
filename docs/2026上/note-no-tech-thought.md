@@ -10,6 +10,20 @@ novlan1
 
 ---
 
+> **2026-03-29** — 撤回废弃
+>
+> ```bash
+> # 撤回废弃
+> npm deprecate tdesign-uniapp-chat ""
+>
+> # 重新废弃
+> npm deprecate "tdesign-uniapp-chat@*" "This package has been renamed to @tdesign/uniapp-chat. Please install @tdesign/uniapp-chat instead. See https://tdesign.tencent.com/uniapp-chat/getting-started/ for more details."
+> ```
+>
+
+---
+---
+
 > **2026-03-25** — bash 代码片段
 >
 > ```bash
