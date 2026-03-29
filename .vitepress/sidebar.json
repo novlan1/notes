@@ -208,7 +208,7 @@
         },
         {
           "text": "随笔",
-          "link": "/docs/2025下/not-tech.md"
+          "link": "/docs/2025下/note-not-tech.md"
         },
         {
           "text": "技术笔记",
@@ -220,15 +220,15 @@
         },
         {
           "text": "非技术思考",
-          "link": "/docs/2025下/no-tech-thought.md"
+          "link": "/docs/2025下/note-no-tech-thought.md"
         },
         {
           "text": "非技术笔记",
-          "link": "/docs/2025下/no-tech-note.md"
+          "link": "/docs/2025下/note-no-tech.md"
         },
         {
           "text": "技术笔记",
-          "link": "/docs/2025下/tech-note.md"
+          "link": "/docs/2025下/note-tech.md"
         },
         {
           "text": "pnpm patch",
