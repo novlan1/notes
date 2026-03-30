@@ -8,6 +8,12 @@ novlan1
 
 # 非技术思考笔记
 
+## token
+
+`2026-03-30`
+
+<img src="https://cdn.uwayfly.com/article/2026/3/own_mike_zXrddpi27cK2RrxJ.png" width="500"/>
+
 ## nginx 中  `proxy_pass` 带不带尾部 `/` 的区别
 
 `2026-03-30`
