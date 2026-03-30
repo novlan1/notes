@@ -91,6 +91,10 @@
         {
           "text": "TDesign Vue2 开发踩坑",
           "link": "/docs/2026上/tdesign-uniapp-vue2-inner.md"
+        },
+        {
+          "text": "SSH 免密登录方案对比：sshpass vs ssh-agent",
+          "link": "/docs/2026上/ssh-auto-login.md"
         }
       ]
     },
