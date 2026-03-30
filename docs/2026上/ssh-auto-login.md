@@ -499,3 +499,87 @@ Host my-server
 ```
 
 > 💡 `IdentitiesOnly yes` 的作用是**只使用指定的密钥**，防止 SSH 自动尝试 agent 中的其他密钥。
+
+---
+
+### 问题五：脚本中 `scp`/`ssh` 无法识别你在 `.zshrc` 中定义的 alias
+
+#### 现象
+
+你在 `~/.zshrc` 中定义了 SSH 别名：
+
+```bash
+alias loginDev='ssh -p 36000 root@192.168.1.100'
+```
+
+在终端里直接输入 `loginDev` 可以正常连接。但在脚本中使用这个别名时：
+
+```bash
+#!/bin/bash
+scp -P 36000 loginDev:/path/to/file ./local/
+```
+
+报错：
+
+```text
+ssh: Could not resolve hostname logindev: nodename nor servname provided, or not known
+```
+
+注意报错中的主机名变成了全小写的 `logindev`——说明 `scp` 根本没有识别你的 alias，而是把它当成了一个真正的主机名去做 DNS 查找（DNS 查找是大小写不敏感的，所以被转成了小写）。
+
+#### 原因：交互式 Shell vs 非交互式 Shell
+
+这个问题的根本原因在于 **Shell 的两种运行模式**：
+
+| | 交互式 Shell | 非交互式 Shell |
+|--|-------------|---------------|
+| **什么时候** | 你打开终端，手动输入命令 | 执行脚本（`./script.sh`、`bash script.sh`） |
+| **加载配置** | 会加载 `~/.zshrc` / `~/.bashrc` | ❌ **不会**加载这些文件 |
+| **alias 是否可用** | ✅ 可用 | ❌ **不可用** |
+| **shell 函数** | ✅ 可用 | ❌ 不可用（除非脚本内 `source` 了配置文件） |
+
+**简单理解**：
+
+- `~/.zshrc`（或 `~/.bashrc`）是**交互式配置文件**，只有你"坐在终端前敲命令"时才会加载
+- 当你运行一个脚本时，系统会启动一个新的**非交互式 Shell 进程**来执行它，这个进程**不会读取** `~/.zshrc`
+- 所以脚本里的 `scp`、`ssh` 等命令完全不知道你定义了什么 alias
+
+这就像你在自己家里（交互式终端）贴了一张备忘录（alias），但去公司（脚本环境）时，那张备忘录并不在那里。
+
+#### 解决方案：使用 `~/.ssh/config` 代替 alias
+
+`~/.ssh/config` 是 **SSH 程序自己的配置文件**，无论在交互式终端还是脚本中，`ssh`、`scp`、`sftp` 都会读取它。这是定义 SSH 主机别名的**正确方式**。
+
+在 `~/.ssh/config` 中添加：
+
+```text
+Host loginDev
+    HostName 192.168.1.100
+    User root
+    Port 36000
+    IdentityFile ~/.ssh/id_ed25519
+```
+
+现在无论在哪里使用都没问题：
+
+```bash
+# 终端里直接用
+ssh loginDev
+
+# 脚本里也能用
+scp loginDev:/path/to/file ./local/
+
+# 甚至不用再指定 -P 端口，因为 config 里已经配了
+```
+
+#### 对比总结
+
+| | `.zshrc` alias | `~/.ssh/config` Host |
+|--|---------------|---------------------|
+| 交互式终端 | ✅ 可用 | ✅ 可用 |
+| 脚本中 | ❌ 不可用 | ✅ 可用 |
+| `scp` / `sftp` | ❌ 不识别 | ✅ 自动识别 |
+| 端口/密钥配置 | 每次写在命令里 | 一次配置，自动应用 |
+| 推荐程度 | ⚠️ 仅适合简单快捷命令 | ✅ SSH 主机别名的标准做法 |
+
+> 💡 **一句话总结**：Shell alias 只在你手动敲命令时生效，脚本和 `scp` 都不认。SSH 主机别名应该配在 `~/.ssh/config` 里，这才是到处都能用的正确姿势。
