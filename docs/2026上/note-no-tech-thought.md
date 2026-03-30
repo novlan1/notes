@@ -8,6 +8,89 @@ novlan1
 
 # 非技术思考笔记
 
+## nginx 中  `proxy_pass` 带不带尾部 `/` 的区别
+
+`2026-03-30`
+
+
+
+#### 核心规则
+
+Nginx 的 `proxy_pass` 有一个关键规则：
+
+> **如果 `proxy_pass` 的 URL 中包含 URI 部分（哪怕只是一个 `/`），Nginx 会用这个 URI 替换掉 `location` 匹配到的部分。如果不包含 URI，则原样转发完整请求路径。**
+
+### 什么算"包含 URI"？
+
+| proxy_pass 写法 | 是否包含 URI | 说明 |
+|---|---|---|
+| `http://localhost:5176` | ❌ 不包含 | 没有任何路径部分 |
+| `http://localhost:5176/` | ✅ 包含 | `/` 就是一个 URI |
+| `http://localhost:5176/app` | ✅ 包含 | `/app` 是 URI |
+
+#### 具体行为对比
+
+假设 Nginx 配置：
+
+```nginx
+location /tapd-solution-cgi/ {
+    proxy_pass http://localhost:5176;   # 不带 /
+}
+```
+
+浏览器请求 `/tapd-solution-cgi/api/solutions`，Nginx 的处理逻辑：
+
+```
+proxy_pass 没有 URI 部分
+→ 原样转发完整路径
+→ 后端收到: /tapd-solution-cgi/api/solutions  ❌ 404
+```
+
+改成带 `/`：
+
+```nginx
+location /tapd-solution-cgi/ {
+    proxy_pass http://localhost:5176/;  # 带 /
+}
+```
+
+```
+proxy_pass 有 URI 部分（/）
+→ 用 "/" 替换掉 location 匹配的 "/tapd-solution-cgi/"
+→ 后端收到: /api/solutions  ✅ 匹配成功
+```
+
+### 替换公式
+
+用一个公式来理解：
+
+```
+后端收到的路径 = proxy_pass的URI + (原始请求路径 - location匹配的部分)
+```
+
+以请求 `/tapd-solution-cgi/api/solutions` 为例：
+
+| 配置 | 计算过程 | 后端收到 |
+|---|---|---|
+| `proxy_pass http://localhost:5176;` | 无 URI，原样转发 | `/tapd-solution-cgi/api/solutions` |
+| `proxy_pass http://localhost:5176/;` | `/` + (`/tapd-solution-cgi/api/solutions` - `/tapd-solution-cgi/`) | `/api/solutions` |
+| `proxy_pass http://localhost:5176/v2/;` | `/v2/` + (`/tapd-solution-cgi/api/solutions` - `/tapd-solution-cgi/`) | `/v2/api/solutions` |
+
+#### 流程图
+
+```mermaid
+flowchart TD
+    A["浏览器请求: /tapd-solution-cgi/api/solutions"] --> B{"proxy_pass 是否包含 URI？"}
+    B -->|"不包含<br/>http://localhost:5176"| C["原样转发完整路径"]
+    C --> D["后端收到: /tapd-solution-cgi/api/solutions ❌"]
+    B -->|"包含 URI<br/>http://localhost:5176/"| E["用 URI 替换 location 前缀"]
+    E --> F["后端收到: /api/solutions ✅"]
+```
+
+#### 总结
+
+一句话记住：**`proxy_pass` 不带路径 = 原样转发，带路径（哪怕只是 `/`）= 替换 location 前缀**。这就是为什么仅仅多一个 `/` 就能决定后端收到的是 `/tapd-solution-cgi/api/solutions` 还是 `/api/solutions`。
+
 ### 撤回废弃
 
 `2026-03-29`
