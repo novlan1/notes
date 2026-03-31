@@ -8,6 +8,80 @@ novlan1
 
 # 非技术思考笔记
 
+## DevCloud 切换终端 Node 版本变化的原因
+
+`2026-03-31`
+
+
+
+### 为什么切换终端 Node 版本就变了？
+
+DevCloud 的构建环境中，每个**构建步骤（Step）**都是在一个**新的 Shell 会话**中执行的。这意味着：
+
+1. **每个 Step 都会重新初始化 Shell 环境**，之前通过 `nvm use` 设置的 Node 版本不会保留
+2. Shell 启动时会加载默认的 `.bashrc` / `.bash_profile`，Node 版本会回退到系统默认版本
+3. `nvm use` 只在当前 Shell 会话中生效，不会持久化
+
+### 如何固定 nvm 的 Node 版本？
+
+有以下几种方案：
+
+#### 方案一：使用 `nvm alias default`（推荐）
+
+在构建脚本的**最前面**设置默认版本：
+
+```bash
+nvm alias default 18
+nvm use default
+node -v  # 验证
+```
+
+`nvm alias default` 会将版本写入 `~/.nvm/alias/default` 文件，后续新 Shell 会话会自动使用这个版本。
+
+#### 方案二：在每个 Step 开头都加 `nvm use`
+
+如果有多个构建步骤，在**每个步骤的开头**都加上：
+
+```bash
+source ~/.nvm/nvm.sh
+nvm use 18
+```
+
+#### 方案三：项目根目录添加 `.nvmrc` 文件
+
+在项目根目录创建 `.nvmrc` 文件：
+
+```
+18
+```
+
+然后在构建脚本中使用：
+
+```bash
+source ~/.nvm/nvm.sh
+nvm use  # 会自动读取 .nvmrc 中的版本
+```
+
+#### 方案四：直接设置 PATH（最可靠）
+
+绕过 nvm，直接把目标 Node 版本的路径加到 PATH 最前面：
+
+```bash
+export PATH="$HOME/.nvm/versions/node/v18.20.0/bin:$PATH"
+node -v
+```
+
+### 最佳实践建议
+
+| 做法 | 说明 |
+|------|------|
+| ✅ 项目中提交 `.nvmrc` 文件 | 统一团队和 CI 的 Node 版本 |
+| ✅ 每个 Step 开头 `nvm use` | 确保每个步骤版本一致 |
+| ✅ 使用 `--frozen-lockfile` | 配合 lockfile 确保依赖版本一致 |
+| ❌ 只在第一个 Step 设置版本 | 后续 Step 会丢失 |
+
+结合你之前遇到的构建机类型错误问题，建议在项目根目录添加 `.nvmrc` 文件锁定 Node 版本，并在 CI 脚本中每个步骤都执行 `nvm use`，这样可以确保构建环境的一致性。
+
 ## TDesign
 
 `2026-03-31`
