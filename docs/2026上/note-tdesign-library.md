@@ -8,6 +8,16 @@ novlan1
 
 # TDesign 组件库笔记
 
+## 【import { IsURLOptions } from …
+
+`2026-03-31`
+
+【import { IsURLOptions } from 'validator/es/lib/isURL'】
+
+改成了
+
+【import { IsURLOptions } from '@common'】
+
 ## @brand-color 和 @brand-color-…
 
 `2026-03-11`
