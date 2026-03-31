@@ -8,6 +8,14 @@ novlan1
 
 # TDesign 组件库笔记
 
+## TS 引入 JS 类型报错
+
+`2026-03-31`
+
+TS 文件引入 JS 文件，会报错 `xx implicitly has an 'any' type`。也就是所有的TS必须引入TS，或者有dts的JS。
+
+<img src="https://cdn.uwayfly.com/article/2026/3/own_mike_QhRR6XYCAQi42mTb.png" width="500"/>
+
 ## 【import { IsURLOptions } from …
 
 `2026-03-31`
