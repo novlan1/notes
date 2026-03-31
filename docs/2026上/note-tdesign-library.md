@@ -8,6 +8,18 @@ novlan1
 
 # TDesign 组件库笔记
 
+## 为什么不同写法的 uniComponent 会导致类型提示不一样
+
+`2026-03-31`
+
+原理：
+
+uniComponent 是一个纯 JS 函数（定义在 .js 文件中，没有 TypeScript 类型注解），返回类型被推断为 any
+
+当 export default uniComponent(...) 时，Vue 的类型系统拿到的 default export 就是 any
+
+当 export default { ...uniComponent(...) } 时，虽然展开的内容也是 any，但外层是一个对象字面量，Vue/TypeScript 能将其推断为一个合法的 Vue 组件选项对象（ComponentOptions），从而提供具体类型
+
 ## TS 引入 JS 类型报错
 
 `2026-03-31`
