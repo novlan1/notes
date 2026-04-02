@@ -8,6 +8,19 @@ novlan1
 
 # 非技术思考笔记
 
+## t-comm badge 变更
+
+`2026-04-02`
+
+顺序不太合理：建议按「项目信息 → npm 信息 → 质量指标 → 时间」的逻辑排列
+
+建议调整后的顺序和颜色方案：
+
+```
+第一行：npm version → npm license → npm downloads → npm unpacked-size
+第二行：modules → TypeScript → build → coverage → created
+```
+
 ## 文章写做了什么
 
 `2026-03-31`
