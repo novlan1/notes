@@ -8,6 +8,17 @@ novlan1
 
 # 非技术思考笔记
 
+## BREAKING CHANGE 提交
+
+`2026-04-02`
+
+```sh
+feat: 将 GAME_MAP 中的 GID 改为引用 GID_MAP 常量
+
+BREAKING CHANGE: GAME_MAP 中的 GID 字段不再是数字字面量，而是引用 GID_MAP 中的常量。
+直接依赖 GAME_MAP.xxx.GID 数值类型的代码不受影响，但如果有代码通过硬编码方式 mock 了 GAME_MAP 结构，需要同步更新。
+```
+
 ## t-comm badge 变更
 
 `2026-04-02`
