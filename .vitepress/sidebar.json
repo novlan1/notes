@@ -95,6 +95,10 @@
         {
           "text": "SSH 免密登录方案对比：sshpass vs ssh-agent",
           "link": "/docs/2026上/ssh-auto-login.md"
+        },
+        {
+          "text": "TDesign 小程序/UniApp Table 组件适配踩坑记录",
+          "link": "/docs/2026上/tdesign-uniapp-table.md"
         }
       ]
     },
