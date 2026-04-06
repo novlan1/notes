@@ -8,6 +8,18 @@ novlan1
 
 # 非技术思考笔记
 
+## 生意、产品、作品
+
+`2026-04-06`
+
+
+
+<img src="https://cdn.uwayfly.com/article/2026/4/own_mike_D6sEB67ymZ6E8fzT.png" width="500"/>
+
+<img src="https://cdn.uwayfly.com/article/2026/4/own_mike_7QcfZmEB6hjcRkt2.png" width="500"/>
+
+<img src="https://cdn.uwayfly.com/article/2026/4/own_mike_5AxDazibctZXEprP.png" width="500"/>
+
 ## 转换 prompt
 
 `2026-04-06`
