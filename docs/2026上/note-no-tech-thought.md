@@ -8,6 +8,14 @@ novlan1
 
 # 非技术思考笔记
 
+## 蓝鲸
+
+`2026-04-06`
+
+人工审核api https://bkapigw.woa.com/docs/api-docs/gateway/devops?apiName=v4_user_manual_review&stage=devx
+
+蓝鲸开发者中心https://v3.open.woa.com/developer-center/apps/tip-tool/settings/application/info
+
 ## 你不知道你不知道
 
 `2026-04-06`
