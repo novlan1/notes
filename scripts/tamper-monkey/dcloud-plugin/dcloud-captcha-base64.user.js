@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         DCloud 插件市场 - 验证码自动识别填入
 // @namespace    https://ext.dcloud.net.cn/
-// @version      3.7.0
-// @description  识别验证码、自动提交、错误弹窗自动重试、提交成功后自动续点下载（需配合本地 OCR 服务使用）
+// @version      4.1.0
+// @description  识别验证码、自动提交、错误弹窗自动重试、提交成功后自动续点下载、Watchdog 防卡死+自动刷新页面（需配合本地 OCR 服务使用）
 // @author       novlan1
 // @match        https://ext.dcloud.net.cn/*
 // @grant        GM_setClipboard
@@ -24,12 +24,23 @@
   const MAX_RETRY_COUNT = 5; // 识别失败时最大自动换图重试次数
   const SUBMIT_BTN_SELECTOR = '.btn.btn-primary'; // 提交按钮选择器
   const DOWNLOAD_BTN_TEXT = '下载插件并导入HBuilderX'; // 下载按钮文本（也匹配 HX 缩写）
+  const WATCHDOG_TIMEOUT = 15000; // 看门狗超时时间（毫秒），超过此时间无活动则判定卡住
+  const WATCHDOG_CHECK_INTERVAL = 3000; // 看门狗检查间隔（毫秒）
+  const WATCHDOG_RECOVERY_TIMEOUT = 10000; // 看门狗恢复操作后的二级超时（毫秒），恢复操作后如果仍无新活动则刷新页面
+  const WATCHDOG_MAX_CONSECUTIVE = 2; // 看门狗连续触发次数上限，超过则直接刷新页面
 
   let retryCount = 0; // 当前连续重试计数（OCR 格式校验 + 错误弹窗 共享）
   let isProcessing = false; // 全局处理锁，防止并发重复触发
   let isSubmitting = false; // 提交等待锁，提交后到结果返回前阻止新的 OCR 处理
   let srcChangeTimer = null; // src 变化防抖定时器
   let userClickedDownload = false; // 用户是否手动点击过"下载插件并导入HBuilderX"按钮
+  let isAutoRefreshing = false; // 标记当前是否为脚本自动换图（区分用户手动操作）
+  let submitSuccessTimer = null; // 提交成功轮询定时器
+  let watchdogTimer = null; // 看门狗定时器
+  let watchdogRecoveryTimer = null; // 看门狗恢复后的二级超时定时器
+  let lastActivityTime = Date.now(); // 最后一次有效活动的时间戳
+  let watchdogEnabled = false; // 看门狗是否已启用（用户首次点击下载后启用）
+  let watchdogConsecutiveCount = 0; // 看门狗连续触发次数（成功恢复后重置）
   const MAX_TOTAL_RETRY = 8; // 全局最大重试次数（OCR 格式校验 + 错误弹窗 共享）
 
   // ========== 样式注入 ==========
@@ -111,6 +122,130 @@
     document.head.appendChild(style);
   }
 
+  // ========== 看门狗（Watchdog）—— 防卡死核心机制 ==========
+  // 每次有效活动时调用 tickActivity() 更新时间戳
+  // 看门狗定期检查：如果超过 WATCHDOG_TIMEOUT 没有活动，判定卡住并自动恢复
+  function tickActivity(reason) {
+    lastActivityTime = Date.now();
+    console.log(`[验证码OCR] 🐕 活动心跳: ${reason}`);
+  }
+
+  function startWatchdog() {
+    stopWatchdog();
+    watchdogEnabled = true;
+    watchdogConsecutiveCount = 0;
+    lastActivityTime = Date.now();
+    console.log(`[验证码OCR] 🐕 看门狗已启动（超时阈值: ${WATCHDOG_TIMEOUT / 1000}秒，恢复超时: ${WATCHDOG_RECOVERY_TIMEOUT / 1000}秒，连续上限: ${WATCHDOG_MAX_CONSECUTIVE}次）`);
+
+    watchdogTimer = setInterval(() => {
+      const elapsed = Date.now() - lastActivityTime;
+      if (elapsed < WATCHDOG_TIMEOUT) {
+        // 有正常活动，重置连续触发计数
+        if (watchdogConsecutiveCount > 0) {
+          console.log(`[验证码OCR] 🐕 检测到正常活动，重置连续触发计数 (${watchdogConsecutiveCount} → 0)`);
+          watchdogConsecutiveCount = 0;
+        }
+        return;
+      }
+
+      watchdogConsecutiveCount++;
+      console.warn(`[验证码OCR] 🐕🚨 看门狗触发！已 ${(elapsed / 1000).toFixed(1)} 秒无活动，判定卡住（连续第 ${watchdogConsecutiveCount} 次）`);
+      console.log(`[验证码OCR] 🐕 当前状态: isProcessing=${isProcessing}, isSubmitting=${isSubmitting}, retryCount=${retryCount}`);
+
+      // 连续触发超过上限 → 直接刷新页面（说明之前的恢复操作都无效，可能被系统弹窗卡住）
+      if (watchdogConsecutiveCount > WATCHDOG_MAX_CONSECUTIVE) {
+        console.warn(`[验证码OCR] 🐕💀 看门狗已连续触发 ${watchdogConsecutiveCount} 次，恢复操作无效，直接刷新页面`);
+        window.location.reload();
+        return;
+      }
+
+      // 重置所有状态
+      resetAllState();
+
+      // 判断当前页面状态并恢复
+      const captchaImg = findCaptchaImg();
+      const captchaVisible = captchaImg && (captchaImg.offsetParent !== null || captchaImg.closest('.modal.in'));
+
+      if (captchaVisible) {
+        // 验证码弹窗还在 → 换图重新识别
+        console.log('[验证码OCR] 🐕 验证码弹窗仍在，尝试换图重新识别');
+        tickActivity('看门狗恢复-换图');
+        captchaImg.dataset.b64Processed = 'false';
+        clickRefreshCaptcha();
+      } else {
+        // 没有验证码弹窗 → 可能被系统弹窗（"要打开 HBuilderX 吗？"）卡住
+        // 尝试点击下载按钮，并启动二级超时检测
+        console.log('[验证码OCR] 🐕 未检测到验证码弹窗，尝试重新点击下载按钮');
+        tickActivity('看门狗恢复-重新下载');
+        const clicked = autoClickDownloadBtn();
+        if (!clicked) {
+          // 下载按钮也找不到，直接刷新页面
+          console.warn('[验证码OCR] 🐕💀 下载按钮也找不到，3秒后刷新页面');
+          schedulePageReload(3000);
+        } else {
+          // 点击了下载按钮，启动二级超时：如果 N 秒内没有新的验证码弹窗出现，说明被系统弹窗卡住，刷新页面
+          startRecoveryTimeout();
+        }
+      }
+    }, WATCHDOG_CHECK_INTERVAL);
+  }
+
+  function stopWatchdog() {
+    if (watchdogTimer) {
+      clearInterval(watchdogTimer);
+      watchdogTimer = null;
+    }
+    stopRecoveryTimeout();
+  }
+
+  // 看门狗恢复后的二级超时：点击下载按钮后，如果一段时间内没有新的验证码弹窗出现，说明被系统弹窗卡住
+  function startRecoveryTimeout() {
+    stopRecoveryTimeout();
+    console.log(`[验证码OCR] 🐕⏱️ 启动恢复超时检测（${WATCHDOG_RECOVERY_TIMEOUT / 1000}秒内需出现验证码弹窗）`);
+    watchdogRecoveryTimer = setTimeout(() => {
+      watchdogRecoveryTimer = null;
+      // 检查是否有新的验证码弹窗出现
+      const captchaImg = findCaptchaImg();
+      const captchaVisible = captchaImg && (captchaImg.offsetParent !== null || captchaImg.closest('.modal.in'));
+      if (captchaVisible) {
+        console.log('[验证码OCR] 🐕✅ 恢复超时检测：验证码弹窗已出现，恢复正常');
+        return; // 正常恢复了
+      }
+      // 仍然没有验证码弹窗 → 被系统弹窗卡住了，刷新页面
+      console.warn('[验证码OCR] 🐕💀 恢复超时！点击下载后仍无验证码弹窗出现（可能被浏览器系统弹窗卡住），刷新页面');
+      window.location.reload();
+    }, WATCHDOG_RECOVERY_TIMEOUT);
+  }
+
+  function stopRecoveryTimeout() {
+    if (watchdogRecoveryTimer) {
+      clearTimeout(watchdogRecoveryTimer);
+      watchdogRecoveryTimer = null;
+    }
+  }
+
+  // 延迟刷新页面
+  function schedulePageReload(delay) {
+    console.warn(`[验证码OCR] 🔄 ${delay / 1000}秒后刷新页面...`);
+    setTimeout(() => {
+      window.location.reload();
+    }, delay);
+  }
+
+  // 重置所有状态（看门狗触发时 / 提交成功时 共用）
+  function resetAllState() {
+    isProcessing = false;
+    isSubmitting = false;
+    retryCount = 0;
+    isAutoRefreshing = false;
+    stopSubmitSuccessPolling();
+    stopRecoveryTimeout();
+    if (srcChangeTimer) {
+      clearTimeout(srcChangeTimer);
+      srcChangeTimer = null;
+    }
+  }
+
   // ========== 图片转 Base64 ==========
   function imgToBase64(imgElement) {
     return new Promise((resolve, reject) => {
@@ -183,7 +318,7 @@
           onload: (response) => {
             try {
               const data = JSON.parse(response.responseText);
-              if (data.code === 0 && data.result) {
+              if (data.code === 0 && typeof data.result === 'string') {
                 resolve({ result: data.result, valid: data.valid !== false });
               } else {
                 reject(new Error(data.error || '识别失败'));
@@ -209,7 +344,7 @@
         })
           .then(res => res.json())
           .then((data) => {
-            if (data.code === 0 && data.result) {
+            if (data.code === 0 && typeof data.result === 'string') {
               resolve({ result: data.result, valid: data.valid !== false });
             } else {
               reject(new Error(data.error || '识别失败'));
@@ -229,11 +364,16 @@
 
   // ========== 自动点击换图按钮 ==========
   function clickRefreshCaptcha() {
+    // 标记为脚本自动换图，防止 observeRefreshButton 误重置计数器
+    isAutoRefreshing = true;
+
     // 优先点击 yw0_button
     const refreshBtn = document.getElementById('yw0_button');
     if (refreshBtn) {
       refreshBtn.click();
       console.log('[验证码OCR] 🔄 已点击换图按钮 #yw0_button');
+      // 延迟重置标记，确保事件冒泡完成后再重置
+      setTimeout(() => { isAutoRefreshing = false; }, 50);
       return true;
     }
 
@@ -242,9 +382,11 @@
     if (captchaImg) {
       captchaImg.click();
       console.log('[验证码OCR] 🔄 已点击验证码图片换图');
+      setTimeout(() => { isAutoRefreshing = false; }, 50);
       return true;
     }
 
+    isAutoRefreshing = false;
     console.warn('[验证码OCR] ⚠️ 未找到换图按钮');
     return false;
   }
@@ -450,7 +592,9 @@
 
         // 调用本地 OCR 服务识别
         try {
+          tickActivity('OCR 请求发出');
           const { result: ocrResult, valid: serverValid } = await recognizeCaptcha(base64);
+          tickActivity('OCR 响应返回');
           const isValid = serverValid && isValidCaptcha(ocrResult);
 
           console.log(`[验证码OCR] 🤖 识别结果: "${ocrResult}" (${isValid ? '有效' : '无效'}, 重试次数: ${retryCount}/${MAX_RETRY_COUNT})`);
@@ -471,12 +615,16 @@
               isSubmitting = true;
               console.log('[验证码OCR] 🔒 设置提交锁，阻止后续 OCR 触发');
               setTimeout(() => {
+                tickActivity('提交验证码');
                 autoClickSubmitBtn();
+                // 提交后启动轮询检查验证码弹窗是否消失（兼容 DOM 移除和 CSS 隐藏两种方式）
+                startSubmitSuccessPolling();
                 // 提交后设置超时自动释放锁（防止弹窗未出现导致永久锁定）
                 setTimeout(() => {
                   if (isSubmitting) {
                     console.log('[验证码OCR] 🔓 提交锁超时自动释放（5秒无响应）');
                     isSubmitting = false;
+                    stopSubmitSuccessPolling();
                   }
                 }, 5000);
               }, 600);
@@ -504,23 +652,50 @@
               // 延迟点击换图，等待 UI 更新
               setTimeout(() => {
                 isProcessing = false; // 释放锁，允许下一次处理
+                tickActivity('无效结果-换图重试');
                 clickRefreshCaptcha();
               }, 500);
               return; // 提前返回，不标记为已处理
             }
-            // 超过最大重试次数，填入结果但【不自动提交】，避免触发错误弹窗再次循环
-            console.warn(`[验证码OCR] ⚠️ 已达全局最大重试次数 ${MAX_TOTAL_RETRY}，停止自动重试，请手动处理`);
+            // 超过最大重试次数，重置计数器继续重试（由看门狗兜底防止无限循环）
+            console.warn(`[验证码OCR] ⚠️ 已达全局最大重试次数 ${MAX_TOTAL_RETRY}，重置计数器继续尝试`);
             retryCount = 0;
-            fillCaptchaInput(ocrResult); // 仍然填入，让用户自行判断
-            showOcrResultPanel(
-              container,
-              'error',
-              `识别结果 "${ocrResult}" 可能不准确（已重试${MAX_TOTAL_RETRY}次），已填入但未自动提交，请手动核实后提交`,
-            );
+            // 继续换图重试，不停下来
+            img.dataset.b64Processed = 'false';
+            setTimeout(() => {
+              isProcessing = false;
+              tickActivity('重试上限重置-继续换图');
+              clickRefreshCaptcha();
+            }, 1000);
+            return;
           }
         } catch (ocrErr) {
           console.error('[验证码OCR] ❌ OCR 识别失败:', ocrErr.message);
           showOcrResultPanel(container, 'error', ocrErr.message);
+
+          // OCR 服务异常时也自动换图重试
+          if (retryCount < MAX_TOTAL_RETRY) {
+            retryCount++;
+            console.log(`[验证码OCR] 🔄 OCR 失败后自动换图重试 (${retryCount}/${MAX_TOTAL_RETRY})`);
+            img.dataset.b64Processed = 'false';
+            setTimeout(() => {
+              isProcessing = false;
+              tickActivity('OCR失败-换图重试');
+              clickRefreshCaptcha();
+            }, 500);
+            return; // 提前返回，不标记为已处理
+          } else {
+            // 超过最大重试次数，重置计数器继续尝试
+            console.warn(`[验证码OCR] ⚠️ OCR 失败已达全局最大重试次数 ${MAX_TOTAL_RETRY}，重置计数器继续尝试`);
+            retryCount = 0;
+            img.dataset.b64Processed = 'false';
+            setTimeout(() => {
+              isProcessing = false;
+              tickActivity('OCR失败重试上限重置-继续换图');
+              clickRefreshCaptcha();
+            }, 1000);
+            return;
+          }
         }
       }
 
@@ -619,6 +794,11 @@
           userClickedDownload = true;
           console.log('[验证码OCR] 📌 检测到用户手动点击了"下载插件并导入HBuilderX"，后续将自动续点');
         }
+        // 用户首次点击下载后启动看门狗
+        if (!watchdogEnabled) {
+          startWatchdog();
+        }
+        tickActivity('用户点击下载按钮');
       }
     }, true);
   }
@@ -635,7 +815,14 @@
         || (target.tagName === 'A' && target.textContent.includes('换一个'))
         || (target.tagName === 'IMG' && target.id === CAPTCHA_IMG_ID)
       ) {
-        // 手动换图时重置所有计数器和锁
+        // 如果是脚本自动换图触发的，不重置计数器，也不重复触发处理
+        if (isAutoRefreshing) {
+          console.log('[验证码OCR] ⏭️ 脚本自动换图触发，跳过 observeRefreshButton 处理');
+          return;
+        }
+
+        // 用户手动换图时重置所有计数器和锁
+        console.log('[验证码OCR] 👆 用户手动换图，重置所有状态');
         retryCount = 0;
         isProcessing = false;
         isSubmitting = false;
@@ -652,6 +839,59 @@
         }, 800);
       }
     }, true);
+  }
+
+  // ========== 提交成功后的处理（自动续点下载） ==========
+  function handleSubmitSuccess() {
+    console.log('[验证码OCR] ✅ 验证码提交成功，释放所有锁并重置状态');
+    resetAllState();
+    tickActivity('提交成功');
+
+    // 如果用户之前手动点击过下载按钮，自动续点下一个
+    if (userClickedDownload) {
+      console.log('[验证码OCR] 🔁 用户曾手动点击过下载，1.5秒后自动续点"下载插件并导入HBuilderX"');
+      setTimeout(() => {
+        tickActivity('自动续点下载');
+        autoClickDownloadBtn();
+      }, 1500);
+    }
+  }
+
+  // ========== 轮询检查验证码弹窗是否消失 ==========
+  // Bootstrap 弹窗关闭时可能不移除 DOM，而是通过 CSS 隐藏（display:none / 移除 in class）
+  // 因此不能仅依赖 MutationObserver 的 removedNodes，需要轮询检查
+  function startSubmitSuccessPolling() {
+    stopSubmitSuccessPolling(); // 先清理旧的
+    let pollCount = 0;
+    const MAX_POLL = 20; // 最多轮询 20 次（共 10 秒）
+
+    submitSuccessTimer = setInterval(() => {
+      pollCount++;
+      if (!isSubmitting || pollCount > MAX_POLL) {
+        // 已被其他逻辑处理（如 removedNodes 检测到），或超时
+        stopSubmitSuccessPolling();
+        return;
+      }
+
+      // 检查验证码弹窗是否还可见
+      const captchaImg = document.getElementById(CAPTCHA_IMG_ID);
+      const captchaInput = document.getElementById(CAPTCHA_INPUT_ID);
+      const modalVisible = captchaImg && (captchaImg.offsetParent !== null || captchaImg.closest('.modal.in'));
+      const inputVisible = captchaInput && (captchaInput.offsetParent !== null || captchaInput.closest('.modal.in'));
+
+      if (!modalVisible && !inputVisible) {
+        // 验证码弹窗已不可见（可能是 DOM 移除，也可能是 CSS 隐藏）
+        console.log('[验证码OCR] 🔍 轮询检测到验证码弹窗已不可见');
+        handleSubmitSuccess();
+      }
+    }, 500);
+  }
+
+  function stopSubmitSuccessPolling() {
+    if (submitSuccessTimer) {
+      clearInterval(submitSuccessTimer);
+      submitSuccessTimer = null;
+    }
   }
 
   // ========== 监听错误提示弹窗 + 验证码弹窗消失 ==========
@@ -694,19 +934,18 @@
               confirmBtn.click();
               console.log('[验证码OCR] 🖱️ 已自动点击"确认"按钮关闭错误弹窗');
 
-              // 关闭弹窗后自动换图重试（共享全局重试计数）
-              if (retryCount < MAX_TOTAL_RETRY) {
-                retryCount++;
-                console.log(`[验证码OCR] 🔄 错误弹窗后自动换图重试 (${retryCount}/${MAX_TOTAL_RETRY})`);
-                setTimeout(() => {
-                  isProcessing = false; // 释放锁，允许下一次处理
-                  clickRefreshCaptcha();
-                }, 600);
-              } else {
-                console.warn(`[验证码OCR] ⚠️ 全局重试已达上限 ${MAX_TOTAL_RETRY} 次，停止自动重试，请手动处理`);
+              // 关闭弹窗后自动换图重试（不再有上限，由看门狗兜底）
+              retryCount++;
+              if (retryCount >= MAX_TOTAL_RETRY) {
+                console.log(`[验证码OCR] 🔄 错误弹窗重试计数器重置 (${retryCount} → 0)`);
                 retryCount = 0;
-                isProcessing = false;
               }
+              console.log(`[验证码OCR] 🔄 错误弹窗后自动换图重试 (${retryCount}/${MAX_TOTAL_RETRY})`);
+              setTimeout(() => {
+                isProcessing = false; // 释放锁，允许下一次处理
+                tickActivity('错误弹窗-换图重试');
+                clickRefreshCaptcha();
+              }, 600);
             }, 300);
           }
         }
@@ -723,21 +962,7 @@
           );
 
           if (hasCaptchaModal && isSubmitting) {
-            console.log('[验证码OCR] ✅ 验证码弹窗已消失（提交成功），释放所有锁并重置状态');
-            isSubmitting = false;
-            isProcessing = false;
-            retryCount = 0;
-            if (srcChangeTimer) {
-              clearTimeout(srcChangeTimer); srcChangeTimer = null;
-            }
-
-            // 如果用户之前手动点击过下载按钮，自动续点下一个
-            if (userClickedDownload) {
-              console.log('[验证码OCR] 🔁 用户曾手动点击过下载，1.5秒后自动续点"下载插件并导入HBuilderX"');
-              setTimeout(() => {
-                autoClickDownloadBtn();
-              }, 1500);
-            }
+            handleSubmitSuccess();
           }
         }
       }
@@ -751,7 +976,7 @@
 
   // ========== 初始化 ==========
   function init() {
-    console.log('[验证码OCR] 🚀 脚本已加载（v3.7 - 自动识别 + 自动提交 + 用户触发后自动续点下载 + 防死循环重试）');
+    console.log('[验证码OCR] 🚀 脚本已加载（v4.1 - 自动识别 + 自动提交 + 自动续点 + Watchdog 防卡死 + 系统弹窗自动刷新 + 永不停止）');
     injectStyles();
     observeDownloadBtn(); // 监听用户是否手动点击过下载按钮
     observeCaptcha();
