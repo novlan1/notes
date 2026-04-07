@@ -19,7 +19,7 @@
 </template>
 ```
 
-第二种方式如下。
+<!-- 第二种方式如下。
 
 ```vue
 <script lang="ts" setup>
@@ -34,7 +34,7 @@ Toast({
   }
 })
 </script>
-```
+``` -->
 
 ### 2.2. Icon 太大怎么办
 
