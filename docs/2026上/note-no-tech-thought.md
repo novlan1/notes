@@ -8,6 +8,14 @@ novlan1
 
 # 非技术思考笔记
 
+## tamper 篡改！
+
+`2026-04-07`
+
+<img src="https://cdn.uwayfly.com/article/2026/4/own_mike_b8mjGJAYc8Jdcriz.png" width="500"/>
+
+<img src="https://cdn.uwayfly.com/article/2026/4/own_mike_BAKtfZSNWyBcFFJQ.png" width="500"/>
+
 ## 生意、产品、作品
 
 `2026-04-06`
