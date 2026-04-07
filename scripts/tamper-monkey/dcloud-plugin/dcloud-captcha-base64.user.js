@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         DCloud 插件市场 - 验证码自动识别填入
 // @namespace    https://ext.dcloud.net.cn/
-// @version      4.1.0
-// @description  识别验证码、自动提交、错误弹窗自动重试、提交成功后自动续点下载、Watchdog 防卡死+自动刷新页面（需配合本地 OCR 服务使用）
+// @version      4.2.0
+// @description  识别验证码、自动提交、错误弹窗自动重试、提交成功后自动续点下载、Watchdog 防卡死+自动刷新页面+刷新后自动恢复（需配合本地 OCR 服务使用）
 // @author       novlan1
 // @match        https://ext.dcloud.net.cn/*
 // @grant        GM_setClipboard
@@ -28,12 +28,14 @@
   const WATCHDOG_CHECK_INTERVAL = 3000; // 看门狗检查间隔（毫秒）
   const WATCHDOG_RECOVERY_TIMEOUT = 10000; // 看门狗恢复操作后的二级超时（毫秒），恢复操作后如果仍无新活动则刷新页面
   const WATCHDOG_MAX_CONSECUTIVE = 2; // 看门狗连续触发次数上限，超过则直接刷新页面
+  const STORAGE_KEY_AUTO_DOWNLOAD = 'dcloud_captcha_auto_download'; // sessionStorage key：自动下载模式标记
+  const AUTO_DOWNLOAD_DELAY = 2000; // 刷新页面后自动点击下载按钮的延迟（毫秒），等待页面渲染完成
 
   let retryCount = 0; // 当前连续重试计数（OCR 格式校验 + 错误弹窗 共享）
   let isProcessing = false; // 全局处理锁，防止并发重复触发
   let isSubmitting = false; // 提交等待锁，提交后到结果返回前阻止新的 OCR 处理
   let srcChangeTimer = null; // src 变化防抖定时器
-  let userClickedDownload = false; // 用户是否手动点击过"下载插件并导入HBuilderX"按钮
+  let userClickedDownload = false; // 用户是否手动点击过"下载插件并导入HBuilderX"按钮（运行时状态，刷新后通过 sessionStorage 恢复）
   let isAutoRefreshing = false; // 标记当前是否为脚本自动换图（区分用户手动操作）
   let submitSuccessTimer = null; // 提交成功轮询定时器
   let watchdogTimer = null; // 看门狗定时器
@@ -155,7 +157,7 @@
       // 连续触发超过上限 → 直接刷新页面（说明之前的恢复操作都无效，可能被系统弹窗卡住）
       if (watchdogConsecutiveCount > WATCHDOG_MAX_CONSECUTIVE) {
         console.warn(`[验证码OCR] 🐕💀 看门狗已连续触发 ${watchdogConsecutiveCount} 次，恢复操作无效，直接刷新页面`);
-        window.location.reload();
+        reloadPage();
         return;
       }
 
@@ -213,7 +215,7 @@
       }
       // 仍然没有验证码弹窗 → 被系统弹窗卡住了，刷新页面
       console.warn('[验证码OCR] 🐕💀 恢复超时！点击下载后仍无验证码弹窗出现（可能被浏览器系统弹窗卡住），刷新页面');
-      window.location.reload();
+      reloadPage();
     }, WATCHDOG_RECOVERY_TIMEOUT);
   }
 
@@ -224,11 +226,20 @@
     }
   }
 
+  // 刷新页面（刷新前自动写入 sessionStorage 标记，确保刷新后能自动恢复）
+  function reloadPage() {
+    if (userClickedDownload) {
+      try { sessionStorage.setItem(STORAGE_KEY_AUTO_DOWNLOAD, '1'); } catch (e) { /* ignore */ }
+      console.log('[验证码OCR] 🔄 刷新前写入 sessionStorage 标记，确保刷新后自动恢复');
+    }
+    window.location.reload();
+  }
+
   // 延迟刷新页面
   function schedulePageReload(delay) {
     console.warn(`[验证码OCR] 🔄 ${delay / 1000}秒后刷新页面...`);
     setTimeout(() => {
-      window.location.reload();
+      reloadPage();
     }, delay);
   }
 
@@ -790,9 +801,11 @@
       if (!btn) return;
       const text = btn.textContent.trim();
       if (text.includes(DOWNLOAD_BTN_TEXT) || text.includes('下载插件并导入HX')) {
-        if (!userClickedDownload) {
+      if (!userClickedDownload) {
           userClickedDownload = true;
-          console.log('[验证码OCR] 📌 检测到用户手动点击了"下载插件并导入HBuilderX"，后续将自动续点');
+          // 持久化到 sessionStorage，刷新页面后自动恢复
+          try { sessionStorage.setItem(STORAGE_KEY_AUTO_DOWNLOAD, '1'); } catch (e) { /* ignore */ }
+          console.log('[验证码OCR] 📌 检测到用户手动点击了"下载插件并导入HBuilderX"，后续将自动续点（已持久化）');
         }
         // 用户首次点击下载后启动看门狗
         if (!watchdogEnabled) {
@@ -974,14 +987,63 @@
     });
   }
 
+  // ========== 刷新后自动恢复 ==========
+  // 检查 sessionStorage，如果之前用户点击过下载按钮，刷新后自动恢复状态并继续
+  function tryAutoResumeAfterReload() {
+    try {
+      const flag = sessionStorage.getItem(STORAGE_KEY_AUTO_DOWNLOAD);
+      if (flag === '1') {
+        // 读取后立即删除标记（一次性使用，后续由运行时状态接管）
+        sessionStorage.removeItem(STORAGE_KEY_AUTO_DOWNLOAD);
+        userClickedDownload = true;
+        console.log('[验证码OCR] 🔄 检测到 sessionStorage 标记，刷新后自动恢复自动下载模式（标记已清除）');
+
+        // 启动看门狗
+        startWatchdog();
+
+        // 延迟自动点击下载按钮（等待页面渲染完成）
+        setTimeout(() => {
+          console.log(`[验证码OCR] 🔄 刷新后自动点击"下载插件并导入HBuilderX"按钮`);
+          tickActivity('刷新后自动恢复-点击下载');
+          const clicked = autoClickDownloadBtn();
+          if (!clicked) {
+            // 按钮可能还没渲染出来，再等一会儿重试
+            console.log('[验证码OCR] 🔄 下载按钮未找到，2秒后重试');
+            setTimeout(() => {
+              tickActivity('刷新后自动恢复-重试点击下载');
+              autoClickDownloadBtn();
+            }, 2000);
+          }
+        }, AUTO_DOWNLOAD_DELAY);
+      }
+    } catch (e) {
+      // sessionStorage 不可用时静默忽略
+    }
+  }
+
+  // 清除自动下载标记（用户可手动调用 window.__stopAutoDownload() 停止）
+  function clearAutoDownloadFlag() {
+    try { sessionStorage.removeItem(STORAGE_KEY_AUTO_DOWNLOAD); } catch (e) { /* ignore */ }
+    userClickedDownload = false;
+    stopWatchdog();
+    resetAllState();
+    console.log('[验证码OCR] 🛑 已清除自动下载标记，脚本停止自动操作');
+  }
+
   // ========== 初始化 ==========
   function init() {
-    console.log('[验证码OCR] 🚀 脚本已加载（v4.1 - 自动识别 + 自动提交 + 自动续点 + Watchdog 防卡死 + 系统弹窗自动刷新 + 永不停止）');
+    console.log('[验证码OCR] 🚀 脚本已加载（v4.2 - 自动识别 + 自动提交 + 自动续点 + Watchdog 防卡死 + 系统弹窗自动刷新 + 刷新后自动恢复 + 永不停止）');
     injectStyles();
     observeDownloadBtn(); // 监听用户是否手动点击过下载按钮
     observeCaptcha();
     observeRefreshButton();
     observeErrorDialog(); // 监听错误提示弹窗
+
+    // 刷新后自动恢复
+    tryAutoResumeAfterReload();
+
+    // 暴露停止接口，用户可在控制台调用 window.__stopAutoDownload() 停止自动下载
+    window.__stopAutoDownload = clearAutoDownloadFlag;
   }
 
   init();

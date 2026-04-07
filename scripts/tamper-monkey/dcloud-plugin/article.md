@@ -268,3 +268,34 @@ OCR 返回 { code: 0, result: "" }
 3. 新增 `startRecoveryTimeout()` / `stopRecoveryTimeout()` — 二级超时管理
 4. 新增 `watchdogConsecutiveCount` — 连续触发计数器，有正常活动时自动重置
 5. `resetAllState()` 中增加清理二级超时定时器
+
+### v4.2 — 🔄 刷新后自动恢复：sessionStorage 持久化
+
+**问题**：v4.1 中看门狗检测到系统弹窗卡住后会刷新页面，但 `window.location.reload()` 后所有 JS 变量被重置，`userClickedDownload = false`，脚本不会自动点击下载按钮，必须等用户再次手动点击。
+
+**解决方案**：用 `sessionStorage` 持久化"自动下载模式"标记（用完即删，无需手动清除）
+
+```
+用户首次点击"下载插件并导入HBuilderX"
+  → sessionStorage.setItem('dcloud_captcha_auto_download', '1')
+  → 启动看门狗
+
+看门狗触发刷新前（reloadPage）
+  → 重新写入 sessionStorage 标记（确保刷新后能恢复）
+
+页面刷新后（init 阶段）
+  → 检查 sessionStorage 标记
+  → 标记存在？→ 立即删除标记（用完即删）
+  → 恢复 userClickedDownload = true
+  → 启动看门狗
+  → 延迟 2 秒自动点击下载按钮（等待页面渲染）
+  → 如果按钮未找到，再等 2 秒重试
+```
+
+**关键改动**：
+1. 新增 `STORAGE_KEY_AUTO_DOWNLOAD` / `AUTO_DOWNLOAD_DELAY` 配置常量
+2. 新增 `reloadPage()` — 统一刷新入口，刷新前自动写入 sessionStorage 标记
+3. 新增 `tryAutoResumeAfterReload()` — 初始化时检查 sessionStorage，**读取后立即删除**（用完即删），自动恢复状态并点击下载
+4. 新增 `clearAutoDownloadFlag()` — 清除标记并停止所有自动操作
+5. 暴露 `window.__stopAutoDownload()` — 用户可在控制台手动停止自动下载
+6. 所有 `window.location.reload()` 统一替换为 `reloadPage()`，确保刷新前写入标记
