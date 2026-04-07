@@ -8,6 +8,39 @@ novlan1
 
 # 非技术思考笔记
 
+## 键盘弹起，输入框不可见原因
+
+`2026-04-07`
+
+
+### 问题原因
+
+输入框区域 `.bottom` 使用了 `position: fixed; bottom: 0;` 固定定位，当键盘弹起时，代码通过 `marginBottom` 来尝试顶起输入框：
+
+```html
+:style="{ marginBottom: keyboardHeight + 'px' }"
+```
+
+但 **`marginBottom` 对 `position: fixed` 的元素不会改变其视觉位置**。`fixed` 定位的元素是相对于视口定位的，`bottom: 0` 始终将其固定在屏幕底部，`marginBottom` 只是增加了底部外边距，不会将元素向上推。
+
+### 修复方案
+
+在 `index.vue` 中做了以下修改：
+
+1. **`.bottom` 输入框区域**：将 `marginBottom` 改为 `bottom`，使 fixed 定位的输入框能正确跟随键盘高度上移：
+   ```html
+   :style="{ bottom: keyboardHeight + 'px' }"
+   ```
+
+2. **`.block` 占位元素**：将 `marginBottom` 改为动态 `height`，使占位块高度随键盘高度增加，确保聊天内容区域也能正确收缩：
+   ```html
+   :style="{ height: 'calc(env(safe-area-inset-bottom) + 129rpx + ' + keyboardHeight + 'px)' }"
+   ```
+
+3. **给 `.block` 添加过渡动画**，使高度变化更平滑。
+
+
+
 ## tamper 篡改！
 
 `2026-04-07`
