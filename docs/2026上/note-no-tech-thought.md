@@ -8,6 +8,14 @@ novlan1
 
 # 非技术思考笔记
 
+## cos-to-git
+
+`2026-04-08`
+
+<img src="https://cdn.uwayfly.com/article/2026/4/own_mike_FQ66PH6wrwaNKT6T.png" width="500"/>
+
+太好，只有 article、cos-access-log、past 没有备份了。
+
 ## 键盘弹起，输入框不可见原因
 
 `2026-04-07`
