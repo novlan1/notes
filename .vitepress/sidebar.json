@@ -69,6 +69,10 @@
           "link": "/docs/2026上/tdesign-uniapp-exports-global.md"
         },
         {
+          "text": "@tdesign/uniapp 中类型提示",
+          "link": "/docs/2026上/tdesign-uniapp-exports.md"
+        },
+        {
           "text": "Stepper 小数输入精度丢失 Bug 修复",
           "link": "/docs/2026上/td-stepper-skill.md"
         },

@@ -19,23 +19,6 @@
 </template>
 ```
 
-<!-- 第二种方式如下。
-
-```vue
-<script lang="ts" setup>
-import TToast from '@tdesign/uniapp/toast/toast.vue';
-
-Toast({
-  context: {
-    $refs: {
-      't-toast': TToast.value,
-    },
-    // ...
-  }
-})
-</script>
-``` -->
-
 ### 2.2. Icon 太大怎么办
 
 <img src="https://cdn.uwayfly.com/article/2026/2/own_mike_6k8bS4My3RnnZKFa.png" width="500" />
@@ -106,4 +89,26 @@ PC 环境下，可以通过加载 `touch-emulator` 脚本来适配。
 
 脚本地址: https://tdesign.gtimg.com/js/touch-emulator.js, 你可以放到自己的 CDN 上。
 
+### 2.9. Indexes 组件滑动问题
 
+Indexes 组件依赖 onPageScroll，在小程序、APP-PLUS 等平台下，动态监听 `onPageScroll` 不生效，需要业务自己在页面中监听，下面给出最佳实践之一。
+
+```js
+// 页面 Vue 文件下，引入组件库提供的监听方法
+// 该方法内部会通过 event-bus，传递参数给对应的组件
+import { handlePageScroll } from 'tdesign-uniapp/mixins/page-scroll';
+
+// Vue3
+defineOptions({
+  onPageScroll(e) {
+    handlePageScroll(e);
+  },
+});
+
+// Vue2
+export default {
+  onPageScroll(e) {
+    handlePageScroll(e);
+  },
+}
+```
