@@ -8,6 +8,31 @@ novlan1
 
 # 非技术思考笔记
 
+## 修复 H5 环境下 `e.target` 为 `document` 时没有 `scrollTop` 的问题。
+
+`2026-04-09`
+
+### 修改内容
+
+在 `page-scroll.js` 的 `_bindScroller` 方法中，H5 分支增加了对 `e.target` 的兼容处理：
+
+```js
+// 修改前
+result = this[funcName]?.call(this, e.target);
+
+// 修改后
+const target = e.target === document ? (document.scrollingElement || document.documentElement) : e.target;
+result = this[funcName]?.call(this, target);
+```
+
+### 修复逻辑
+
+- 当 `getScroller` 没有找到带 `overflow: scroll/auto` 的祖先元素时，会返回 `window`
+- `window` 上监听 `scroll` 事件，`e.target` 是 `document`
+- `document` 本身没有 `scrollTop` 属性，导致 `onScroll` 回调中拿到 `undefined`
+- 修复后，当检测到 `e.target === document` 时，自动替换为 `document.scrollingElement`（优先）或 `document.documentElement`，这两个对象都有正确的 `scrollTop` 属性
+
+
 ## cos-to-git
 
 `2026-04-08`
