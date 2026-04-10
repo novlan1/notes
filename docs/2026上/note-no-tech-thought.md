@@ -8,6 +8,54 @@ novlan1
 
 # 非技术思考笔记
 
+## gp-hor 精简 tsconfig.json
+
+`2026-04-10`
+
+
+已完成精简，从 46 行减少到 37 行。以下是删除的 9 个与 `@vue/tsconfig` 重复的字段：
+
+| 删除的字段 | 原值 | `@vue/tsconfig` 中的值 | 说明 |
+|-----------|------|----------------------|------|
+| `target` | `"esnext"` | `"ESNext"` | 完全一致 |
+| `strict` | `true` | `true` | 完全一致 |
+| `esModuleInterop` | `true` | `true` | 完全一致 |
+| `allowSyntheticDefaultImports` | `true` | — | 由 `esModuleInterop: true` 隐式启用 |
+| `noEmit` | `true` | `true` | 完全一致 |
+| `jsx` | `"preserve"` | `"preserve"` | 完全一致 |
+| `skipLibCheck` | `true` | `true` | 完全一致 |
+| `resolveJsonModule` | `true` | `true` | 完全一致 |
+| `noImplicitThis` | `true` | `true` | 完全一致 |
+
+保留的字段都是项目独有的或有覆盖意义的：
+- **`module`** — 保留以避免继承父配置的 `moduleResolution: "Bundler"` 组合带来的潜在影响
+- **`importHelpers`** / **`experimentalDecorators`** / **`sourceMap`** / **`allowJs`** — 父配置中没有
+- **`noImplicitAny: false`** — 显式覆盖父配置 `strict: true` 隐含的 `noImplicitAny: true`
+- **`types`** / **`paths`** / **`lib`** — 项目特有配置
+[ ]
+知识库搜索结果与当前任务无关，忽略。精简已完成，让我记录 session log。
+
+`tsconfig.json` 已精简完成，删除了以下 9 个与 `@vue/tsconfig/tsconfig.json` 重复的字段：
+
+| 删除的字段 | 说明 |
+|-----------|------|
+| `target` | 与父配置 `"ESNext"` 一致 |
+| `strict` | 与父配置 `true` 一致 |
+| `esModuleInterop` | 与父配置 `true` 一致 |
+| `allowSyntheticDefaultImports` | 由 `esModuleInterop: true` 隐式启用 |
+| `noEmit` | 与父配置 `true` 一致 |
+| `jsx` | 与父配置 `"preserve"` 一致 |
+| `skipLibCheck` | 与父配置 `true` 一致 |
+| `resolveJsonModule` | 与父配置 `true` 一致 |
+| `noImplicitThis` | 与父配置 `true` 一致 |
+
+保留的字段都是项目独有或有覆盖意义的：
+- **`module`** — 保留以避免继承父配置 `moduleResolution: "Bundler"` 的潜在影响
+- **`importHelpers`** / **`experimentalDecorators`** / **`sourceMap`** / **`allowJs`** — 父配置中没有
+- **`noImplicitAny: false`** — 显式覆盖 `strict: true` 隐含的 `noImplicitAny: true`
+- **`types`** / **`paths`** / **`lib`** — 项目特有配置
+
+
 ## target 什么情况下会影响产物
 
 `2026-04-10`
