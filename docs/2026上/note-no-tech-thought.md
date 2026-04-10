@@ -8,6 +8,110 @@ novlan1
 
 # 非技术思考笔记
 
+## gp-hor 精简 tsconfig.json
+
+`2026-04-10`
+
+
+已完成精简，从 46 行减少到 37 行。以下是删除的 9 个与 `@vue/tsconfig` 重复的字段：
+
+| 删除的字段 | 原值 | `@vue/tsconfig` 中的值 | 说明 |
+|-----------|------|----------------------|------|
+| `target` | `"esnext"` | `"ESNext"` | 完全一致 |
+| `strict` | `true` | `true` | 完全一致 |
+| `esModuleInterop` | `true` | `true` | 完全一致 |
+| `allowSyntheticDefaultImports` | `true` | — | 由 `esModuleInterop: true` 隐式启用 |
+| `noEmit` | `true` | `true` | 完全一致 |
+| `jsx` | `"preserve"` | `"preserve"` | 完全一致 |
+| `skipLibCheck` | `true` | `true` | 完全一致 |
+| `resolveJsonModule` | `true` | `true` | 完全一致 |
+| `noImplicitThis` | `true` | `true` | 完全一致 |
+
+保留的字段都是项目独有的或有覆盖意义的：
+- **`module`** — 保留以避免继承父配置的 `moduleResolution: "Bundler"` 组合带来的潜在影响
+- **`importHelpers`** / **`experimentalDecorators`** / **`sourceMap`** / **`allowJs`** — 父配置中没有
+- **`noImplicitAny: false`** — 显式覆盖父配置 `strict: true` 隐含的 `noImplicitAny: true`
+- **`types`** / **`paths`** / **`lib`** — 项目特有配置
+[ ]
+知识库搜索结果与当前任务无关，忽略。精简已完成，让我记录 session log。
+
+`tsconfig.json` 已精简完成，删除了以下 9 个与 `@vue/tsconfig/tsconfig.json` 重复的字段：
+
+| 删除的字段 | 说明 |
+|-----------|------|
+| `target` | 与父配置 `"ESNext"` 一致 |
+| `strict` | 与父配置 `true` 一致 |
+| `esModuleInterop` | 与父配置 `true` 一致 |
+| `allowSyntheticDefaultImports` | 由 `esModuleInterop: true` 隐式启用 |
+| `noEmit` | 与父配置 `true` 一致 |
+| `jsx` | 与父配置 `"preserve"` 一致 |
+| `skipLibCheck` | 与父配置 `true` 一致 |
+| `resolveJsonModule` | 与父配置 `true` 一致 |
+| `noImplicitThis` | 与父配置 `true` 一致 |
+
+保留的字段都是项目独有或有覆盖意义的：
+- **`module`** — 保留以避免继承父配置 `moduleResolution: "Bundler"` 的潜在影响
+- **`importHelpers`** / **`experimentalDecorators`** / **`sourceMap`** / **`allowJs`** — 父配置中没有
+- **`noImplicitAny: false`** — 显式覆盖 `strict: true` 隐含的 `noImplicitAny: true`
+- **`types`** / **`paths`** / **`lib`** — 项目特有配置
+
+
+## target 什么情况下会影响产物
+
+`2026-04-10`
+
+
+## `target` 什么情况下会影响产物？
+
+`target` 是否影响最终产物，取决于你的**构建流程**：
+
+### 1. 直接用 `tsc` 编译输出产物时 —— **会影响**
+
+如果你的项目直接使用 `tsc`（TypeScript 编译器）来生成最终的 JS 文件，那么 `target` 会**直接决定产物的语法级别**。例如：
+
+| target | 产物中的表现 |
+|--------|------------|
+| `ES5` | 箭头函数 → `function`，`class` → 原型链，`async/await` → `__awaiter` helper |
+| `ES2015` | 保留箭头函数、`class`、`Promise`，但 `async/await` → generator |
+| `ES2017` | 保留 `async/await` |
+| `ESNext` | 几乎不做语法降级 |
+
+**典型场景**：纯 Node.js 工具库、CLI 工具、不使用 Babel/Rollup 的项目。
+
+### 2. 使用 Babel/Rollup/Webpack 等工具链时 —— **通常不影响**
+
+这就是你当前项目（t-comm）的情况。构建流程是：
+
+```mermaid
+graph LR
+    A[TypeScript 源码] -->|tsc 或 @rollup/plugin-typescript| B[中间产物]
+    B -->|@rollup/plugin-babel| C[最终产物]
+```
+
+在这种流程中：
+- **TypeScript** 只负责：类型检查 + 去除类型注解 + 生成 `.d.ts` 声明文件
+- **Babel** 负责：实际的语法降级（箭头函数、class、async/await 等）
+
+所以 `target` 设成 `ES2015` 还是 `ESNext` 都不影响最终产物，因为 Babel 会按照自己的 `@babel/preset-env` 配置来决定降级到什么程度。
+
+### 3. `target` 仍然会影响的几个方面
+
+即使有 Babel，`target` 仍然会影响以下内容：
+
+| 影响项 | 说明 |
+|--------|------|
+| **`.d.ts` 声明文件** | `target` 决定了声明文件中可以使用哪些内置类型（如 `ES5` 下没有 `Promise` 类型，需要配合 `lib` 选项） |
+| **辅助代码注入** | 如 `target: "ES5"` 时，TypeScript 会为 `class` 继承注入 `__extends` helper |
+| **类型检查行为** | 某些语法在低 `target` 下会报错，比如 `target: "ES3"` 不支持 getter/setter |
+| **`tsc --noEmit` 的检查逻辑** | `target` 影响 TypeScript 对某些 API 可用性的判断 |
+
+### 总结
+
+对于你的项目（t-comm），由于使用了 **Rollup + Babel** 构建：
+- `target` **不影响**最终打包产物的语法兼容性
+- `target` **会影响** `.d.ts` 声明文件和类型检查行为
+- 将 `target` 从 `ES5` 改为 `ES2015` 是安全的，不会改变产物的浏览器兼容性
+
 ## 修复 H5 环境下 `e.target` 为 `document` 时没有 `scrollTop` 的问题。
 
 `2026-04-09`
