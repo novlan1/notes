@@ -1,4 +1,4 @@
-相关 issue： https://github.com/Tencent/tdesign-miniprogram/issues/4294。
+相关 issue： https://github.com/Tencent/tdesign-miniprogram/issues/4294
 
 ---
 

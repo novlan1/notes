@@ -194,3 +194,29 @@ flowchart TD
 - `exports`：**现代标准**，精确控制每个子路径的运行时入口和类型入口
 - 通配符 `"./*"`：**运行时路径映射的兜底**，但无法提供类型信息
 - 精确子路径声明：**为 TypeScript 提供类型解析**，与通配符互补而非冲突
+
+---
+
+---
+
+## 自己总结
+
+1. `exports` 是模块解析的最高优先级入口。
+2. 如果 `exports` 字段存在，未在 `exports` 中声明的路径无法被外部引入。
+3. `exports` 遵循“最长前缀匹配 + 精确优先”。
+
+4. `types/typings` 是主入口的类型声明，对子路径（如`@tdesign/uniapp/toast`）无效，仅当 `exports` 中没有匹配到对应路径的 `types` 条件时，才会 `fallback` 到这个字段。
+
+5. `exports` 中每个路径的 `default` 表示运行时兜底入口
+
+6. 通配符 `"./*": "./dist/*"`，无法提供 `types` 字段，类型缺失。
+
+7. `exports` 中的
+
+```json
+"./global": {
+  "types": "./global.d.ts"
+}
+```
+
+只是声明 `@tdesign/uniapp/global` 这个模块路径是可解析的，就是可以用 `import '@tdesign/uniapp/global'` ，但是仍然需要写到 `tsconfig.json` 中的 `compileOptions.types` 中，才能让 Typescript 自动加载这个类型声明到全局作用域，无需显式 import
