@@ -8,6 +8,19 @@ novlan1
 
 # 非技术思考笔记
 
+## plus
+
+`2026-04-12`
+
+> press-dialog(-plus), 
+press-icon(-plus), 
+press-loading(-plus), 
+press-picker(-plus), 
+press-popup(-plus), 
+press-popover(-plus)
+press-picker-plus-popup-plus
+
+
 ## gp-hor 精简 tsconfig.json
 
 `2026-04-10`
