@@ -13,8 +13,7 @@
     "td:hx:vue2": "node scripts/td/vue3-hx/publish-h5.cjs --vue2",
     "td:hx:vue3": "node scripts/td/vue3-hx/publish-h5.cjs --vue3",
     "td:dep": "npm run td:deps",
-    "td:deps": "node scripts/td/install-deps.cjs",
-    "dcloud:svr": "node scripts/tamper-monkey/dcloud-plugin/dcloud-captcha-ocr-server.cjs"
+    "td:deps": "node scripts/td/install-deps.cjs"
   },
   "type": "module",
   "devDependencies": {
