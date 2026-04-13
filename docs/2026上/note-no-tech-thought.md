@@ -8,6 +8,12 @@ novlan1
 
 # 非技术思考笔记
 
+## sudo rm /Library/Preferences/com.apple.keyboardtype.plist
+
+`2026-04-13`
+
+Cmd+`\`` 出 §= 系统把你的键盘当成欧洲 ISO 键盘。 删除 `com.apple.keyboardtype.plist` 是让系统 “失忆”，重新认成正确的美式 ANSI 键盘。
+
 ## 旁边特拉梅尔
 
 `2026-04-12`
