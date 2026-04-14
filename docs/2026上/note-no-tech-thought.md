@@ -8,6 +8,30 @@ novlan1
 
 # 非技术思考笔记
 
+## MR 评审
+
+`2026-04-14`
+
+```mermaid
+sequenceDiagram
+    participant G as 工蜂
+    participant S as Agent Server
+    participant AI as LLM (Knot)
+    participant DB as MongoDB
+    
+    G->>S: Webhook: merge_request opened/updated
+    S->>S: 验证签名 & 解析事件
+    S->>DB: 创建评审记录 (status: pending)
+    S->>G: GET /merge_request/:id/changes
+    G-->>S: 返回 diff 内容
+    S->>S: 预处理 diff（过滤二进制、限制大小）
+    S->>AI: 发送 diff + 评审 Prompt
+    AI-->>S: 返回评审意见 JSON
+    S->>DB: 更新评审记录 (status: completed)
+    S->>G: POST /notes (逐条提交评论)
+    G-->>S: 评论创建成功
+```
+
 ## sudo rm /Library/Preferences/com.apple.keyboardtype.plist
 
 `2026-04-13`
