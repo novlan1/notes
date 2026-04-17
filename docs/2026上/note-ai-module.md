@@ -8,6 +8,32 @@ novlan1
 
 # AI 模块笔记
 
+## bugOwner
+
+`2026-04-18`
+
+
+**好消息：代码里其实已经有把 Bug 处理人（`bugOwner`）加入 MR 的逻辑了**（`TapdBugFixService.ts` 第 858-861 行）：
+
+```typescript
+const reviewers = [...TapdBugFixService.DEFAULT_REVIEWERS];
+if (record.bugOwner && !reviewers.includes(record.bugOwner)) {
+  reviewers.push(record.bugOwner);
+}
+```
+
+**但之前的问题是**：这个列表只传给了工蜂 API 的 `assignee_list`（指派人），而不是 `reviewer_list`（评审人）。在工蜂中这两个是不同的概念：
+- `assignee_list` → MR 的**指派人**
+- `reviewer_list` → MR 的**评审人**（会收到 Code Review 通知）
+
+**修改内容**：修改了 `GitApiService.ts` 的 `createMergeRequest` 方法：
+1. 新增可选参数 `reviewerList`
+2. 如果未单独指定 `reviewerList`，默认使用 `assigneeList` 同时作为评审人
+3. 创建 MR 时同时传递 `assignee_list` 和 `reviewer_list`
+
+这样 Bug 处理人会同时成为 MR 的**指派人和评审人**，会收到 Code Review 通知。
+
+
 ## 小程序组件转 uniapp
 
 `2026-03-24`
