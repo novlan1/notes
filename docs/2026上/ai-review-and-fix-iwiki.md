@@ -13,7 +13,7 @@ flowchart LR
     C -->|是| D[AI 自动修复]
     C -->|否| E[评审结束]
     D -->|在原分支提交修复| F[评论通知开发者]
-    
+
     G[开发者评论 /ai-review] -->|Webhook: note| B
     H[开发者评论 /ai-fix] -->|Webhook: note| D
 ```
@@ -78,6 +78,11 @@ flowchart TD
 
 📊 共发现 5 个问题，🔴 严重: 1，🟡 警告: 2，🔵 建议: 2，✅ 其中 3 个已作为行内评论标注
 ```
+
+AI 评审案例
+
+<img src="https://cdn.uwayfly.com/article/2026/4/own_mike_a4GF5B5J6ACspSZz.png" width="900" />
+
 
 ## 三、AI 自动修复
 
@@ -173,6 +178,14 @@ flowchart TD
     I -->|否| K[忽略]
 ```
 
+自动修复案例
+
+<img src="https://cdn.uwayfly.com/article/2026/4/own_mike_CjTTTmDezibSxS63.png" width="900" />
+
+/ai-fix 斜杠命令案例
+
+<img src="https://cdn.uwayfly.com/article/2026/4/own_mike_EpyTnR4JQzspFQpx.png" width="900" />
+
 ## 五、MR 标题标记
 
 通过在 MR 标题中添加特定标记，可以控制 AI 行为：
@@ -211,7 +224,6 @@ feat: 新增功能 --no-ai-fix               # 只评审不修复
 | `mrIgnoreAiFixFlag` | `MR_IGNORE_AI_FIX_FLAG` | `--no-ai-fix` | MR 标题跳过修复标记 |
 | `mrIgnoreAiReviewFlag` | `MR_IGNORE_AI_REVIEW_FLAG` | `--no-ai-review` | MR 标题跳过评审标记 |
 | `mrReviewIgnoreBranches` | `MR_REVIEW_IGNORE_BRANCHES` | `release->develop,develop->release` | 忽略分支规则 |
-| `mrReviewDefaultOperator` | `MR_REVIEW_DEFAULT_OPERATOR` | `guowangyang` | Webhook 默认操作人 |
 
 ## 八、行为矩阵
 
