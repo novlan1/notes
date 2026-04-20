@@ -8,6 +8,31 @@ novlan1
 
 # 非技术思考笔记
 
+## t-dropdown-menu 中 computedLabel 和 label 优先级问题
+
+`2026-04-20`
+
+```js
+<t-dropdown-menu relation-key="relationKey">
+    <t-dropdown-item
+    v-model:value="product.value"
+    label="城市"
+    :options="[{ label: '北京', value: 'bj' }, { label: '上海', value: 'sh' }]"
+    placement="right"
+    :relation-key="relationKey"
+    @change="onChange"
+    />
+    <t-dropdown-item
+    :options="sorter.options"
+    placement="right"
+    :default-value="sorter.value"
+    :relation-key="relationKey"
+    />
+</t-dropdown-menu>
+```
+
+product.value 一开始为 null，可以复现 https://github.com/Tencent/tdesign-miniprogram/issues/4418
+
 ## 没必要单独沉一个包，分析的很好
 
 `2026-04-18`
