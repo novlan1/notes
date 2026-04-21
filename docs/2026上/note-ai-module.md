@@ -8,6 +8,42 @@ novlan1
 
 # AI 模块笔记
 
+## 支持非 AI Review 的自动修复
+
+`2026-04-21`
+
+
+## 改动说明（`handleSlashCommandFix` 中一处）
+
+1. **合成虚拟 issue**
+   - 当 DB 里没有匹配到 AI Review issue（`issuesByFile` 为空）但 `noteContext.filePath` 存在时
+   - 用评论的 `filePath`/`line`/`parentNoteBody` 合成一条 `IReviewIssue` 塞入 `issuesByFile`
+   - 这样 AI prompt 里会出现结构化的：
+     ```
+     ### 文件: pixui/.../record.tsx
+     - **[warning]** 来自代码行内评论（非 AI Review）：Unexpected space before the ':'. [@typescript-eslint/type-annotation-spacing]
+       行号: 91
+     ```
+
+2. **指令始终显式带文件+行号**
+   - 原逻辑：有 `parentNoteBody` 就不带 `filePath`/`line` 的 fallback 提示
+   - 新逻辑：只要 `noteContext.filePath` 存在，就在指令最前面加 `请修复文件 \`xxx\` 第 N 行 附近的问题`，再跟上父评论内容
+
+## 覆盖场景
+
+| 评论来源 | 修复前 | 修复后 |
+|---|---|---|
+| AI Review 行内评论 | 精准匹配 DB issue → OK | 精准匹配 DB issue → OK（无变化） |
+| ESLint/lint bot 行内评论 | 无结构化 issue，AI 靠猜 | ✅ 合成虚拟 issue + 显式行号 |
+| 人工 code review 行内评论 | 无结构化 issue，AI 靠猜 | ✅ 合成虚拟 issue + 显式行号 |
+| MR 顶层评论（无 position） | 靠 userInstruction | 无变化（本身就没有文件锚点） |
+
+## 风险评估
+
+- 对 AI Review 场景**零影响**（只有在 `issuesByFile` 为空时才合成）
+- 虚拟 issue 使用 `severity: 'warning'` / `category: 'other'`，符合现有类型定义
+- AI prompt 里 `message` 字段明确标注"来自代码行内评论（非 AI Review）"，AI 能理解上下文
+
 ## `mr-auto-fix` 集合的主键
 
 `2026-04-21`
