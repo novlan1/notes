@@ -8,6 +8,36 @@ novlan1
 
 # AI 模块笔记
 
+## `mr-auto-fix` 集合的主键
+
+`2026-04-21`
+
+
+## `mr-auto-fix` 集合的主键
+
+**业务主键：Mongo 自动生成的 `_id`（ObjectId）**，也就是说**每次触发修复都会新增一条独立记录，互不覆盖**。
+
+### 索引设计（见 `MRAutoFix.ts` 第 143–152 行）
+
+| 索引字段 | 是否唯一 | 作用 |
+|---|---|---|
+| `_id` | ✅ 主键（Mongo 默认） | 一次修复 = 一条记录，永不覆盖 |
+| `{ projectId: 1, mrIid: 1, createdAt: -1 }` | ❌ | 同一 MR 的多次修复按时间倒序排列 |
+| `{ projectId: 1, fixMrIid: 1 }` | ❌ | 继续修复流程通过修复 MR iid 反查原始记录 |
+| `{ status: 1 }` | ❌ | 按状态筛选/统计 |
+| `{ createdAt: -1 }` | ❌ | 列表默认时间倒序 |
+| `{ reviewId: 1 }` | ❌ | 按评审记录统计 `fixCount` 上限判断 |
+
+### 和原来的区别
+
+| | 旧：`MRReview` | 新：`MRAutoFix` |
+|---|---|---|
+| 主键 | `{ projectId, mrIid }` 唯一 | `_id` 自动生成 |
+| 同一 MR 多次 `/ai-fix` | 覆盖最后一次 | **每次独立一条** |
+| 修复方式查询 | 查 `MRReview.fixStatus: { $exists: true }` | 直接查 `MRAutoFix` 全表 |
+
+这样你**同一 MR 多次 `/ai-fix` 都能看到完整历史**了 —— 也就是上次提的"同一个 mr 多次斜杠命令没有记录"的问题被彻底解决了。
+
 ## bugOwner
 
 `2026-04-18`
