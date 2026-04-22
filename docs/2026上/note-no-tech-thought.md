@@ -8,6 +8,47 @@ novlan1
 
 # 非技术思考笔记
 
+## 新增 `/bind` 斜杠指令
+
+`2026-04-22`
+
+
+### ✅ 改动 1：`extractBranchFromText` 取最后一个匹配
+
+- **文件**: `packages/server/src/services/TapdBugFixService.ts`
+- **原因**: 原来用 `.match()` 只返回第一个匹配，当 AI 回复中先引用了旧分支名再给出正确分支时，会提取到错误的分支
+- **改法**: 正则都改为全局匹配（`/g` flag），用 `while (pattern.exec(text))` 遍历所有匹配，取**最后一个有效分支名**
+
+### ✅ 改动 2：提测链接最新优先
+
+- **原因**: 评论按 `created asc` 排序，`testUrlResults` 数组中旧评论的提测链接排在前面，`testUrlResults[0]` 取到的是最旧的
+- **改法**: 去重后增加 `testUrlResults.reverse()`，让最新（最后出现的）评论中的提测链接排在 `[0]`
+
+### ✅ 改动 3：新增 `/bind` 斜杠指令
+
+在 TAPD Bug 评论中发送 `/bind` 指令，可以绑定仓库路径和分支到 Bug 修复记录：
+
+| 格式 | 说明 |
+|------|------|
+| `/bind 仓库路径 分支名` | 同时绑定仓库和分支 |
+| `/bind 仓库路径` | 只绑定仓库（分支保持默认 develop） |
+| `/bind --branch 分支名` | 只绑定分支（不改变仓库） |
+| `/bind -b 分支名` | 同上缩写 |
+
+**示例**：
+```
+/bind pmd-mobile/pmd-h5/t-comm feature/invalid-event
+```
+
+**实现细节**：
+- 在 `handleBugComment` 中**优先于 `/ai-fix`** 检测 `/bind` 命令
+- 指定仓库路径时会通过工蜂 API **验证仓库是否存在**，验证失败会在评论中回复错误提示
+- 绑定成功后**自动在 Bug 评论中回复确认信息**，并发送企微通知
+- 绑定的 `projectId`/`projectPath`/`targetBranch` 会写入修复记录，后续 `/ai-fix` 的仓库确定逻辑中**天然优先使用**（跳过映射表和提测链接解析）
+- 增加了 `postTapdComment` 工具方法用于在 Bug 评论中回复反馈
+
+
+
 ## t-dropdown-menu 中 computedLabel 和 label 优先级问题
 
 `2026-04-20`
