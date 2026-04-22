@@ -8,6 +8,124 @@ novlan1
 
 # AI 模块笔记
 
+## bug 仓库定位
+
+`2026-04-22`
+
+
+## 1. 能在本地用吗
+
+**能，现在就能用。** 它已经落在 `~/.codebuddy/skills/tapd-resolve-repo-branch/SKILL.md`，属于**用户级 Skill**（location: `user`），对所有工作区全局可用。
+
+你不用重启 IDE，下次对话里提到"bug 单"、"定位仓库"、"解析提测链接"、给 Bug URL 等关键词时，系统会把它列到 `<available_skills>` 里，我就能调 `use_skill("tapd-resolve-repo-branch")` 触发。
+
+> 顺带一说：当前这一轮对话的 `<available_skills>` 里已经能看到它了（description 就是你刚写的那段）。所以**本地生效已经完成**。
+
+---
+
+## 2. 能在 Knot 智能体上用吗
+
+**取决于 Knot 是不是同一套 CodeBuddy Skill 机制，大概率不行。**
+
+- **用户级 Skill**（`~/.codebuddy/skills/`）跟着**你本机的 CodeBuddy IDE 插件**走。只有在你本机、通过 CodeBuddy 这个 Agent 运行时才能被发现。
+- Knot 是独立智能体平台（腾讯内网），它有自己的工具/Skill 注册体系，**不会自动扫描你本机的 `~/.codebuddy/skills/`**。
+- 如果你希望在 Knot 上复用这套 SOP，需要把 `SKILL.md` 里的内容作为**系统提示词 / Prompt 模板 / 知识库条目**注册到 Knot 智能体的配置里，并且把 `resolve.ts` 脚本包装成 Knot 能调用的工具（HTTP 接口或者 Knot 的 function tool 配置）。
+
+简而言之：**Skill ≠ 跨平台通用能力**，它是 CodeBuddy 的本地扩展。想跨到 Knot，得走 Knot 自己的那套注册流程。
+
+---
+
+## 3. 怎么触发
+
+三种方式，从被动到主动：
+
+| 方式 | 怎么用 | 什么时候用 |
+|------|--------|-----------|
+| **自动触发** | 在对话里说到 description 里列的关键词（bug 修复、定位仓库、解析提测链接、TAPD bug、bug url 等）| 日常最常见 |
+| **显式点名** | 直接说"用 tapd-resolve-repo-branch 这个 skill 处理一下" | 关键词不够明显、想强制走 SOP 时 |
+| **斜杠命令**（如果 CodeBuddy 支持）| `/tapd-resolve-repo-branch` | 命令行风格，最快 |
+
+触发后，AI（也就是我）会读到完整的 SOP 文本，按里面的流程调 `tapd_mcp_http` 工具拉 TAPD 内容 + 调 `scripts/tapd-resolve-repo-branch/resolve.ts` 脚本解析链接。
+
+---
+
+## 4. 怎么更新这个 Skill
+
+**直接改 `~/.codebuddy/skills/tapd-resolve-repo-branch/SKILL.md` 即可。** 下次对话就是新版本，不需要重启、不需要编译、不需要任何注册动作。
+
+如果想改脚本，改 `scripts/tapd-resolve-repo-branch/resolve.ts`，下次 AI 用 `npx tsx` 调的时候就是新版本。
+
+**常见更新场景**：
+- 新增一种 Bug 评论格式 → 改 SKILL.md 里"采集内容"那一节
+- 新增一种 Git 链接形态（比如 GitLab）→ 改 `resolve.ts` 的正则
+- 调整优先级顺序 → 改 SKILL.md 里"排序规则"那一节
+
+---
+
+## 5. 怎么"入库"——这才是最关键的问题
+
+你说的"入库"，我理解有两层含义：
+
+### 5.1 本机入库（Git 版本化）
+
+**问题**：`~/.codebuddy/skills/` 在你用户目录下，不在项目仓库里，一换电脑就没了，团队成员也复用不到。
+
+**解决方案**：在项目仓库里维护一份"**源版本**"，通过软链或同步脚本推到 `~/.codebuddy/skills/`。
+
+具体可以这样组织：
+
+```
+tapd-solution/
+├── .codebuddy/
+│   └── skills/
+│       └── tapd-resolve-repo-branch/
+│           └── SKILL.md          # 源文件，受 Git 管理
+├── scripts/
+│   └── tapd-resolve-repo-branch/
+│       └── resolve.ts             # 已经在仓库里了
+└── script/
+    └── install-skills.sh          # 同步脚本：ln -s 或 cp 到 ~/.codebuddy/skills/
+```
+
+要不要我顺手帮你：
+1. 把 `SKILL.md` 从 `~/.codebuddy/skills/` **搬进** 项目 `.codebuddy/skills/` 下（项目级可版本化）
+2. 写一个 `script/install-skills.sh`，团队成员 clone 后跑一次就把项目里的 skills 软链到 `~/.codebuddy/skills/`
+3. 在 README 的 Skills 沉淀章节加个"如何安装"小节
+
+### 5.2 团队/组织入库（让同事也能用）
+
+目前看 CodeBuddy 的机制里，Skill 有三层：
+- **user**（`~/.codebuddy/skills/`）：本人可用
+- **manager** / **plugin**：系统预置或插件带的，无法自己改
+- **项目级**（`<workspace>/.codebuddy/skills/`，如果 CodeBuddy 支持扫描这里）：随仓库走
+
+最稳的办法就是 **5.1 的方案**——放在项目 `.codebuddy/skills/` 下，配合安装脚本。这样：
+- 新同事 clone 仓库 → 跑 `bash script/install-skills.sh` → 本地立即可用
+- Skill 升级 → 改完 commit → 同事 pull → 软链的话立即生效，cp 的话需要重跑脚本
+
+### 5.3 跨到 Knot / 其他平台入库
+
+这个得看 Knot 具体怎么管理智能体的 Prompt 和工具。一般路径：
+- 把 `SKILL.md` 的正文作为 Knot 智能体的**系统提示词片段**或**知识库文档**
+- 把 `resolve.ts` 包成 HTTP 服务或 Knot function tool
+- 在 Knot 的智能体编排里把两者串起来
+
+---
+
+## 总结一张表
+
+| 问题 | 答案 |
+|------|------|
+| 本地能用吗 | ✅ 已生效，下一轮对话就能触发 |
+| Knot 能用吗 | ❌ 不能直接用，需要改造成 Knot 的 Prompt + Tool |
+| 怎么触发 | 关键词自动触发 / 显式点名 `use_skill` / 斜杠命令 |
+| 怎么更新 | 直接改 `SKILL.md` 或 `resolve.ts`，下轮对话即生效 |
+| 本机入库 | 现在没入库，建议搬到项目 `.codebuddy/skills/` + 写安装脚本 |
+| 团队入库 | 同上，靠仓库 + 安装脚本 |
+| 跨平台入库 | 需要逐个平台按它自己的规范注册 |
+
+
+
 ## 支持非 AI Review 的自动修复
 
 `2026-04-21`
