@@ -8,6 +8,222 @@ novlan1
 
 # AI 模块笔记
 
+##  `tsc` vs `tsx` 原理深度对比
+
+`2026-04-23`
+
+
+
+## 一、`tsc`（TypeScript Compiler）原理
+
+### 架构
+
+```
+┌──────────────────────────────────────────────────────┐
+│                      tsc                             │
+│  ┌────────┐  ┌────────┐  ┌────────┐  ┌─────────┐     │
+│  │Scanner │→ │ Parser │→ │ Binder │→ │ Checker │     │
+│  │(词法)  │  │ (语法) │  │(作用域)│  │(类型检查)│    │
+│  └────────┘  └────────┘  └────────┘  └─────────┘     │
+│                                           ↓          │
+│                                      ┌────────┐      │
+│                                      │Emitter │      │
+│                                      │(生成JS)│      │
+│                                      └────────┘      │
+└──────────────────────────────────────────────────────┘
+```
+
+### 完整流水线
+
+```ts
+// 输入
+const age: number = 18;
+```
+
+**1. Scanner（词法分析）**：字符流 → token 流
+```
+['const', 'age', ':', 'number', '=', '18', ';']
+```
+
+**2. Parser（语法分析）**：token 流 → **AST**
+```
+VariableStatement
+  └─ VariableDeclaration
+       ├─ name: 'age'
+       ├─ type: NumberKeyword
+       └─ initializer: NumericLiteral(18)
+```
+
+**3. Binder（符号绑定）**：为每个 AST 节点建立 `Symbol`，构建作用域链。这样 `age` 在别处被引用时，知道它在哪里声明。
+
+**4. Checker（类型检查）**：遍历 AST，根据类型规则、类型推导、泛型、控制流分析… 发现类型错误就报 diagnostic。**这一步最慢，占总耗时 60%+**。
+
+**5. Emitter（代码生成）**：再遍历一次 AST，**剥掉类型**，按 `target`（ES5/ES2020）做语法降级，产出 `.js`、`.d.ts`、`.map`。
+
+**输出**：
+```js
+"use strict";
+const age = 18;
+```
+
+### 关键特性
+
+- 用 **TypeScript 自己写的**（自举，`tsc` 源码 100+ MB）
+- **增量编译**：`.tsbuildinfo` 缓存，改一个文件不用全量重编
+- **单线程**：JavaScript 天生单线程
+- **权威**：TS 官方语义，Checker 是所有 IDE 类型提示的核心
+
+### 为什么慢？
+
+- **Checker 要做完整的语义分析**：你写 `a + b`，它要递归解析 a/b 类型、找到所有可能的重载、做类型推导
+- **JS 虚拟机限制**：V8 单核跑 TS Checker
+- 典型速度：**100 ms/file 量级**（1000 个文件要几十秒）
+
+---
+
+## 二、`tsx`（TypeScript Execute）原理
+
+### 架构
+
+```
+┌─────────────────────────────────────────────────────┐
+│                       tsx                           │
+│                                                     │
+│        ┌────────────────────────────┐               │
+│        │   esbuild (Go 写的)        │               │
+│        │  ┌─────────┐  ┌──────────┐ │               │
+│        │  │ Parser  │→ │Transform │ │               │
+│        │  │(AST)    │  │(剥类型)  │ │               │
+│        │  └─────────┘  └──────────┘ │               │
+│        └────────────────────────────┘               │
+│                        │                            │
+│                        ↓  内存里的 JS                │
+│        ┌────────────────────────────┐               │
+│        │      Node.js ESM Loader    │               │
+│        │  (通过 --import hook 注入) │               │
+│        └────────────────────────────┘               │
+└─────────────────────────────────────────────────────┘
+```
+
+### 完整流水线
+
+**1. 启动时**：tsx 用 Node 的 Loader Hook 机制向 Node 注入一个"翻译层"：
+
+```js
+// 相当于
+node --import tsx/esm your-file.ts
+```
+
+**2. Node 遇到 `.ts` 文件**（或 `.ts` 扩展名的 import），不会报错，而是交给 tsx 的 loader：
+
+```
+Node: 我要 import './foo.ts'
+  ↓
+tsx loader 拦截
+  ↓
+读取 foo.ts 源码 → 调 esbuild transform → 得到 foo.js 字符串
+  ↓
+塞回 Node，Node 当成普通 JS 执行
+```
+
+**3. esbuild 做了什么？**
+- **只做 2 件事**：① parse 成 AST；② 遍历 AST 剥掉类型，转语法
+- **没有 Checker**！类型完全被无视
+- 用 **Go 语言**写，**并行**编译多文件，速度极快
+
+### 转译示例
+
+**输入** `foo.ts`：
+```ts
+interface User { name: string }
+const user: User = { name: 'bob' };
+console.log(user.name);
+```
+
+**esbuild 处理后（内存里）**：
+```js
+const user = { name: 'bob' };
+console.log(user.name);
+```
+
+就这么简单 — `interface` 整个被删，`: User` 注解被删。
+
+### 为什么快？
+
+| 维度 | `tsc` | `tsx (esbuild)` |
+|---|---|---|
+| 语言 | TypeScript（跑在 V8） | Go（原生二进制） |
+| 并行 | 单线程 | **多核并行** |
+| 类型检查 | ✅ 做 | ❌ 跳过 |
+| 语法转换 | 精细但慢 | 粗暴但快 |
+| 典型速度 | 100 ms/file | **< 1 ms/file** |
+
+esbuild 官方 benchmark：**比 tsc 快 20-100 倍**。
+
+---
+
+## 三、关键对比表
+
+| 维度 | `tsc` | `tsx` |
+|---|---|---|
+| **本质** | 完整编译器 | Node 的 TS 包装器 |
+| **是否产物** | 输出到 `outDir` | 不产出，内存里执行 |
+| **类型检查** | ✅ 完整 | ❌ 跳过 |
+| **语法转译** | 逐行精细，支持 target | 快糙猛，但够用 |
+| **速度** | 慢 | 快 20-100x |
+| **热重载** | 自带 `--watch`，但不重启进程 | `tsx watch` 自带进程重启 |
+| **底层引擎** | TypeScript 自己（JS） | esbuild（Go） |
+| **场景** | CI、build、类型校验 | 开发、脚本、tests |
+
+---
+
+## 四、tsx 的 Node.js Hook 原理（补充）
+
+Node.js 从 v20 开始稳定的 `--import` + `module.register()` API：
+
+```js
+// tsx/esm 内部大概长这样
+import { register } from 'node:module';
+register('./tsx-loader.mjs', import.meta.url);
+
+// tsx-loader.mjs
+export async function load(url, context, next) {
+  if (url.endsWith('.ts')) {
+    const source = await readFile(url);
+    const { code } = await esbuild.transform(source, { loader: 'ts' });
+    return { format: 'module', source: code };
+  }
+  return next(url, context);
+}
+```
+
+这就是为什么 `tsx` 能让 Node **"假装"自己原生支持 TypeScript** — 其实是在 import 时偷偷把 .ts 翻成 .js。
+
+> 😄 花边：**Node.js v22.6+ 自己内置了 `--experimental-strip-types`**，直接跳过类型就能跑 .ts，原理和 tsx 一样（只剥类型不检查）。但社区还在用 tsx，因为它成熟、支持旧版本 Node、功能更全（watch、路径别名、jsx 等）。
+
+---
+
+## 五、为什么后端项目 dev 要 `tsx` + build 要 `tsc`
+
+```
+┌───────────────┐         ┌───────────────┐
+│   开发时      │         │   生产时      │
+│   tsx watch   │         │  tsc → node   │
+└───────────────┘         └───────────────┘
+      │                         │
+      ↓                         ↓
+  "快糙猛"体验             "稳权威"产物
+  类型错 IDE 提示           类型错 CI 拦截
+  改完毫秒重启              无 TS 解析开销
+  不关心 .js 产物           纯 .js 直接跑
+```
+
+**简记**：
+- `tsc` = **语义层面**的 TS → JS（慢但严格）
+- `tsx` = **语法层面**的 TS → JS（快但宽容）+ Node 运行钩子
+
+两者**互补**，不是替代关系。IDE（VSCode）里的红线也是由 `tsc` 的语言服务（`tsserver`）给出的，而不是 `tsx`。
+
 ## tsx vs tsc
 
 `2026-04-23`
