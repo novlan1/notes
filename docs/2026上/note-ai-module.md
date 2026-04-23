@@ -8,6 +8,83 @@ novlan1
 
 # AI 模块笔记
 
+## tip-robot to ts
+
+`2026-04-23`
+
+好的，继续一次性迁移。先读取剩余所有 js 文件。
+全部代码已读完。现在开始系统性迁移：
+
+**计划：**
+1. 先更新 `tsconfig.json`、`package.json`，添加 typings
+2. 创建所有 `.ts` 文件（对应原 `.js`）
+3. 最后删除所有 `.js` 文件
+
+### Step 1: 更新 tsconfig 和 package.json
+### Step 2: 创建所有 TS 文件
+
+从叶子开始，先写 utils/config/core/middleware/router，最后入口。
+现在写 robot 子项目：
+继续 router 和 core/init：
+现在写 robot 入口 server.ts + cos-audit 子包：
+### Step 3: 删除所有旧的 .js 文件
+### Step 4: 安装依赖并执行 tsc 校验
+依赖已装好。执行 tsc 校验：
+几个类型错误，都来自 ctx 字段可能 undefined，而目标参数要求 string。逐一修复：
+-
+-
+`sendWxRobotMarkdown` 的 `webhookUrl` 是 `string`（必填）。修复 5 个类型错误：用 `(x as string)` 或添加默认值 `|| ''`：
+-
+-
+-
+现在修复 script/env/rainbow-env.ts 的 `rainbowAppId` 缺失问题 —— 检查原 js 是否漏掉了：
+
+原 js 里确实没传 `rainbowAppId`，这是 t-comm 最新 ts 类型要求的新必填字段。用类型断言保持原逻辑：
+再跑一次 tsc：
+类型全部通过。执行 build 看能否正常产出 dist：
+build 成功，dist 产出正常。验证一下入口文件：
+最后清理 dist，并看下最终项目结构：
+全部完成。总结：
+
+## 迁移完成 ✅
+
+### 核心变更
+
+| 变更项 | 说明 |
+|---|---|
+| **28 个 `.js` → `.ts`** | 全部源文件迁移，架构不变，`cos-audit` / `robot` 仍独立 |
+| **`tsconfig.json`** | 重写为 Node 后端配置：`target: ES2020`、`module: commonjs`、`outDir: dist`、`strict: true` + `noImplicitAny: false`、保留 `allowJs` |
+| **`package.json`** | 新增 `typescript@5.7`、`tsx`、`@types/koa`、`@types/koa-router`、`@types/koa-bodyparser`、`@types/node`；脚本改为 dev 用 `tsx watch src/...`、start 跑 `node dist/src/...`、build 用 `tsc` |
+| **`typings/index.d.ts`** | 为无 `@types` 的包（`@wecom/crypto`、`koa-xml-body`、`fast-xml-parser`、`@tencent/next-admin-svr`、`@tencent/rainbow-node-sdk`）写 shim；声明 `global.robotConfig` / `global.cosAuditConfig` / `global.errors`；按你的要求**没有**给 `t-comm` / `@tencent/t-comm` 写 declare（它们自带类型） |
+| **删除** | `babel.config.js`（前端 Vue 的残留）、`tsconfig.eslint.json`（不再需要） |
+
+### 验证结果
+
+```
+$ npx tsc --noEmit  →  exit 0（无错误）
+$ npx tsc          →  dist/src/project/robot/server.js ✅
+                       dist/src/project/cos-audit/server.js ✅
+```
+
+### 使用方式
+
+```bash
+# 开发（两个子包独立）
+pnpm dev:robot         # tsx watch src/project/robot/server.ts
+pnpm dev:cos-audit     # tsx watch src/project/cos-audit/server.ts
+
+# 生产
+pnpm build             # tsc → dist/
+pnpm start:robot       # node dist/src/project/robot/server.js
+pnpm start:cos-audit   # node dist/src/project/cos-audit/server.js
+```
+
+### 其他说明
+
+1. 一些 Koa middleware 参数对 `ctx` 做了 `as any` / 可选字段断言，因为原来的 js 会往 ctx 上乱挂字段（`token`、`encodingAESKey`、`robotName`、`webhookUrl`、`chatId`、`msgType` 等），严格类型下只能用扩展接口 + 兜底，行为 100% 等价于原 js
+2. `script/env/rainbow-env.ts` 里 `writeEnvFromRainbow` 的参数用了 `as any`，因为原 js 没传 t-comm 新增的 `rainbowAppId`。若业务上实际需要这个字段，请告诉我
+3. 所有全局变量（`global.robotConfig` / `global.cosAuditConfig` / `global.errors`）在 `typings/index.d.ts` 中做了声明，行为保持不变
+
 ## 方案B是不是最合理的呢，一个类只做一件事情
 
 `2026-04-23`
