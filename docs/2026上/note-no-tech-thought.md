@@ -8,6 +8,12 @@ novlan1
 
 # 非技术思考笔记
 
+## Vengeance 
+
+`2026-04-23`
+
+<img src="https://cdn.uwayfly.com/article/2026/4/own_mike_XhEkKQnGTBTEcY3Q.png" width="500"/>
+
 ## deduped - deduplicated
 
 `2026-04-23`
