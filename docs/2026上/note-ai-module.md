@@ -8,6 +8,124 @@ novlan1
 
 # AI 模块笔记
 
+## tsx vs tsc
+
+`2026-04-23`
+
+简短对比：
+
+## 核心区别
+
+| 维度 | **`tsx`** | **`tsc`** |
+|---|---|---|
+| 身份 | **运行器**（executor） | **编译器**（compiler） |
+| 产物 | 不产出文件，内存里即时编译即时执行 | 产出 `.js` + `.d.ts` + `.map` 到 `outDir` |
+| 类型检查 | ❌ **不做类型检查**（直接剥掉类型就跑） | ✅ 会报所有类型错误，错了不出产物 |
+| 底层 | esbuild（超快，毫秒级） | TypeScript 官方编译器（慢，但权威） |
+| 用途 | 开发/脚本即跑 | 生产构建、CI 类型校验 |
+| 热重载 | 自带 `tsx watch` | 需要配合 `tsc --watch` + `nodemon` |
+| 性能 | 启动 < 1s | 冷启动数秒 |
+
+## 在本项目里的分工
+
+```bash
+# 开发：不关心类型错误，改代码立刻重启（esbuild 毫秒级）
+pnpm dev:robot        →  tsx watch src/project/robot/server.ts
+pnpm dev:cos-audit    →  tsx watch src/project/cos-audit/server.ts
+
+# 构建：严格类型检查 + 产出 dist
+pnpm build            →  tsc
+
+# 生产：直接跑编译好的纯 js，无 ts 开销
+pnpm start:robot      →  node dist/src/project/robot/server.js
+```
+
+## 关键区别演示
+
+假设你写了一段错误代码：
+
+```ts
+const n: number = 'hello';  // 类型错误
+console.log('run');
+```
+
+- **`tsx` 会照样打印 `run`**（类型被剥掉就执行了）
+- **`tsc` 直接报错退出**，不产出 js
+
+## 为什么不"一个工具干两件事"
+
+- 只用 `tsc`：启动慢、不支持一键 watch 跑，dev 体验差
+- 只用 `tsx`：类型错误永远发现不了，生产容易爆雷
+
+所以标准做法：**dev 用 `tsx`（快），build + CI 用 `tsc`（严）**。如果你希望 CI 里独立做类型校验但不出产物，可以跑：
+
+```bash
+npx tsc --noEmit       # 只校验类型，不生成文件
+```
+
+## 类比
+
+- `tsc` 就像 **gcc**：编译 → 产物 → 单独运行
+- `tsx` 就像 **python**：直接 `tsx xxx.ts` 当脚本跑
+
+这也是 `tapd-solution/packages/server` 和你现在这个项目采用的主流后端 TS 组合。
+
+## 核心区别
+
+| 维度 | **`tsx`** | **`tsc`** |
+|---|---|---|
+| 身份 | **运行器**（executor） | **编译器**（compiler） |
+| 产物 | 不产出文件，内存里即时编译即时执行 | 产出 `.js` + `.d.ts` + `.map` 到 `outDir` |
+| 类型检查 | ❌ **不做类型检查**（直接剥掉类型就跑） | ✅ 会报所有类型错误，错了不出产物 |
+| 底层 | esbuild（超快，毫秒级） | TypeScript 官方编译器（慢，但权威） |
+| 用途 | 开发/脚本即跑 | 生产构建、CI 类型校验 |
+| 热重载 | 自带 `tsx watch` | 需要配合 `tsc --watch` + `nodemon` |
+| 性能 | 启动 < 1s | 冷启动数秒 |
+
+## 在本项目里的分工
+
+```bash
+# 开发：不关心类型错误，改代码立刻重启（esbuild 毫秒级）
+pnpm dev:robot        →  tsx watch src/project/robot/server.ts
+pnpm dev:cos-audit    →  tsx watch src/project/cos-audit/server.ts
+
+# 构建：严格类型检查 + 产出 dist
+pnpm build            →  tsc
+
+# 生产：直接跑编译好的纯 js，无 ts 开销
+pnpm start:robot      →  node dist/src/project/robot/server.js
+```
+
+## 关键区别演示
+
+假设你写了一段错误代码：
+
+```ts
+const n: number = 'hello';  // 类型错误
+console.log('run');
+```
+
+- **`tsx` 会照样打印 `run`**（类型被剥掉就执行了）
+- **`tsc` 直接报错退出**，不产出 js
+
+## 为什么不"一个工具干两件事"
+
+- 只用 `tsc`：启动慢、不支持一键 watch 跑，dev 体验差
+- 只用 `tsx`：类型错误永远发现不了，生产容易爆雷
+
+所以标准做法：**dev 用 `tsx`（快），build + CI 用 `tsc`（严）**。如果你希望 CI 里独立做类型校验但不出产物，可以跑：
+
+```bash
+npx tsc --noEmit       # 只校验类型，不生成文件
+```
+
+## 类比
+
+- `tsc` 就像 **gcc**：编译 → 产物 → 单独运行
+- `tsx` 就像 **python**：直接 `tsx xxx.ts` 当脚本跑
+
+这也是 `tapd-solution/packages/server` 和你现在这个项目采用的主流后端 TS 组合。
+
 ## tip-robot to ts
 
 `2026-04-23`
