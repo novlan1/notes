@@ -8,6 +8,756 @@ novlan1
 
 # AI 模块笔记
 
+##  `tsc` vs `tsx` 原理深度对比
+
+`2026-04-23`
+
+
+
+## 一、`tsc`（TypeScript Compiler）原理
+
+### 架构
+
+```
+┌──────────────────────────────────────────────────────┐
+│                      tsc                             │
+│  ┌────────┐  ┌────────┐  ┌────────┐  ┌─────────┐     │
+│  │Scanner │→ │ Parser │→ │ Binder │→ │ Checker │     │
+│  │(词法)  │  │ (语法) │  │(作用域)│  │(类型检查)│    │
+│  └────────┘  └────────┘  └────────┘  └─────────┘     │
+│                                           ↓          │
+│                                      ┌────────┐      │
+│                                      │Emitter │      │
+│                                      │(生成JS)│      │
+│                                      └────────┘      │
+└──────────────────────────────────────────────────────┘
+```
+
+### 完整流水线
+
+```ts
+// 输入
+const age: number = 18;
+```
+
+**1. Scanner（词法分析）**：字符流 → token 流
+```
+['const', 'age', ':', 'number', '=', '18', ';']
+```
+
+**2. Parser（语法分析）**：token 流 → **AST**
+```
+VariableStatement
+  └─ VariableDeclaration
+       ├─ name: 'age'
+       ├─ type: NumberKeyword
+       └─ initializer: NumericLiteral(18)
+```
+
+**3. Binder（符号绑定）**：为每个 AST 节点建立 `Symbol`，构建作用域链。这样 `age` 在别处被引用时，知道它在哪里声明。
+
+**4. Checker（类型检查）**：遍历 AST，根据类型规则、类型推导、泛型、控制流分析… 发现类型错误就报 diagnostic。**这一步最慢，占总耗时 60%+**。
+
+**5. Emitter（代码生成）**：再遍历一次 AST，**剥掉类型**，按 `target`（ES5/ES2020）做语法降级，产出 `.js`、`.d.ts`、`.map`。
+
+**输出**：
+```js
+"use strict";
+const age = 18;
+```
+
+### 关键特性
+
+- 用 **TypeScript 自己写的**（自举，`tsc` 源码 100+ MB）
+- **增量编译**：`.tsbuildinfo` 缓存，改一个文件不用全量重编
+- **单线程**：JavaScript 天生单线程
+- **权威**：TS 官方语义，Checker 是所有 IDE 类型提示的核心
+
+### 为什么慢？
+
+- **Checker 要做完整的语义分析**：你写 `a + b`，它要递归解析 a/b 类型、找到所有可能的重载、做类型推导
+- **JS 虚拟机限制**：V8 单核跑 TS Checker
+- 典型速度：**100 ms/file 量级**（1000 个文件要几十秒）
+
+---
+
+## 二、`tsx`（TypeScript Execute）原理
+
+### 架构
+
+```
+┌─────────────────────────────────────────────────────┐
+│                       tsx                           │
+│                                                     │
+│        ┌────────────────────────────┐               │
+│        │   esbuild (Go 写的)        │               │
+│        │  ┌─────────┐  ┌──────────┐ │               │
+│        │  │ Parser  │→ │Transform │ │               │
+│        │  │(AST)    │  │(剥类型)  │ │               │
+│        │  └─────────┘  └──────────┘ │               │
+│        └────────────────────────────┘               │
+│                        │                            │
+│                        ↓  内存里的 JS                │
+│        ┌────────────────────────────┐               │
+│        │      Node.js ESM Loader    │               │
+│        │  (通过 --import hook 注入) │               │
+│        └────────────────────────────┘               │
+└─────────────────────────────────────────────────────┘
+```
+
+### 完整流水线
+
+**1. 启动时**：tsx 用 Node 的 Loader Hook 机制向 Node 注入一个"翻译层"：
+
+```js
+// 相当于
+node --import tsx/esm your-file.ts
+```
+
+**2. Node 遇到 `.ts` 文件**（或 `.ts` 扩展名的 import），不会报错，而是交给 tsx 的 loader：
+
+```
+Node: 我要 import './foo.ts'
+  ↓
+tsx loader 拦截
+  ↓
+读取 foo.ts 源码 → 调 esbuild transform → 得到 foo.js 字符串
+  ↓
+塞回 Node，Node 当成普通 JS 执行
+```
+
+**3. esbuild 做了什么？**
+- **只做 2 件事**：① parse 成 AST；② 遍历 AST 剥掉类型，转语法
+- **没有 Checker**！类型完全被无视
+- 用 **Go 语言**写，**并行**编译多文件，速度极快
+
+### 转译示例
+
+**输入** `foo.ts`：
+```ts
+interface User { name: string }
+const user: User = { name: 'bob' };
+console.log(user.name);
+```
+
+**esbuild 处理后（内存里）**：
+```js
+const user = { name: 'bob' };
+console.log(user.name);
+```
+
+就这么简单 — `interface` 整个被删，`: User` 注解被删。
+
+### 为什么快？
+
+| 维度 | `tsc` | `tsx (esbuild)` |
+|---|---|---|
+| 语言 | TypeScript（跑在 V8） | Go（原生二进制） |
+| 并行 | 单线程 | **多核并行** |
+| 类型检查 | ✅ 做 | ❌ 跳过 |
+| 语法转换 | 精细但慢 | 粗暴但快 |
+| 典型速度 | 100 ms/file | **< 1 ms/file** |
+
+esbuild 官方 benchmark：**比 tsc 快 20-100 倍**。
+
+---
+
+## 三、关键对比表
+
+| 维度 | `tsc` | `tsx` |
+|---|---|---|
+| **本质** | 完整编译器 | Node 的 TS 包装器 |
+| **是否产物** | 输出到 `outDir` | 不产出，内存里执行 |
+| **类型检查** | ✅ 完整 | ❌ 跳过 |
+| **语法转译** | 逐行精细，支持 target | 快糙猛，但够用 |
+| **速度** | 慢 | 快 20-100x |
+| **热重载** | 自带 `--watch`，但不重启进程 | `tsx watch` 自带进程重启 |
+| **底层引擎** | TypeScript 自己（JS） | esbuild（Go） |
+| **场景** | CI、build、类型校验 | 开发、脚本、tests |
+
+---
+
+## 四、tsx 的 Node.js Hook 原理（补充）
+
+Node.js 从 v20 开始稳定的 `--import` + `module.register()` API：
+
+```js
+// tsx/esm 内部大概长这样
+import { register } from 'node:module';
+register('./tsx-loader.mjs', import.meta.url);
+
+// tsx-loader.mjs
+export async function load(url, context, next) {
+  if (url.endsWith('.ts')) {
+    const source = await readFile(url);
+    const { code } = await esbuild.transform(source, { loader: 'ts' });
+    return { format: 'module', source: code };
+  }
+  return next(url, context);
+}
+```
+
+这就是为什么 `tsx` 能让 Node **"假装"自己原生支持 TypeScript** — 其实是在 import 时偷偷把 .ts 翻成 .js。
+
+> 😄 花边：**Node.js v22.6+ 自己内置了 `--experimental-strip-types`**，直接跳过类型就能跑 .ts，原理和 tsx 一样（只剥类型不检查）。但社区还在用 tsx，因为它成熟、支持旧版本 Node、功能更全（watch、路径别名、jsx 等）。
+
+---
+
+## 五、为什么后端项目 dev 要 `tsx` + build 要 `tsc`
+
+```
+┌───────────────┐         ┌───────────────┐
+│   开发时      │         │   生产时      │
+│   tsx watch   │         │  tsc → node   │
+└───────────────┘         └───────────────┘
+      │                         │
+      ↓                         ↓
+  "快糙猛"体验             "稳权威"产物
+  类型错 IDE 提示           类型错 CI 拦截
+  改完毫秒重启              无 TS 解析开销
+  不关心 .js 产物           纯 .js 直接跑
+```
+
+**简记**：
+- `tsc` = **语义层面**的 TS → JS（慢但严格）
+- `tsx` = **语法层面**的 TS → JS（快但宽容）+ Node 运行钩子
+
+两者**互补**，不是替代关系。IDE（VSCode）里的红线也是由 `tsc` 的语言服务（`tsserver`）给出的，而不是 `tsx`。
+
+## tsx vs tsc
+
+`2026-04-23`
+
+简短对比：
+
+## 核心区别
+
+| 维度 | **`tsx`** | **`tsc`** |
+|---|---|---|
+| 身份 | **运行器**（executor） | **编译器**（compiler） |
+| 产物 | 不产出文件，内存里即时编译即时执行 | 产出 `.js` + `.d.ts` + `.map` 到 `outDir` |
+| 类型检查 | ❌ **不做类型检查**（直接剥掉类型就跑） | ✅ 会报所有类型错误，错了不出产物 |
+| 底层 | esbuild（超快，毫秒级） | TypeScript 官方编译器（慢，但权威） |
+| 用途 | 开发/脚本即跑 | 生产构建、CI 类型校验 |
+| 热重载 | 自带 `tsx watch` | 需要配合 `tsc --watch` + `nodemon` |
+| 性能 | 启动 < 1s | 冷启动数秒 |
+
+## 在本项目里的分工
+
+```bash
+# 开发：不关心类型错误，改代码立刻重启（esbuild 毫秒级）
+pnpm dev:robot        →  tsx watch src/project/robot/server.ts
+pnpm dev:cos-audit    →  tsx watch src/project/cos-audit/server.ts
+
+# 构建：严格类型检查 + 产出 dist
+pnpm build            →  tsc
+
+# 生产：直接跑编译好的纯 js，无 ts 开销
+pnpm start:robot      →  node dist/src/project/robot/server.js
+```
+
+## 关键区别演示
+
+假设你写了一段错误代码：
+
+```ts
+const n: number = 'hello';  // 类型错误
+console.log('run');
+```
+
+- **`tsx` 会照样打印 `run`**（类型被剥掉就执行了）
+- **`tsc` 直接报错退出**，不产出 js
+
+## 为什么不"一个工具干两件事"
+
+- 只用 `tsc`：启动慢、不支持一键 watch 跑，dev 体验差
+- 只用 `tsx`：类型错误永远发现不了，生产容易爆雷
+
+所以标准做法：**dev 用 `tsx`（快），build + CI 用 `tsc`（严）**。如果你希望 CI 里独立做类型校验但不出产物，可以跑：
+
+```bash
+npx tsc --noEmit       # 只校验类型，不生成文件
+```
+
+## 类比
+
+- `tsc` 就像 **gcc**：编译 → 产物 → 单独运行
+- `tsx` 就像 **python**：直接 `tsx xxx.ts` 当脚本跑
+
+这也是 `tapd-solution/packages/server` 和你现在这个项目采用的主流后端 TS 组合。
+
+## 核心区别
+
+| 维度 | **`tsx`** | **`tsc`** |
+|---|---|---|
+| 身份 | **运行器**（executor） | **编译器**（compiler） |
+| 产物 | 不产出文件，内存里即时编译即时执行 | 产出 `.js` + `.d.ts` + `.map` 到 `outDir` |
+| 类型检查 | ❌ **不做类型检查**（直接剥掉类型就跑） | ✅ 会报所有类型错误，错了不出产物 |
+| 底层 | esbuild（超快，毫秒级） | TypeScript 官方编译器（慢，但权威） |
+| 用途 | 开发/脚本即跑 | 生产构建、CI 类型校验 |
+| 热重载 | 自带 `tsx watch` | 需要配合 `tsc --watch` + `nodemon` |
+| 性能 | 启动 < 1s | 冷启动数秒 |
+
+## 在本项目里的分工
+
+```bash
+# 开发：不关心类型错误，改代码立刻重启（esbuild 毫秒级）
+pnpm dev:robot        →  tsx watch src/project/robot/server.ts
+pnpm dev:cos-audit    →  tsx watch src/project/cos-audit/server.ts
+
+# 构建：严格类型检查 + 产出 dist
+pnpm build            →  tsc
+
+# 生产：直接跑编译好的纯 js，无 ts 开销
+pnpm start:robot      →  node dist/src/project/robot/server.js
+```
+
+## 关键区别演示
+
+假设你写了一段错误代码：
+
+```ts
+const n: number = 'hello';  // 类型错误
+console.log('run');
+```
+
+- **`tsx` 会照样打印 `run`**（类型被剥掉就执行了）
+- **`tsc` 直接报错退出**，不产出 js
+
+## 为什么不"一个工具干两件事"
+
+- 只用 `tsc`：启动慢、不支持一键 watch 跑，dev 体验差
+- 只用 `tsx`：类型错误永远发现不了，生产容易爆雷
+
+所以标准做法：**dev 用 `tsx`（快），build + CI 用 `tsc`（严）**。如果你希望 CI 里独立做类型校验但不出产物，可以跑：
+
+```bash
+npx tsc --noEmit       # 只校验类型，不生成文件
+```
+
+## 类比
+
+- `tsc` 就像 **gcc**：编译 → 产物 → 单独运行
+- `tsx` 就像 **python**：直接 `tsx xxx.ts` 当脚本跑
+
+这也是 `tapd-solution/packages/server` 和你现在这个项目采用的主流后端 TS 组合。
+
+## tip-robot to ts
+
+`2026-04-23`
+
+好的，继续一次性迁移。先读取剩余所有 js 文件。
+全部代码已读完。现在开始系统性迁移：
+
+**计划：**
+1. 先更新 `tsconfig.json`、`package.json`，添加 typings
+2. 创建所有 `.ts` 文件（对应原 `.js`）
+3. 最后删除所有 `.js` 文件
+
+### Step 1: 更新 tsconfig 和 package.json
+### Step 2: 创建所有 TS 文件
+
+从叶子开始，先写 utils/config/core/middleware/router，最后入口。
+现在写 robot 子项目：
+继续 router 和 core/init：
+现在写 robot 入口 server.ts + cos-audit 子包：
+### Step 3: 删除所有旧的 .js 文件
+### Step 4: 安装依赖并执行 tsc 校验
+依赖已装好。执行 tsc 校验：
+几个类型错误，都来自 ctx 字段可能 undefined，而目标参数要求 string。逐一修复：
+-
+-
+`sendWxRobotMarkdown` 的 `webhookUrl` 是 `string`（必填）。修复 5 个类型错误：用 `(x as string)` 或添加默认值 `|| ''`：
+-
+-
+-
+现在修复 script/env/rainbow-env.ts 的 `rainbowAppId` 缺失问题 —— 检查原 js 是否漏掉了：
+
+原 js 里确实没传 `rainbowAppId`，这是 t-comm 最新 ts 类型要求的新必填字段。用类型断言保持原逻辑：
+再跑一次 tsc：
+类型全部通过。执行 build 看能否正常产出 dist：
+build 成功，dist 产出正常。验证一下入口文件：
+最后清理 dist，并看下最终项目结构：
+全部完成。总结：
+
+## 迁移完成 ✅
+
+### 核心变更
+
+| 变更项 | 说明 |
+|---|---|
+| **28 个 `.js` → `.ts`** | 全部源文件迁移，架构不变，`cos-audit` / `robot` 仍独立 |
+| **`tsconfig.json`** | 重写为 Node 后端配置：`target: ES2020`、`module: commonjs`、`outDir: dist`、`strict: true` + `noImplicitAny: false`、保留 `allowJs` |
+| **`package.json`** | 新增 `typescript@5.7`、`tsx`、`@types/koa`、`@types/koa-router`、`@types/koa-bodyparser`、`@types/node`；脚本改为 dev 用 `tsx watch src/...`、start 跑 `node dist/src/...`、build 用 `tsc` |
+| **`typings/index.d.ts`** | 为无 `@types` 的包（`@wecom/crypto`、`koa-xml-body`、`fast-xml-parser`、`@tencent/next-admin-svr`、`@tencent/rainbow-node-sdk`）写 shim；声明 `global.robotConfig` / `global.cosAuditConfig` / `global.errors`；按你的要求**没有**给 `t-comm` / `@tencent/t-comm` 写 declare（它们自带类型） |
+| **删除** | `babel.config.js`（前端 Vue 的残留）、`tsconfig.eslint.json`（不再需要） |
+
+### 验证结果
+
+```
+$ npx tsc --noEmit  →  exit 0（无错误）
+$ npx tsc          →  dist/src/project/robot/server.js ✅
+                       dist/src/project/cos-audit/server.js ✅
+```
+
+### 使用方式
+
+```bash
+# 开发（两个子包独立）
+pnpm dev:robot         # tsx watch src/project/robot/server.ts
+pnpm dev:cos-audit     # tsx watch src/project/cos-audit/server.ts
+
+# 生产
+pnpm build             # tsc → dist/
+pnpm start:robot       # node dist/src/project/robot/server.js
+pnpm start:cos-audit   # node dist/src/project/cos-audit/server.js
+```
+
+### 其他说明
+
+1. 一些 Koa middleware 参数对 `ctx` 做了 `as any` / 可选字段断言，因为原来的 js 会往 ctx 上乱挂字段（`token`、`encodingAESKey`、`robotName`、`webhookUrl`、`chatId`、`msgType` 等），严格类型下只能用扩展接口 + 兜底，行为 100% 等价于原 js
+2. `script/env/rainbow-env.ts` 里 `writeEnvFromRainbow` 的参数用了 `as any`，因为原 js 没传 t-comm 新增的 `rainbowAppId`。若业务上实际需要这个字段，请告诉我
+3. 所有全局变量（`global.robotConfig` / `global.cosAuditConfig` / `global.errors`）在 `typings/index.d.ts` 中做了声明，行为保持不变
+
+## 方案B是不是最合理的呢，一个类只做一件事情
+
+`2026-04-23`
+
+认真想一下这个问题。"单一职责"原则确实最优雅，但是否合理要看**现状和代价**。
+
+## 原则 vs 现实
+
+### 方案 B 的理论优势（你说得对）
+- 单一职责（SRP）—— 每个类只做一件事
+- 面向测试 —— 小类好 mock、好单测
+- 未来扩展清晰 —— 新成员能快速找到代码
+
+### 方案 B 在**本项目**的实际代价
+
+我先看下这个类被多少地方引用：
+**118+ 处内部自引用**，同一个类内 method 相互调用。还有外部调用：
+看下外部文件引用：
+## 分析
+
+**外部只有 2 个引用点**，**内部 120+ 个自引用**。
+
+### 方案 B 的真实代价
+
+拆成多个独立 class（如 `TapdClient` / `TapdAIOrchestrator` / `TapdBindService` / `TapdWebhookService`）后，你会立刻遇到以下问题：
+
+#### 问题 1：循环依赖的噩梦
+
+举个例子：
+- `TapdBindService.handleBindCommand()` 里调 `createAndFixBug()` → `fixBug()`
+- `fixBug()` 在 `TapdBugFixCoreService` 里
+- `fixBug()` 内部又要调 `TapdClient.fetchBugDetail()`、`TapdAIOrchestrator.callAILocate()`、发企业微信通知（`NotifyService`）
+- `TapdAIOrchestrator.callAILocate()` 又要调 `GitApiService.getRepoTree()`
+
+拆出来后：
+```
+TapdWebhookService → TapdBindService → TapdBugFixCoreService → TapdAIOrchestrator
+                                                            → TapdClient
+                                                            → NotifyService
+TapdBugFixCoreService → NotifyService
+TapdBugFixCoreService → TapdClient
+TapdWebhookService → TapdClient（拉 Bug 详情、兜底）
+TapdWebhookService → NotifyService（发通知）
+```
+
+这个依赖图是个**有向无环图**，但：
+- 每个 class 都要 `import` 3-5 个其他 class
+- 某些共享的辅助（比如 `sendTapdBugFixStatusNotification`、`buildMentionLine`、`isFrontendOwner`）要么放到一个 `TapdNotifyService`，要么复制多份
+- 改一个 method 签名可能要改 3 个文件
+
+#### 问题 2：`fixBug` 这个核心方法无法拆
+
+`fixBug` 是整个流程的**编排者**，700 行代码里调用了：
+- TAPD API（拉需求、评论、提测链接）
+- AI（locate、fix、resolveRepo、大文件 loop）
+- Git API（getRepoTree、getFileContent、createMR、createBranch）
+- 通知（各种阶段通知）
+- DB（record.save）
+
+拆出子服务后，`fixBug` 位置无论放哪个类，都会：
+- 依赖几乎**所有其他**子服务
+- 每次调用变成 `TapdClient.fetchBugDetail(...)` 而不是 `this.fetchBugDetail(...)`
+
+代码量**不会减少**，只是分散了。
+
+#### 问题 3：属性私有性丢失
+
+现在 `private static readonly FIX_AGENT_ID = '...'`、`private static callAgent(...)` 是私有的。
+拆成多个类后，这些要改成 `public static` 或 `export function`，**封装性反而变差**。
+
+#### 问题 4：118 处 `TapdBugFixService.xxx` 调用全要改
+
+比如现在的：
+```ts
+TapdBugFixService.fetchBugDetail(...)
+TapdBugFixService.callAILocate(...)
+TapdBugFixService.sendTapdBugFixStatusNotification(...)
+```
+
+全变成：
+```ts
+TapdClient.fetchBugDetail(...)
+TapdAIOrchestrator.callAILocate(...)
+TapdNotifyService.sendTapdBugFixStatusNotification(...)
+```
+
+每个方法签名可能变（参数顺序、this 绑定），改点是 **118 处**，任何一处漏改都可能炸。
+
+### 方案 A 其实也满足"单一职责"（但边界放在文件层）
+
+方案 A 是**文件层面**的单一职责，而不是**class 层面**。
+
+- `aiCall.ts` 只做 AI 调用
+- `tapdApi.ts` 只做 TAPD API
+- `webhookHandlers.ts` 只做 webhook 解析分发
+
+**每个文件都是"一个职责"**。方案 A 依然是单一职责原则，只是把"单一职责的单元"从 class 改成了 file + module。
+
+## 关键洞察
+
+> **在大量内部耦合的工具类场景下，"拆文件 + 保留统一入口 class" 比 "拆成多个 class" 更合理。**
+
+理由：
+1. **内部调用频繁** → 保留 `TapdBugFixService.xxx` 这种统一调用路径最省心
+2. **fixBug 是编排器** → 它天然要"看得见"所有下游，拆类反而让它成了跨类调度者，更混乱
+3. **外部只有 2 个引用点** → 零 breaking change 的收益被浪费
+4. **SRP 的粒度是"变化原因"** → 这个文件的所有代码都围绕"TAPD Bug 自动修复"这一件事变化，所以整体上它**就是**单一职责的
+
+## 什么时候方案 B 才合理？
+
+三种情况：
+
+1. **`TapdClient` 有外部复用** —— 比如另一个业务要直接用 TAPD Open API
+2. **`AI 调用` 要抽象成通用服务** —— 比如有 3 个 Agent 编排场景要共享 callAgent
+3. **每个子职责有独立的演进节奏和 owner** —— 团队分工明确，不同人维护不同部分
+
+目前这 3 个都不成立。
+
+## 我的最终建议
+
+**坚持方案 A。** 它就是"同一个类只做一件事"的合理落地形态，只是把拆分粒度从 class 降到 file。
+
+如果你非常介意"class 层面"的单一职责，我给你**方案 A+**，介于 A 和 B 之间：
+
+- 保留 `TapdBugFixService` 主类作为**门面**（Facade Pattern）
+- 拆出 2-3 个**纯无状态辅助模块**（不是 class，是 file 导出的 function）
+- 主类里调用辅助模块，但对外 API 完全不变
+
+```
+packages/server/src/services/tapdBugFix/
+├── TapdBugFixService.ts          # 门面 + 核心 fixBug/webhook 编排
+├── helpers/
+│   ├── aiCall.ts                 # 独立函数：callAILocate/callAIFix/callAgent 等
+│   ├── tapdApi.ts                # 独立函数：fetchBugDetail/fetchStory 等
+│   ├── responseParser.ts         # 独立函数：parseAI*Response 等
+│   └── constants.ts              # 常量 + PROMPTS + interfaces
+└── index.ts                      # re-export TapdBugFixService
+```
+
+这样：
+- 主类只剩 ~1000 行，聚焦"业务编排"（fixBug + webhook 路由 + /bind 指令）
+- 其他 ~3500 行的"工具型代码"全在 helpers/ 下，彼此无依赖
+- 外部调用 `TapdBugFixService.fixBug(...)` 零改动
+- 真正符合"同一个类只做一件事" —— 主类只做"TAPD Bug 修复业务编排"，不再做 AI 调用细节 / TAPD API 细节 / 解析细节
+
+## 决策建议
+
+| 目标 | 推荐方案 |
+|---|---|
+| 快速降低文件行数、最稳 | **方案 A** |
+| 兼顾 SRP + 稳妥 | **方案 A+**（推荐！） |
+| 纯理论 SRP，不怕大改 | 方案 B（真的不推荐） |
+
+你要不要我按 **方案 A+** 推进？下一步就是**第 1 轮**：抽 `constants.ts`（interfaces + SYSTEM_PROMPTS + 类级配置常量），大概能把主文件砍掉 550 行，风险最低，先验证路径可行。
+
+## bug 仓库定位
+
+`2026-04-22`
+
+
+## 1. 能在本地用吗
+
+**能，现在就能用。** 它已经落在 `~/.codebuddy/skills/tapd-resolve-repo-branch/SKILL.md`，属于**用户级 Skill**（location: `user`），对所有工作区全局可用。
+
+你不用重启 IDE，下次对话里提到"bug 单"、"定位仓库"、"解析提测链接"、给 Bug URL 等关键词时，系统会把它列到 `<available_skills>` 里，我就能调 `use_skill("tapd-resolve-repo-branch")` 触发。
+
+> 顺带一说：当前这一轮对话的 `<available_skills>` 里已经能看到它了（description 就是你刚写的那段）。所以**本地生效已经完成**。
+
+---
+
+## 2. 能在 Knot 智能体上用吗
+
+**取决于 Knot 是不是同一套 CodeBuddy Skill 机制，大概率不行。**
+
+- **用户级 Skill**（`~/.codebuddy/skills/`）跟着**你本机的 CodeBuddy IDE 插件**走。只有在你本机、通过 CodeBuddy 这个 Agent 运行时才能被发现。
+- Knot 是独立智能体平台（腾讯内网），它有自己的工具/Skill 注册体系，**不会自动扫描你本机的 `~/.codebuddy/skills/`**。
+- 如果你希望在 Knot 上复用这套 SOP，需要把 `SKILL.md` 里的内容作为**系统提示词 / Prompt 模板 / 知识库条目**注册到 Knot 智能体的配置里，并且把 `resolve.ts` 脚本包装成 Knot 能调用的工具（HTTP 接口或者 Knot 的 function tool 配置）。
+
+简而言之：**Skill ≠ 跨平台通用能力**，它是 CodeBuddy 的本地扩展。想跨到 Knot，得走 Knot 自己的那套注册流程。
+
+---
+
+## 3. 怎么触发
+
+三种方式，从被动到主动：
+
+| 方式 | 怎么用 | 什么时候用 |
+|------|--------|-----------|
+| **自动触发** | 在对话里说到 description 里列的关键词（bug 修复、定位仓库、解析提测链接、TAPD bug、bug url 等）| 日常最常见 |
+| **显式点名** | 直接说"用 tapd-resolve-repo-branch 这个 skill 处理一下" | 关键词不够明显、想强制走 SOP 时 |
+| **斜杠命令**（如果 CodeBuddy 支持）| `/tapd-resolve-repo-branch` | 命令行风格，最快 |
+
+触发后，AI（也就是我）会读到完整的 SOP 文本，按里面的流程调 `tapd_mcp_http` 工具拉 TAPD 内容 + 调 `scripts/tapd-resolve-repo-branch/resolve.ts` 脚本解析链接。
+
+---
+
+## 4. 怎么更新这个 Skill
+
+**直接改 `~/.codebuddy/skills/tapd-resolve-repo-branch/SKILL.md` 即可。** 下次对话就是新版本，不需要重启、不需要编译、不需要任何注册动作。
+
+如果想改脚本，改 `scripts/tapd-resolve-repo-branch/resolve.ts`，下次 AI 用 `npx tsx` 调的时候就是新版本。
+
+**常见更新场景**：
+- 新增一种 Bug 评论格式 → 改 SKILL.md 里"采集内容"那一节
+- 新增一种 Git 链接形态（比如 GitLab）→ 改 `resolve.ts` 的正则
+- 调整优先级顺序 → 改 SKILL.md 里"排序规则"那一节
+
+---
+
+## 5. 怎么"入库"——这才是最关键的问题
+
+你说的"入库"，我理解有两层含义：
+
+### 5.1 本机入库（Git 版本化）
+
+**问题**：`~/.codebuddy/skills/` 在你用户目录下，不在项目仓库里，一换电脑就没了，团队成员也复用不到。
+
+**解决方案**：在项目仓库里维护一份"**源版本**"，通过软链或同步脚本推到 `~/.codebuddy/skills/`。
+
+具体可以这样组织：
+
+```
+tapd-solution/
+├── .codebuddy/
+│   └── skills/
+│       └── tapd-resolve-repo-branch/
+│           └── SKILL.md          # 源文件，受 Git 管理
+├── scripts/
+│   └── tapd-resolve-repo-branch/
+│       └── resolve.ts             # 已经在仓库里了
+└── script/
+    └── install-skills.sh          # 同步脚本：ln -s 或 cp 到 ~/.codebuddy/skills/
+```
+
+要不要我顺手帮你：
+1. 把 `SKILL.md` 从 `~/.codebuddy/skills/` **搬进** 项目 `.codebuddy/skills/` 下（项目级可版本化）
+2. 写一个 `script/install-skills.sh`，团队成员 clone 后跑一次就把项目里的 skills 软链到 `~/.codebuddy/skills/`
+3. 在 README 的 Skills 沉淀章节加个"如何安装"小节
+
+### 5.2 团队/组织入库（让同事也能用）
+
+目前看 CodeBuddy 的机制里，Skill 有三层：
+- **user**（`~/.codebuddy/skills/`）：本人可用
+- **manager** / **plugin**：系统预置或插件带的，无法自己改
+- **项目级**（`<workspace>/.codebuddy/skills/`，如果 CodeBuddy 支持扫描这里）：随仓库走
+
+最稳的办法就是 **5.1 的方案**——放在项目 `.codebuddy/skills/` 下，配合安装脚本。这样：
+- 新同事 clone 仓库 → 跑 `bash script/install-skills.sh` → 本地立即可用
+- Skill 升级 → 改完 commit → 同事 pull → 软链的话立即生效，cp 的话需要重跑脚本
+
+### 5.3 跨到 Knot / 其他平台入库
+
+这个得看 Knot 具体怎么管理智能体的 Prompt 和工具。一般路径：
+- 把 `SKILL.md` 的正文作为 Knot 智能体的**系统提示词片段**或**知识库文档**
+- 把 `resolve.ts` 包成 HTTP 服务或 Knot function tool
+- 在 Knot 的智能体编排里把两者串起来
+
+---
+
+## 总结一张表
+
+| 问题 | 答案 |
+|------|------|
+| 本地能用吗 | ✅ 已生效，下一轮对话就能触发 |
+| Knot 能用吗 | ❌ 不能直接用，需要改造成 Knot 的 Prompt + Tool |
+| 怎么触发 | 关键词自动触发 / 显式点名 `use_skill` / 斜杠命令 |
+| 怎么更新 | 直接改 `SKILL.md` 或 `resolve.ts`，下轮对话即生效 |
+| 本机入库 | 现在没入库，建议搬到项目 `.codebuddy/skills/` + 写安装脚本 |
+| 团队入库 | 同上，靠仓库 + 安装脚本 |
+| 跨平台入库 | 需要逐个平台按它自己的规范注册 |
+
+
+
+## 支持非 AI Review 的自动修复
+
+`2026-04-21`
+
+
+## 改动说明（`handleSlashCommandFix` 中一处）
+
+1. **合成虚拟 issue**
+   - 当 DB 里没有匹配到 AI Review issue（`issuesByFile` 为空）但 `noteContext.filePath` 存在时
+   - 用评论的 `filePath`/`line`/`parentNoteBody` 合成一条 `IReviewIssue` 塞入 `issuesByFile`
+   - 这样 AI prompt 里会出现结构化的：
+     ```
+     ### 文件: pixui/.../record.tsx
+     - **[warning]** 来自代码行内评论（非 AI Review）：Unexpected space before the ':'. [@typescript-eslint/type-annotation-spacing]
+       行号: 91
+     ```
+
+2. **指令始终显式带文件+行号**
+   - 原逻辑：有 `parentNoteBody` 就不带 `filePath`/`line` 的 fallback 提示
+   - 新逻辑：只要 `noteContext.filePath` 存在，就在指令最前面加 `请修复文件 \`xxx\` 第 N 行 附近的问题`，再跟上父评论内容
+
+## 覆盖场景
+
+| 评论来源 | 修复前 | 修复后 |
+|---|---|---|
+| AI Review 行内评论 | 精准匹配 DB issue → OK | 精准匹配 DB issue → OK（无变化） |
+| ESLint/lint bot 行内评论 | 无结构化 issue，AI 靠猜 | ✅ 合成虚拟 issue + 显式行号 |
+| 人工 code review 行内评论 | 无结构化 issue，AI 靠猜 | ✅ 合成虚拟 issue + 显式行号 |
+| MR 顶层评论（无 position） | 靠 userInstruction | 无变化（本身就没有文件锚点） |
+
+## 风险评估
+
+- 对 AI Review 场景**零影响**（只有在 `issuesByFile` 为空时才合成）
+- 虚拟 issue 使用 `severity: 'warning'` / `category: 'other'`，符合现有类型定义
+- AI prompt 里 `message` 字段明确标注"来自代码行内评论（非 AI Review）"，AI 能理解上下文
+
+## `mr-auto-fix` 集合的主键
+
+`2026-04-21`
+
+
+## `mr-auto-fix` 集合的主键
+
+**业务主键：Mongo 自动生成的 `_id`（ObjectId）**，也就是说**每次触发修复都会新增一条独立记录，互不覆盖**。
+
+### 索引设计（见 `MRAutoFix.ts` 第 143–152 行）
+
+| 索引字段 | 是否唯一 | 作用 |
+|---|---|---|
+| `_id` | ✅ 主键（Mongo 默认） | 一次修复 = 一条记录，永不覆盖 |
+| `{ projectId: 1, mrIid: 1, createdAt: -1 }` | ❌ | 同一 MR 的多次修复按时间倒序排列 |
+| `{ projectId: 1, fixMrIid: 1 }` | ❌ | 继续修复流程通过修复 MR iid 反查原始记录 |
+| `{ status: 1 }` | ❌ | 按状态筛选/统计 |
+| `{ createdAt: -1 }` | ❌ | 列表默认时间倒序 |
+| `{ reviewId: 1 }` | ❌ | 按评审记录统计 `fixCount` 上限判断 |
+
+### 和原来的区别
+
+| | 旧：`MRReview` | 新：`MRAutoFix` |
+|---|---|---|
+| 主键 | `{ projectId, mrIid }` 唯一 | `_id` 自动生成 |
+| 同一 MR 多次 `/ai-fix` | 覆盖最后一次 | **每次独立一条** |
+| 修复方式查询 | 查 `MRReview.fixStatus: { $exists: true }` | 直接查 `MRAutoFix` 全表 |
+
+这样你**同一 MR 多次 `/ai-fix` 都能看到完整历史**了 —— 也就是上次提的"同一个 mr 多次斜杠命令没有记录"的问题被彻底解决了。
+
 ## bugOwner
 
 `2026-04-18`
