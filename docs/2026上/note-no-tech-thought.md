@@ -8,6 +8,138 @@ novlan1
 
 # 非技术思考笔记
 
+## Controller / Service / Model
+
+`2026-04-24`
+
+
+## 一、MVC 到底是啥？
+**MVC 是一种代码分层架构思想**，不是框架，不是技术，就是**把代码按功能分成 3 块**，让项目不乱、好维护、好改。
+
+全称：
+- **M（Model）模型**：管**数据**（数据库读写、数据校验）
+- **V（View）视图**：管**页面展示**（前端 HTML/页面）
+- **C（Controller）控制器**：管**请求入口/响应出口**（接收请求、返回结果）
+
+### 一句话总结 MVC
+> **Controller 接收请求 → 调用 Service 处理业务 → Service 调用 Model 操作数据 → Controller 返回结果**
+
+---
+
+## 二、Node.js 后台服务里：Controller / Service / Model 是标配吗？
+**是的！而且是绝大多数企业级 Node.js 后台的标准分层结构！**
+
+但注意：**纯后端服务里没有 View**，所以后端实际是 **Controller + Service + Model** 三层架构。
+
+我给你拆开讲每一层是干嘛的：
+
+---
+
+## 三、每层到底做什么？（最实用的解释）
+
+### 1. Controller（控制器）—— 门卫/入口
+**只做两件事：**
+- 接收前端发来的请求（参数、路径、方法）
+- 把结果返回给前端
+
+**不写业务逻辑！不写数据库操作！**
+
+例子：
+```js
+// 用户登录请求来了
+async function login(req, res) {
+  const { username, password } = req.body;
+  // 只调用 service，不写逻辑
+  const token = await userService.login(username, password);
+  res.send({ token });
+}
+```
+
+---
+
+### 2. Service（业务逻辑层）—— 核心大脑
+**这一层最重要！**
+- 处理所有业务规则
+- 做判断、计算、流程控制
+- 调用 Model 读写数据
+- 给 Controller 返回结果
+
+例子：
+```js
+async function login(username, password) {
+  // 1. 查用户
+  const user = await userModel.findByUsername(username);
+  if (!user) throw new Error("用户不存在");
+
+  // 2. 校验密码
+  const isValid = compare(password, user.password);
+  if (!isValid) throw new Error("密码错误");
+
+  // 3. 生成 token
+  return generateToken(user);
+}
+```
+
+---
+
+### 3. Model（数据模型）—— 数据库工具人
+**只和数据库打交道：**
+- 增删改查
+- 数据表结构定义
+- 数据校验
+
+例子：
+```js
+// 只负责查数据库
+async function findByUsername(username) {
+  return db.query("SELECT * FROM user WHERE username = ?", [username]);
+}
+```
+
+---
+
+## 四、为什么要分成这三层？（好处）
+- **代码不乱**：谁该干嘛清清楚楚
+- **好维护**：改业务不动入口，改数据库不动业务
+- **好复用**：Service 可以被多个 Controller 调用
+- **好测试**：业务逻辑单独测试
+- **企业标准**：所有公司后端都这么写
+
+---
+
+## 五、一个完整的请求流程（你一看就懂）
+```
+前端请求
+   ↓
+Controller（接收参数）
+   ↓
+Service（处理业务逻辑）
+   ↓
+Model（操作数据库）
+   ↓
+数据库 → 返回数据 → Model → Service → Controller → 前端
+```
+
+---
+
+## 六、最简单的结论
+1. **MVC 是代码分层思想**
+2. **Node.js 后台不用 View，只用 C + S + M**
+3. **Controller / Service / Model 是 Node.js 后台最标准、最常用的结构**
+4. 职责口诀：
+   - **Controller 收请求、返回结果**
+   - **Service 处理业务**
+   - **Model 操作数据库**
+
+---
+
+### 总结
+- **MVC = 分层思想**，后端简化为 **Controller + Service + Model**
+- 这三层**是 Node.js 后台服务的标配**，企业项目必用
+- 职责清晰：入口 → 业务 → 数据
+
+
+
 ## Vengeance 
 
 `2026-04-23`
