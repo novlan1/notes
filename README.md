@@ -58,3 +58,9 @@ npm run td:deps --pr 1
     - H5 需要在 HX 中构建，然后 `notes` 下执行 `npm run td:hx:vue2` 和 `npm run td:hx:vue`
     - H5 发布到 `github pages`，点开看看
     - Vue3 hx 需要主仓库的 dist 文件，vue2 hx等不需要
+
+类型检查
+
+```bash
+pnpm uniapp type-check
+```
