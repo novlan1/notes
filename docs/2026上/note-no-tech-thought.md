@@ -8,6 +8,14 @@ novlan1
 
 # 非技术思考笔记
 
+## 组件使用统计上报方案
+
+`2026-05-03`
+
+之前 component-statistics-db.ts 已经从逐条 updateOne 优化为了 bulkWrite，后来又改为了 find + 逐条 updateOne(upsert)，现在最新版本是带耗时日志的 find + updateOne 方案。
+
+现在用户提出了一个更好的方案：直接 deleteMany + insertMany，只需 2 次 MongoDB 操作。
+
 ## test
 
 `2026-04-29`
