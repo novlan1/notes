@@ -8,6 +8,31 @@ novlan1
 
 # 非技术思考笔记
 
+## Standalone 啥意思
+
+`2026-05-06`
+
+**Standalone** 是指 pnpm 的一种独立安装方式，即不依赖 Node.js/npm，而是作为一个**独立的可执行文件**直接安装到系统中。
+
+## 具体区别
+
+| 安装方式 | 路径示例 | 特点 |
+|---------|---------|------|
+| **Standalone（独立安装）** | `~/Library/pnpm/pnpm` | 独立二进制文件，不依赖 npm，通常通过官方安装脚本 `curl -fsSL https://get.pnpm.io/install.sh \| sh` 安装 |
+| **npm 全局安装** | `~/.nvm/versions/node/vXX/bin/pnpm` | 作为 npm 包安装，依赖 Node.js 环境 |
+| **corepack 管理** | 由 corepack 代理 | Node.js 内置的包管理器版本管理工具 |
+
+## 你之前遇到的问题
+
+你的系统中同时存在两种安装：
+
+1. **Standalone**：`/Users/g/Library/pnpm/pnpm`（v10.17.1）
+2. **npm 全局**：`/Users/g/.nvm/versions/node/v22.17.1/bin/pnpm`（v9.13.2）
+
+由于 `~/Library/pnpm/` 在你的 `PATH` 环境变量中优先级更高，所以无论你用 `npm install -g` 装什么版本，系统始终优先使用 standalone 的那个 pnpm。这就是为什么之前 `npm install -g pnpm@9.13.2` 和 `corepack` 都不生效的原因。
+
+删掉 standalone 的文件后，PATH 就会找到 npm 全局安装的版本了。
+
 ## pnpm 版本切换
 
 `2026-05-06`
