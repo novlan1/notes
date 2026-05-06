@@ -8,6 +8,37 @@ novlan1
 
 # 非技术思考笔记
 
+## pnpm 版本切换
+
+`2026-05-06`
+
+切换回 pnpm 10 很简单，直接执行：
+
+```bash
+npm install -g pnpm@10
+```
+
+验证：
+
+```bash
+pnpm -v
+# 应该输出 10.x.x
+```
+
+---
+
+## 常用版本切换命令汇总
+
+| 操作 | 命令 |
+|------|------|
+| 切换到 pnpm 9 | `npm install -g pnpm@9` |
+| 切换到 pnpm 10 | `npm install -g pnpm@10` |
+| 安装指定版本 | `npm install -g pnpm@10.17.1` |
+| 查看当前版本 | `pnpm -v` |
+| 查看安装路径 | `which pnpm` |
+
+因为之前已经删掉了 standalone 的 pnpm，现在你的 pnpm 统一由 npm 全局管理（路径在 `~/.nvm/versions/node/v22.17.1/bin/pnpm`），所以以后用 `npm install -g pnpm@<版本号>` 就能随时切换了。
+
 ## 组件使用统计上报方案
 
 `2026-05-03`
