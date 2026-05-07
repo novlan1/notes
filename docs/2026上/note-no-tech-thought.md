@@ -8,6 +8,182 @@ novlan1
 
 # 非技术思考笔记
 
+## Cocos Creator 能用 pnpm 装三方库吗？
+
+`2026-05-07`
+
+
+## 一、先搞清一个关键概念
+
+Cocos Creator 项目里的 `package.json` 分**两套**：
+
+| 文件位置 | 作用 | 能否 pnpm install |
+|---|---|---|
+| **项目根 `/package.json`** | 存 Cocos 引擎版本、项目 uuid、扩展依赖 | ❌ 不是给 npm 用的 |
+| **扩展目录 `extensions/xxx/package.json`** | 标准 npm 格式，编辑器扩展的本体 | ✅ 可以 |
+
+你项目里 `extensions/localization-editor/package.json` 就是标准 npm 包（10KB 大小就是佐证）。
+
+---
+
+## 二、三种"装三方库"的场景
+
+### 场景 ① 游戏运行时（`assets/scripts/` 里用）—— **可以，但要小心**
+
+官方推荐做法：**在项目根建一个"逻辑上的 npm workspace"**，然后把产物放进 `assets/` 里。
+
+#### 方案 A：pnpm + 直接放 node_modules（最简单但不推荐）
+
+```bash
+# 在项目根
+pnpm init -y  # 注意：会被 Cocos 的 package.json 覆盖，所以要手动合并
+pnpm add lodash-es
+```
+
+然后在脚本里：
+```ts
+import { debounce } from 'lodash-es';
+```
+
+**问题**：
+- Cocos 的 `package.json` 结构特殊，pnpm init 会冲突（需要手动合并字段）
+- 默认 `node_modules` 不会被 Cocos 的构建扫描到，因为 Cocos 只打包 `assets/` 下的 `.ts`
+- 必须 **在 `tsconfig.json` 里配置 `paths`**，或把 `node_modules` 做软链进 `assets/`
+
+#### 方案 B：纯 ESM 的库 → 直接拷源码到 `assets/libs/`（**最推荐**）
+
+```
+assets/
+  libs/
+    lodash-es/
+      debounce.ts
+      throttle.ts
+    ...
+```
+
+原因：Cocos 的构建只认 `assets/` 下的 `.ts/.js`，并且会用 Rollup 打进最终 bundle。纯 ESM 的库（如 `lodash-es`、`mitt`、`eventemitter3`、`protobufjs/minimal`）拷过来就能用。
+
+#### 方案 C：通过 `cc.d.ts` + 动态加载（CDN 脚本）
+
+适合大体积的库，例如在 WASM、在线解析器场景下，把 JS 文件放进 `assets/resources/scripts/xxx.js`（当 asset 处理），运行时动态 `fetch + eval`。不推荐常规使用。
+
+---
+
+### 场景 ② 编辑器扩展里（`extensions/xxx/` 里用）—— **完全可以**
+
+这里就是**标准 Node.js 环境**，`extensions/xxx/package.json` 是标准 npm 包，可以 pnpm 随便装：
+
+```bash
+cd extensions/cocos-mcp-server
+pnpm add express ws zod
+pnpm add -D @types/node typescript
+```
+
+你的 `extensions/localization-editor/` 目录下还有 `webpack-dist/`，说明它内部就是用 webpack 打包 npm 依赖后再发布的——这证明**编辑器扩展 = 正常 Node 项目**。
+
+---
+
+### 场景 ③ 构建期工具（不进游戏包）—— **完全可以**
+
+比如你想：
+- 用 `sharp` 压缩图片
+- 用 `protobufjs` 生成代码
+- 用 `fs-extra` 做构建前处理
+
+可以在项目根独立搞一个 `tools/` 目录，`pnpm init` 独立管理，跟 Cocos 本身隔离。
+
+---
+
+## 三、Cocos 运行时装三方库的**实操步骤**（场景 ①）
+
+如果你真要给 `assets/scripts/` 引入 npm 包，推荐这套做法：
+
+### 1. 保留 Cocos 的原始 `package.json`，新建 pnpm workspace
+
+项目根 `pnpm-workspace.yaml`：
+```yaml
+packages:
+  - 'assets/scripts-deps'   # 专门放依赖的子包
+  - 'extensions/*'
+```
+
+### 2. 建一个"依赖中转"子包
+
+```
+assets/scripts-deps/
+  package.json   ← 这里 pnpm add 
+  index.ts       ← re-export 给业务代码用
+```
+
+`assets/scripts-deps/package.json`：
+```json
+{
+  "name": "scripts-deps",
+  "version": "1.0.0",
+  "dependencies": {
+    "mitt": "^3.0.1",
+    "lodash-es": "^4.17.21"
+  }
+}
+```
+
+`assets/scripts-deps/index.ts`：
+```ts
+export { default as mitt } from 'mitt';
+export { debounce, throttle } from 'lodash-es';
+```
+
+### 3. 配置 `tsconfig.json` 路径映射
+
+```json
+{
+  "extends": "./temp/tsconfig.cocos.json",
+  "compilerOptions": {
+    "strict": false,
+    "baseUrl": ".",
+    "paths": {
+      "mitt": ["node_modules/mitt/dist/mitt.mjs"],
+      "lodash-es/*": ["node_modules/lodash-es/*"]
+    }
+  }
+}
+```
+
+### 4. 业务代码里直接用
+
+```ts
+import mitt from 'mitt';
+import { debounce } from 'lodash-es';
+```
+
+### ⚠️ 踩坑提醒
+
+1. **只选 ESM 格式的包**：CommonJS（带 `require`）在 Cocos Rollup 里可能炸
+2. **避免依赖 Node API**：不能用 `fs`、`path`、`process` 等（浏览器/小游戏没有）
+3. **避免引入带二进制的包**：如 `sharp`、`canvas`
+4. **小游戏包体**：`lodash` 全量会多 70KB+，务必按需引入（`lodash-es/debounce`）
+5. **Cocos 版本**：3.x 用 Rollup 支持 ESM，2.x 用 CommonJS，差异大
+6. **meta 文件**：如果把源码拷进 `assets/libs/`，每个 `.ts` 都会生成 `.meta`，记得提交
+
+---
+
+## 四、给你这个项目的建议
+
+你这个项目是 **Cocos Creator 3.8.8 + 微信小游戏**（有 `build-templates/wechatgame`），我建议：
+
+| 需求 | 推荐方案 |
+|---|---|
+| 工具函数（debounce/深拷贝/事件总线） | 直接在 `assets/scripts/utils/` 写或拷源码 |
+| 网络请求 | 用引擎内置 `assetManager` + `fetch`，别装 axios |
+| 数学库（如矩阵、四元数） | 用 `cc` 自带的 `Vec3`/`Mat4`/`Quat` |
+| 协议（protobuf） | 拷 `protobufjs/minimal` 的 ESM 源码到 `assets/libs/` |
+| 动画 | 用 `cc.tween`，别装 gsap |
+| 编辑器扩展内部 | 放开手用 pnpm，正常 npm 生态 |
+
+**核心原则**：运行时库能不装就不装，尤其是小游戏 4MB 主包限制下（你有 `wechat-minigame-size-optimize` 这个 skill，说明已经在意包体问题），多一个依赖多一份风险。
+
+
+
 ## 关于 `open-type="chooseAvatar"` 安全检测失败的自定义提示
 
 `2026-05-07`
