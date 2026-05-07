@@ -8,6 +8,107 @@ novlan1
 
 # 非技术思考笔记
 
+## 关于 `open-type="chooseAvatar"` 安全检测失败的自定义提示
+
+`2026-05-07`
+
+
+
+## 简短结论
+
+**不能完全自定义原生安全检测的提示**，但**可以在回调中判断并给出自己的提示**。
+
+## 详细说明
+
+### 1. 微信官方安全检测机制
+
+当用户使用 `<button open-type="chooseAvatar">` 选择头像时，微信会对用户选择的头像图片进行**本地安全检测**（内容安全检测）。如果检测到违规内容（如涉黄、涉政、违规图片等），微信会：
+
+- **直接弹出原生提示**（类似 "图片含有违规内容" 的 Toast），这个提示**无法拦截、无法修改、无法关闭**
+- `@chooseavatar` 回调事件**不会触发**，或者触发时 `e.detail.avatarUrl` 为空/为默认灰色头像
+
+这是微信小程序的安全策略，属于客户端行为，开发者无权干预。
+
+### 2. 可以做的自定义处理
+
+虽然原生提示改不了，但可以在业务层做兜底判断。针对你当前的 `index.vue` 中的 `handlerEditIcon`，建议改造如下：
+
+```vue
+<script lang="ts" setup>
+// ... existing code ...
+
+const handlerEditIcon = (e) => {
+  const avatarUrl = e?.detail?.avatarUrl;
+  
+  // 场景1：未拿到头像地址（可能被安全检测拦截、用户取消等）
+  if (!avatarUrl) {
+    uni.showToast({
+      title: '头像获取失败，请更换图片重试',
+      icon: 'none',
+      duration: 2000,
+    });
+    return;
+  }
+
+  // 场景2：拿到的是微信默认灰色头像（部分机型安全检测不通过时会回传默认图）
+  // 默认头像URL特征：通常包含 'mmopen' 且是灰色默认图
+  const isDefaultAvatar = avatarUrl.includes('default') 
+    || avatarUrl.includes('/0') // 微信默认头像常见结尾
+    || avatarUrl === '';
+  
+  if (isDefaultAvatar) {
+    uni.showToast({
+      title: '请选择合规的头像图片',
+      icon: 'none',
+    });
+    return;
+  }
+
+  pic.value = avatarUrl;
+  saveInfo();
+};
+
+// ... existing code ...
+</script>
+```
+
+### 3. 上传后端二次校验（强烈推荐）
+
+由于 `chooseAvatar` 返回的是**临时路径**，必须上传到自己的 CDN。建议在上传时走一次后端的内容安全检测（微信提供 `security.imgSecCheck` 接口），这样能在业务层拦住违规图片并给出可控的提示：
+
+```ts
+const handlerEditIcon = async (e) => {
+  const avatarUrl = e?.detail?.avatarUrl;
+  if (!avatarUrl) {
+    uni.showToast({ title: '头像获取失败，请重试', icon: 'none' });
+    return;
+  }
+
+  try {
+    // 上传前或上传时，后端调用 security.imgSecCheck 做内容安全检测
+    const res = await uploadAvatar(avatarUrl);
+    if (res.code === 'SECURITY_FAIL') {
+      uni.showToast({ title: '头像含违规内容，请更换', icon: 'none' });
+      return;
+    }
+    pic.value = res.url;
+    saveInfo();
+  } catch (err) {
+    uni.showToast({ title: '上传失败，请重试', icon: 'none' });
+  }
+};
+```
+
+## 总结
+
+| 场景 | 是否可自定义提示 |
+|------|-----------------|
+| 微信客户端本地安全检测（原生 Toast） | ❌ 不可拦截/不可修改 |
+| `chooseavatar` 回调中 `avatarUrl` 为空 | ✅ 可以自定义提示 |
+| 上传到后端，服务端二次安全检测 | ✅ 完全可控 |
+
+建议采用 **"回调兜底 + 后端 imgSecCheck 二次校验"** 的组合方案，业务层提示完全可控。
+
 ## export OA_PAGES_API_KEY="${{settings.ygw_oa_pages_api_key.password}}" 这种方式后，能否在nodejs中通过process.env.OA_PAGES_API_KEY 拿到变量呢
 
 `2026-05-07`
