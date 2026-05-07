@@ -8,6 +8,32 @@ novlan1
 
 # 非技术思考笔记
 
+## vscode switchWindow 切换窗口快捷键
+
+`2026-05-07`
+
+打开 keybindings.json
+
+`Cmd + Shift + P` → 输入 "Open Keyboard Shortcuts (JSON)" → 回车
+
+
+把 
+```json
+  {
+    "key": "cmd+o cmd+p",
+    "command": "workbench.action.quickSwitchWindow"
+  }
+```
+
+改成
+
+```json
+  {
+    "key": "cmd+o cmd+p",
+    "command": "workbench.action.switchWindow"
+  }
+```
+
 ## Standalone 啥意思
 
 `2026-05-06`
