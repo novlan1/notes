@@ -8,6 +8,44 @@ novlan1
 
 # 非技术思考笔记
 
+## export OA_PAGES_API_KEY="${{settings.ygw_oa_pages_api_key.password}}" 这种方式后，能否在nodejs中通过process.env.OA_PAGES_API_KEY 拿到变量呢
+
+`2026-05-07`
+
+可以的。在 bash 脚本中通过 `export` 设置的环境变量，在**同一个进程及其子进程**中都能被访问到。
+
+你的脚本流程是：
+
+```bash
+export OA_PAGES_API_KEY="${{settings.ygw_oa_pages_api_key.password}}"
+# ... 后续执行 npm run docs:deploy 等命令
+```
+
+当脚本执行 `npm run docs:deploy` 时，Node.js 进程是作为当前 shell 的**子进程**启动的，子进程会继承父进程的环境变量，所以在 Node.js 中：
+
+```js
+process.env.OA_PAGES_API_KEY  // ✅ 能拿到值
+```
+
+### 关键点
+
+| 场景 | 能否拿到 |
+|------|---------|
+| 同一脚本步骤中 `export` 后执行的 `npm run xxx` | ✅ 能 |
+| 同一脚本步骤中**没有** `export`，只是 `OA_PAGES_API_KEY=xxx`（不 export） | ❌ 不能（仅当前 shell 可见，不传递给子进程） |
+| 不同的蓝盾步骤（不同 step） | ❌ 不能（每个 step 是独立的 shell 进程） |
+
+你当前的写法 `export OA_PAGES_API_KEY="..."` 是正确的，只要 Node.js 脚本是在**同一个脚本步骤**中被调用的（比如通过 `npm run docs:deploy`），就一定能通过 `process.env.OA_PAGES_API_KEY` 拿到。
+
+
+在 bash 脚本中临时用 Node.js 打印环境变量，可以这样写
+
+```bash
+node -e "console.log(process.env.OA_PAGES_API_KEY)"
+```
+
+node -e 是 Node.js 命令行参数，意思是 evaluate（执行），用于直接在命令行中运行一段 JavaScript 代码，而不需要创建文件。
+
 ## vscode switchWindow 切换窗口快捷键
 
 `2026-05-07`
