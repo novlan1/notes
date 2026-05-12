@@ -125,7 +125,7 @@ packages:
 
 ```
 assets/scripts-deps/
-  package.json   ← 这里 pnpm add 
+  package.json   ← 这里 pnpm add
   index.ts       ← re-export 给业务代码用
 ```
 
@@ -229,7 +229,7 @@ import { debounce } from 'lodash-es';
 
 const handlerEditIcon = (e) => {
   const avatarUrl = e?.detail?.avatarUrl;
-  
+
   // 场景1：未拿到头像地址（可能被安全检测拦截、用户取消等）
   if (!avatarUrl) {
     uni.showToast({
@@ -242,10 +242,10 @@ const handlerEditIcon = (e) => {
 
   // 场景2：拿到的是微信默认灰色头像（部分机型安全检测不通过时会回传默认图）
   // 默认头像URL特征：通常包含 'mmopen' 且是灰色默认图
-  const isDefaultAvatar = avatarUrl.includes('default') 
+  const isDefaultAvatar = avatarUrl.includes('default')
     || avatarUrl.includes('/0') // 微信默认头像常见结尾
     || avatarUrl === '';
-  
+
   if (isDefaultAvatar) {
     uni.showToast({
       title: '请选择合规的头像图片',
@@ -299,7 +299,13 @@ const handlerEditIcon = async (e) => {
 
 建议采用 **"回调兜底 + 后端 imgSecCheck 二次校验"** 的组合方案，业务层提示完全可控。
 
-## export OA_PAGES_API_KEY="${{settings.ygw_oa_pages_api_key.password}}" 这种方式后，能否在nodejs中通过process.env.OA_PAGES_API_KEY 拿到变量呢
+## ygw_oa_pages_api_key
+
+```bash
+export OA_PAGES_API_KEY="${{settings.ygw_oa_pages_api_key.password}}"
+```
+
+这种方式后，能否在nodejs中通过process.env.OA_PAGES_API_KEY 拿到变量呢
 
 `2026-05-07`
 
@@ -346,7 +352,7 @@ node -e 是 Node.js 命令行参数，意思是 evaluate（执行），用于直
 `Cmd + Shift + P` → 输入 "Open Keyboard Shortcuts (JSON)" → 回车
 
 
-把 
+把
 ```json
   {
     "key": "cmd+o cmd+p",
@@ -670,7 +676,7 @@ Model（操作数据库）
 
 
 
-## Vengeance 
+## Vengeance
 
 `2026-04-23`
 
@@ -785,7 +791,7 @@ sequenceDiagram
     participant S as Agent Server
     participant AI as LLM (Knot)
     participant DB as MongoDB
-    
+
     G->>S: Webhook: merge_request opened/updated
     S->>S: 验证签名 & 解析事件
     S->>DB: 创建评审记录 (status: pending)
@@ -823,11 +829,11 @@ Cmd+`\`` 出 §= 系统把你的键盘当成欧洲 ISO 键盘。 删除 `com.app
 
 `2026-04-12`
 
-> press-dialog(-plus), 
-press-icon(-plus), 
-press-loading(-plus), 
-press-picker(-plus), 
-press-popup(-plus), 
+> press-dialog(-plus),
+press-icon(-plus),
+press-loading(-plus),
+press-picker(-plus),
+press-popup(-plus),
 press-popover(-plus)
 press-picker-plus-popup-plus
 
