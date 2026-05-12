@@ -8,6 +8,24 @@ novlan1
 
 # 技术笔记
 
+## 蓝牙
+
+`2026-05-12`
+
+等着被扫 = 外围
+主动去扫 = 中心
+
+
+BLE = Bluetooth Low Energy
+中文：低功耗蓝牙
+
+RSSI = Received Signal Strength Indicator
+中文：接收信号强度指示
+
+为啥 RSSI 是负数？
+因为单位是 dBm（分贝毫瓦）
+蓝牙、WiFi 这种无线信号：发射功率是正数，传到你手机里已经衰减得很厉害，功率小于 1 毫瓦，就变成负数了。
+
 ## test
 
 `2026-04-29`
