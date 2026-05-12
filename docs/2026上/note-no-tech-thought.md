@@ -8,6 +8,20 @@ novlan1
 
 # 非技术思考笔记
 
+## pages 迁移
+
+`2026-05-12`
+
+```
+mobile\.woa\.com/(press-pix-demo|press-plus-demo|press-next-demo|press-ui-demo|press-components|press-pix|press-plus|press-next|press-ui|plugin-light|t-comm)(?=[/?#]|$)
+```
+
+替换成
+
+```
+$1.pages.woa.com
+```
+
 ## Cocos Creator 能用 pnpm 装三方库吗？
 
 `2026-05-07`
