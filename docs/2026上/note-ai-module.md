@@ -8,6 +8,24 @@ novlan1
 
 # AI 模块笔记
 
+## Skill MCP CLI
+
+`2026-05-19`
+
+当 Agent 跑在云上，CLI 够不到的地方，MCP 是唯一的选择。
+
+你的 Agent 跑在 Claude Cowork 里，跑在 Managed Agents 里，跑在手机上，它没有终端，没有文件系统，没法 pip install 一个 CLI。这时候一个标准化的远程 MCP 服务器，加上 OAuth 认证和 Vaults 凭证管理，确实是更为通用和合理的方案。
+
+所以目前来看，接下来的图景大概是这样：
+
+- 本地开发环境 → CLI + Skills，轻量、快速、上下文干净。
+
+- 云端生产环境 → MCP + Skills，标准化、跨平台、认证完备。
+
+- 简单场景 → 直连 API，别瞎折腾。
+
+agent的能力扩展可以分为两类，自然语言和工具，skill就是自然语言+工具，mcp和cli是工具。skill有编排功能，是agent和人类的粘合剂，用来解决需要一些想法，流程可以固定的问题
+
 ## 早点回家吧
 
 `2026-05-19`
