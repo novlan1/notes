@@ -8,6 +8,12 @@ novlan1
 
 # AI 模块笔记
 
+## harness engineering
+
+`2026-05-19`
+
+https://openai.com/zh-Hans-CN/index/harness-engineering/
+
 ## Skill MCP CLI
 
 `2026-05-19`
