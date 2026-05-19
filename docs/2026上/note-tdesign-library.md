@@ -8,6 +8,12 @@ novlan1
 
 # TDesign 组件库笔记
 
+## TD uniapp
+
+`2026-05-19`
+
+Vue3 hx 需要dist
+
 ## 榜首
 
 `2026-05-19`
