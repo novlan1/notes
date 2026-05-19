@@ -67,6 +67,14 @@ net::ERR_CACHE_MISS
 2. [issue#2674](https://github.com/Tencent/tdesign-miniprogram/issues/2674)
 3. [issue#489](https://github.com/Tencent/tdesign-miniprogram/issues/489)
 
+之前：
+
+<img src="https://cdn.uwayfly.com/tdesign-uniapp/faq/2025-05/placeholader-before.gif" width="300" />
+
+之后：
+
+<img src="https://cdn.uwayfly.com/tdesign-uniapp/faq/2025-05/placeholader-after.gif?a=2123" width="300" />
+
 ### 2.7. 插槽类型报错
 
 报错如下：
