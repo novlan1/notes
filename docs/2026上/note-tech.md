@@ -8,6 +8,12 @@ novlan1
 
 # 技术笔记
 
+## Cocos wx对象
+
+`2026-05-19`
+
+微信开发者工具的 Console 跑在 WebView (调试器) 进程里，而小游戏代码跑在 JSCore (游戏) 进程里——两个进程的 wx 对象不是同一个！
+
 ## git status --porcelain
 
 `2026-05-19`
