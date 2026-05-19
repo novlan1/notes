@@ -8,6 +8,16 @@ novlan1
 
 # 技术笔记
 
+## git status --porcelain
+
+`2026-05-19`
+
+git status --porcelain
+
+- Porcelain 本义 = 瓷器 = 漂亮但脆弱 = 给人看
+- Plumbing 本义 = 水管 = 粗糙但耐用 = 给机器用
+- --porcelain 参数 = 例外！专门输出机器能用的稳定格式
+
 ## 蓝牙
 
 `2026-05-12`
