@@ -8,6 +8,12 @@ novlan1
 
 # AI 模块笔记
 
+## 早点回家吧
+
+`2026-05-19`
+
+<img src="https://cdn.uwayfly.com/article/2026/5/own_mike_T4XxcsjCjSWzpYFQ.png" width="500"/>
+
 ## 组件
 
 `2026-05-12`
