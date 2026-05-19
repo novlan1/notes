@@ -79,6 +79,14 @@ export default withMermaid({
             text: 'Plugin Light',
             link: 'https://github.com/novlan1/plugin-light/',
           },
+          {
+            text: 'NPM',
+            link: 'https://www.npmjs.com/search?page=0&q=author%3Ayanggwcn&sortBy=downloads_weekly',
+          },
+          {
+            text: 'TAPD',
+            link: 'https://tapd.woa.com/tapd_fe/my/work?default=1&jump_count=1',
+          },
         ],
       },
     ],
