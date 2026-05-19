@@ -87,6 +87,30 @@ export default withMermaid({
             text: 'TAPD',
             link: 'https://tapd.woa.com/tapd_fe/my/work?default=1&jump_count=1',
           },
+          {
+            text: 'TD Uniapp Demo',
+            link: 'https://tdesign.tencent.com/uniapp/live#/',
+          },
+          {
+            text: 'TD Uniapp Starter',
+            link: 'https://tdesignoteam.github.io/tdesign-uniapp-starter/#/',
+          },
+          {
+            text: 'TD Uniapp Starter Apply',
+            link: 'https://tdesignoteam.github.io/tdesign-uniapp-starter-apply/#/',
+          },
+          {
+            text: 'TD Uniapp Vue3 HX',
+            link: 'https://tdesignoteam.github.io/tdesign-uniapp-starter-vue3-hx/#/',
+          },
+           {
+            text: 'TD Uniapp Vue2 CLI',
+            link: 'https://tdesignoteam.github.io/tdesign-uniapp-starter-vue2-cli/#/',
+          },
+          {
+            text: 'TD Uniapp Vue2 HX',
+            link: 'https://tdesignoteam.github.io/tdesign-uniapp-starter-vue2-hx/#/',
+          },
         ],
       },
     ],
