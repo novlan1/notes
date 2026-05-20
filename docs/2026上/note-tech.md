@@ -42,12 +42,6 @@ RSSI = Received Signal Strength Indicator
 因为单位是 dBm（分贝毫瓦）
 蓝牙、WiFi 这种无线信号：发射功率是正数，传到你手机里已经衰减得很厉害，功率小于 1 毫瓦，就变成负数了。
 
-## test
-
-`2026-04-29`
-
-test
-
 ## npx prettier scripts/generat…
 
 `2026-01-19`
