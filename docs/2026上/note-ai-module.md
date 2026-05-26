@@ -8,6 +8,143 @@ novlan1
 
 # AI 模块笔记
 
+## 这种登记的方式是不是不太好，能否设置一个主动拉取的按钮+弹窗，输入仓库地址、分支、目录，按照一定规则，自动拉取并录入
+
+`2026-05-27`
+
+这个想法非常好——**主动拉取 > 手工登记**，本质上是把 `e2e-manifest.json` 从"客户端配置"升级成"服务端约定"。给你完整方案，先讲清楚再问你要不要写。
+
+## 一、设计
+
+```mermaid
+flowchart LR
+  U[用户在 Web 点 从仓库导入] --> D[弹窗输入<br/>gitUrl + branch + 目录]
+  D -->|POST /api/e2e/import-from-repo| S[Server]
+  S --> CL[1.simple-git clone/pull]
+  CL --> SC[2.扫描目录<br/>读 e2e-manifest.json<br/>或 glob *.e2e.ts]
+  SC --> PV[3.返回预览<br/>项目+环境+用例 diff]
+  PV --> UI[弹窗 Step2: 预览+勾选]
+  UI -->|POST /api/e2e/import-from-repo/apply| AP[4.upsert 入库]
+  AP --> R[结果: 新增 X 条/更新 Y 条/跳过 Z 条]
+```
+
+**两步式交互**（关键）：第一步只**预览** diff 不写库，第二步勾选后才 apply。避免把脏数据直接灌进去。
+
+## 二、扫描规则（按优先级）
+
+```mermaid
+flowchart TD
+  A[clone 仓库] --> B{有 e2e-manifest.json?}
+  B -->|有| C[Mode A: 按 manifest 完整导入<br/>项目+环境+用例+定时]
+  B -->|无| D{扫描指定目录<br/>找 *.e2e.ts}
+  D -->|找到| E[Mode B: 自动生成用例<br/>name=文件名<br/>scriptPath=相对路径<br/>runner=playwright<br/>tags=父目录名<br/>repoId=本次 gitUrl<br/>branch=本次 branch]
+  D -->|没找到| F[报错: 目录无 e2e 文件]
+```
+
+**Mode A（推荐）**：仓库已经有 `e2e-manifest.json`（gp-next 已经有了），全量导入项目+环境+用例+定时任务。
+
+**Mode B（兜底）**：没有 manifest 时，扫 `e2e/**/*.e2e.ts` 自动生成最小用例。一行代码不写也能接入。
+
+## 三、幂等策略（再次拉取不重复）
+
+| 实体 | 幂等键 | 已存在时行为 |
+|---|---|---|
+| `Repo` | `gitUrl` | 复用 |
+| `E2EProject` | `name` | 复用，更新 displayName/description |
+| `E2EBizUrlAlias` | `name` | 复用，更新 url |
+| `E2ELoginPreset` | `name` | **不动 authUrl**（authUrl 是手动维护的签名）|
+| `E2EProjectEnv` | `(projectId, envKey)` | 更新绑定关系 |
+| `E2ETestCase` | `(projectId, scriptPath)` | 更新 name/tags/branch，不覆盖 owner |
+| `E2ETestSchedule` | `(projectId, name)` | 更新 cron/enabled |
+
+每次再点"导入"，**只增量更新差异部分**，不会出现重复 case。
+
+## 四、UI 草图
+
+```
+┌────────────────────────────────────────────┐
+│ 从仓库导入用例                            ×│
+├────────────────────────────────────────────┤
+│ Git 仓库 *  [https://git.woa.com/...    ▼]│ ← select 自动从已登记 Repo 拉
+│             [+ 新增仓库]                   │
+│ 分支       [develop                      ] │
+│ 扫描目录   [e2e                          ] │ ← 默认 e2e
+│ Manifest   [e2e-manifest.json            ] │ ← 默认值，没有就走 Mode B
+│                                            │
+│            [取消]  [扫描预览]              │
+└────────────────────────────────────────────┘
+
+点扫描预览后 →
+
+┌────────────────────────────────────────────┐
+│ 导入预览（gp-next @ develop）            ×│
+├────────────────────────────────────────────┤
+│ ✅ Repo: gp-next      [已存在 复用]       │
+│ ✅ 项目: gp-next      [新增]              │
+│                                            │
+│ 环境（2）        全选 ☑                    │
+│  ☑ test  → gp-next-h5-test    [新增]      │
+│  ☑ prod  → gp-next-h5-prod    [新增]      │
+│                                            │
+│ 用例（10）       全选 ☑    runner: playwright│
+│  ☑ HOME-001 ... [新增]                     │
+│  ☑ HOME-002 ... [新增]                     │
+│  ☑ MSG-003 ...  [更新 scriptPath]         │
+│  ☐ SEARCH-001 ... [无变化 跳过]           │
+│                                            │
+│ 定时任务（1）                              │
+│  ☑ 每日冒烟 0 9 * * * [新增]              │
+│                                            │
+│            [上一步]  [确认导入]            │
+└────────────────────────────────────────────┘
+```
+
+## 五、安全 / 边界
+
+1. **clone 用 `--depth 1` 浅拉**，10 条用例的仓库基本秒级返回
+2. **clone 路径放 `config.gitWorkDir` 下隔离子目录**（`log/projects/e2e-import/<repoSlug>`），完事不删（下次直接 `git fetch + reset`，更快）
+3. **manifest 校验**：用 zod 严格校验 schema，schema 不匹配直接拒绝并指出错位置
+4. **删除策略**：本次导入**不做**删除——manifest 删了某条 case 不会从平台删。删除走 Web 单条删，避免误清
+5. **删除权限**：复用现有 `requireDeletePermission` 中间件思路，导入接口加个白名单
+6. **登录态特殊处理**：manifest 里只放 `loginPreset.name`，**不放 authUrl**（敏感签名不入库），如果同名 preset 不存在则提示"请先在 `登录态预设页面` 创建 XXX"
+
+## 六、文件改动清单（如果你说写）
+
+### tapd-solution 后端
+
+| 文件 | 改动 |
+|---|---|
+| `packages/server/src/services/E2EImportService.ts` | **新增**：clone/扫描/diff/apply 全部逻辑 |
+| `packages/server/src/services/manifestSchema.ts` | **新增**：zod schema 用于 manifest 校验 |
+| `packages/server/src/controllers/e2eImport.ts` | **新增**：`POST /api/e2e/import/preview` + `POST /api/e2e/import/apply` |
+| `packages/server/src/routes/index.ts` | 挂载新路由 |
+
+### tapd-solution 前端
+
+| 文件 | 改动 |
+|---|---|
+| `packages/web/src/views/e2e-projects/ImportFromRepoDialog.vue` | **新增**：两步式弹窗（输入→预览→应用） |
+| `packages/web/src/views/e2e-projects/index.vue` | 列表页加「从仓库导入」按钮 |
+
+### gp-next（无改动）
+
+`e2e-manifest.json` 已经写好了，直接拿来用。
+
+## 七、可选增强（后续做）
+
+- **定时同步**：在 Repo 上加 `autoSyncCron` 字段，每天定时拉一次仓库自动更新（依托现有 `E2ETestScheduleService` 心跳）
+- **Webhook 触发**：仓库 push 时工蜂回调 `/webhook/e2e-manifest-sync`，自动同步
+- **diff 详情**：每条用例的更新前/后用 monaco-diff 展示，便于审查
+- **批量删除**：第二步预览里加"平台已存在但 manifest 没有"的"残留用例"分组，可选择性清理
+
+## 决策点（你定）
+
+1. **写不写**？写的话我下一轮就开搞，预计 6 个文件，全部 lint 通过
+2. **Mode A only 还是 A + B 都支持**？我建议都支持，gp-next 走 A，其他还没写 manifest 的项目走 B
+3. **路由权限**？是否要把"从仓库导入"限定到删除白名单同样的人？我建议是，避免普通同事乱拉
+
+回这三个点，我直接动手。
+
 ## 智能机器人
 
 `2026-05-26`
