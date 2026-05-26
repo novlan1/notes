@@ -8,6 +8,144 @@ novlan1
 
 # AI 模块笔记
 
+## B方案是不是更好，我想的是，每个仓库的多个分支可以是完全不同的测试用例，caseA没必要自行复用其他用例，由代码侧通过mr维护。
+
+`2026-05-27`
+
+想清楚你的逻辑了——你这个角度其实是 **「分支即工程」**：develop 上有什么用例完全由 develop 的代码决定，release 上有什么用例完全由 release 的代码决定，平台不强行做映射。这个想法非常对，比方案 A 更纯粹。
+
+但是 **方案 B（gitUrl 拼 #branch）我不推荐**——它脏。我提一个 **方案 D：项目=仓库×分支**，比 B 干净比 A 简单。
+
+## 一、先把你的语义说清楚
+
+```mermaid
+flowchart LR
+    subgraph 你的真实需求
+      R[gp-next 仓库] -.- D[develop 分支]
+      R -.- RL[release 分支]
+      D --> CD["develop 用例集<br/>10 条 case<br/>由 develop MR 维护"]
+      RL --> CR["release 用例集<br/>5 条 case 子集<br/>由 release MR 维护"]
+    end
+    
+    CD -.|完全独立| CR
+```
+
+关键洞察：**「同一条 scriptPath 在两个分支可能是完全不同的实现」**——比如 `e2e/home/01.xxx.e2e.ts`，develop 上断言新功能 X，release 上还在断言旧功能 Y。**它们不应该在平台上是「同一条 case」**，而应该是两条独立 case。
+
+## 二、对比三个方案
+
+| 维度 | A: branches[] 数组 | B: gitUrl#branch | **D: Project=Repo×Branch** |
+|---|---|---|---|
+| Schema 改动 | 大（Repo + Case 复合索引 + migration） | 0 | 0（已有 schema 就够） |
+| 同一仓库多分支 | branches[] 平铺 | 虚拟 gitUrl 区分 | 多个 E2EProject 实例 |
+| 用例隔离性 | 弱（要靠复合索引） | 强（虚拟 gitUrl 隔离） | **强**（projectId 天然隔离） |
+| URL 干净度 | ✅ | ❌ 脏 | ✅ |
+| Webhook 实现 | 找 branches[] 匹配项 | 拼字符串匹配 | 找匹配 (gitUrl, branch) 的所有 project |
+| 用户认知 | 一个项目多 cron | 一个项目多 cron | **一个项目=一个分支**（清晰） |
+| 用例完全独立 | 需要复合索引 | 用 gitUrl 区分 | **天然独立** |
+| 跨分支复用 | 内置（自动） | 不支持 | 不支持（你不要） |
+| 触发用例时选 branch | 要选 | 要选 | 不用选（项目自带） |
+| 前端 UX | 项目页带分支 tab | 项目带分支后缀 | **项目列表加 branch 列** |
+| 实现复杂度 | 6/10 | 3/10 | **2/10** |
+
+## 三、方案 D 的具体形态
+
+每次「从仓库导入」时，**项目实例是 (gitUrl, branch) 的笛卡尔积**：
+
+```
+E2EProject 列表：
+  ┌─────────────────────────────────────────────────────────┐
+  │ name              displayName            gitUrl  branch │
+  ├─────────────────────────────────────────────────────────┤
+  │ gp-next-develop   gp-next（develop）     gp-next develop│
+  │ gp-next-release   gp-next（release）     gp-next release│
+  │ df-admin-develop  df-admin（develop）    df-admin develop│
+  └─────────────────────────────────────────────────────────┘
+```
+
+每个 project：
+- 自带固定 `gitUrl + branch`（写到 `E2EProject` 的两个新字段）
+- 自己的 cases / envs / schedules / autoSync
+- 自己的 webhook 触发条件（push 到 release → 找 branch=release 的 project）
+
+```mermaid
+flowchart TD
+    PUSH[Webhook: push to develop] --> Q{查询<br/>E2EProject<br/>gitUrl=gp-next<br/>branch=develop}
+    Q --> P1[gp-next-develop project]
+    P1 --> S1[同步该 project 下的<br/>10 条 develop case]
+    
+    PUSH2[Webhook: push to release] --> Q2{查询<br/>E2EProject<br/>gitUrl=gp-next<br/>branch=release}
+    Q2 --> P2[gp-next-release project]
+    P2 --> S2[同步该 project 下的<br/>5 条 release case]
+```
+
+## 四、Schema 改动（就两行）
+
+```ts
+// E2EProject schema 加两个字段
+gitUrl: { type: String, default: '' },        // 该项目对应的仓库
+branch: { type: String, default: '' },        // 该项目对应的分支
+
+// 复合唯一索引：同一仓库同一分支只能有一个 project
+E2EProjectSchema.index({ gitUrl: 1, branch: 1 }, {
+  unique: true,
+  partialFilterExpression: { gitUrl: { $ne: '' } },  // 老的没填的不卡
+});
+```
+
+`E2ETestCase`、`Repo.e2eAutoSync`、`Schedule` 全部不动——因为它们都已经挂在 `projectId` 下，天然隔离了。
+
+`Repo.e2eAutoSync` 也不需要 `branches[]`，因为现在不再是「Repo 同步」而是「Project 同步」——直接把 `e2eAutoSync` 字段 **从 Repo 移到 E2EProject** 即可（每个 project 独立 cron / lastSyncedAt）。
+
+## 五、对照你提的两个具体诉求
+
+| 你的诉求 | 方案 D 怎么满足 |
+|---|---|
+| 一个仓库支持多分支 | 每个 (gitUrl, branch) 是独立 E2EProject，无限多分支 |
+| Webhook 按 branch 判断 | `E2EProject.find({ gitUrl, branch })`，找到才同步 |
+| 前端用例列表顶部 branch 筛选 | **不需要**——项目本身就是按分支筛过的 |
+| caseA 不需要跨分支复用 | 天然不复用，不同 project 之间互不可见 |
+| 代码侧通过 MR 维护 | 每个分支的 manifest.json 各自维护，互不影响 |
+
+## 六、还有几个补充建议（你问"看看还有没有补充的"）
+
+1. **导入弹窗加"项目命名规则"提示**：默认 name 改成 `<repoSlug>-<branch>`（比如 `gp-next-develop`）
+2. **同一仓库多分支引导**：在「从仓库导入」弹窗里，如果检测到该 gitUrl 已有别的分支项目，弹个 banner 提示「检测到该仓库已有 1 个分支项目（develop），当前导入会创建独立的 release 项目，互不影响」
+3. **项目列表分组**：可选地按 gitUrl 把同一仓库的多分支 project 在 UI 上分组显示
+4. **Repo 详情页**（前面提过的）：列出该 repo 下所有 (branch, project, lastSync, cron)，作为"仓库视角"入口
+5. **Run 列表加 project / branch 列**：现在 Run 列表只看到 caseId，多分支后从 Run 反查应该明确知道"这是 release 分支跑的"
+6. **触发运行时去掉 branch 参数**：因为 project 自带 branch，trigger 不再需要让用户选
+7. **manifest 的 project.name 自动追加 branch**：如果 manifest 写的是 `name: "gp-next"`，但你导入到 release 分支，自动改成 `gp-next-release`，避免和 develop 撞名
+8. **E2ETestCase.branch 字段**：可保留作"该用例运行时实际跑的 branch"（一般等于 project.branch，但留个手动覆盖入口给极端场景）
+9. **跨分支差异 diff 视图**（未来）：在 Repo 详情页可以看到「develop 有哪些 case，release 有哪些 case，差集是什么」——纯展示，不操作
+10. **Webhook 双向：删除分支事件**：当工蜂推送 `delete branch` 事件时，自动把对应 project 标记为 archived（不删数据，避免误删）
+
+## 七、迁移代价
+
+- 现有「gp-next」单 project → 升级为 `gp-next-develop`，自动填 `gitUrl + branch=develop`
+- 一行 mongo update：`db.e2eprojects.updateMany({ gitUrl: { $exists: false } }, { $set: { gitUrl: '...', branch: 'develop' } })`
+- E2ETestCase 数据完全不动
+
+## 八、我的最终推荐
+
+**方案 D**。理由：
+- 实现复杂度最低（**2/10** vs A 的 **6/10**）
+- 完美对齐你"代码侧通过 MR 维护"的心智
+- 用户认知最清晰：「项目 = 仓库 × 分支」
+- 0 复合索引、0 数据迁移痛点、0 schema 大改
+
+**问你三件事再动手：**
+
+1. **方案 D 同意吗**？还是你坚持要 A 那种"一个 project 内带多分支"？
+2. **现有 gp-next project 如何处理**：自动改名为 `gp-next-develop`（推荐）还是保留 `gp-next` 不带分支后缀？
+3. **「项目列表按仓库分组显示」要不要做**？（不做也行，列表加个 gitUrl + branch 列就够用）
+
+回我这三个，我就开始写代码。
+
+
+
+📝 Session 20260526-090813 — Turn 16 recorded.
+
 ## 我想一个仓库可以支持多个分支，现在没做到，webhook那里判断和branch，前端测试用例列表顶部也没有筛选，看看还有其他有没有补充的
 
 `2026-05-27`
