@@ -8,6 +8,127 @@ novlan1
 
 # AI 模块笔记
 
+## 我想一个仓库可以支持多个分支，现在没做到，webhook那里判断和branch，前端测试用例列表顶部也没有筛选，看看还有其他有没有补充的
+
+`2026-05-27`
+
+你说的对——现在 `e2eAutoSync.branch` 是单分支，多分支同时跑不了。我先把"多分支支持"的完整影响面梳清楚，再问你拍板。
+
+## 一、现状盘点（哪些地方"绑死了单分支"）
+
+```mermaid
+flowchart TD
+  A[Repo.e2eAutoSync.branch<br/>只有一个 string] --> B1[apply 时所有 case.branch 都用同一个]
+  A --> B2[Webhook: 只有 branch === cfg.branch 才同步]
+  A --> B3[Scheduler: 只能按一个 cron 跑一个分支]
+  A --> B4[E2ETestCase.branch<br/>每条用例一个分支]
+  A --> B5[前端用例列表<br/>没有 branch 筛选]
+  A --> B6[apply 幂等键 (projectId, scriptPath)<br/>不含 branch -> 不同分支同 path 会互相覆盖]
+```
+
+最严重的是 **B6**：现在 case 的唯一性只看 `(projectId, scriptPath)`。如果同一个仓库同时跑 `develop / release` 两个分支，apply 会把同一条 `e2e/home/01.xxx.e2e.ts` 来回覆盖 branch 字段，根本存不下两份。
+
+## 二、设计方案（请你选一个）
+
+### 方案 A：**多分支并行**（功能完整但改动大）
+
+把 `branch` 升级为 `branches[]`，每个分支独立持有一份用例 / cron / sync 状态。
+
+```mermaid
+flowchart LR
+  R[Repo.e2eAutoSync] -->|改为| BS["branches: BranchConfig[]"]
+  BS --> B1[branch: develop<br/>cron: 0 9 * * *<br/>lastSyncedAt<br/>nextRunAt]
+  BS --> B2[branch: release<br/>cron: 0 22 * * *<br/>lastSyncedAt<br/>nextRunAt]
+  
+  C[E2ETestCase] -->|幂等键变为| K["projectId + scriptPath + branch"]
+  C --> C1[case A @ develop]
+  C --> C2[case A @ release]
+```
+
+**核心改动**：
+1. `Repo.e2eAutoSync` 从 `{ branch, cron, lastSyncedAt }` → `{ branches: [{ branch, cron, manifestPath, scanDir, lastSyncedAt, nextRunAt, lastSyncOk, lastSyncedSha, lastSyncError }] }`
+2. `E2ETestCase` 加复合唯一索引 `(projectId, scriptPath, branch)`，已有 case 数据通过 mongo migration 升级
+3. `apply` 改成"按 (gitUrl, branch) upsert"，同分支才覆盖，不同分支独立存
+4. Scheduler 从"扫 repo"改为"扫每个 branches 项"
+5. Webhook 接到 push → 找到该分支的 cfg 才触发，找不到就忽略
+6. 前端 `e2e-project-detail` 用例列表加 branch 筛选 + 列展示
+7. 触发用例运行时（trigger）让用户选 branch（默认拿用例自身的 branch）
+
+**好处**：完整支持「develop 每天跑、release 推送即跑」的真实场景。
+**代价**：8 处改动，要写一次 mongo migration（给老数据 case 把 `branch` 字段补成索引一致）。
+
+### 方案 B：**多 Repo 记录映射多分支**（最小改动）
+
+每个分支登记成独立的 `Repo` 记录（虚拟），靠 gitUrl + branch 后缀区分：
+
+```
+gitUrl=https://git.woa.com/x/gp-next.git
+gitUrl=https://git.woa.com/x/gp-next.git#release  (虚拟)
+```
+
+**好处**：0 schema 改动，前端只是过滤 list 时把 `#release` 当 tag 显示。
+**代价**：脏，gitUrl 不再是真正的 URL；前端搜索框、复制粘贴、webhook 匹配全要做特例处理。**不推荐**。
+
+### 方案 C：**多 Project 镜像多分支**（折中）
+
+`gp-next-develop` 和 `gp-next-release` 分别建两个 E2EProject，各自指向同一个 Repo + 不同 branch。
+
+**好处**：schema 完全不动，webhook 找 project 而不是 branch 就行。
+**代价**：用户体验割裂——明明是一个项目，得在两个项目页面之间反复切。**不推荐**。
+
+## 三、我推荐方案 A，并补这些「你没提但应该一起做」的点
+
+| # | 项目 | 说明 | 优先级 |
+|---|---|---|---|
+| 1 | **多分支支持**（你提的） | branches[] + 复合唯一键 | P0 |
+| 2 | **前端用例列表 branch 筛选**（你提的） | 顶部加 branch 下拉 + 列展示 | P0 |
+| 3 | **Webhook 多分支匹配** | 接到 push 找 branches[] 里匹配的项 | P0 |
+| 4 | **触发运行时选 branch** | 现在 trigger 强用 case.branch，用户没机会临时切 | P1 |
+| 5 | **mongo migration 脚本** | 给老 case 补 `branch` 默认值 + 建复合索引 | P0（一起做） |
+| 6 | **Repo 详情页**（新页面） | 列出所有 branches、上次同步时间、错误、立即同步按钮 | P1 |
+| 7 | **同步历史日志表** | 新建 `E2ERepoSyncLog`，记每次自动同步的统计 / 错误 / 耗时 | P2 |
+| 8 | **手动触发同步去重** | 防止用户连点三次「立即同步」，期间 webhook 又来一次 | P1（用 mongo distributed lock 或者内存 lock） |
+| 9 | **Manifest 支持多分支差异化** | manifest 里允许声明`branchOverrides: { release: { schedules: [...] } }` | P2（按需） |
+| 10 | **Run 列表加 branch 筛选** | 现在 `/e2e/runs` 也是平铺，多分支后会乱 | P1 |
+| 11 | **「分支克隆」按钮** | 用户在 develop 分支调好后，一键把所有 case 克隆到 release | P2（很实用）|
+| 12 | **autoSyncCron 校验提示** | 前端 cron 输入框 + 实时显示「下次触发时间」 | P1 |
+
+## 四、风险点 & 决策
+
+1. **历史数据兼容**：现有 case 都没填 `branch` 索引（默认 develop），加复合唯一索引前必须先 migration。我可以写脚本，但需要你确认现网 mongo 是不是能停服 30 秒（数据量很小应该秒级）
+2. **Webhook 退化**：如果某分支既不在 `branches[]` 也不是已知项目分支，是直接忽略还是落 dump？我倾向**落 dump 但不触发**
+3. **Scheduler 心跳压力**：每分钟扫 N 个 repo × M 个分支，按现有量级（< 50）完全无压力，不用提前优化
+4. **前端 branch 筛选 UI**：是放顶部全局过滤、还是放表格列头筛选？我倾向**顶部 + 表格列同时支持**（顶部主、列头次）
+
+## 五、我建议的执行顺序
+
+如果你同意方案 A，我打算分两轮做完：
+
+**第 1 轮（本轮）— 后端骨架（P0）**
+- Repo.e2eAutoSync.branches[] schema 改造 + migration 脚本
+- E2ETestCase 复合唯一索引 + migration
+- E2EImportService.apply 按 branch 隔离
+- E2ERepoSyncScheduler 扫 branches 而非 repo
+- Webhook 多分支匹配
+- 测试
+
+**第 2 轮（下轮）— 前端 + 增强（P0/P1）**
+- 用例列表顶部 branch 筛选 + 列
+- Run 列表 branch 筛选
+- 触发运行时选 branch
+- ImportFromRepoDialog 弹窗支持配多分支 cron（当前是一个 input，要改成可增减的 list）
+- 同步历史日志表 + 列表页
+- 手动触发去重锁
+- 前端 cron 表达式预览
+
+## 六、问你三件事再动手
+
+1. **方案 A / B / C 选哪个**？我推荐 A
+2. **现网 mongo 数据量大概多少 case**？要不要写带 dry-run 的 migration 脚本？
+3. **「分支克隆」按钮要不要做**（11 号）？很多团队做完 develop 调试后会一键克隆到 release
+
+回我这三个，我下一轮就把第 1 轮全部代码写完。
+
 ## 这种登记的方式是不是不太好，能否设置一个主动拉取的按钮+弹窗，输入仓库地址、分支、目录，按照一定规则，自动拉取并录入
 
 `2026-05-27`
