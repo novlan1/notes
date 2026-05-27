@@ -8,6 +8,118 @@ novlan1
 
 # AI 模块笔记
 
+## 结合/Users/g/Documents/git-woa/gp-next业务项目，和这个仓库，看看你的建议，我觉得是自主探寻路径、生成spec、结合代码、生成确定性的测试用例（pagewright），自己跑、出现错误自己定位、自己改测试用例（有必要可以spec）
+
+`2026-05-27`
+
+我先看看两个项目的现状，再给你一个落地建议。
+已经把 ai-e2e-platform（已有 browser-use + Knot proxy + Midscene + Playwright 的能力栈）和 gp-next（已有规范化的 `specs/<domain>/NN.xxx.spec.md ↔ e2e/<domain>/NN.xxx.e2e.ts` 双向同步）都摸清楚了。下面是结合两个仓库的现状给你的具体建议（不动代码，只给方案）。
+
+---
+
+## 一、先校准目标
+
+你说的最终形态是一个**自治回路**：
+
+```
+种子 URL/路由 → 自主探索 → 写 spec.md → 生成 e2e.ts → 跑 → 失败自定位 → 改 e2e（必要时改 spec）
+```
+
+这里有 4 个独立能力，**没有任何单一开源项目能一把全包**。所以正确做法不是"换一个工具"，而是**把你 ai-e2e-platform 已经造好的轮子（Knot proxy + browser-use + Playwright + Midscene + skill CLI），按这 4 个能力分别拼装**。
+
+---
+
+## 二、4 个能力 × 各自最成熟的方案
+
+| 能力 | 最适合的工具 | 你已有的基建 | 缺口 |
+|---|---|---|---|
+| ① 自主探索路径 | **browser-use**（你已在用）/ Playwright Test Agents Planner | `browser-use-lab/`、Knot proxy 已经把 OpenAI 协议接到 Knot | 没有"探索→spec"的产物约定 |
+| ② 写 spec.md | **任何 LLM**（你的 Knot 模型即可）+ gp-next 的模板 | `specs/_schema/spec.template.md` + frontmatter schema | 没有"探索 trace → spec"的转换器 |
+| ③ 生成 e2e.ts | **Playwright codegen** + LLM；或 Playwright v1.56+ Test Generator Agent | gp-next `e2e/_fixtures/test.ts`（authedGoto/storageState 都齐了） | 缺一个把 spec frontmatter+断言 → Playwright 代码的生成器 |
+| ④ 跑+自愈 | **Playwright Test Healer**（v1.56+，最对口）；备选 Midscene 视觉断言兜底 | `playwright.config.ts`、`tip-toc-*` 选择器规约 | 失败定位需要 trace + DOM diff 喂给 LLM |
+
+**结论**：不要把"探索"和"生成代码"绑到同一个 Agent 上。让 browser-use 只负责**探索 + 抓证据**，让 LLM 离线把证据转成 spec/e2e，让 Playwright 自己跑+自愈。
+
+---
+
+## 三、为什么不直接上 Playwright Test Agents（v1.56+）
+
+它确实是官方方案，但对你来说有 3 个硬伤：
+
+1. **它的 LLM 默认走 OpenAI/Anthropic 直连**，你公司只有 Knot；要接，又得给它再做一份 proxy（你 ai-e2e-platform 的 Knot proxy 是给 browser-use 走的 OpenAI 协议，不一定能直接喂给 VS Code agent loop）。
+2. **它生成的 spec 是它自己的 markdown 格式**，跟 gp-next 已经定型的 frontmatter schema（`id/domain/related_pages/last_synced_commit` + `ci-spec-sync-check.ts`）不兼容，套上去会推翻 CI 的双向同步检查。
+3. **Healer 的修复策略对 uniapp h5 的 class 选择器**（你们大量用 `.tip-toc-*` / `.press-tab--active`）效果一般，它更擅长 role/text 选择器。
+
+可以**借鉴它的三 Agent 拆分思路**（Planner/Generator/Healer），但实现走自己 stack。
+
+---
+
+## 四、推荐的落地形态：在 ai-e2e-platform 里加 3 个 skill 子命令
+
+复用现有 `packages/e2e-skill-cli/` + Knot proxy，**不引入新依赖**。
+
+```
+e2e-skill plan    --biz-url <seed> --domain home --out ../gp-next/specs/home/
+e2e-skill gen     --spec ../gp-next/specs/home/04.xxx.spec.md --out ../gp-next/e2e/home/
+e2e-skill heal    --e2e ../gp-next/e2e/home/04.xxx.e2e.ts
+```
+
+### 4.1 `plan`（探索 → spec）
+
+- 直接复用你的 `browser-use-lab/runner.py` + Knot proxy
+- 给 browser-use 一个**约束 prompt**：「探索 `<seed URL>` 下的主流路径，每发现一个独立 user value 就记录一条 trace（点击序列 + 截图 + 关键 DOM + 网络请求列表）」
+- 探索结束产出 `runs/<runId>/exploration.json`
+- 再用一个 LLM call（走同一个 Knot proxy 的 `/v1/chat/completions`）把 trace 套到 `specs/_schema/spec.template.md`，**自动填 frontmatter**（`related_pages` 从 trace 里访问过的 URL 反查、`related_apis` 从网络请求里抓 trpc method 名）
+
+> 关键产出：一份**符合 gp-next CI 校验**的 spec.md。这是它跟 Playwright 官方 Planner 最大的不同。
+
+### 4.2 `gen`（spec → e2e）
+
+- 解析 spec 的 `## 测试断言（E2E 锚点）` 段（gp-next 已经形成稳定章节结构）
+- 用 `playwright codegen` 拿到一份**确定性的选择器骨架**，再用 LLM 把"自然语言断言"映射为 `expect(...)` 调用
+- 模板严格套 gp-next 的 `e2e/_fixtures/test.ts`（`authedGoto` + storageState）
+- 编号取 `specs/<domain>/` 当前最大 + 1，避免破坏 CI 同步
+
+### 4.3 `heal`（跑 → 失败自愈）
+
+- `playwright test --reporter=json` + `--trace=on`
+- 失败用例把 **trace.zip + 失败前的 DOM snapshot + spec.md** 一起喂给 LLM
+- LLM 输出 patch（diff 形式）；先在 sandbox 跑一次绿了再写回
+- **保护栏**：自愈最多重试 N 次；连续 2 次自愈仍失败 → 提示"可能是真的回归 / 需要改 spec"，而不是死循环改用例
+
+> 这一步可以选择性用 **Midscene 兜底**：当选择器自愈失败，就让 Midscene 用视觉 + 自然语言断言代替（你们已经装了 `@midscene/web`），不会因为 uniapp class 名变化就崩。
+
+---
+
+## 五、为什么不推荐"全交给 Midscene"或"全交给 browser-use"
+
+- **Midscene 强项**：视觉断言，写新用例很快；**弱项**：每次都要 VLM，成本高，CI 不稳定，不擅长生成 spec。所以只做"自愈兜底"。
+- **browser-use 强项**：自主导航 + 点点看；**弱项**：它输出的是"操作历史"而不是"测试代码"，强行让它写 Playwright spec，结果就是 selector 全是 `getByText` + 偶尔崩。所以只做"探索 + 抓证据"。
+- **Playwright 自带 codegen**：选择器生成最准（直接 inspect DOM），所以让它做"代码骨架"，AI 只补断言。
+
+三者**各做最擅长的一段**，就是你想要的"确定性"。
+
+---
+
+## 六、一个最小可行起步（不用一上来全做）
+
+我建议先做最有价值的 **`plan` + `gen` 串起来**，用 gp-next 的 `home` domain 做试点：
+
+1. 在 `ai-e2e-platform/packages/e2e-skill-cli` 加一个子命令 `plan`，跑 browser-use 探索 `https://h5.igame.qq.com/.../views/index/index`
+2. 产出 `specs/home/04.xxx.spec.md`（人工 review 一遍 frontmatter）
+3. 再跑 `gen`，产出 `e2e/home/04.xxx.e2e.ts`
+4. `pnpm e2e -- e2e/home/04.xxx.e2e.ts` 看通过率
+
+这一步跑通后，再加 `heal`。
+
+---
+
+## 七、要不要我现在就动手
+
+这只是方案，**没改任何代码**。如果你认可这个思路，告诉我从哪一步开始，我就直接在 `packages/e2e-skill-cli/src/` 里加 `plan.ts`、串通 browser-use → spec 模板 → 文件落盘。
+
+📝 Session 005-10-09 — Turn 1 recorded.
+
 ## 想问下如何自动搜索路径，生成spec和测试用例，用browser-use还是什么其他工具能生成吗，可以给你个链接，你自己探索，有什么社区成熟的方案吗
 
 `2026-05-27`
