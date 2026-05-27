@@ -8,6 +8,63 @@ novlan1
 
 # 技术笔记
 
+## 我怎么编辑这个文件呢，code xx.code-workspace好像不会打开这个文件
+
+`2026-05-27`
+
+对，`code xxx.code-workspace` 在 VS Code / CodeBuddy 里是 **"以工作区方式打开"**，不是"编辑这个文件"。要编辑它的内容，有几种方式：
+
+## 方法 1：当作普通 JSON 文件编辑（最直接）
+
+```bash
+# 强制以"文件"方式打开编辑
+code -r /Users/guowangyang/Documents/git-woa/gp-multi.code-workspace --goto /Users/guowangyang/Documents/git-woa/gp-multi.code-workspace
+```
+
+更简单的写法（先打开一个目录，再把文件拖进去或用 goto）：
+
+```bash
+code /Users/guowangyang/Documents/git-woa
+# 然后在左侧资源管理器双击 gp-multi.code-workspace
+```
+
+或者直接用其他编辑器：
+
+```bash
+# 用系统默认编辑器
+open -t /Users/guowangyang/Documents/git-woa/gp-multi.code-workspace
+
+# 或 vim / nano
+vim /Users/guowangyang/Documents/git-woa/gp-multi.code-workspace
+```
+
+## 方法 2：已经在工作区模式下，用命令面板打开
+
+这是**最推荐的日常做法**——你已经用 workspace 模式打开了 IDE，想编辑挂载列表时：
+
+1. `Cmd+Shift+P` 打开命令面板
+2. 输入 **`Workspaces: Open Workspace Configuration File`**（中文：**"工作区: 打开工作区配置文件"**）
+3. 回车，IDE 就会把当前那个 `.code-workspace` 文件作为 JSON 打开供你编辑
+
+保存后立即生效，不用重启。
+
+## 方法 3：通过 UI 增删文件夹（不用手写 JSON）
+
+在工作区模式下：
+- **加仓库**：左侧资源管理器空白处右键 → `Add Folder to Workspace...` → 选目录
+- **删仓库**：右键某个根目录 → `Remove Folder from Workspace`
+- **改显示名**：右键 → `Rename`（或直接编辑 JSON 里的 `name` 字段）
+
+这些操作会自动写回 `.code-workspace` 文件。
+
+---
+
+## 关于你截图里的现象再补一句
+
+你之前截图看到 `code my-projects.code-workspace` 没"打开文件"——那其实是**正常行为**：它打开的是**工作区**（左上角标题会变成 `xxx (Workspace)`）。要看 JSON 内容就用上面方法 2 的命令面板，最方便。
+
+需要我帮你把更多 gp 系列仓库或任何特定仓库加进 `gp-multi.code-workspace` 吗？告诉我列表即可。
+
 ## code-worspace 解释
 
 `2026-05-27`
