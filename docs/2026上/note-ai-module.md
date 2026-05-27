@@ -8,6 +8,90 @@ novlan1
 
 # AI 模块笔记
 
+## 想问下如何自动搜索路径，生成spec和测试用例，用browser-use还是什么其他工具能生成吗，可以给你个链接，你自己探索，有什么社区成熟的方案吗
+
+`2026-05-27`
+
+好的，基于你们项目的现状（已有 specs/*.md + e2e/*.ts 的流水线），来综合回答这个问题：
+
+---
+
+## 自动搜索路径、生成 Spec 和测试用例的成熟方案
+
+### 方案一：Playwright 官方 Test Agents（最推荐，v1.56+）
+
+这是 **Playwright 官方在 2025 年末推出的内置方案**，三个 Agent 正好对应你项目的现有工作流：
+
+```
+Planner → Spec(.md)   →   Generator → .spec.ts   →   Healer → 修复失败用例
+```
+
+| Agent | 对应你项目 | 做什么 |
+|---|---|---|
+| **Planner** | 生成 `specs/*.md` | 打开 URL，自动探索页面交互，输出 Markdown 测试计划 |
+| **Generator** | 生成 `e2e/*.ts` | 读取 `.md` 转成可执行 Playwright 测试代码（实时验证选择器）|
+| **Healer** | 修复 `e2e/*.ts` | 跑失败用例 → 自动分析 UI → 打补丁 |
+
+**初始化方式：**
+```bash
+npx playwright init-agents --loop=vscode  # 或 --loop=claude
+```
+
+给一个 URL，Planner 会自己点击页面各路径、发现功能，生成 spec。**这就是「自动搜索路径」的核心能力**。
+
+> ⚠️ 需要 Playwright v1.56+ 且 VS Code v1.105+
+
+---
+
+### 方案二：Playwright MCP + AI（当前最灵活）
+
+```
+AI (Claude/GPT/Cursor) + Playwright MCP Server → 控制真实浏览器 → 生成测试代码
+```
+
+给 AI 一个链接，让它：
+1. 自己导航探索所有路由
+2. 记录交互路径
+3. 输出 Playwright spec
+
+你已经在用 CodeBuddy，配合 Playwright MCP Server 就能实现，参考：[BrowserStack 指南](https://www.browserstack.com/guide/playwright-ai-test-generator)
+
+---
+
+### 方案三：Midscene.js（字节出品，视觉驱动）
+
+```bash
+pnpm add @midscene/web
+```
+
+**特点：用截图 + 自然语言断言代替选择器**：
+```typescript
+// 不写 locator，直接用 AI 理解 UI
+await ai('点击「主理人赛」Tab');
+await aiAssert('推荐关注横滑列表可见');
+```
+
+**适合你们项目的场景**：解决你们当前 `page.route` 拦截不稳定的问题，因为它是视觉层断言，不依赖 DOM 选择器或网络 mock。
+
+---
+
+### 方案四：browser-use（Python 生态）
+
+browser-use 是 Python 的 AI 浏览器代理，**更偏向「操作任务」而非「生成测试」**，目前 JS 生态没有成熟的对应品。如果你的目标是生成 Playwright 测试代码，**不推荐走这条路**。
+
+---
+
+## 针对你项目的建议路线
+
+你们的项目已经有 `specs/` + `e2e/` 的分层，**最自然的接入是 Playwright Test Agents**：
+
+1. 升级 `playwright` 到 v1.56+
+2. 运行 `npx playwright init-agents --loop=claude`（配合 CodeBuddy）
+3. 给 Planner 一个种子 URL + 你的 `_fixtures/test.ts`（登录 fixture）
+4. Planner 自动探索路由 → 生成 `specs/xxx.md` → Generator 生成 `e2e/xxx.ts`
+
+如果想让我直接帮你跑一个页面的探索生成，你可以把那个页面链接发过来，我可以用 Playwright MCP 做演示。
+
 ## B方案是不是更好，我想的是，每个仓库的多个分支可以是完全不同的测试用例，caseA没必要自行复用其他用例，由代码侧通过mr维护。
 
 `2026-05-27`
