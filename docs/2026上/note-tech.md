@@ -8,6 +8,123 @@ novlan1
 
 # 技术笔记
 
+## code-worspace 解释
+
+`2026-05-27`
+
+这是 **VS Code（Visual Studio Code）** 的**多根工作区配置文件**（`.code-workspace`），作用是**一次性打开多个项目文件夹**，并统一配置编辑器规则。
+
+我给你用**最通俗、最清晰**的方式逐段解释👇
+
+# 整体作用
+这个文件让你：
+1. **同时打开 6 个独立项目**（不用一个个打开文件夹）
+2. **统一隐藏不需要看的文件**（node_modules、dist 等）
+3. **统一搜索排除、监听排除**
+4. **给 TypeScript 分配更大内存**
+
+---
+
+# 逐段解释
+
+## 1. folders（核心：同时打开多个项目）
+```json
+"folders": [
+  { "name": "gp-next", "path": "gp-next" },
+  { "name": "gp-apply", "path": "gp-apply" },
+  { "name": "gp-hor", "path": "gp-hor" },
+  { "name": "gp-match", "path": "gp-match" },
+  { "name": "gp-pixui", "path": "gp-pixui" },
+  { "name": "tapd-solution", "path": "1.basic-repos/tapd-solution" }
+]
+```
+意思：
+- 一次性加载 **6 个项目文件夹**
+- `name`：VS Code 左侧显示的名字
+- `path`：文件夹实际路径
+
+这就是 **VS Code 多项目工作区**（Multi-root Workspace），专门给**微前端、多包仓库、前后端分离项目**使用。
+
+---
+
+## 2. settings（统一编辑器设置）
+### A. files.exclude（文件隐藏）
+```json
+"files.exclude": {
+  "**/node_modules": true,
+  "**/dist": true,
+  "**/.history": true
+}
+```
+- 在 VS Code 左侧文件树**隐藏**这些文件夹
+- 你看不到，但它们真实存在
+
+### B. search.exclude（搜索排除）
+```json
+"search.exclude": {
+  "**/node_modules": true,
+  "**/dist": true,
+  "**/*.map": true,
+  "**/pnpm-lock.yaml": true,
+  "**/package-lock.json": true
+}
+```
+- 全局搜索（Ctrl+Shift+F）**不搜索**这些文件
+- 避免搜索结果爆炸、卡顿
+
+### C. files.watcherExclude（文件监听排除）
+```json
+"files.watcherExclude": {
+  "**/node_modules/**": true,
+  "**/dist/**": true,
+  "**/.history/**": true
+}
+```
+- VS Code **不监听**这些文件夹的变化
+- 减少 CPU 占用、防止编辑器卡顿
+
+### D. TypeScript 内存配置
+```json
+"typescript.tsserver.maxTsServerMemory": 8192
+```
+- 给 TS 语言服务分配 **8GB 内存**
+- 解决**大型项目 TS 卡顿、CPU 飙高**的问题
+
+---
+
+## 3. extensions（推荐插件）
+```json
+"extensions": {
+  "recommendations": []
+}
+```
+- 这里可以写团队共享的插件列表
+- 目前是空的，代表没有推荐插件
+
+---
+
+# 一句话总结
+这是一个 **VS Code 多项目工作区配置**，用来：
+- 同时打开 6 个前端项目
+- 统一隐藏无用文件
+- 优化搜索、监听、TS 内存
+- 让大型项目更流畅
+
+---
+
+### 总结
+- **folders**：一次性打开多个项目
+- **files.exclude**：左侧隐藏文件
+- **search.exclude**：搜索不查这些
+- **watcherExclude**：不监听这些文件（防卡顿）
+- **maxTsServerMemory**：给 TS 加大内存
+- **extensions**：团队共享插件
+
+如果你需要，我还能帮你：
+- 优化这个配置
+- 给你生成更干净、更通用的 `.code-workspace` 模板
+- 解释多项目工作区的优缺点/使用场景
+
 ## .git/info/exclude 干啥用的
 
 `2026-05-26`
