@@ -8,6 +8,70 @@ novlan1
 
 # AI 模块笔记
 
+## 这个生成spec的方案可靠吗
+
+`2026-05-28`
+
+好问题。让我仔细审视一下 `plan` 子命令生成 spec 的完整链路，看看是否可靠。先重新读一下核心逻辑：
+现在看 plan-runner 后半段——exploration.json → spec.md 的 LLM 调用部分：
+全链路审完了。以下是我的诚实评估：
+
+---
+
+## `plan` 生成 spec 方案可靠性分析
+
+### 整体结论：**可用但有明确短板，适合"辅助起草 + 人工 review"，不适合直接当产出交付。**
+
+---
+
+### ✅ 可靠的部分
+
+| 方面 | 设计 | 评价 |
+|------|------|------|
+| **trace 采集** | `page.on('request')` 抓网络 + `on_step_end` 抓 DOM 文本/可点元素 | 稳：都是 Playwright native API，数据确定性高 |
+| **容错** | explorer 失败也写 exploration.json（含已有 trace） | LLM 基于不完整数据仍可出草稿 |
+| **LLM prompt 约束** | 显式声明 frontmatter schema + 正文章节顺序 + 禁止编造 | 够严格，实测出来的 spec 格式基本合规 |
+| **postProcess 兜底** | 剥 code fence + 保证 `---` 开头 | 对 LLM 常见越界有处理 |
+| **id / slug 自动编号** | 扫 outDir 取 max+1 | 不会重复 |
+
+### ⚠️ 明确短板/风险
+
+| 风险点 | 原因 | 影响 | 建议 |
+|------|------|------|------|
+| **1. explorer 只跑一个 page，看不到多页态** | `initial_actions` 只打开一个 biz_url，Agent 最多做 5 次"点进去 + 返回"的一级探索 | 如果 spec 需要覆盖"从 A 页面跳到 B 页面"的跨页流程（如搜索→结果→详情），单次 explorer 无法给出完整 trace | 对跨页场景，要么让用户多跑几次 plan（每次指不同 biz_url），要么后续加"多种子 URL"支持 |
+| **2. Agent 自主探索的不确定性** | browser-use Agent 是 LLM 驱动的；如果页面是 SPA + 延时加载 + WebSocket IM，Agent 经常在加载中就点下一步 | 导致 DOM snapshot 里的 texts/clickables 可能是中间态（loading）而非稳态 | 在 dom hook 里增加 `page.waitForLoadState('networkidle')` 兜底；或增加探索 prompt 里"等稳定再记录"的约束 |
+| **3. network trace 过滤不够精细** | `trpc-like` 的正则 `/trpc\|cgi\|cgame\|esport\|api\//i` 会误命中大量无关请求（如 CDN API、Aegis 上报） | 喂给 LLM 的 `related_apis` 可能有噪声 | 加白名单正则：只留 `cgigame` / `esport_api` / `trpc.` 前缀的 |
+| **4. `done` payload 依赖 LLM 自报** | Agent 的 `done(text=JSON)` 是 LLM 自己写的，不是从 DOM 程序化抽取的 | Agent 可能**编造**它没见过的 observedTexts / candidateSelectors | 在 prompt 里已有"只能来自真实页面"约束，但 LLM 仍可能幻觉。**建议**：用 domSnapshots 的 texts 交叉校验 donePayload.observedTexts，剔除在 trace 里没出现的文案 |
+| **5. 生成 spec 的 LLM 也会幻觉** | `SPEC_GEN_SYSTEM` 说了"不要发明事实"，但 temperature=0.2 不是 0 | `related_apis`、`测试断言（E2E 锚点）` 段可能出现从未在 trace 里出现过的接口名/选择器 | **critical** —— 加一步后处理：`checkAssertionsAgainstTrace()`，把 spec 中引用的 text/api/selector 与 exploration.json 做 fuzzy match，不匹配的标 `⚠️ TODO: 人工确认` |
+| **6. 没做 spec→已有 spec 去重** | 每次 plan 只看 outDir 的文件名编号，不检查内容是否与已有 spec 重复 | 多跑几次 plan 可能产出内容高度重复的 spec | 后续可加 embedding 比较或 title dedup |
+| **7. related_pages 无法自动推断** | 从 trace 只能拿到 URL，推不出 `.vue` 源码路径 | frontmatter 的 `related_pages` 永远是 TODO 占位 | 可以做：根据 URL 的 path 片段到 gp-next src/ 里 grep 路由配置自动匹配 |
+
+### 🔴 最高风险
+
+**"trace 到 spec"这一步是单次 LLM 调用，没有自检环节。** 如果 LLM 一次生成的 spec：
+- frontmatter 缺字段 → `ci-spec-sync-check` 会挡
+- 测试断言引用了不存在的选择器 → 后面 gen 出来的 e2e 一定会 timeout
+- 主流程写反了需求逻辑 → 人工 review 前无法发现
+
+**改进方案**（推荐实施优先级）：
+
+1. **（低成本高收益）加一轮结构化自检**：生成 spec 后再调一次 LLM（或纯规则），把 spec 里的"文案断言"和"接口名"与 `exploration.json.domSnapshots[*].texts` / `network[*].url` 做精确匹配，不命中的自动标 `⚠️`。
+2. **（中等成本）`related_apis` 自动校验**：从 exploration 的 network JSONL 里 exact match spec 里列出的 API 名，不存在的删掉。
+3. **（未来优化）多 pass 探索**：先跑一遍 → 根据 done 判断缺哪些路径 → 自动补一轮"定向下钻"探索（类似 human review → 再跑），目前 max_steps=20 只能做一遍宽度探索。
+
+---
+
+### 实操建议
+
+> **当前阶段的正确使用姿势**：把 `plan` 当"spec 起草器"，人工必须 review `related_pages` / `related_apis` / `测试断言（E2E 锚点）` 三段后再推 `gen`。`gen` + `heal` 的闭环才是能自动化验证的——spec 本身仍需人工把关。
+
+如果要让 spec 生成更可靠，我建议的最小改动优先级：
+1. 加 `validateSpecAgainstTrace()` 后处理（纯规则，5min 可写）
+2. `dom_hook` 加 `waitForLoadState('networkidle', timeout=3000)` 兜底
+3. `done payload` 的 observedTexts 与 domSnapshots 交叉校验
+
+要不要我现在动手实现第 1 点（trace↔spec 交叉校验）？这是最高 ROI 的改进。
+
 ## AI E2E
 
 `2026-05-28`
