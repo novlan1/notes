@@ -8,6 +8,42 @@ novlan1
 
 # AI 模块笔记
 
+## AI E2E
+
+`2026-05-28`
+
+### 生成 exploration.json
+
+关键设计点：
+
+1. 复用现有基建：Knot proxy / venv / IPHONE_PROFILE / merge_auth_into_biz / resolveLoginPreset 全部复用，零新依赖。
+2. gp-next 兼容：spec 模板里 frontmatter 的字段顺序、id 正则（^[A-Z]{2,8}-\d{3}$）、related_pages 正则（^src/.+\.vue$）都通过 system+user prompt 约束 LLM 严格遵守，并把人工 review 项写到备注里，避免 LLM 编造。
+3. trace 收口：page.on('request') 抓所有 XHR/fetch/document，过滤静态资源；DOM 快照用 page.evaluate 抓可见文本前 60 条 + 可点击元素（含 data-testid）；Agent done 时强制输出 JSON。三种证据汇总到一份 exploration.json。
+4. safety：--dry-run 只打印不落盘；--next-id 自动扫描 outDir 防止覆盖；spec id 自动 padStart(3,'0') 满足 schema。
+
+### 生成 测试用例
+
+关键设计
+1. 零新依赖：手写一个轻量 frontmatter 解析（只支持 spec 模板用到的字段格式 + 字符串数组），避免引入 js-yaml。
+2. CRLF 兼容 + 前置空行兼容：parseSpec 先 normalize 换行符，再用允许 (^|\n) 起始的正则匹配 frontmatter。
+3. section 抽取的坑（已修）：必须不要用 multiline m flag + $，否则非贪婪匹配会在第一个行尾立刻停止；改用 (?=\n##\\s+|(?![\\s\\S])) 锁定下一节或字符串真结尾。
+4. fixture 契约自适应：summarizeFixtures 优先读 gp-next 真实 _fixtures/test.ts 的 header 注释 + export 列表喂给 LLM，找不到时退到内置默认描述（不阻塞流程）。
+5. 输出契约硬约束：system prompt 强制 LLM 只 import ../_fixtures/test、必须 test.describe('<spec.id> <spec.title>', ...)、主流程不 mock、接口正则不绑死域名；finalizeE2e 还做了 import + describe 的存在性自检——不达标直接拒收并把 raw 落到 ~/.e2e-skill/gens/<runId>/raw.txt 便于排查。
+6. trace 自动发现：gen 不传 --exploration 时，先看 spec 同目录的 *.exploration.json，再回落到最近一次 ~/.e2e-skill/plans/*/reports/exploration.json（按 mtime），找不到也允许跑（仅基于 spec）。
+7. 路径推断：spec 路径若落在 <root>/specs/<domain>/...，自动推断 repoRoot 与镜像出 <root>/e2e/<domain>/...，不必手动传 --out / --repo-root。
+
+### heal
+
+关键设计
+1. 复用 gp-next 既有 CI 契约：直接走 playwright.ci.config.ts（已含 json/html/junit reporter，固定输出 e2e-report/result.json），不污染 gp-next 也不需要在命令行追加 reporter 参数。
+2. 可拔插的失败上下文：每个失败 spec 的输入材料 = 测试 fullTitle + status + 去 ANSI 的 error.message/stack + Playwright 自带的 error-context.md（含 Test source 行号箭头）；不解析 trace.zip（信息已足够 + 二进制处理太重）。
+3. retry attachment 兜底：result.json 里 results[length-1]（retry1）的 attachment 可能因为原 outputDir 被清而失效；改为遍历所有 results，取第一个能 existsSync 的 error-context.md。
+4. 轮内全产物落盘：每轮的 playwright.stdout.log / stderr.log / result.json 副本 / before.e2e.ts / after.e2e.ts / prompt.user.md / failures.json / llm.raw.txt 全部存到 ~/.e2e-skill/heals/<runId>/round-N/，便于排查 + 回滚。
+5. proxy 懒启动：第一轮就过的情况下不启 proxy（不调 LLM 也不需要 Knot 配置），节省 ~3-5s 启动开销。
+6. LLM 输出契约硬约束：与 gen 共用 finalizeE2e——必须含 import { test, expect } from '../_fixtures/test' 和 test.describe(，否则拒收。
+7. 守护循环：最大 3 轮（可调）；达到上限直接 failed；如果 LLM 返回内容与原文一致，警告但仍进入下一轮（避免假死）。
+8. dry-run 友好：--dry-run 仅打印推断结果（repoRoot / specFile / cmd / reportDir），不真跑 playwright，方便用户先确认路径再开跑。
+
 ## 结合/Users/g/Documents/git-woa/gp-next业务项目，和这个仓库，看看你的建议，我觉得是自主探寻路径、生成spec、结合代码、生成确定性的测试用例（pagewright），自己跑、出现错误自己定位、自己改测试用例（有必要可以spec）
 
 `2026-05-27`
