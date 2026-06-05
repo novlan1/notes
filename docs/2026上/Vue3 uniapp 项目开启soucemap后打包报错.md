@@ -1,3 +1,5 @@
+<!-- https://iwiki.aow.com/p/4019642872 -->
+
 ## 分析结论
 
 非 setup 的 `<script lang="ts">` 在 sourcemap 生成时会产生冲突。具体原因如下：
