@@ -8,6 +8,33 @@ novlan1
 
 # PUBGM 赛事笔记
 
+## getStageTimeDesc
+
+`2026-06-02`
+
+
+关于 `info.stages` vs `site_stages` 的差异：原代码原本就用的 `info.stages`（不是我引入的），保持原样以避免引入兼容性风险（接口可能由后端做了 alias 或 stages 是另一个 SiteInfo 类型字段，不属于本次需求范围），已只对 `timeDesc` 做最小化改造。
+
+## 修改总结
+
+### 1. `src/local-logic/site/site-info-parse.ts`
+- 抽出 `getStageTimeDesc(stage)` 公共函数并 `export`
+- 时间口径优先级（与上一轮需求一致）：
+  1. `game_info.labels.match_time_config` → 第一时段开始 ~ 最后时段结束
+  2. `game_info.act_start_time / act_end_time`
+  3. `basic_site_stage_info.stime / etime`
+- `paresOneSiteInfo` 内 `stages.map` 替换为调用 `getStageTimeDesc(stage)`，移除原来内联的一大段逻辑
+
+### 2. `src/local-logic/site/index.ts`
+- `parseStages` 改为调用 `getStageTimeDesc(item)`，统一了时间展示口径
+- 顺手修正了原先错误读取 `item.stage_id`、缺失 `name` 字段的问题（现在从 `basic_site_stage_info` 中取，符合 `SiteStage` 真实结构）
+
+### 收益
+- 两个入口（首页站点列表 / 单赛区详情）现在保证完全一致的时间展示口径
+- 单一逻辑来源（Single Source of Truth），后续口径变更只需改一处
+- 顺带修复了 `index.ts` 原来直接读 `item.stime` / `item.stage_id` 而结构不存在的 bug
+
+
 ## Openclaw 爆火的底层原因
 
 `2026-03-13`
