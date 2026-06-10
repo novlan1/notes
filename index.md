@@ -13,10 +13,10 @@ hero:
   actions:
     - theme: brand
       text: '2026'
-      link: /docs/2026上/cherry-markdown-stream
+      link: /docs/2026上/Cherry-Markdown-支持流式输出包
     - theme: alt
       text: '2025'
-      link: /docs/2025下/tdesign-uniapp-article
+      link: /docs/2025下/TDesign-UniApp-文章
     - theme: alt
       text: '2024'
       link: /docs/2024下/TDesignMiniProgram中Cascader组件的性能优化

@@ -6,39 +6,39 @@
       "items": [
         {
           "text": "CDN 证书配置",
-          "link": "/docs/2026上/cdn-ssl.md"
+          "link": "/docs/2026上/CDN-证书配置.md"
         },
         {
           "text": "Typescript 教程笔记",
-          "link": "/docs/2026上/typescript-wangdoc.md"
+          "link": "/docs/2026上/Typescript-教程笔记.md"
         },
         {
           "text": "非技术思考",
-          "link": "/docs/2026上/note-no-tech-thought.md"
+          "link": "/docs/2026上/非技术思考.md"
         },
         {
           "text": "非技术笔记",
-          "link": "/docs/2026上/note-no-tech.md"
+          "link": "/docs/2026上/非技术笔记.md"
         },
         {
           "text": "技术笔记",
-          "link": "/docs/2026上/note-tech.md"
+          "link": "/docs/2026上/技术笔记.md"
         },
         {
           "text": "Cherry Markdown 支持流式输出包",
-          "link": "/docs/2026上/cherry-markdown-stream.md"
+          "link": "/docs/2026上/Cherry-Markdown-支持流式输出包.md"
         },
         {
           "text": "@tdesign/uniapp 图标瘦身",
-          "link": "/docs/2026上/tdesign-uniapp中的图标瘦身.md"
+          "link": "/docs/2026上/@tdesign-uniapp-图标瘦身.md"
         },
         {
           "text": "@tdesign/uniapp 的 Vue2.x 适配说明",
-          "link": "/docs/2026上/tdesign-uniapp-vue2.md"
+          "link": "/docs/2026上/@tdesign-uniapp-的-Vue2.x-适配说明.md"
         },
         {
           "text": "TDesign E2E 测试",
-          "link": "/docs/2026上/tdesign-e2e-test.md"
+          "link": "/docs/2026上/TDesign-E2E-测试.md"
         },
         {
           "text": "产品创新 - 苏杰",
@@ -46,15 +46,15 @@
         },
         {
           "text": "@tdesign/uniapp 常见问题",
-          "link": "/docs/2026上/tdesign-uniapp-faq.md"
+          "link": "/docs/2026上/@tdesign-uniapp-常见问题.md"
         },
         {
           "text": "零成本知识沉淀",
-          "link": "/docs/2026上/knowledge-consolidation.md"
+          "link": "/docs/2026上/零成本知识沉淀.md"
         },
         {
           "text": "从源码追踪 uni-app H5 平台 `uni-image > img` 样式丢失之谜",
-          "link": "/docs/2026上/uni-image-img-style.md"
+          "link": "/docs/2026上/从源码追踪-uni-app-H5-平台-uni-image-img-样式丢失之谜.md"
         },
         {
           "text": "cos流-git与cos双向同步技术方案",
@@ -62,47 +62,47 @@
         },
         {
           "text": "@tdesign/uniapp 中 init 命令和 build 命令对比",
-          "link": "/docs/2026上/tdesign-uniapp-init.md"
+          "link": "/docs/2026上/@tdesign-uniapp-中-init-命令和-build-命令对比.md"
         },
         {
           "text": "@tdesign/uniapp 中类型导出",
-          "link": "/docs/2026上/tdesign-uniapp-exports-global.md"
+          "link": "/docs/2026上/@tdesign-uniapp-中类型导出.md"
         },
         {
           "text": "@tdesign/uniapp 中类型提示",
-          "link": "/docs/2026上/tdesign-uniapp-exports.md"
+          "link": "/docs/2026上/@tdesign-uniapp-中类型提示.md"
         },
         {
           "text": "Stepper 小数输入精度丢失 Bug 修复",
-          "link": "/docs/2026上/td-stepper-skill.md"
+          "link": "/docs/2026上/Stepper-小数输入精度丢失-Bug-修复.md"
         },
         {
           "text": "机器人消息录入",
-          "link": "/docs/2026上/robot-knowledge-entry.md"
+          "link": "/docs/2026上/机器人消息录入.md"
         },
         {
           "text": "TDesign 碎片笔记",
-          "link": "/docs/2026上/note-tdesign-library.md"
+          "link": "/docs/2026上/TDesign-碎片笔记.md"
         },
         {
           "text": "AI 碎片笔记",
-          "link": "/docs/2026上/note-ai-module.md"
+          "link": "/docs/2026上/AI-碎片笔记.md"
         },
         {
           "text": "PUBGM 碎片笔记",
-          "link": "/docs/2026上/note-pubgm-match.md"
+          "link": "/docs/2026上/PUBGM-碎片笔记.md"
         },
         {
           "text": "TDesign Vue2 开发踩坑",
-          "link": "/docs/2026上/tdesign-uniapp-vue2-inner.md"
+          "link": "/docs/2026上/TDesign-Vue2-开发踩坑.md"
         },
         {
           "text": "SSH 免密登录方案对比：sshpass vs ssh-agent",
-          "link": "/docs/2026上/ssh-auto-login.md"
+          "link": "/docs/2026上/SSH-免密登录方案对比-sshpass-vs-ssh-agent.md"
         },
         {
           "text": "TDesign 小程序/UniApp Table 组件适配踩坑记录",
-          "link": "/docs/2026上/tdesign-uniapp-table.md"
+          "link": "/docs/2026上/TDesign-小程序-UniApp-Table-组件适配踩坑记录.md"
         },
         {
           "text": "23天战胜拖延症 - 黄河清",
@@ -110,7 +110,7 @@
         },
         {
           "text": "Devcloud 空间清理",
-          "link": "/docs/2026上/devcloud-space.md"
+          "link": "/docs/2026上/Devcloud-空间清理.md"
         }
       ]
     },
@@ -124,7 +124,7 @@
         },
         {
           "text": "Promise 链式调用",
-          "link": "/docs/2025下/promise-link.md"
+          "link": "/docs/2025下/Promise-链式调用.md"
         },
         {
           "text": "TDesign",
@@ -132,7 +132,7 @@
         },
         {
           "text": "Vue 中的 h 函数",
-          "link": "/docs/2025下/h函数.md"
+          "link": "/docs/2025下/Vue-中的-h-函数.md"
         },
         {
           "text": "工程师个人发展指南",
@@ -148,19 +148,19 @@
         },
         {
           "text": "TDesign UniApp 文章",
-          "link": "/docs/2025下/tdesign-uniapp-article.md"
+          "link": "/docs/2025下/TDesign-UniApp-文章.md"
         },
         {
           "text": "TDesign UniApp 其他",
-          "link": "/docs/2025下/tdesign-uniapp-other.md"
+          "link": "/docs/2025下/TDesign-UniApp-其他.md"
         },
         {
           "text": "TDesign UniAPP 大仓",
-          "link": "/docs/2025下/tdesign-uniapp-monorepo.md"
+          "link": "/docs/2025下/TDesign-UniAPP-大仓.md"
         },
         {
           "text": "TDesign UniAPP 发布",
-          "link": "/docs/2025下/tdesign-uniapp-publish.md"
+          "link": "/docs/2025下/TDesign-UniAPP-发布.md"
         },
         {
           "text": "git",
@@ -176,11 +176,11 @@
         },
         {
           "text": "业务核心",
-          "link": "/docs/2025下/business-core.md"
+          "link": "/docs/2025下/业务核心.md"
         },
         {
           "text": "AI 需求",
-          "link": "/docs/2025下/AI需求.md"
+          "link": "/docs/2025下/AI-需求.md"
         },
         {
           "text": "赛事横版支持任意页面关闭",
@@ -188,11 +188,11 @@
         },
         {
           "text": "HBuilderX 自定义",
-          "link": "/docs/2025下/hx-custom.md"
+          "link": "/docs/2025下/HBuilderX-自定义.md"
         },
         {
           "text": "whistle 配置文件",
-          "link": "/docs/2025下/whistle-config.md"
+          "link": "/docs/2025下/whistle-配置文件.md"
         },
         {
           "text": "频率学派与贝叶斯学派",
@@ -208,19 +208,19 @@
         },
         {
           "text": "关于状态",
-          "link": "/docs/2025下/stateless.md"
+          "link": "/docs/2025下/关于状态.md"
         },
         {
           "text": "MCP、Agent、RAG",
-          "link": "/docs/2025下/mcp-agent-rag.md"
+          "link": "/docs/2025下/MCP-Agent-RAG.md"
         },
         {
           "text": "之前笔记",
-          "link": "/docs/2025下/notes-before.md"
+          "link": "/docs/2025下/之前笔记.md"
         },
         {
           "text": "拖延笔记",
-          "link": "/docs/2025下/拖延.md"
+          "link": "/docs/2025下/拖延笔记.md"
         },
         {
           "text": "OAuth2.0",
@@ -228,35 +228,35 @@
         },
         {
           "text": "随笔",
-          "link": "/docs/2025下/note-not-tech.md"
+          "link": "/docs/2025下/随笔.md"
         },
         {
-          "text": "技术笔记",
-          "link": "/docs/2025下/some-tech.md"
+          "text": "技术笔记一",
+          "link": "/docs/2025下/技术笔记一.md"
         },
         {
           "text": "代码圈复杂度",
-          "link": "/docs/2025下/complexity.md"
+          "link": "/docs/2025下/代码圈复杂度.md"
         },
         {
           "text": "非技术思考",
-          "link": "/docs/2025下/note-no-tech-thought.md"
+          "link": "/docs/2025下/非技术思考.md"
         },
         {
           "text": "非技术笔记",
-          "link": "/docs/2025下/note-no-tech.md"
+          "link": "/docs/2025下/非技术笔记.md"
         },
         {
-          "text": "技术笔记",
-          "link": "/docs/2025下/note-tech.md"
+          "text": "技术笔记二",
+          "link": "/docs/2025下/技术笔记二.md"
         },
         {
           "text": "pnpm patch",
-          "link": "/docs/2025下/115.pnpm-patch.md"
+          "link": "/docs/2025下/pnpm-patch.md"
         },
         {
           "text": "mongo 聚合",
-          "link": "/docs/2025下/mongo-aggregate.md"
+          "link": "/docs/2025下/mongo-聚合.md"
         },
         {
           "text": "marked-uniapp",
@@ -264,23 +264,23 @@
         },
         {
           "text": "Typescript 学习",
-          "link": "/docs/2025下/ts.md"
+          "link": "/docs/2025下/Typescript-学习.md"
         },
         {
           "text": "某需求分享功能",
-          "link": "/docs/2025下/share.md"
+          "link": "/docs/2025下/某需求分享功能.md"
         },
         {
           "text": "AI Start",
-          "link": "/docs/2025下/ai-start.md"
+          "link": "/docs/2025下/AI-Start.md"
         },
         {
           "text": "为什么 Vue 无需 Fiber",
-          "link": "/docs/2025下/why-vue-not-need-fiber.md"
+          "link": "/docs/2025下/为什么-Vue-无需-Fiber.md"
         },
         {
           "text": "短文 AI",
-          "link": "/docs/2025下/短文-ai.md"
+          "link": "/docs/2025下/短文-AI.md"
         }
       ]
     },

@@ -136,7 +136,7 @@ export default withMermaid({
       copyright: 'Copyright © 2025-present novlan1',
     },
   },
-  ignoreDeadLinks: true,
+  ignoreDeadLinks: false,
 
   vite: {
     esbuild: {
