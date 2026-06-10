@@ -83,12 +83,20 @@ export default withMermaid({
             link: 'https://www.npmjs.com/search?page=0&q=author%3Ayanggwcn&sortBy=downloads_weekly',
           },
           {
+            text: 'NPM TD Uniapp',
+            link: 'https://www.npmjs.com/search?q=%40tdesign%2Funiapp',
+          },
+          {
             text: 'TAPD',
             link: 'https://tapd.woa.com/tapd_fe/my/work?default=1&jump_count=1',
           },
           {
             text: 'TD Uniapp Demo',
             link: 'https://tdesign.tencent.com/uniapp/live#/',
+          },
+          {
+            text: 'TD Uniapp Doc',
+            link: 'https://tdesign.tencent.com/uniapp/overview/',
           },
           {
             text: 'TD Uniapp Starter',
