@@ -58,7 +58,7 @@ $1.pages.woa.com
 `2026-05-07`
 
 
-## 一、先搞清一个关键概念
+### 一、先搞清一个关键概念
 
 Cocos Creator 项目里的 `package.json` 分**两套**：
 
@@ -71,13 +71,13 @@ Cocos Creator 项目里的 `package.json` 分**两套**：
 
 ---
 
-## 二、三种"装三方库"的场景
+### 二、三种"装三方库"的场景
 
-### 场景 ① 游戏运行时（`assets/scripts/` 里用）—— **可以，但要小心**
+#### 场景 ① 游戏运行时（`assets/scripts/` 里用）—— **可以，但要小心**
 
 官方推荐做法：**在项目根建一个"逻辑上的 npm workspace"**，然后把产物放进 `assets/` 里。
 
-#### 方案 A：pnpm + 直接放 node_modules（最简单但不推荐）
+##### 方案 A：pnpm + 直接放 node_modules（最简单但不推荐）
 
 ```bash
 # 在项目根
@@ -95,7 +95,7 @@ import { debounce } from 'lodash-es';
 - 默认 `node_modules` 不会被 Cocos 的构建扫描到，因为 Cocos 只打包 `assets/` 下的 `.ts`
 - 必须 **在 `tsconfig.json` 里配置 `paths`**，或把 `node_modules` 做软链进 `assets/`
 
-#### 方案 B：纯 ESM 的库 → 直接拷源码到 `assets/libs/`（**最推荐**）
+##### 方案 B：纯 ESM 的库 → 直接拷源码到 `assets/libs/`（**最推荐**）
 
 ```
 assets/
@@ -108,13 +108,13 @@ assets/
 
 原因：Cocos 的构建只认 `assets/` 下的 `.ts/.js`，并且会用 Rollup 打进最终 bundle。纯 ESM 的库（如 `lodash-es`、`mitt`、`eventemitter3`、`protobufjs/minimal`）拷过来就能用。
 
-#### 方案 C：通过 `cc.d.ts` + 动态加载（CDN 脚本）
+##### 方案 C：通过 `cc.d.ts` + 动态加载（CDN 脚本）
 
 适合大体积的库，例如在 WASM、在线解析器场景下，把 JS 文件放进 `assets/resources/scripts/xxx.js`（当 asset 处理），运行时动态 `fetch + eval`。不推荐常规使用。
 
 ---
 
-### 场景 ② 编辑器扩展里（`extensions/xxx/` 里用）—— **完全可以**
+#### 场景 ② 编辑器扩展里（`extensions/xxx/` 里用）—— **完全可以**
 
 这里就是**标准 Node.js 环境**，`extensions/xxx/package.json` 是标准 npm 包，可以 pnpm 随便装：
 
@@ -128,7 +128,7 @@ pnpm add -D @types/node typescript
 
 ---
 
-### 场景 ③ 构建期工具（不进游戏包）—— **完全可以**
+#### 场景 ③ 构建期工具（不进游戏包）—— **完全可以**
 
 比如你想：
 - 用 `sharp` 压缩图片
@@ -139,11 +139,11 @@ pnpm add -D @types/node typescript
 
 ---
 
-## 三、Cocos 运行时装三方库的**实操步骤**（场景 ①）
+### 三、Cocos 运行时装三方库的**实操步骤**（场景 ①）
 
 如果你真要给 `assets/scripts/` 引入 npm 包，推荐这套做法：
 
-### 1. 保留 Cocos 的原始 `package.json`，新建 pnpm workspace
+#### 1. 保留 Cocos 的原始 `package.json`，新建 pnpm workspace
 
 项目根 `pnpm-workspace.yaml`：
 ```yaml
@@ -152,7 +152,7 @@ packages:
   - 'extensions/*'
 ```
 
-### 2. 建一个"依赖中转"子包
+#### 2. 建一个"依赖中转"子包
 
 ```
 assets/scripts-deps/
@@ -178,7 +178,7 @@ export { default as mitt } from 'mitt';
 export { debounce, throttle } from 'lodash-es';
 ```
 
-### 3. 配置 `tsconfig.json` 路径映射
+#### 3. 配置 `tsconfig.json` 路径映射
 
 ```json
 {
@@ -194,14 +194,14 @@ export { debounce, throttle } from 'lodash-es';
 }
 ```
 
-### 4. 业务代码里直接用
+#### 4. 业务代码里直接用
 
 ```ts
 import mitt from 'mitt';
 import { debounce } from 'lodash-es';
 ```
 
-### ⚠️ 踩坑提醒
+#### ⚠️ 踩坑提醒
 
 1. **只选 ESM 格式的包**：CommonJS（带 `require`）在 Cocos Rollup 里可能炸
 2. **避免依赖 Node API**：不能用 `fs`、`path`、`process` 等（浏览器/小游戏没有）
@@ -212,7 +212,7 @@ import { debounce } from 'lodash-es';
 
 ---
 
-## 四、给你这个项目的建议
+### 四、给你这个项目的建议
 
 你这个项目是 **Cocos Creator 3.8.8 + 微信小游戏**（有 `build-templates/wechatgame`），我建议：
 
@@ -235,13 +235,13 @@ import { debounce } from 'lodash-es';
 
 
 
-## 简短结论
+### 简短结论
 
 **不能完全自定义原生安全检测的提示**，但**可以在回调中判断并给出自己的提示**。
 
-## 详细说明
+### 详细说明
 
-### 1. 微信官方安全检测机制
+#### 1. 微信官方安全检测机制
 
 当用户使用 `<button open-type="chooseAvatar">` 选择头像时，微信会对用户选择的头像图片进行**本地安全检测**（内容安全检测）。如果检测到违规内容（如涉黄、涉政、违规图片等），微信会：
 
@@ -250,7 +250,7 @@ import { debounce } from 'lodash-es';
 
 这是微信小程序的安全策略，属于客户端行为，开发者无权干预。
 
-### 2. 可以做的自定义处理
+#### 2. 可以做的自定义处理
 
 虽然原生提示改不了，但可以在业务层做兜底判断。针对你当前的 `index.vue` 中的 `handlerEditIcon`，建议改造如下：
 
@@ -293,7 +293,7 @@ const handlerEditIcon = (e) => {
 </script>
 ```
 
-### 3. 上传后端二次校验（强烈推荐）
+#### 3. 上传后端二次校验（强烈推荐）
 
 由于 `chooseAvatar` 返回的是**临时路径**，必须上传到自己的 CDN。建议在上传时走一次后端的内容安全检测（微信提供 `security.imgSecCheck` 接口），这样能在业务层拦住违规图片并给出可控的提示：
 
@@ -320,7 +320,7 @@ const handlerEditIcon = async (e) => {
 };
 ```
 
-## 总结
+### 总结
 
 | 场景 | 是否可自定义提示 |
 |------|-----------------|
@@ -330,7 +330,7 @@ const handlerEditIcon = async (e) => {
 
 建议采用 **"回调兜底 + 后端 imgSecCheck 二次校验"** 的组合方案，业务层提示完全可控。
 
-## ygw_oa_pages_api_key
+### ygw_oa_pages_api_key
 
 ```bash
 export OA_PAGES_API_KEY="${{settings.ygw_oa_pages_api_key.password}}"
@@ -355,7 +355,7 @@ export OA_PAGES_API_KEY="${{settings.ygw_oa_pages_api_key.password}}"
 process.env.OA_PAGES_API_KEY  // ✅ 能拿到值
 ```
 
-### 关键点
+#### 关键点
 
 | 场景 | 能否拿到 |
 |------|---------|
@@ -406,7 +406,7 @@ node -e 是 Node.js 命令行参数，意思是 evaluate（执行），用于直
 
 **Standalone** 是指 pnpm 的一种独立安装方式，即不依赖 Node.js/npm，而是作为一个**独立的可执行文件**直接安装到系统中。
 
-## 具体区别
+### 具体区别
 
 | 安装方式 | 路径示例 | 特点 |
 |---------|---------|------|
@@ -414,7 +414,7 @@ node -e 是 Node.js 命令行参数，意思是 evaluate（执行），用于直
 | **npm 全局安装** | `~/.nvm/versions/node/vXX/bin/pnpm` | 作为 npm 包安装，依赖 Node.js 环境 |
 | **corepack 管理** | 由 corepack 代理 | Node.js 内置的包管理器版本管理工具 |
 
-## 你之前遇到的问题
+### 你之前遇到的问题
 
 你的系统中同时存在两种安装：
 
@@ -444,7 +444,7 @@ pnpm -v
 
 ---
 
-## 常用版本切换命令汇总
+### 常用版本切换命令汇总
 
 | 操作 | 命令 |
 |------|------|
@@ -471,29 +471,29 @@ pnpm -v
 
 先给结论：公众号、小程序，从底层技术/平台管控是中心化；从流量分发/生态逻辑是「去中心化」（微信官方定义）。下面分清楚、讲明白，再补常见对比。
 
-## 一、先分清两个维度（核心）
+### 一、先分清两个维度（核心）
 
-### 1. 技术/管控中心化（Web2 通用）
+#### 1. 技术/管控中心化（Web2 通用）
 - 所有数据、账号、审核、规则、服务器，都由腾讯（微信）统一掌控，平台有绝对管理权（封号、下架、限流、改规则）
 - 你没有数据主权、不能脱离微信独立运行——这是绝对中心化
 
-### 2. 流量/生态去中心化（微信核心定位）
+#### 2. 流量/生态去中心化（微信核心定位）
 - 平台不提供统一的官方流量入口、不强制分发、不搞平台级推荐池（早期）
 - 流量靠你自己：二维码、分享、搜索、私域、社群、线下，粉丝/用户是你的私域资产，不是平台的
 
-## 二、公众号：到底是啥？
+### 二、公众号：到底是啥？
 - 定位：生态去中心化，底层中心化
 - 早期订阅号：纯时间线、无算法推荐、无官方流量池——完全去中心化分发，你自己拉粉、自己运营
 - 现在：加入「推荐信息流/看一看」，有算法介入，但依然以用户主动订阅/打开为主，没有像抖音/头条那样的中心化流量池，还是偏去中心化
 - 一句话：微信不喂流量，你自己搞流量，粉丝归你，但平台管生死
 
-## 三、小程序：到底是啥？
+### 三、小程序：到底是啥？
 - 定位：生态去中心化，底层中心化
 - 入口：没有官方首页/应用商店式入口，靠扫码、分享、聊天、搜一搜、附近、公众号跳转——用户主动触发，平台不强制分发
 - 流量逻辑：和公众号一致，私域/社交/搜索为主，平台不做中心化流量分配
 - 一句话：即用即走、入口分散、流量自驱，底层全在微信服务器
 
-## 四、常见其他产品对比（一眼看懂）
+### 四、常见其他产品对比（一眼看懂）
 
 ✅ 中心化（平台掌控流量、分发、用户）
 - 抖音、快手、今日头条、小红书（算法推荐池，平台决定给谁曝光）
@@ -568,7 +568,7 @@ pnpm -v
 `2026-04-24`
 
 
-## 一、MVC 到底是啥？
+### 一、MVC 到底是啥？
 **MVC 是一种代码分层架构思想**，不是框架，不是技术，就是**把代码按功能分成 3 块**，让项目不乱、好维护、好改。
 
 全称：
@@ -576,12 +576,12 @@ pnpm -v
 - **V（View）视图**：管**页面展示**（前端 HTML/页面）
 - **C（Controller）控制器**：管**请求入口/响应出口**（接收请求、返回结果）
 
-### 一句话总结 MVC
+#### 一句话总结 MVC
 > **Controller 接收请求 → 调用 Service 处理业务 → Service 调用 Model 操作数据 → Controller 返回结果**
 
 ---
 
-## 二、Node.js 后台服务里：Controller / Service / Model 是标配吗？
+### 二、Node.js 后台服务里：Controller / Service / Model 是标配吗？
 **是的！而且是绝大多数企业级 Node.js 后台的标准分层结构！**
 
 但注意：**纯后端服务里没有 View**，所以后端实际是 **Controller + Service + Model** 三层架构。
@@ -590,9 +590,9 @@ pnpm -v
 
 ---
 
-## 三、每层到底做什么？（最实用的解释）
+### 三、每层到底做什么？（最实用的解释）
 
-### 1. Controller（控制器）—— 门卫/入口
+#### 1. Controller（控制器）—— 门卫/入口
 **只做两件事：**
 - 接收前端发来的请求（参数、路径、方法）
 - 把结果返回给前端
@@ -612,7 +612,7 @@ async function login(req, res) {
 
 ---
 
-### 2. Service（业务逻辑层）—— 核心大脑
+#### 2. Service（业务逻辑层）—— 核心大脑
 **这一层最重要！**
 - 处理所有业务规则
 - 做判断、计算、流程控制
@@ -637,7 +637,7 @@ async function login(username, password) {
 
 ---
 
-### 3. Model（数据模型）—— 数据库工具人
+#### 3. Model（数据模型）—— 数据库工具人
 **只和数据库打交道：**
 - 增删改查
 - 数据表结构定义
@@ -653,7 +653,7 @@ async function findByUsername(username) {
 
 ---
 
-## 四、为什么要分成这三层？（好处）
+### 四、为什么要分成这三层？（好处）
 - **代码不乱**：谁该干嘛清清楚楚
 - **好维护**：改业务不动入口，改数据库不动业务
 - **好复用**：Service 可以被多个 Controller 调用
@@ -662,7 +662,7 @@ async function findByUsername(username) {
 
 ---
 
-## 五、一个完整的请求流程（你一看就懂）
+### 五、一个完整的请求流程（你一看就懂）
 ```
 前端请求
    ↓
@@ -677,7 +677,7 @@ Model（操作数据库）
 
 ---
 
-## 六、最简单的结论
+### 六、最简单的结论
 1. **MVC 是代码分层思想**
 2. **Node.js 后台不用 View，只用 C + S + M**
 3. **Controller / Service / Model 是 Node.js 后台最标准、最常用的结构**
@@ -688,7 +688,7 @@ Model（操作数据库）
 
 ---
 
-### 总结
+#### 总结
 - **MVC = 分层思想**，后端简化为 **Controller + Service + Model**
 - 这三层**是 Node.js 后台服务的标配**，企业项目必用
 - 职责清晰：入口 → 业务 → 数据
@@ -779,7 +779,7 @@ product.value 一开始为 null，可以复现 https://github.com/Tencent/tdesig
 
 没必要单独沉淀一个包。原因如下：
 
-## 不建议单独成包的理由
+### 不建议单独成包的理由
 
 1. **代码量极少**：Vite 版本 ~10 行，Webpack 版本 ~10 行，完全不值得一个独立 npm 包的维护成本（package.json、README、构建配置、发版流程等）
 
@@ -789,7 +789,7 @@ product.value 一开始为 null，可以复现 https://github.com/Tencent/tdesig
 
 4. **Vite 和 Webpack 的插件接口不同**：如果要做成独立包，要么拆成两个包（更不值得），要么做适配层（过度设计）
 
-## 当前做法已经是最佳实践
+### 当前做法已经是最佳实践
 
 现在的方式——在每个配置包内部定义一个私有的 `buildTimePlugin()` / `BuildTimePlugin` class，是最合理的：
 
@@ -910,11 +910,11 @@ press-picker-plus-popup-plus
 `2026-04-10`
 
 
-## `target` 什么情况下会影响产物？
+### `target` 什么情况下会影响产物？
 
 `target` 是否影响最终产物，取决于你的**构建流程**：
 
-### 1. 直接用 `tsc` 编译输出产物时 —— **会影响**
+#### 1. 直接用 `tsc` 编译输出产物时 —— **会影响**
 
 如果你的项目直接使用 `tsc`（TypeScript 编译器）来生成最终的 JS 文件，那么 `target` 会**直接决定产物的语法级别**。例如：
 
@@ -927,7 +927,7 @@ press-picker-plus-popup-plus
 
 **典型场景**：纯 Node.js 工具库、CLI 工具、不使用 Babel/Rollup 的项目。
 
-### 2. 使用 Babel/Rollup/Webpack 等工具链时 —— **通常不影响**
+#### 2. 使用 Babel/Rollup/Webpack 等工具链时 —— **通常不影响**
 
 这就是你当前项目（t-comm）的情况。构建流程是：
 
@@ -943,7 +943,7 @@ graph LR
 
 所以 `target` 设成 `ES2015` 还是 `ESNext` 都不影响最终产物，因为 Babel 会按照自己的 `@babel/preset-env` 配置来决定降级到什么程度。
 
-### 3. `target` 仍然会影响的几个方面
+#### 3. `target` 仍然会影响的几个方面
 
 即使有 Babel，`target` 仍然会影响以下内容：
 
@@ -954,7 +954,7 @@ graph LR
 | **类型检查行为** | 某些语法在低 `target` 下会报错，比如 `target: "ES3"` 不支持 getter/setter |
 | **`tsc --noEmit` 的检查逻辑** | `target` 影响 TypeScript 对某些 API 可用性的判断 |
 
-### 总结
+#### 总结
 
 对于你的项目（t-comm），由于使用了 **Rollup + Babel** 构建：
 - `target` **不影响**最终打包产物的语法兼容性
@@ -1382,7 +1382,7 @@ flowchart TD
 
 一句话记住：**`proxy_pass` 不带路径 = 原样转发，带路径（哪怕只是 `/`）= 替换 location 前缀**。这就是为什么仅仅多一个 `/` 就能决定后端收到的是 `/tapd-solution-cgi/api/solutions` 还是 `/api/solutions`。
 
-### 撤回废弃
+## 撤回废弃
 
 `2026-03-29`
 
@@ -1394,7 +1394,7 @@ npm deprecate tdesign-uniapp-chat ""
 npm deprecate "tdesign-uniapp-chat@*" "This package has been renamed to @tdesign/uniapp-chat. Please install @tdesign/uniapp-chat instead. See https://tdesign.tencent.com/uniapp-chat/getting-started/ for more details."
 ```
 
-### bash 代码片段
+## bash 代码片段
 
 `2026-03-25`
 
@@ -1421,7 +1421,7 @@ npm deprecate tdesign-uniapp "This package has been renamed to @tdesign/uniapp. 
 5. 希望大模型自动编排
 6. 工具数量 > 50，且用户需要"发现"哪些工具存在
 
-### sh 代码片段
+## sh 代码片段
 
 `2026-03-24`
 
@@ -1430,7 +1430,7 @@ npm deprecate tdesign-uniapp "This package has been renamed to @tdesign/uniapp. 
 scp group-new:/root/guowangyang/protoc-gen-http-ts/main /Users/guowangyang/Documents/git-woa/gen-proto-ts/main
 ```
 
-### bash 代码片段
+## bash 代码片段
 
 `2026-03-24`
 
@@ -1460,7 +1460,7 @@ npm 的下载量统计不是实时更新的：
 
 - 每天批量更新一次：npm 的统计后端每天跑一次批处理任务来聚合前一天的下载日志，通常在 UTC 时间每天凌晨 更新完成
 
-### slug 的含义
+## slug 的含义
 
 `2026-03-22`
 
@@ -2182,7 +2182,7 @@ KANO模型（卡诺模型）是东京理工大学狩野纪昭教授于1984年提
 
 据可查的资料显示，产品经理（Product Manager）诞生于 20 世纪二三十年代的宝洁，产品经理做的事情呢，听起来和项目经理（Project Manager）很像。没错，这两个“经理”都是一个跨职能部门的负责人，通常都没有实权，而且需要做很多沟通协调的事情。
 
-### mermaid 代码片段
+## mermaid 代码片段
 
 `2026-02-14`
 
@@ -2383,7 +2383,7 @@ flowchart LR
 
 <img src="https://cdn.uwayfly.com/article/2026/1/own_mike_fNPQxPzGXmMyA4FX.png" width="500"/>
 
-### sh 代码片段
+## sh 代码片段
 
 `2026-01-29`
 
