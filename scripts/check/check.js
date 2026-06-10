@@ -2,7 +2,6 @@ import { readFileSync } from 't-comm';
 import * as glob from 'glob';
 
 const SIDE_BAR_PATH = '.vitepress/sidebar.json';
-const SIDE_BAR_WORK_PATH = '.vitepress/sidebar-work-docs.json';
 const DOCS_GLOB = './docs/**/*.md';
 const BLACK_LIST = [
   'docs/work/index.md',
@@ -10,10 +9,8 @@ const BLACK_LIST = [
 
 function main() {
   const data = readFileSync(SIDE_BAR_PATH, true);
-  const workData = readFileSync(SIDE_BAR_WORK_PATH, true);
   const list = [
     ...data.sidebar,
-    ...workData.sidebar,
   ];
 
   const allItems = list.reduce((acc, item) => [

@@ -111,6 +111,42 @@
         {
           "text": "Devcloud 空间清理",
           "link": "/docs/2026上/Devcloud-空间清理.md"
+        },
+        {
+          "text": "web-container - PC 手机视窗模拟",
+          "link": "/docs/2026上/web-container-PC手机视窗模拟.md"
+        },
+        {
+          "text": "tdesign-uniapp 适配 Vue2.x 踩坑合集",
+          "link": "/docs/2026上/tdesign-uniapp-适配-Vue2.x-踩坑合集.md"
+        },
+        {
+          "text": "TAPD Bug 自动修复系统",
+          "link": "/docs/2026上/TAPD-Bug-自动修复系统.md"
+        },
+        {
+          "text": "TDesign Tab 高度链断裂问题",
+          "link": "/docs/2026上/TDesign-Tab-高度链断裂问题.md"
+        },
+        {
+          "text": "BCS 的 envFrom",
+          "link": "/docs/2026上/BCS-的-envFrom.md"
+        },
+        {
+          "text": "pnpm 的 Hoisting 提升机制",
+          "link": "/docs/2026上/pnpm-的-Hoisting-提升机制.md"
+        },
+        {
+          "text": "AI 自动评审与自动修复",
+          "link": "/docs/2026上/AI-自动评审与自动修复.md"
+        },
+        {
+          "text": "Vue3 uniapp 项目开启 soucemap 后打包报错",
+          "link": "/docs/2026上/Vue3-uniapp-项目开启-soucemap-后打包报错.md"
+        },
+        {
+          "text": "Midscene vs Browser-Use",
+          "link": "/docs/2026上/5月/Midscene-vs-Browser-Use.md"
         }
       ]
     },
@@ -407,6 +443,10 @@
         {
           "text": "红包算法",
           "link": "/docs/2024上/红包算法.md"
+        },
+        {
+          "text": "非技术笔记",
+          "link": "/docs/2024上/非技术笔记.md"
         }
       ]
     },
