@@ -2,7 +2,7 @@
   "sidebar": [
     {
       "text": "2026上",
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         {
           "text": "CDN 证书配置",
@@ -116,7 +116,7 @@
     },
     {
       "text": "2025下",
-      "collapsed": false,
+      "collapsed": true,
       "items": [
         {
           "text": "内存占用过高",

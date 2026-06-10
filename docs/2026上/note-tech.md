@@ -14,7 +14,7 @@ novlan1
 
 对，`code xxx.code-workspace` 在 VS Code / CodeBuddy 里是 **"以工作区方式打开"**，不是"编辑这个文件"。要编辑它的内容，有几种方式：
 
-## 方法 1：当作普通 JSON 文件编辑（最直接）
+### 方法 1：当作普通 JSON 文件编辑（最直接）
 
 ```bash
 # 强制以"文件"方式打开编辑
@@ -38,7 +38,7 @@ open -t /Users/guowangyang/Documents/git-woa/gp-multi.code-workspace
 vim /Users/guowangyang/Documents/git-woa/gp-multi.code-workspace
 ```
 
-## 方法 2：已经在工作区模式下，用命令面板打开
+### 方法 2：已经在工作区模式下，用命令面板打开
 
 这是**最推荐的日常做法**——你已经用 workspace 模式打开了 IDE，想编辑挂载列表时：
 
@@ -48,7 +48,7 @@ vim /Users/guowangyang/Documents/git-woa/gp-multi.code-workspace
 
 保存后立即生效，不用重启。
 
-## 方法 3：通过 UI 增删文件夹（不用手写 JSON）
+### 方法 3：通过 UI 增删文件夹（不用手写 JSON）
 
 在工作区模式下：
 - **加仓库**：左侧资源管理器空白处右键 → `Add Folder to Workspace...` → 选目录
@@ -59,7 +59,7 @@ vim /Users/guowangyang/Documents/git-woa/gp-multi.code-workspace
 
 ---
 
-## 关于你截图里的现象再补一句
+### 关于你截图里的现象再补一句
 
 你之前截图看到 `code my-projects.code-workspace` 没"打开文件"——那其实是**正常行为**：它打开的是**工作区**（左上角标题会变成 `xxx (Workspace)`）。要看 JSON 内容就用上面方法 2 的命令面板，最方便。
 
@@ -73,7 +73,7 @@ vim /Users/guowangyang/Documents/git-woa/gp-multi.code-workspace
 
 我给你用**最通俗、最清晰**的方式逐段解释👇
 
-# 整体作用
+### 整体作用
 这个文件让你：
 1. **同时打开 6 个独立项目**（不用一个个打开文件夹）
 2. **统一隐藏不需要看的文件**（node_modules、dist 等）
@@ -82,9 +82,9 @@ vim /Users/guowangyang/Documents/git-woa/gp-multi.code-workspace
 
 ---
 
-# 逐段解释
+### 逐段解释
 
-## 1. folders（核心：同时打开多个项目）
+#### 1. folders（核心：同时打开多个项目）
 ```json
 "folders": [
   { "name": "gp-next", "path": "gp-next" },
@@ -104,8 +104,8 @@ vim /Users/guowangyang/Documents/git-woa/gp-multi.code-workspace
 
 ---
 
-## 2. settings（统一编辑器设置）
-### A. files.exclude（文件隐藏）
+#### 2. settings（统一编辑器设置）
+##### A. files.exclude（文件隐藏）
 ```json
 "files.exclude": {
   "**/node_modules": true,
@@ -116,7 +116,7 @@ vim /Users/guowangyang/Documents/git-woa/gp-multi.code-workspace
 - 在 VS Code 左侧文件树**隐藏**这些文件夹
 - 你看不到，但它们真实存在
 
-### B. search.exclude（搜索排除）
+##### B. search.exclude（搜索排除）
 ```json
 "search.exclude": {
   "**/node_modules": true,
@@ -129,7 +129,7 @@ vim /Users/guowangyang/Documents/git-woa/gp-multi.code-workspace
 - 全局搜索（Ctrl+Shift+F）**不搜索**这些文件
 - 避免搜索结果爆炸、卡顿
 
-### C. files.watcherExclude（文件监听排除）
+##### C. files.watcherExclude（文件监听排除）
 ```json
 "files.watcherExclude": {
   "**/node_modules/**": true,
@@ -140,7 +140,7 @@ vim /Users/guowangyang/Documents/git-woa/gp-multi.code-workspace
 - VS Code **不监听**这些文件夹的变化
 - 减少 CPU 占用、防止编辑器卡顿
 
-### D. TypeScript 内存配置
+##### D. TypeScript 内存配置
 ```json
 "typescript.tsserver.maxTsServerMemory": 8192
 ```
@@ -149,7 +149,7 @@ vim /Users/guowangyang/Documents/git-woa/gp-multi.code-workspace
 
 ---
 
-## 3. extensions（推荐插件）
+#### 3. extensions（推荐插件）
 ```json
 "extensions": {
   "recommendations": []
@@ -160,7 +160,7 @@ vim /Users/guowangyang/Documents/git-woa/gp-multi.code-workspace
 
 ---
 
-# 一句话总结
+### 一句话总结
 这是一个 **VS Code 多项目工作区配置**，用来：
 - 同时打开 6 个前端项目
 - 统一隐藏无用文件
@@ -169,7 +169,7 @@ vim /Users/guowangyang/Documents/git-woa/gp-multi.code-workspace
 
 ---
 
-### 总结
+##### 总结
 - **folders**：一次性打开多个项目
 - **files.exclude**：左侧隐藏文件
 - **search.exclude**：搜索不查这些
@@ -186,12 +186,11 @@ vim /Users/guowangyang/Documents/git-woa/gp-multi.code-workspace
 
 `2026-05-26`
 
-# .git/info/exclude 是干嘛的？
 简单说：**它是 Git 项目里「只对你自己生效」的忽略文件**，作用和 `.gitignore` 几乎一样，但**不会被提交到 Git 仓库、不会共享给团队成员**。
 
 ---
 
-## 核心区别（一看就懂）
+### 核心区别（一看就懂）
 | 文件 | 作用 | 是否提交到仓库 | 是否共享给团队 |
 |------|------|----------------|----------------|
 | `.gitignore` | 团队通用忽略规则 | ✅ 是 | ✅ 是（所有人都生效） |
@@ -199,7 +198,7 @@ vim /Users/guowangyang/Documents/git-woa/gp-multi.code-workspace
 
 ---
 
-## 什么时候用 .git/info/exclude？
+### 什么时候用 .git/info/exclude？
 你只需要在**自己电脑上忽略**，**不想让团队其他人也跟着忽略**的文件，就放这里：
 
 1. 你本地编辑器生成的临时文件（比如 `.idea/`、`.vscode/`、`*.swp`）
@@ -209,7 +208,7 @@ vim /Users/guowangyang/Documents/git-woa/gp-multi.code-workspace
 
 ---
 
-## 怎么用？
+### 怎么用？
 1. 打开项目里的这个文件（路径固定）
    ```
    你的项目/.git/info/exclude
@@ -231,14 +230,14 @@ vim /Users/guowangyang/Documents/git-woa/gp-multi.code-workspace
 
 ---
 
-## 重要提醒
+### 重要提醒
 - **它不会被提交**：你写的规则只有你自己能用，队友看不到
 - **优先级**：和 `.gitignore` 一起生效，谁忽略都行
 - **不要**把团队需要共用的忽略规则写在这里（那是 `.gitignore` 的职责）
 
 ---
 
-### 总结
+#### 总结
 - **.gitignore** = 团队共用忽略
 - **.git/info/exclude** = **你自己本地专用忽略**
 
@@ -248,9 +247,9 @@ vim /Users/guowangyang/Documents/git-woa/gp-multi.code-workspace
 
 这是一个很实用的问题，我来帮你总结一下算法题中 `for` 和 `while` 的选择规则。
 
-## 核心判断标准：**循环的推进方式是否固定**
+### 核心判断标准：**循环的推进方式是否固定**
 
-### 用 `for` 循环的场景
+#### 用 `for` 循环的场景
 
 **特征：有一个指针/索引在每次迭代中固定前进一步**
 
@@ -267,7 +266,7 @@ for (let i = 0; i < n; i++) { ... }
 
 ---
 
-### 用 `while` 循环的场景
+#### 用 `while` 循环的场景
 
 **特征：循环的推进方式不固定，或有多个指针在"竞争"推进**
 
@@ -287,7 +286,7 @@ while (条件) {
 
 ---
 
-## 快速判断口诀
+### 快速判断口诀
 
 | 问自己 | 答案 | 选择 |
 |--------|------|------|
@@ -298,7 +297,7 @@ while (条件) {
 
 ---
 
-## 对比你做过的题
+### 对比你做过的题
 
 | 题目 | 循环方式 | 原因 |
 |------|----------|------|
@@ -309,13 +308,13 @@ while (条件) {
 
 ---
 
-## 一句话总结
+### 一句话总结
 
 > **有"主驱动指针"每轮固定走一步 → `for`；推进逻辑不固定 → `while`**
 
 滑动窗口题之所以用 `for`，是因为 `right` 是"主驱动"，它每轮必走一步；而 `left` 只是"被动调整"，在循环体内按条件跳。双指针对撞用 `while`，是因为 `left` 和 `right` 地位平等，每轮只有一个动，谁动取决于条件判断。
 
-## 1. Clean Architecture（整洁架构）
+## Clean Architecture && DDD
 
 `2026-05-26`
 
@@ -326,6 +325,7 @@ while (条件) {
 通俗理解：一套软件分层设计思想，核心是业务逻辑（核心）不受外部技术、框架、数据库、接口影响，代码分层清晰、依赖单向、易维护、易测试。
 
 核心特点
+
 - 圈层结构：领域层 > 应用层 > 接口 / 基础设施层
 - 依赖规则：外层依赖内层，内层绝不依赖外层
 - 业务逻辑独立：换数据库、换前端、换第三方接口，核心代码不用改
@@ -388,7 +388,7 @@ npx prettier scripts/generate-css-vars.mjs --write
 
 contentHeight 就是 popoverContentHeight，这样就好理解多了。
 
-### popover 组件的 placement 取值有 le…
+## popover 组件的 placement 取值有 le…
 
 `2026-01-17`
 
@@ -429,7 +429,7 @@ if (isTopBase) {
 }
 ```
 
-## - 哪些任务交给 AI 最「划算」
+## 哪些任务交给 AI 最「划算」
 
 `2026-01-16`
 
@@ -567,7 +567,7 @@ if (isTopBase) {
 - 纯样式库（无逻辑组件）
 - 小型项目（< 10 个组件，手动维护更高效）
 
-## - 如果组件库质量差（类型定义不全、缺少 Demo），再…
+## 如果组件库质量差（类型定义不全、缺少 Demo），再…
 
 `2026-01-12`
 
@@ -575,18 +575,16 @@ if (isTopBase) {
 - 如果架构设计不合理（不分层、不排序），检索体验会很差
 - AI 只是锦上添花，数据质量才是根本
 
-## 某次腾讯文档xx
+## 某次腾讯文档XX
 
 `2026-01-12`
-
-某次腾讯文档xx
 
 - Uniapp技术选型
 - 赛程为什么不用canvas
 - 国际化原理 安全问题
 - 小程序底层原理
 
-### 计算属性只在相关响应式依赖发生改变时它们才会重新求值。这…
+## 计算属性只在相关响应式依赖发生改变时它们才会重新求值。这…
 
 `2026-01-11`
 
@@ -602,7 +600,7 @@ computed: {
 ｝
 ```
 
-## - 技术优化在业务应用中的稳定性和可靠性：是否能够长时间…
+## 技术优化在业务应用中的稳定性和可靠性：是否能够长时间…
 
 `2026-01-10`
 
