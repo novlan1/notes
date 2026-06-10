@@ -4,7 +4,7 @@ layout: home
 
 hero:
   name: 'Notes'
-  text: 'Learning Running <br />Everything Keeping'
+  text: 'Stay The Course'
   tagline: 'Powered by novlan1'
   image:
     src: https://cdn.uwayfly.com/press%2Fimg%2Fpress-ui-avatar-transparent.png
