@@ -95,7 +95,7 @@ export default withMermaid({
             link: 'https://tdesign.tencent.com/uniapp/live#/',
           },
           {
-            text: 'TD Uniapp Doc',
+            text: 'TD Uniapp Docs',
             link: 'https://tdesign.tencent.com/uniapp/overview/',
           },
           {
