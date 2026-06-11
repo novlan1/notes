@@ -6,6 +6,12 @@ novlan1
 
 :::
 
+## 2026H1 紧凑版本
+
+`2026-06-11`
+
+负责 TDesign 移动端组件开发与多端适配，横跨 miniprogram、mobile-vue、mobile-react 三大仓库。在小程序侧，主导 tdesign-uniapp 从 0.1.0 到 0.9.0 的全生命周期建设，实现 Vue2/Vue3 + H5 + 微信小程序多端适配，新增 Table、AI Chat 等组件并完成主题系统搭建；在 Vue 侧，增强 Table（fixedRows、scroll-to-bottom）、Dialog 异步关闭、Message 单例/间距、Slider 垂直模式等能力，完成 3 个版本发布；在 React 侧，新增 DateTimePicker 组件，扩展 Table/Calendar/Tabs/Popup 等组件能力，并系统性补充多组件测试用例。同时发表 TDesign UniApp 相关 KM 文章 2 篇，沉淀跨端适配方案与实践经验；TDesign UniApp 项目获得腾讯微创新奖。过去一年累计提交 109 次，净增代码 15.8 万行，完成 8+ 版本发布，覆盖新组件开发、Bug 修复、测试补充与国际化文档，对 TDesign 移动端三端生态的完整性和质量提升起到核心推动作用。
+
 ## 2026H1 原始数据
 
 `2026-06-11`
