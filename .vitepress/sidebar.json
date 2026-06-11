@@ -13,16 +13,36 @@
           "link": "/docs/2026上/Typescript-教程笔记.md"
         },
         {
-          "text": "非技术思考",
-          "link": "/docs/2026上/非技术思考.md"
+          "text": "技术笔记一",
+          "link": "/docs/2026上/01.note-tech-1.md"
+        },
+        {
+          "text": "技术笔记二",
+          "link": "/docs/2026上/01.note-tech.md"
+        },
+        {
+          "text": "技术思考",
+          "link": "/docs/2026上/02.note-tech-thought.md"
         },
         {
           "text": "非技术笔记",
-          "link": "/docs/2026上/非技术笔记.md"
+          "link": "/docs/2026上/03.note-no-tech.md"
         },
         {
-          "text": "技术笔记",
-          "link": "/docs/2026上/技术笔记.md"
+          "text": "非技术思考",
+          "link": "/docs/2026上/04.note-no-tech-thought.md"
+        },
+        {
+          "text": "TDesign 碎片笔记",
+          "link": "/docs/2026上/05.note-tdesign-library.md"
+        },
+        {
+          "text": "AI 碎片笔记",
+          "link": "/docs/2026上/07.note-ai-module.md"
+        },
+        {
+          "text": "PUBGM 碎片笔记",
+          "link": "/docs/2026上/10.note-pubgm-match.md"
         },
         {
           "text": "Cherry Markdown 支持流式输出包",
@@ -79,18 +99,6 @@
         {
           "text": "机器人消息录入",
           "link": "/docs/2026上/机器人消息录入.md"
-        },
-        {
-          "text": "TDesign 碎片笔记",
-          "link": "/docs/2026上/TDesign-碎片笔记.md"
-        },
-        {
-          "text": "AI 碎片笔记",
-          "link": "/docs/2026上/AI-碎片笔记.md"
-        },
-        {
-          "text": "PUBGM 碎片笔记",
-          "link": "/docs/2026上/PUBGM-碎片笔记.md"
         },
         {
           "text": "TDesign Vue2 开发踩坑",
