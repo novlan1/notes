@@ -1,88 +1,126 @@
-## 一、问题分类
+# uniapp message 组件「连续点击就消失/无响应」修复说明
 
-非 single 模式（`msg.single` 为 false/未传）和 single 模式的代码路径完全不同，咱们先把两条路径理清：
+## 一、Bug 现象
 
-| 模式 | id 生成 | 走的分支 | 是否复用 instance |
-|------|---------|----------|-------------------|
-| **非 single** | `${name}_${this.index}`（每次自增，必然唯一） | setMessage 里 `findIndex < 0` 永远成立 → 走 `addMessage` | ❌ 每次都是新建 |
-| **single** | 固定 `${name}_inner` | 第一次走 addMessage，第二次起走复用分支 | ✅ 复用同一个组件 ref |
+连续点击触发 message 弹出时：
+- 部分消息不到 1s 就消失（远早于 duration）
+- 部分点击没反应
+- 控制台无报错
 
-## 二、本轮 3 处修改逐个评估
+## 二、根因
 
-### 修改 ① — `message-item.vue`：`hide` 里 setTimeout 加 `hideTimeoutContext`，`reset()` 中清掉
+复用同一 message-item 的场景下（如 `single: true`，或同一容器复用 ref），组件中存在 **3 个 setTimeout 没有被正确清理**，导致旧定时器干扰新一轮展示：
 
-**作用范围**：所有模式（every message-item 实例）
+| # | 定时器位置 | 用途 | 原代码缺陷 |
+|---|-----------|------|-----------|
+| 1 | `message-item.show` 中 `closeTimeoutContext` | duration 到期触发 hide | `resetData` 只把字段重置为 0，并未 `clearTimeout`，旧定时器仍在跑 |
+| 2 | `message-item.hide` 中 `setTimeout(SHOW_DURATION)` | 400ms 后置 `visible=false` | 裸 setTimeout，没有句柄，无法清除 |
+| 3 | `message.close` 中 `setTimeout(SHOW_DURATION)` | 400ms 后从 messageList 移除占位 | 裸 setTimeout，没有句柄，无法清除 |
 
-**对非 single 的影响**：
-- 非 single 模式下每条消息都是独立组件实例，每个实例只 hide 一次就销毁，`hideTimeoutContext` 只会被赋值一次，到期后自然走完逻辑
-- `reset()` 清 `hideTimeoutContext` 仅在"组件还活着且要重新 show"时才有意义，非 single 模式不会发生这种情形（不复用），所以这段 clearTimeout 是个 no-op
-- ✅ **完全无副作用**，对非 single 是纯防御性代码
+新一轮 show 启动后，上述任一旧定时器到期都会把新消息「hide / visible=false / 占位移除」掉，造成闪退或无响应。
 
-### 修改 ② — `message.vue`：复用分支 `setMessage` 的 else 里 `instance.reset()` + `instance.onHide = null`
+## 三、修复方案
 
-**作用范围**：**仅复用分支**（`instanceIndex >= 0`）
+围绕一个原则：**每个 setTimeout 都要有可被清除的句柄，并在下一轮 show 之前对称地清掉。**
 
-**对非 single 的影响**：
-- 非 single 模式 id 每次自增，永远走不到 else 分支
-- ✅ **路径上不可达，零影响**
+### 1. `message-item.vue`
 
-### 修改 ③ — `message.vue`：`removeMsgTimers` map + `setMessage` 入口按 id 取消 pending removeMsg + `close` 用 map 管理 setTimeout
+- `rawData` 增加 `hideTimeoutContext` 字段
+- `hide()` 中把 `setTimeout` 句柄保存到 `hideTimeoutContext`
+- `reset()` 中追加 `clearTimeout(hideTimeoutContext)`
 
-**作用范围**：所有模式
+→ 修复 #2
 
-**对非 single 的影响**逐项看：
+### 2. `message.vue`
 
-**a) `setMessage` 入口的 `if (this.removeMsgTimers[id]) clearTimeout`：**
-- 非 single 模式 id 每次都是 `${name}_${this.index}`（this.index 在 addMessage 成功后 +1），id 单调递增不会重复
-- 进入 setMessage 时 `removeMsgTimers[id]` 必然为 undefined，if 不成立，直接跳过
-- ✅ **走不进去，零影响**
+- `created()` 中初始化 `removeMsgTimers = {}`，按 id 管理 close 的延迟移除句柄
+- `close(id)` 用 `removeMsgTimers[id]` 替代裸 setTimeout，回调里 `delete` 自身
+- `setMessage` 入口先 `clearTimeout(removeMsgTimers[id])` 取消同 id 的 pending 移除
+- 复用分支（`setMessage` 的 else）和 `showMessageItem` 在 `resetData` 之前先调 `instance.reset()` 并把 `instance.onHide = null`
 
-**b) `close` 中 `if (this.removeMsgTimers[id]) clearTimeout` + 用 map 替代裸 setTimeout：**
-- 非 single 模式下，每条消息只会被 close 一次（duration 到期或手动关闭），map 里同 id 不会有 pending，if 也不成立
-- 后续逻辑等价于 `this.removeMsgTimers[id] = setTimeout(() => { this.removeMsg(id); delete this.removeMsgTimers[id]; }, SHOW_DURATION); this.removeInstance(id);`
-- 跟原来 `setTimeout(() => this.removeMsg(id), SHOW_DURATION); this.removeInstance(id);` 行为完全一致，只是多挂了个句柄到 map 上，到期 delete 自己
-- ✅ **行为等价，零影响**
+→ 修复 #1（通过显式 reset）和 #3（通过 map 管理）
 
-**c) 内存泄漏？**
-- map 里 key 在 setTimeout 回调执行后就 `delete`，不会越积越多
-- ✅ 没问题
+## 四、对原有逻辑的影响
 
-### 修改 ④（顺带的）— `showMessageItem` 里的 `instance.reset()` + `onHide = null`
+- **id 唯一的非复用场景**（每条消息独立组件实例）：新增的 clearTimeout 操作均为 no-op，行为完全等价
+- **复用 instance 场景**：补齐了原本缺失的对称清理逻辑，时序正确
+- 无 API 变更，无样式变更
 
-- 非 single 模式：`addMessage` 里通过 `this.$refs[id]` 拿到的就是新挂载的 message-item 实例，刚 mounted 没跑过 show，`closeTimeoutContext`/`hideTimeoutContext` 都是 0，调 reset() 就是几个 clearTimeout(0)，no-op
-- ✅ **无副作用**
+## 五、变更文件
 
-## 三、总览图
+- `message-item.vue`：`rawData` / `hide` / `reset`
+- [message.vue](/Users/guowangyang/Documents/github/tdesign-miniprogram/packages/uniapp-components/message/message.vue)：`created` / `setMessage` / `showMessageItem` / `close`
 
-```mermaid
-flowchart TD
-    A[setMessage 调用] --> B{msg.single?}
-    B -->|否| C[id=name_index 自增]
-    B -->|是| D[id=name_inner 固定]
+---
 
-    C --> E[清 removeMsgTimers id<br/>id 唯一,必走过]
-    D --> E
+# 关于 `v-if="idx === 0"` 这段改动的解释
 
-    E --> F{instances 中有同 id?}
-    F -->|否 非 single 必然到此| G[addMessage<br/>走 showMessageItem<br/>新实例 reset 是 no-op]
-    F -->|是 仅 single 可能到此| H[复用分支<br/>instance.reset + onHide=null<br/>resetData]
+图片中红色（左）是改前，绿色（右）是改后。改动核心是：**给 v-for 里所有的 `<slot>` 转发都加了 `v-if="idx === 0"` 限制，只对第一条消息透传 slot。**
 
-    G --> I[show -> duration 到期 hide -> close]
-    H --> I
-    I --> J[close 用 map 管理 removeMsg 定时器]
+## 一、为什么要加这个限制？
+
+### Vue 的 slot 机制限制
+
+在 Vue 里，**父组件传进来的 slot 内容是「同一份 VNode」**，正常用法是只在子组件树里渲染**一次**。
+
+而 message 容器的模板是这样的：
+
+```vue
+<t-message-item v-for="(item, idx) in messageList" :key="item.id">
+  <template #icon>
+    <slot name="icon" />   <!-- 这里把父组件的 icon slot 转发给每个 message-item -->
+  </template>
+  ...
+</t-message-item>
 ```
 
-## 四、结论
+当 `messageList` 里有多条消息时（连续点击调用 setMessage 会出现），`<slot name="icon" />` 会被渲染多次 —— 也就是**同一份 slot VNode 被复用到多个 message-item 实例**。
 
-| 修改点 | 对非 single 影响 |
-|--------|------------------|
-| ① message-item `hideTimeoutContext` | 无（纯防御） |
-| ② setMessage 复用分支 reset | 无（路径不可达） |
-| ③ removeMsgTimers map | 无（行为等价） |
-| ④ showMessageItem reset | 无（no-op） |
+### 由此产生的两类问题
 
-✅ **本轮所有修改对非 single 模式零行为变化**，纯粹是修复 single 模式（复用同一 instance）下的定时器互踩问题。
+#### 1️⃣ 控制台警告 / 报错
 
-## 五、修改思路一句话总结
+- **`Duplicate slot name "icon" found`** —— 同一个父组件里出现多个同名 `<slot>` 转发节点
+- **`Duplicate keys detected` / VNode 复用警告** —— slot 内的 DOM 节点带 key 时，多次复用会被 Vue 检测为重复 key
+- **`Cannot read property xxx of null`** —— uni-app 在某些端（小程序、抖音）下 slot 节点引用被 hoisted，多实例同时引用同一节点会触发 null 异常
 
-> **single 模式连续点击的本质是同一个 message-item 实例的生命周期被反复打断/重启，但组件内部有 3 个 setTimeout（show 中的 close 计时、hide 中的 fade 延迟、message 容器中的 removeMsg 延迟）原本没有「成对的清除时机」。本次修复给这 3 个定时器都补上「下一次 show 之前先清掉上一次的」对称逻辑，从而保证新一轮 show 的时序不会被前一轮的残留定时器破坏。**
+这就是你前面看到的"控制台报错"现象之一。
+
+#### 2️⃣ 同名 slot 渲染异常
+
+部分平台（尤其小程序端编译后）对一个父作用域内出现多个同名 slot 的处理是「最后一个生效」或「全部 fallback」，会出现 icon/content/link 渲染丢失或闪烁。
+
+## 二、为什么是 `idx === 0` 而不是别的方案？
+
+| 方案 | 评价 |
+|------|------|
+| ✅ **只在 `idx === 0` 渲染 slot** | 第一条消息拿到父级 slot 内容，后续消息不渲染 slot（它们只显示文本/icon prop 即可）。简单、零警告 |
+| ❌ 直接删掉 slot 转发 | 会丢失 message 组件作为容器时父组件传 icon/content/link 的能力 |
+| ❌ 用 `<slot v-bind="...">` 多份克隆 | Vue 本身不支持「克隆 slot VNode」，强行克隆会破坏 reactivity |
+| ❌ 给每个 slot 用不同 name | 父组件不知道有几个 message，没法预先命名 |
+
+**实际业务上**：message 的 icon/content/link slot 主要用于「单条消息高度自定义」的场景，连续多条同时存在时本就不合理（多条消息都长一样自定义内容没意义），所以**只让第一条吃到 slot 是符合直觉的取舍**。
+
+## 三、和本轮 bug 修复的关系
+
+这块改动**不是连续点击 bug 的主因**，但它解决了你当时观察到的：
+
+> "控制台有报错"、"还有点警告，一起解决下"
+
+中那部分**警告**——也就是 `Duplicate slot` / 同名 slot 之类的告警。修完之后控制台就只剩"消息消失"的功能 bug，从而更容易定位到真正的根因（定时器互踩）。
+
+## 四、注释也说明了这一点
+
+```vue
+<!-- slot 仅透传给第一条消息，避免 v-for 中产生多个同名 slot 的警告 -->
+```
+
+注释直接点题：**避免 v-for 中产生多个同名 slot 的警告**。
+
+## 总结
+
+这是一处**附带的告警治理**，不影响功能：
+
+- 触发条件：`messageList.length > 1`（连续点击/多条并存）
+- 副作用：同名 slot 在 v-for 里被多次渲染 → Vue 警告 / 多端兼容异常
+- 修复手段：`v-if="idx === 0"` 让 slot 转发只发生一次
