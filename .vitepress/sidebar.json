@@ -163,6 +163,10 @@
         {
           "text": "@tdesign/uniapp Image Viewer 缩放",
           "link": "/docs/2026上/@tdesign-uniapp-image-viewer缩放.md"
+        },
+        {
+          "text": "@tdesign/uniapp Message 连续点击报错修复",
+          "link": "/docs/2026上/@tdesign-uniapp-message连续点击报错修复"
         }
       ]
     },
