@@ -49,7 +49,7 @@
 ## 五、变更文件
 
 - `message-item.vue`：`rawData` / `hide` / `reset`
-- [message.vue](/Users/guowangyang/Documents/github/tdesign-miniprogram/packages/uniapp-components/message/message.vue)：`created` / `setMessage` / `showMessageItem` / `close`
+- `message.vue`：`created` / `setMessage` / `showMessageItem` / `close`
 
 ---
 
