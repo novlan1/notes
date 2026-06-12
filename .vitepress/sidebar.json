@@ -155,6 +155,14 @@
         {
           "text": "Midscene vs Browser-Use",
           "link": "/docs/2026上/Midscene-vs-Browser-Use.md"
+        },
+        {
+          "text": "@tdesign/uniapp 新增API属性",
+          "link": "/docs/2026上/@tdesign-uniapp-新增API属性.md"
+        },
+        {
+          "text": "@tdesign/uniapp Image Viewer 缩放",
+          "link": "/docs/2026上/@tdesign-uniapp-image-viewer缩放.md"
         }
       ]
     },
