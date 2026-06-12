@@ -52,13 +52,14 @@ npm run td:deps --pr 1
     - H5 需要发到 `github pages`，点开看看
     - tdesign-uniapp-starter-vue2-cli 需要执行 `npm run init`，进行引入路径修复
     - 小程序需要发到开发者工具，点开看看
+    - tdesign-uniapp-starter 除了 push 到组织下外，还要 push 到个人账户下
 2. tdesign-uniapp-starter-vue3-hx, tdesign-uniapp-starter-vue2-hx
     - 可能都需要同步 uniapp 中的 `pages.json`
     - tdesign-uniapp-starter-vue3-hx 需要执行 `npm run init`，进行 `replace-alias`
     - 更新构建无问题
     - H5 需要在 HX 中构建，然后 `notes` 下执行 `npm run td:hx:vue2` 和 `npm run td:hx:vue`
     - H5 发布到 `github pages`，点开看看
-    - Vue3 hx 需要主仓库的 dist 文件（npm run uniapp -- run release:prepare），vue2 hx等不需要
+    - Vue3 hx 需要主仓库的 dist 文件（`npm run uniapp -- run release:prepare`），vue2 hx等不需要
 
 类型检查
 
