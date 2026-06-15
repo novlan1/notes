@@ -434,7 +434,7 @@ created() {
 
 ### 2.4. 小结
 
-你当前代码中 [`created() { this.instances = [] }`](command:gongfeng.gongfeng-copilot.chat.open-symbol-in-file?%5B%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Ftdesign-uniapp-starter-vue2-cli%2Fsrc%2Fpages-more%2Fmessage%2Fbase%2Findex.vue%22%2C%22external%22%3A%22file%3A%2F%2F%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Ftdesign-uniapp-starter-vue2-cli%2Fsrc%2Fpages-more%2Fmessage%2Fbase%2Findex.vue%22%2C%22path%22%3A%22%2FUsers%2Fguowangyang%2FDocuments%2Fgithub%2Ftdesign-uniapp-starter-vue2-cli%2Fsrc%2Fpages-more%2Fmessage%2Fbase%2Findex.vue%22%2C%22scheme%22%3A%22file%22%7D%2C%22created%28%29%20%7B%20this.instances%20%3D%20%5B%5D%20%7D%22%2C%5B%7B%22line%22%3A100%2C%22character%22%3A2%7D%2C%7B%22line%22%3A100%2C%22character%22%3A14%7D%5D%5D) 的写法是正确的，**千万不要**把 `instances` 移到 `data()` 中。凡是存储组件实例、DOM 元素、定时器 ID 等**不需要视图响应的大型对象**，都应该用这种方式声明。
+你当前代码中 `created() { this.instances = [] }` 的写法是正确的，**千万不要**把 `instances` 移到 `data()` 中。凡是存储组件实例、DOM 元素、定时器 ID 等**不需要视图响应的大型对象**，都应该用这种方式声明。
 
 
 ## 3. 模板中使用到的变量需在 data 中声明
