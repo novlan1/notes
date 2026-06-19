@@ -61,7 +61,7 @@ npm run td:deps --pr 1
     - H5 发布到 `github pages`，点开看看
     - Vue3 hx 需要主仓库的 dist 文件（`npm run uniapp -- run release:prepare`），vue2 hx等不需要
 
-类型检查
+<u>类型检查</u>
 
 ```bash
 pnpm uniapp type-check
