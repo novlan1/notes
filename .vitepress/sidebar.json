@@ -166,7 +166,11 @@
         },
         {
           "text": "@tdesign/uniapp Message 连续点击报错修复",
-          "link": "/docs/2026上/@tdesign-uniapp-message连续点击报错修复"
+          "link": "/docs/2026上/@tdesign-uniapp-message连续点击报错修复.md"
+        },
+        {
+          "text": "引导系统设计文档",
+          "link": "/docs/2026上/引导系统设计文档.md"
         }
       ]
     },
