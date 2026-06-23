@@ -60,7 +60,7 @@ export default withMermaid({
             link: 'https://github.com/novlan1/press-ui/',
           },
           {
-            text: 'TDesign UniApp',
+            text: 'TDesign Uniapp',
             link: 'https://uwayfly.com/tdesign-uniapp/',
           },
         ],
