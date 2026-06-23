@@ -2,13 +2,11 @@ import { withMermaid } from 'vitepress-plugin-mermaid';
 import sidebarConfig from './sidebar.json';
 import { getFooterMessage } from './footer';
 
-
 // https://vitepress.dev/reference/site-config
 export default withMermaid({
   lang: 'zh-CN',
   title: '简单点',
   description: '杨的笔记',
-
 
   lastUpdated: true,
   cleanUrls: true,
@@ -87,6 +85,10 @@ export default withMermaid({
             link: 'https://www.npmjs.com/search?q=%40tdesign%2Funiapp',
           },
           {
+            text: 'TD Uniapp 插件',
+            link: 'https://ext.dcloud.net.cn/plugin?name=tdesign-uniapp',
+          },
+          {
             text: 'TAPD',
             link: 'https://tapd.woa.com/tapd_fe/my/work?default=1&jump_count=1',
           },
@@ -110,7 +112,7 @@ export default withMermaid({
             text: 'TD Uniapp Vue3 HX',
             link: 'https://tdesignoteam.github.io/tdesign-uniapp-starter-vue3-hx/#/',
           },
-           {
+          {
             text: 'TD Uniapp Vue2 CLI',
             link: 'https://tdesignoteam.github.io/tdesign-uniapp-starter-vue2-cli/#/',
           },
@@ -132,12 +134,12 @@ export default withMermaid({
     },
 
     sidebar: {
-      '/docs/': [
-        ...sidebarConfig.sidebar,
-      ],
+      '/docs/': [...sidebarConfig.sidebar],
     },
 
-    socialLinks: [{ icon: 'github', link: 'https://github.com/novlan1/notes/' }],
+    socialLinks: [
+      { icon: 'github', link: 'https://github.com/novlan1/notes/' },
+    ],
 
     footer: {
       message: getFooterMessage(),
