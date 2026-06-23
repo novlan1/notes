@@ -121,8 +121,28 @@ export default withMermaid({
             link: 'https://tdesignoteam.github.io/tdesign-uniapp-starter-vue2-hx/#/',
           },
           {
-            text: 'CF 赛事',
+            text: 'CF 赛事赛程页',
             link: 'https://h5.igame.qq.com/pmd-mobile.cg-match.cf-match.cf-pc/#/allscheduletopersonal/7336115/7336116/7336197/1?subGid=2',
+          },
+          {
+            text: '赛场',
+            link: 'https://h5.igame.qq.com/pmd-mobile.match.gp-next.gp/',
+          },
+          {
+            text: '赛场预发布',
+            link: 'https://h5-test.igame.qq.com/pmd-mobile.match.gp-next.gp/?tip_debug_cgi_env=prod',
+          },
+          {
+            text: '赛宝',
+            link: 'https://h5.nes.smoba.qq.com/pvpesport.next.user/',
+          },
+          {
+            text: '赛宝预发布',
+            link: 'https://h5-test.nes.smoba.qq.com/pvpesport.next.user.develop/?tip_debug_cgi_env=prod',
+          },
+          {
+            text: '更多链接',
+            link: '/docs/2024下/link',
           },
         ],
       },
