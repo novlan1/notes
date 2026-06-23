@@ -120,6 +120,10 @@ export default withMermaid({
             text: 'TD Uniapp Vue2 HX',
             link: 'https://tdesignoteam.github.io/tdesign-uniapp-starter-vue2-hx/#/',
           },
+          {
+            text: 'CF 赛事',
+            link: 'https://h5.igame.qq.com/pmd-mobile.cg-match.cf-match.cf-pc/#/allscheduletopersonal/7336115/7336116/7336197/1?subGid=2',
+          },
         ],
       },
     ],
