@@ -139,3 +139,75 @@ export default {
 - `touch-action: pan-y` 表示元素只允许浏览器接管纵向滚动，横向 touch 事件由 JS 处理，从而消除横滑抖动
 - 该属性是浏览器原生 CSS，**仅 H5 端生效**，小程序 / nvue 端会自动忽略，无副作用
 - 同理也可以用在其他自定义横滑组件上（如 swiper 容器、轮播 tab 等）
+
+### 2.11. `styleIsolation: 'shared'` 的配置说明
+
+微信、QQ 等小程序的自定义组件默认开启样式隔离（`isolated`），父组件的 `:deep()` 选择器无法穿透到子组件的 shadow-root 内部，因此当 `tdesign-uniapp` 组件被当作非页面级组件使用时，必须显式将其 `styleIsolation` 改为 `shared`，让外部 `t-class` / `:deep()` 写下来的样式能够命中组件内部节点。
+
+在 Vue 3 `<script setup>` 语法糖下，使用 `defineOptions` 声明：
+
+```html
+<script setup lang="ts">
+defineOptions({
+  options: {
+    styleIsolation: 'shared',
+  },
+});
+</script>
+```
+
+在 Options API 下，则直接挂在组件配置上：
+
+```js
+export default {
+  options: {
+    styleIsolation: 'shared',
+  },
+};
+```
+
+需要注意：
+
+- 该配置只对**小程序端**（微信、QQ、百度等）生效，H5 / App 平台会自动忽略，**无需做平台条件编译**；
+- 仅在**非页面级组件**（即被其他组件以自定义组件形式引入时）才需要声明，页面级组件的样式默认对其内部使用的 TDesign 组件可见，无需额外配置；
+- 配置后，外层通过 `t-class`、`:deep(.t-xxx)` 写入的样式才会生效，否则在小程序端会出现"H5 正常但小程序不生效"的现象。
+
+### 2.12. `:deep()` 在小程序端不生效的常见写法
+
+在 uniapp 项目中，H5 平台下 `<style>` 默认会被加上 `scoped`。如果直接在顶层裸写 `:deep(.xxx)`，编译产物会是这样的形式：
+
+```less
+.data-v-7c5535e6 .navbar {
+  padding: 20px;
+}
+```
+
+该选择器在 H5 下能命中元素，但在微信小程序的 shadow-root 结构下匹配不到组件内部节点，因此样式不会生效。
+
+正确的写法有两种（推荐第一种，与 uniapp H5 默认开启 `scoped` 的行为保持一致）：
+
+```html
+<!-- ✅ 推荐：保留 scoped，并嵌套在一个上层类名下 -->
+<style lang="less" scoped>
+  .app-page {
+    :deep(.navbar) {
+      padding: 20px;
+    }
+  }
+</style>
+```
+
+<img src="https://cdn.uwayfly.com/article/2026/6/own_mike_nnBE4JBJpjGbHbHw.png" width="600px" />
+
+```html
+<!-- ✅ 可选：不加 scoped，直接使用 :deep() -->
+<style lang="less">
+  :deep(.navbar) {
+    padding: 20px;
+  }
+</style>
+```
+
+<img src="https://cdn.uwayfly.com/article/2026/6/own_mike_rBCAxxr8dJZQdWre.png" width="600px" />
+
+简而言之：**要么不加 `scoped`，要么加了 `scoped` 就必须在外层包一层类名嵌套**，避免编译出 `[data-v-xxx] .navbar` 这种无法穿透小程序 shadow-root 的选择器。
