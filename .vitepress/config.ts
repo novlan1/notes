@@ -141,6 +141,10 @@ export default withMermaid({
             link: 'https://h5-test.nes.smoba.qq.com/pvpesport.next.user.develop/?tip_debug_cgi_env=prod',
           },
           {
+            text: '版权保护中心',
+            link: 'https://www.ccopyright.com.cn/',
+          },
+          {
             text: '更多链接',
             link: '/docs/2024下/link',
           },
