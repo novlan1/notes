@@ -16,7 +16,7 @@
     "td:dep": "npm run td:deps",
     "td:deps": "node scripts/td/install-deps.cjs",
     "normalize": "node scripts/normalize-note-headings.cjs",
-    "normalize:all": "npm run normalize -- docs/2026上/01.note-tech.md docs/2026上/02.note-tech-thought.md docs/2026上/03.note-no-tech.md docs/2026上/05.note-tdesign-library.md docs/2026上/07.note-ai-module.md --inplace"
+    "normalize:all": "npm run normalize -- docs/2026上/01.note-tech.md docs/2026上/02.note-tech-thought.md docs/2026上/03.note-no-tech.md docs/2026上/05.note-tdesign-library.md docs/2026上/07.note-ai-module.md docs/2026下/01.note-tech.md --inplace"
   },
   "devDependencies": {
     "@plugin-light/import-meta-resolve": "^0.0.2",

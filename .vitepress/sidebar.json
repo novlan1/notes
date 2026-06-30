@@ -1,6 +1,16 @@
 {
   "sidebar": [
     {
+      "text": "2026下",
+      "collapsed": true,
+      "items": [
+        {
+          "text": "技术笔记一",
+          "link": "/docs/2026下/01.note-tech.md"
+        }
+      ]
+    },
+    {
       "text": "2026上",
       "collapsed": true,
       "items": [
