@@ -7,6 +7,26 @@
         {
           "text": "技术笔记一",
           "link": "/docs/2026下/01.note-tech.md"
+        },
+        {
+          "text": "iOS 证书申请",
+          "link": "/docs/2026下/ios证书.md"
+        },
+        {
+          "text": "蓝牙通信",
+          "link": "/docs/2026下/蓝牙通信.md"
+        },
+        {
+          "text": "Cocos 某图片不展示问题",
+          "link": "/docs/2026下/cocos某图片不展示问题.md"
+        },
+        {
+          "text": "Cocos 中引导设计",
+          "link": "/docs/2026下/cocos中引导设计.md"
+        },
+        {
+          "text": "Cocos 中Toast不显示问题",
+          "link": "/docs/2026下/cocos中Toast不显示问题.md"
         }
       ]
     },
