@@ -82,3 +82,21 @@
 1. 钥匙串看不到私钥：说明这台Mac不是当初生成CSR的电脑，无法导出p12，必须回到原Mac操作，或重新生成CSR、证书
 2. 导出时没有.p12选项：没有选中证书下的私钥，要展开三角同时选中证书+私钥
 3. HBuilderX提示证书错误：p12密码填错、证书类型不对（开发/分发混淆）、描述文件和证书不匹配
+
+
+----
+
+---
+
+# 3. HX 安心打包报错问题
+
+<img src="https://cdn.uwayfly.com/article/2026/7/own_mike_zb6eTwMztJii2zNM.png" width="600" />
+
+> 签名失败
+>
+> 当前系统没有安装苹果根证书，是否打开证书目录(打开后依次安装证书AppleWWDRCAG3.cer,DeveloperIDCA.cer)
+
+解决方案，除了安装提示中的那两个证书外，还删除了之前的 Apple Distribution 证书，重新导入了一次！
+
+参考: https://ask.dcloud.net.cn/question/162257
+
