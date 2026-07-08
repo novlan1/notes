@@ -89,6 +89,14 @@ export default withMermaid({
             link: 'https://ext.dcloud.net.cn/plugin?name=tdesign-uniapp',
           },
           {
+            text: 'TD Uniapp iOS',
+            link: 'https://apps.apple.com/cn/app/id6785948656'
+          },
+          {
+            text: 'TD Uniapp Android',
+            link: 'https://cdn.uwayfly.com/tdesign-uniapp/apk/tdesign-uniapp.apk'
+          },
+          {
             text: 'TAPD',
             link: 'https://tapd.woa.com/tapd_fe/my/work?default=1&jump_count=1',
           },
@@ -147,6 +155,14 @@ export default withMermaid({
           {
             text: '更多链接',
             link: '/docs/2024下/link',
+          },
+          {
+            text: 'TD Uniapp 隐私协议',
+            link: 'https://cdn.uwayfly.com/tdesign-uniapp/privacy.html',
+          },
+          {
+            text: 'Press UI 隐私协议',
+            link: 'https://cdn.uwayfly.com/press-ui/privacy.html',
           },
         ],
       },
