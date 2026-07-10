@@ -9,12 +9,20 @@
           "link": "/docs/2026下/01.note-tech.md"
         },
         {
+          "text": "非技术笔记",
+          "link": "/docs/2026下/03.note-no-tech.md"
+        },
+        {
           "text": "iOS 证书申请",
           "link": "/docs/2026下/ios证书.md"
         },
         {
           "text": "蓝牙通信",
           "link": "/docs/2026下/蓝牙通信.md"
+        },
+        {
+          "text": "蓝牙通信优化",
+          "link": "/docs/2026下/蓝牙通信优化.md"
         },
         {
           "text": "Cocos 某图片不展示问题",
@@ -31,6 +39,18 @@
         {
           "text": "Cocos 碰一碰",
           "link": "/docs/2026下/cocos碰一碰.md"
+        },
+        {
+          "text": "Cocos 账号切换",
+          "link": "/docs/2026下/cocos账号切换.md"
+        },
+        {
+          "text": "Cocos 行为反馈系统",
+          "link": "/docs/2026下/cocos行为反馈系统.md"
+        },
+        {
+          "text": "Cocos 登录系统",
+          "link": "/docs/2026下/cocos登录系统.md"
         }
       ]
     },
