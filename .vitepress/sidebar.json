@@ -51,6 +51,10 @@
         {
           "text": "Cocos 登录系统",
           "link": "/docs/2026下/cocos登录系统.md"
+        },
+        {
+          "text": "Cocos 启动流程全图",
+          "link": "/docs/2026下/cocos启动流程全图.md"
         }
       ]
     },
