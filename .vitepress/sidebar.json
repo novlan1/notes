@@ -55,6 +55,10 @@
         {
           "text": "Cocos 启动流程全图",
           "link": "/docs/2026下/cocos启动流程全图.md"
+        },
+        {
+          "text": "Cocos 插屏优化",
+          "link": "/docs/2026下/cocos插屏优化.md"
         }
       ]
     },
