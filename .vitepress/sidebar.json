@@ -63,6 +63,10 @@
         {
           "text": "Cocos 任务奖励领取",
           "link": "/docs/2026下/cocos任务奖励领取.md"
+        },
+        {
+          "text": "iTOP WebLoginSdk 应用模块",
+          "link": "/docs/2026下/iTOP的WebLoginSdk应用模块.md"
         }
       ]
     },
