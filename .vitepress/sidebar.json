@@ -67,6 +67,10 @@
         {
           "text": "iTOP WebLoginSdk 应用模块",
           "link": "/docs/2026下/iTOP的WebLoginSdk应用模块.md"
+        },
+        {
+          "text": "Cocos 内存优化",
+          "link": "/docs/2026下/cocos内存优化.md"
         }
       ]
     },
