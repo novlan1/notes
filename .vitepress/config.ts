@@ -13,7 +13,7 @@ export default withMermaid({
   base: '/notes/',
 
   head: [
-    ['link', { rel: 'icon', href: '/notes/favicon.ico' }],
+    ['link', { rel: 'icon', href: 'https://cdn.uwayfly.com/article/2026/7/own_mike_RTabY5dKitRNRdBB.png' }],
     ['meta', { name: 'author', content: 'novlan1' }],
     [
       'meta',
