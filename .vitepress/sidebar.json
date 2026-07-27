@@ -71,6 +71,10 @@
         {
           "text": "Cocos 内存优化",
           "link": "/docs/2026下/cocos内存优化.md"
+        },
+        {
+          "text": "Cocos 启动黑屏优化",
+          "link": "/docs/2026下/cocos启动黑屏优化.md"
         }
       ]
     },
