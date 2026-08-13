@@ -79,6 +79,26 @@
         {
           "text": "从 Kont 看 Agent 链路",
           "link": "/docs/2026下/agent链路.md"
+        },
+        {
+          "text": "csharp learn",
+          "link": "docs/2026下/csharp-learn.md"
+        },
+        {
+          "text": "LLM",
+          "link": "docs/2026下/LLM.md"
+        },
+        {
+          "text": "机器学习",
+          "link": "docs/2026下/0.机器学习.md"
+        },
+        {
+          "text": "验证 MCP 鉴权",
+          "link": "docs/2026下/1.验证mcp鉴权.md"
+        },
+        {
+          "text": "Tdesign Uniapp Faq",
+          "link": "docs/2026下/@tdesign-uniapp-faq.md"
         }
       ]
     },
@@ -261,6 +281,10 @@
         {
           "text": "收蛋",
           "link": "/docs/2026上/33.鹅收蛋.md"
+        },
+        {
+          "text": "树",
+          "link": "docs/2026上/树.md"
         }
       ]
     },
