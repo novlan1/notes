@@ -65,7 +65,7 @@ colors = ['#1f77b4', '#ff7f0e', '#2ca02c']
 bars = axes[0].bar(models, accs, color=colors)
 axes[0].set_ylim(0.5, 1.0)   # 跟原来一致，靠 pad=15 + subplots_adjust(top=0.88) 给标题让位
 axes[0].set_ylabel('测试集准确率')
-axes[0].set_title('朴素贝叶斯三种模型准确率对比', pad=15)  # pad=15 标题上移
+axes[0].set_title('朴素贝叶斯三种模型准确率对比', pad=25)  # pad=15 标题上移
 for bar, a in zip(bars, accs):
     axes[0].text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.02,
                  f'{a:.2%}', ha='center', va='bottom', fontsize=11)

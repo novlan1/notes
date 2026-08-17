@@ -13,6 +13,7 @@
 | 5 | 5.decision_tree.py | 决策树分类 | 第 62 章 |
 | 6 | 6.random_forest.py | 随机森林 vs 决策树 + 网格搜索 | 第 70 章 |
 | 7 | 7.svm.py | SVM 线性核 vs RBF 核 | 第 47 章 |
+| 7b | 7b.svm_multiclass.py | SVM 多分类（OvO vs OvR） | 第 48/49 章 |
 | 8 | 8.adaboost.py | Adaboost vs 单决策树桩 | 第 76 章 |
 | 9 | 9.gbdt.py | GBDT 梯度提升树 | 第 82 章 |
 | 10 | 10.xgboost.py | XGBoost 多分类 | 第 81 章 |
