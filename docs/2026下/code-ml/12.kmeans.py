@@ -40,7 +40,8 @@ elbow_k = K_range[np.argmin(deltas) + 1]   # 二阶差分最小
 print(f'肘部法则建议 K = {elbow_k}')
 
 # ============ 可视化 ============
-os.makedirs('img', exist_ok=True)
+IMG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'img')
+os.makedirs(IMG_DIR, exist_ok=True)
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
 # 左图：聚类结果 + 簇中心
@@ -63,7 +64,7 @@ axes[1].legend()
 axes[1].grid(alpha=0.3)
 
 plt.tight_layout()
-out = 'img/12.kmeans.png'
+out = os.path.join(IMG_DIR, '12.kmeans.png')
 plt.savefig(out, dpi=120, bbox_inches='tight')
 print(f'图已保存: {out}')
 plt.show()

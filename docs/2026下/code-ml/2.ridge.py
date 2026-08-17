@@ -42,7 +42,8 @@ print('Lasso  MSE:', mse_lasso)
 print('Ridge  MSE:', mse_ridge)
 
 # ============ 可视化 ============
-os.makedirs('img', exist_ok=True)
+IMG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'img')
+os.makedirs(IMG_DIR, exist_ok=True)
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
 # 左图：三个模型系数对比（直方图）
@@ -75,7 +76,7 @@ axes[1].legend()
 axes[1].grid(alpha=0.3)
 
 plt.tight_layout()
-out = 'img/2.ridge.png'
+out = os.path.join(IMG_DIR, '2.ridge.png')
 plt.savefig(out, dpi=120, bbox_inches='tight')
 print(f'图已保存: {out}')
 plt.show()

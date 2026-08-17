@@ -54,7 +54,8 @@ print(f'MultinomialNB（词频）准确率: {mnb_acc:.4f}')
 print(f'BernoulliNB（0/1 是否出现）准确率: {bnb_acc:.4f}')
 
 # ============ 可视化 ============
-os.makedirs('img', exist_ok=True)
+IMG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'img')
+os.makedirs(IMG_DIR, exist_ok=True)
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
 # 左图：三种模型准确率
@@ -84,7 +85,7 @@ plt.tight_layout()
 # 给左图标题预留顶部空间（避免和柱形条数字标签重叠）
 fig.subplots_adjust(top=0.88, wspace=0.25)
 
-out = 'img/11.naive_bayes.png'
+out = os.path.join(IMG_DIR, '11.naive_bayes.png')
 plt.savefig(out, dpi=120, bbox_inches='tight')
 print(f'图已保存: {out}')
 plt.show()

@@ -36,7 +36,8 @@ print(f'max_depth=3 测试集准确率: {accuracy_score(y_test, model.predict(x_
 print('特征重要性:', dict(zip(load_iris().feature_names, model.feature_importances_)))
 
 # ============ 可视化 ============
-os.makedirs('img', exist_ok=True)
+IMG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'img')
+os.makedirs(IMG_DIR, exist_ok=True)
 fig = plt.figure(figsize=(18, 10))
 
 # 左图：训练集 vs 测试集准确率
@@ -60,7 +61,7 @@ plot_tree(model, ax=ax2, feature_names=load_iris().feature_names,
 ax2.set_title('决策树结构（max_depth=3）')
 
 plt.tight_layout()
-out = 'img/5.decision_tree.png'
+out = os.path.join(IMG_DIR, '5.decision_tree.png')
 plt.savefig(out, dpi=120, bbox_inches='tight')
 print(f'图已保存: {out}')
 plt.show()

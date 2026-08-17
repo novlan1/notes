@@ -35,7 +35,8 @@ best_k = max(results, key=lambda k: results[k][1])
 print(f'最优 K = {best_k}（轮廓系数最大）')
 
 # ============ 可视化 ============
-os.makedirs('img', exist_ok=True)
+IMG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'img')
+os.makedirs(IMG_DIR, exist_ok=True)
 fig, axes = plt.subplots(1, 3, figsize=(15, 4.5))
 
 for ax, (k, (labels, score)) in zip(axes, results.items()):
@@ -49,7 +50,7 @@ for ax, (k, (labels, score)) in zip(axes, results.items()):
 plt.suptitle('轮廓系数：评估 K-Means 聚类质量（分数越高越好）', fontsize=13, y=1.02)
 plt.tight_layout()
 
-out = 'img/15.silhouette.png'
+out = os.path.join(IMG_DIR, '15.silhouette.png')
 plt.savefig(out, dpi=120, bbox_inches='tight')
 print(f'图已保存: {out}')
 plt.show()

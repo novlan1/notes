@@ -45,7 +45,8 @@ sample = scaler.transform([[5.1, 3.5, 1.4, 0.2]])
 print('样本 [5.1, 3.5, 1.4, 0.2] 预测概率:', model.predict_proba(sample))
 
 # ============ 可视化 ============
-os.makedirs('img', exist_ok=True)
+IMG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'img')
+os.makedirs(IMG_DIR, exist_ok=True)
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
 # 左图：K 值 vs 准确率
@@ -75,7 +76,7 @@ axes[1].legend()
 axes[1].grid(alpha=0.3)
 
 plt.tight_layout()
-out = 'img/4.knn.png'
+out = os.path.join(IMG_DIR, '4.knn.png')
 plt.savefig(out, dpi=120, bbox_inches='tight')
 print(f'图已保存: {out}')
 plt.show()

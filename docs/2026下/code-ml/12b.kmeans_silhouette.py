@@ -39,7 +39,8 @@ best_k_sil = K_range[int(np.argmax(silhouettes))]
 print(f'轮廓系数最优 K = {best_k_sil}')
 
 # ============ 可视化 ============
-os.makedirs('img', exist_ok=True)
+IMG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'img')
+os.makedirs(IMG_DIR, exist_ok=True)
 fig, axes = plt.subplots(1, 3, figsize=(18, 5))
 
 # 左图：K=4 聚类结果
@@ -71,7 +72,7 @@ axes[2].legend()
 axes[2].grid(alpha=0.3)
 
 plt.tight_layout()
-out = 'img/12b.kmeans_silhouette.png'
+out = os.path.join(IMG_DIR, '12b.kmeans_silhouette.png')
 plt.savefig(out, dpi=120, bbox_inches='tight')
 print(f'图已保存: {out}')
 plt.show()

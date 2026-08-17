@@ -60,7 +60,8 @@ for g in gammas:
     print(f'RBF SVM gamma={g} 准确率: {acc:.4f}')
 
 # ============ 可视化 ============
-os.makedirs('img', exist_ok=True)
+IMG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'img')
+os.makedirs(IMG_DIR, exist_ok=True)
 fig, axes = plt.subplots(1, 4, figsize=(20, 5))
 
 # 1. 线性 SVM 决策边界（鸢尾花）
@@ -72,9 +73,9 @@ for ax, (m, g, acc) in zip(axes[1:], models_rbf):
     plot_decision_boundary(m, x_moon_std, y_moon, ax,
                            f'RBF SVM γ={g}\n准确率={acc:.2%}')
 
-plt.suptitle('SVM 决策边界对比（线性核 vs RBF 核）', fontsize=14, y=1.02)
+plt.suptitle('SVM 决策边界对比（线性核 vs RBF 核）', fontsize=14, y=0.98)
 plt.tight_layout()
-out = 'img/7.svm.png'
+out = os.path.join(IMG_DIR, '7.svm.png')
 plt.savefig(out, dpi=120, bbox_inches='tight')
 print(f'图已保存: {out}')
 plt.show()

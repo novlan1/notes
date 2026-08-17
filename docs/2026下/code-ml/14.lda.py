@@ -44,7 +44,8 @@ acc_p = accuracy_score(y_test_p, clf_p.predict(x_test_p))
 print(f'PCA 降维后接逻辑回归准确率: {acc_p:.4f}')
 
 # ============ 可视化 ============
-os.makedirs('img', exist_ok=True)
+IMG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'img')
+os.makedirs(IMG_DIR, exist_ok=True)
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
 colors = ['#1f77b4', '#ff7f0e', '#2ca02c']
@@ -69,7 +70,7 @@ axes[1].legend()
 axes[1].grid(alpha=0.3)
 
 plt.tight_layout()
-out = 'img/14.lda.png'
+out = os.path.join(IMG_DIR, '14.lda.png')
 plt.savefig(out, dpi=120, bbox_inches='tight')
 print(f'图已保存: {out}')
 plt.show()

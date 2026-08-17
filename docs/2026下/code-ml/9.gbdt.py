@@ -44,7 +44,8 @@ for n in n_range:
     test_scores_n.append(accuracy_score(y_test, m.predict(x_test)))
 
 # ============ 可视化 ============
-os.makedirs('img', exist_ok=True)
+IMG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'img')
+os.makedirs(IMG_DIR, exist_ok=True)
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
 # 左图：learning_rate 影响
@@ -67,7 +68,7 @@ axes[1].legend()
 axes[1].grid(alpha=0.3)
 
 plt.tight_layout()
-out = 'img/9.gbdt.png'
+out = os.path.join(IMG_DIR, '9.gbdt.png')
 plt.savefig(out, dpi=120, bbox_inches='tight')
 print(f'图已保存: {out}')
 plt.show()

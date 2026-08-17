@@ -45,7 +45,8 @@ importances = gs.best_estimator_.feature_importances_
 top10_idx = np.argsort(importances)[-10:]
 
 # ============ 可视化 ============
-os.makedirs('img', exist_ok=True)
+IMG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'img')
+os.makedirs(IMG_DIR, exist_ok=True)
 fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
 # 左图：三个模型得分对比
@@ -70,7 +71,7 @@ axes[1].set_title('随机森林：Top 10 最重要特征')
 axes[1].grid(alpha=0.3, axis='x')
 
 plt.tight_layout()
-out = 'img/6.random_forest.png'
+out = os.path.join(IMG_DIR, '6.random_forest.png')
 plt.savefig(out, dpi=120, bbox_inches='tight')
 print(f'图已保存: {out}')
 plt.show()
