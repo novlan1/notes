@@ -93,6 +93,10 @@
           "link": "docs/2026下/0.机器学习.md"
         },
         {
+          "text": "Transformer",
+          "link": "docs/2026下/2.transformer.md"
+        },
+        {
           "text": "验证 MCP 鉴权",
           "link": "docs/2026下/1.验证mcp鉴权.md"
         },
