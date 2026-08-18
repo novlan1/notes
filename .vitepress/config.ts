@@ -1,5 +1,6 @@
 import { withMermaid } from 'vitepress-plugin-mermaid';
 import sidebarConfig from './sidebar.json';
+import markdownItKatex from 'markdown-it-katex';
 import { getFooterMessage } from './footer';
 
 // https://vitepress.dev/reference/site-config
@@ -205,5 +206,13 @@ export default withMermaid({
   // 可选地使用 MermaidPluginConfig 为插件本身设置额外的配置
   mermaidPlugin: {
     class: 'mermaid my-mermaid-class', // 为父容器设置额外的CSS类
+  },
+
+
+  markdown: {
+    config(md) {
+      // 行内 $...$ 和块级 $$...$$ 都支持
+      md.use(markdownItKatex, { throwOnError: false });
+    },
   },
 });

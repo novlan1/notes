@@ -5,3 +5,81 @@
     max-height: 200px;
   }
 }
+
+/* ============ 浮动折叠按钮（永远贴在屏幕左右两侧） ============ */
+
+.vp-sidebar-toggle {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 999;
+  width: 18px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: var(--vp-c-bg-soft, #ffffff);
+  border: 1px solid var(--vp-c-divider, #e2e2e3);
+  color: var(--vp-c-text-2, #3c3c43c0);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  /* 不要 transition，避免切换时的延迟让用户以为没生效 */
+  transition:
+    color 0.15s,
+    background 0.15s,
+    border-color 0.15s;
+}
+
+/* 左侧按钮：永远贴屏幕最左边 */
+.vp-sidebar-toggle-btn {
+  left: 0;
+  border-radius: 0 6px 6px 0;
+  border-left: none;
+}
+
+/* 右侧按钮：永远贴屏幕最右边 */
+.vp-outline-toggle {
+  right: 0;
+  border-radius: 6px 0 0 6px;
+  border-right: none;
+}
+
+.vp-sidebar-toggle:hover {
+  color: var(--vp-c-brand-1, #3451b2);
+  border-color: var(--vp-c-brand-1, #3451b2);
+  background: var(--vp-c-default-soft, #f6f6f7);
+}
+
+.vp-sidebar-toggle:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1, #3451b2);
+  outline-offset: 2px;
+}
+
+.vp-toggle-icon {
+  font-weight: 600;
+  user-select: none;
+}
+
+/* 移动端：屏幕太小，按钮容易被误触，桌面端专属 */
+@media (max-width: 959px) {
+  .vp-sidebar-toggle {
+    display: none;
+  }
+}
+
+/* ============ fallback：当 JS 还没跑完时，按 CSS 类也兜底隐藏 ============ */
+
+/* 用 :has() 兼容老浏览器时，已知 JS 会接管大部分场景 */
+@media (min-width: 960px) {
+  :root.sidebar-hidden aside.VPSidebar,
+  :root.sidebar-hidden .VPSidebar {
+    display: none !important;
+  }
+  :root.outline-hidden aside.VPDocAsideContainer,
+  :root.outline-hidden .VPDocOutlineContainer {
+    display: none !important;
+  }
+}
