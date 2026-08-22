@@ -2,7 +2,7 @@
   "sidebar": [
     {
       "text": "2026下",
-      "collapsed": true,
+      "collapsed": false,
       "items": [
         {
           "text": "技术笔记一",

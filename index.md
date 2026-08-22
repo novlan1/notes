@@ -13,7 +13,7 @@ hero:
   actions:
     - theme: brand
       text: '2026'
-      link: /docs/2026上/Cherry-Markdown-支持流式输出包
+      link: /docs/2026下/LLM
     - theme: alt
       text: '2025'
       link: /docs/2025下/TDesign-UniApp-文章
