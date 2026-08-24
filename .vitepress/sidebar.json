@@ -101,6 +101,10 @@
           "link": "docs/2026下/2.transformer.md"
         },
         {
+          "text": "Redis 入门",
+          "link": "docs/2026下/3.redis入门.md"
+        },
+        {
           "text": "验证 MCP 鉴权",
           "link": "docs/2026下/1.验证mcp鉴权.md"
         },
