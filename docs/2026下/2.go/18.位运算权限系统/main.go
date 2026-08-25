@@ -296,7 +296,7 @@ func main() {
 	fmt.Println("6. 复杂权限检查:")
 
 	// 检查是否拥有任一管理权限
-	managerPermissions := PermUserView | PermUserCreate | PermUserUpdate | PermUserDelete
+	managerPermissions := uint64(PermUserView | PermUserCreate | PermUserUpdate | PermUserDelete)
 
 	for userID := range users {
 		hasAnyManager := pm.HasAnyPermission(userID, managerPermissions)
