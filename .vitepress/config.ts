@@ -1,5 +1,6 @@
 import { withMermaid } from 'vitepress-plugin-mermaid';
 import sidebarConfig from './sidebar.json';
+// @ts-ignore
 import markdownItKatex from 'markdown-it-katex';
 import { getFooterMessage } from './footer';
 
