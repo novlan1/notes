@@ -16,7 +16,7 @@ export default withMermaid({
   head: [
     ['link', { rel: 'icon', href: 'https://cdn.uwayfly.com/article/2026/7/own_mike_RTabY5dKitRNRdBB.png' }],
     ['link', { rel: 'manifest', href: '/notes/manifest.json' }],
-    ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: 'https://cdn.uwayfly.com/article/2026/7/own_mike_RTabY5dKitRNRdBB.png' }],
+    ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/notes/icon-192.png' }],
     ['meta', { name: 'theme-color', content: '#ffffff' }],
     ['meta', { name: 'author', content: 'novlan1' }],
     [
