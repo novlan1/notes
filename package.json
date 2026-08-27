@@ -13,6 +13,7 @@
     "td:hx": "npm run td:hx:vue3 && npm run td:hx:vue2",
     "td:hx:vue2": "node scripts/td/vue3-hx/publish-h5.cjs --vue2",
     "td:hx:vue3": "node scripts/td/vue3-hx/publish-h5.cjs --vue3",
+    "press:hx": "node scripts/press/hx/publish-h5.cjs",
     "td:dep": "npm run td:deps",
     "td:deps": "node scripts/td/install-deps.cjs",
     "normalize": "node scripts/normalize-note-headings.cjs",
