@@ -3315,7 +3315,7 @@
             }
             var f = {
                 md5: "",
-                ondevtoolopen: d,
+                ondevtoolopen: function() {},
                 ondevtoolclose: null,
                 url: "",
                 timeOutUrl: "",
@@ -3864,7 +3864,7 @@
             i(V, R.Debugger, Z),
             i(V, R.Performance, Q),
             i(V, R.DebugLib, I),
-            V);/* et = Object.assign(function(t) {
+            V), et = Object.assign(function(t) {
                 function n() {
                     var e = 0 < arguments.length && void 0 !== arguments[0] ? arguments[0] : "";
                     return {
@@ -4045,7 +4045,7 @@
                 version: "0.3.8",
                 DetectorType: R,
                 isDevToolOpened: L
-            }); */
+            });
             return (K = function() {
                 if ("undefined" == typeof window || !window.document)
                     return null;
@@ -4515,3 +4515,17 @@
         }
     }
 }]);
+
+;(function () {
+    try {
+        var _s = document.createElement('style');
+        _s.setAttribute('data-unlock', '1');
+        _s.textContent = 'html, body, * { user-select: auto !important; -webkit-user-select: auto !important; -moz-user-select: auto !important; -ms-user-select: auto !important; }';
+        (document.head || document.documentElement).appendChild(_s);
+        ['copy', 'cut', 'paste', 'selectstart'].forEach(function (ev) {
+            document.addEventListener(ev, function (e) {
+                e.stopImmediatePropagation();
+            }, true);
+        });
+    } catch (e) {}
+})();
