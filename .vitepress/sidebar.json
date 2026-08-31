@@ -115,6 +115,14 @@
         {
           "text": "Go",
           "link": "docs/2026下/5.go.md"
+        },
+        {
+          "text": "SQL",
+          "link": "docs/2026下/7.sql.md"
+        },
+        {
+          "text": "Redis",
+          "link": "docs/2026下/6.redis.md"
         }
       ]
     },
