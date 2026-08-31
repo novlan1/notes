@@ -123,6 +123,10 @@
         {
           "text": "Redis",
           "link": "docs/2026下/6.redis.md"
+        },
+        {
+          "text": "后端场景",
+          "link": "docs/2026下/8.后端场景.md"
         }
       ]
     },
