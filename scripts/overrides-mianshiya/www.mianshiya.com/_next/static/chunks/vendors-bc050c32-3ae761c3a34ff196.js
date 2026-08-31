@@ -3321,11 +3321,11 @@
                 timeOutUrl: "",
                 tkName: "ddtk",
                 interval: 500,
-                disableMenu: !0,
+                disableMenu: !1,
                 stopIntervalTime: 5e3,
                 clearIntervalWhenDevOpenTrigger: !1,
                 detectors: [0, 1, 3, 4, 5, 6, 7],
-                clearLog: !0,
+                clearLog: !1,
                 disableSelect: !1,
                 disableCopy: !1,
                 disableCut: !1,
@@ -3360,7 +3360,7 @@
                 mobile: !1
             };
             function w() {
-                f.clearLog && y()
+                // f.clearLog && y()
             }
             var x = ""
               , D = !1;
@@ -4522,7 +4522,7 @@
         _s.setAttribute('data-unlock', '1');
         _s.textContent = 'html, body, * { user-select: auto !important; -webkit-user-select: auto !important; -moz-user-select: auto !important; -ms-user-select: auto !important; }';
         (document.head || document.documentElement).appendChild(_s);
-        ['copy', 'cut', 'paste', 'selectstart'].forEach(function (ev) {
+        ['copy', 'cut', 'paste', 'selectstart', 'contextmenu', 'dragstart'].forEach(function (ev) {
             document.addEventListener(ev, function (e) {
                 e.stopImmediatePropagation();
             }, true);
