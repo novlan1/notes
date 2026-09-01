@@ -125,6 +125,10 @@
           "link": "docs/2026下/6.redis.md"
         },
         {
+          "text": "Java",
+          "link": "docs/2026下/9.java.md"
+        },
+        {
           "text": "后端场景",
           "link": "docs/2026下/8.后端场景.md"
         }
