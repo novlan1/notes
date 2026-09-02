@@ -169,6 +169,10 @@ export default withMermaid({
             text: 'Press UI 隐私协议',
             link: 'https://cdn.uwayfly.com/press-ui/privacy.html',
           },
+          {
+            text: 'Portal Learn',
+            link: 'https://portal.learn.woa.com/training/outsourcedCourse/user/activePage?scheme_type=activePageHome'
+          }
         ],
       },
     ],
