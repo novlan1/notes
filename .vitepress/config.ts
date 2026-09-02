@@ -172,7 +172,11 @@ export default withMermaid({
           },
           {
             text: 'Portal Learn',
-            link: 'https://portal.learn.woa.com/training/outsourcedCourse/user/activePage?scheme_type=activePageHome'
+            link: 'https://portal.learn.woa.com/training/outsourcedCourse/user/activePage?scheme_type=activePageHome',
+          },
+          {
+            text: 'ESLint Setup Skill',
+            link: 'http://111.230.129.227/skill/eslint-setup.md',
           }
         ],
       },
