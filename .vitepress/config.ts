@@ -3,6 +3,7 @@ import sidebarConfig from './sidebar.json';
 // @ts-ignore
 import markdownItKatex from 'markdown-it-katex';
 import { getFooterMessage } from './footer';
+import { redisLang } from './shiki-redis';
 
 // https://vitepress.dev/reference/site-config
 export default withMermaid({
@@ -218,6 +219,22 @@ export default withMermaid({
 
 
   markdown: {
+    // shiki 2.x 内置语言（bundledLanguages）里没有 redis / mysql，
+    // 遇到 ```redis / ```mysql 会打印
+    //   "The language 'xxx' is not loaded, falling back to 'txt'"
+    // 解决办法：
+    // - redis：自己写的 TextMate 语法（见 ./shiki-redis.ts）
+    // - mysql / mariadb：没有独立语法，用 languageAlias 指到内置的 sql
+    //
+    // 注意：languageAlias 的 value 必须是 shiki 内置（bundled）语言名，
+    // VitePress 会把它拼进 createHighlighter 的 langs 一起预加载，
+    // 写成自定义语言名（如 redis）会直接抛
+    //   ShikiError: Language `redis` is not included in this bundle
+    languages: [redisLang],
+    languageAlias: {
+      mysql: 'sql',
+      mariadb: 'sql',
+    },
     config(md) {
       // 行内 $...$ 和块级 $$...$$ 都支持
       md.use(markdownItKatex, { throwOnError: false });
