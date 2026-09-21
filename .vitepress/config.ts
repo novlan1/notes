@@ -87,6 +87,10 @@ export default withMermaid({
             link: 'https://www.npmjs.com/search?page=0&q=author%3Ayanggwcn&sortBy=downloads_weekly',
           },
           {
+            text: 'VSCE',
+            link: 'https://marketplace.visualstudio.com/manage/publishers/novlan1?noPrompt=true',
+          },
+          {
             text: 'NPM TD Uniapp',
             link: 'https://www.npmjs.com/search?q=%40tdesign%2Funiapp',
           },
