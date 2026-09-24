@@ -61,5 +61,6 @@ module.exports = {
         pathGroupsExcludedImportTypes: ['builtin'],
       },
     ],
+    'light/no-decimal-in-brackets': 0,
   },
 };

@@ -33,7 +33,12 @@
   />
 
   <div
-    class="flex-end mb-[30px] mt-[70px] flex justify-end p-[20px]"
+    class="flex-end
+      mb-[30px]
+      mt-[70px]
+      flex
+      justify-end
+      p-[20px]"
   >
     <TPagination
       v-model="imageInfo.currentPage"
