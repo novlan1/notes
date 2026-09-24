@@ -54,7 +54,7 @@
     "@plugin-light/shared-vue2": "^1.0.1",
     "@plugin-light/uni-read-pages-vite": "^1.0.0",
     "@stylistic/eslint-plugin-jsx": "3.1.0",
-    "@tsconfig/node22": "^22.0.1",
+    "@tsconfig/node22": "22.0.1",
     "@types/node": "^22.14.1",
     "@types/qs": "^6.9.18",
     "@typescript-eslint/eslint-plugin": "7.18.0",

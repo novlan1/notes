@@ -30,7 +30,10 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9
+          # 必须与本地（10.17.1）保持一致：
+          # pnpm-workspace.yaml 里的 allowBuilds 是 pnpm 10 的配置，pnpm 9 不认识；
+          # 且 pnpm-lock.yaml 现在由 pnpm 10 生成
+          version: 10
 
       - name: Setup Node.js
         uses: actions/setup-node@v5
@@ -38,26 +41,25 @@ jobs:
           node-version: 20
           cache: pnpm
 
-      # ---- notes（VitePress 文档站，仓库根）----
-      - name: Install notes deps
+      # ---- 统一安装：workspace 根（notes）+ 所有子包（含 one）----
+      # pnpm-workspace.yaml 声明 packages: ['one']，
+      # 一次 install 搞定 notes 和 one 的依赖，共用根 pnpm-lock.yaml
+      - name: Install deps (workspace)
         run: pnpm install --frozen-lockfile
 
       - name: notes extra install
         run: pnpm run extra:install
 
-      - name: Build notes
+      - name: Build notes (VitePress)
         run: pnpm run docs:build
 
-      # ---- one（Vue3 子应用，one/ 目录）----
-      - name: Install one deps
-        run: cd one && pnpm install --no-frozen-lockfile
-
+      # ---- one（Vue3 子应用，workspace 子包）----
       - name: one extra install
-        run: cd one && pnpm run extra:install
+        run: pnpm --filter one run extra:install
 
       - name: Build one
         # 内部会先跑 merge:one（合并 历史基线 + 每期增量 → one-data.json）
-        run: cd one && pnpm run build
+        run: pnpm --filter one run build
 
       # ---- 合并产物：one 挂到 /notes/one/ ----
       # notes base=/notes/，one base=/notes/one/，

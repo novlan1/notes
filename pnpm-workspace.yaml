@@ -1,3 +1,8 @@
+# pnpm workspace：根包是 notes（VitePress 站点），one 是独立的 Vue3 子应用子包
+# 后续新增子包，在这里加一行即可（例如 - 'apps/*' 或 - 'two'）
+packages:
+  - 'one'
+
 allowBuilds:
   '@tdesign/uniapp': true
   '@tdesign/uniapp-chat': true
