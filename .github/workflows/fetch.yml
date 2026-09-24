@@ -1,0 +1,80 @@
+name: 'Fetch One Data'
+
+# 从旧仓库 novlan1/one 迁移过来：定时抓取 ONE 的下一期，
+# 只提交「新增的那一期」增量小文件（~100B），完整数据由构建时的
+# merge:one 合并 基线 + 增量 生成。
+#
+# 为什么数据要进 git：
+#   不入库的话每次构建拿到的都是空的增量目录，只能从基线往前推一期，
+#   抓完即丢弃，数据会永远卡在「基线 + 1 期」。
+#   早期 3.5G 的教训是「每次把 1.3MB 全量 json 重写一遍」，
+#   不是增量提交：100B/期 ≈ 36KB/年，可忽略。
+
+on:
+  schedule:
+    # UTC 0,4,6,23 点 = 北京时间 8,12,14,7 点
+    - cron: '0 0,4,6,23 * * *'
+  # 方便手动触发验证 / 补抓
+  workflow_dispatch:
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          # 不走默认的 GITHUB_TOKEN，下面用 PAT 推送
+          persist-credentials: false
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          # 与 build-demo.yml 保持一致（allowBuilds 是 pnpm 10 的配置）
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install deps (workspace)
+        run: pnpm install --frozen-lockfile
+
+      - name: Extra install
+        run: pnpm --filter one run extra:install
+
+      - name: Fetch new data
+        # 数据源偶尔抽风/被限流时，不让定时任务天天报错刷屏；
+        # 没抓到自然就没有 diff，下面会跳过提交，站点继续用基线构建
+        continue-on-error: true
+        run: pnpm --filter one run fetch:new
+
+      - name: Check for changes
+        id: check
+        run: |
+          # 必须先 add 再比较：新增的期数是 untracked 文件，
+          # 直接 git diff 是检测不到的
+          if [ -d one/src/logic/config/one-data ]; then
+            git add one/src/logic/config/one-data
+          fi
+          if git diff --cached --quiet; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo ">>> 没有新数据，跳过提交"
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo ">>> 有新数据，准备提交"
+          fi
+
+      - name: Commit and push
+        if: steps.check.outputs.has_changes == 'true'
+        run: |
+          git config user.name 'novlan1'
+          git config user.email '1576271227@qq.com'
+          git commit -m "feat: fetch new one data $(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')"
+          # 必须用 PAT：GITHUB_TOKEN 触发的 push 不会再触发其他 workflow，
+          # 那样数据更新了但不会重新部署。
+          # 推送到 master 会命中 build-demo.yml（数据文件不在 paths-ignore 里），
+          # 自动带上新数据重新部署。
+          git push "https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com/novlan1/notes.git" HEAD:master
