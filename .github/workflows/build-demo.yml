@@ -63,7 +63,13 @@ jobs:
       # notes base=/notes/，one base=/notes/one/，
       # 因此把 one/dist 放进 .vitepress/dist/one 即对应 URL /notes/one/
       - name: Merge artifacts
-        run: cp -r one/dist .vitepress/dist/one
+        # 注意：必须先 mkdir 再用 `one/dist/.` 复制「目录内容」。
+        # 直接 `cp -r one/dist .vitepress/dist/one` 在目标已存在时（VitePress 若
+        # 扫到 one 下的 md 会先建出 one/ 目录）会嵌套成 one/dist/，页面就 404 了。
+        run: |
+          mkdir -p .vitepress/dist/one
+          cp -r one/dist/. .vitepress/dist/one/
+          ls .vitepress/dist/one
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4

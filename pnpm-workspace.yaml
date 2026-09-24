@@ -1,0 +1,12 @@
+allowBuilds:
+  '@tdesign/uniapp': true
+  '@tdesign/uniapp-chat': true
+  core-js: true
+  ejs: true
+  esbuild: true
+  fsevents: true
+  protobufjs: true
+  puppeteer: true
+  rs-module-lexer: true
+  uni-read-pages: true
+  vue-demi: true

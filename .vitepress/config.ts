@@ -15,6 +15,12 @@ export default withMermaid({
   cleanUrls: true,
   base: '/notes/',
 
+  // one/ 是独立的 Vue3 子应用（构建产物在 one/dist），不是文档，必须排除。
+  // 否则 VitePress 会把 one/README.md 编译成文档页面，
+  // 并提前在 .vitepress/dist 里建出 one/ 目录，
+  // 导致后续 cp 产物时把内容复制成 one/dist/（多嵌套一层）。
+  srcExclude: ['one/**'],
+
   head: [
     ['link', { rel: 'icon', href: 'https://cdn.uwayfly.com/article/2026/7/own_mike_RTabY5dKitRNRdBB.png' }],
     ['link', { rel: 'manifest', href: '/notes/manifest.json' }],
