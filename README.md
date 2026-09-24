@@ -12,6 +12,11 @@ pnpm run docs:dev
 # 打包
 pnpm run docs:build
 
+# one 子项目（Vue3 应用，位于 one/ 目录，详见文末）
+pnpm run one:install   # 安装 one 依赖
+pnpm run one:dev       # 本地开发
+pnpm run one:build     # 构建（内部会先合并数据）
+
 # 检查是否有未注册在 sidebar.json 的文档
 pnpm run check
 ```
@@ -66,3 +71,43 @@ npm run td:deps --pr 1
 ```bash
 pnpm uniapp type-check
 ```
+
+## 子项目：one（ONE·一个）
+
+`one/` 是一个 Vue3 + Vite 子应用，抓取并展示「ONE·一个」的每日图文。
+
+原为独立仓库 `novlan1/one`，已并入本仓（本仓 `.git` 1.5G < one 3.5G，故以本仓为底）。
+线上地址随之变为 <https://novlan1.github.io/notes/one/>（构建 `base` 为 `/notes/one/`）。
+
+### 数据策略（重要）
+
+| 文件 | 说明 | 入库 |
+|---|---|---|
+| `one/src/logic/config/one-data.base.json` | 历史基线，约 5000 期 | ✅ 一次性 |
+| `one/src/logic/config/one-data/<vol>.json` | 每期增量，约 100B | ✅ 每天新增 |
+| `one/src/logic/config/one-data.json` | 完整数据（前端 import） | ❌ 构建产物，已 gitignore |
+
+> 历史教训：早期每次 fetch 都把 1.3MB 的全量 json 重写一遍并提交，
+> 导致 git 历史膨胀到 **3.5G**。现在只提交「新增的那一期」，年增长约 36KB。
+
+命令：
+
+```bash
+pnpm run one:install   # 安装依赖
+pnpm run one:dev       # 开发
+pnpm run one:build     # 构建（内部先跑 merge:one 合并数据）
+pnpm run one:fetch     # 抓取最新一期 → 写增量小文件
+pnpm run one:merge     # 合并 基线+增量 → one-data.json
+```
+
+### 部署
+
+`.github/workflows/build-demo.yml` 统一构建两个项目：
+
+1. 构建 notes（仓库根）→ `.vitepress/dist`
+2. 构建 one（`one/`）→ `one/dist`
+3. 合并：`cp -r one/dist .vitepress/dist/one`
+4. 整体部署到 Pages → `/notes/`（文档站）+ `/notes/one/`（应用）
+
+数据更新由 `.github/workflows/one-fetch.yml` 每天 UTC 1:00（北京 9:00）定时抓取，
+提交增量文件后自动触发上面的构建部署。

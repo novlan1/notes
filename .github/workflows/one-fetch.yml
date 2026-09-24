@@ -1,0 +1,65 @@
+name: 'Fetch ONE Data'
+
+# 抓取 ONE（wufazhuce.com）最新一期。
+#
+# 合并进 notes 大仓后：
+#   抓取结果只写入 one/src/logic/config/one-data/<vol>.json（每期约 100B），
+#   不再重写 1.3MB 的全量 json —— 那是历史上 git 膨胀到 3.5G 的原因。
+#   这次提交会自动触发 build-demo.yml 重新构建并部署。
+#
+# 频率：每天 UTC 1:00（北京时间 9:00）一次。
+on:
+  schedule:
+    - cron: '0 1 * * *'
+  workflow_dispatch:
+
+jobs:
+  bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout codes'
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - name: Use Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 20
+
+      - name: Install pnpm
+        run: npm install -g pnpm@9
+
+      - name: Install Dependencies
+        run: cd one && pnpm install --no-frozen-lockfile
+
+      - name: Extra Install
+        run: cd one && pnpm run extra:install
+
+      - name: 'Get New Data'
+        run: cd one && pnpm run fetch:new
+
+      - name: 'Check for changes'
+        id: check_changes
+        run: |
+          git checkout -- one/pnpm-lock.yaml 2>/dev/null || true
+          if git diff --quiet; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: 'Get Date'
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: echo "REPORT_DATE=$(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')" >> $GITHUB_ENV
+
+      - name: Commit and Push
+        if: steps.check_changes.outputs.has_changes == 'true'
+        uses: actions-js/push@master
+        with:
+          github_token: ${{ secrets.ACCESS_TOKEN }}
+          branch: master
+          author_email: '1576271227@qq.com'
+          author_name: 'novlan1'
+          force: false
+          message: "feat: fetch one new data ${{ env.REPORT_DATE }}"

@@ -38,14 +38,32 @@ jobs:
           node-version: 20
           cache: pnpm
 
-      - name: Install Dependencies
+      # ---- notes（VitePress 文档站，仓库根）----
+      - name: Install notes deps
         run: pnpm install --frozen-lockfile
 
-      - name: Extra Install
+      - name: notes extra install
         run: pnpm run extra:install
 
-      - name: Build
+      - name: Build notes
         run: pnpm run docs:build
+
+      # ---- one（Vue3 子应用，one/ 目录）----
+      - name: Install one deps
+        run: cd one && pnpm install --no-frozen-lockfile
+
+      - name: one extra install
+        run: cd one && pnpm run extra:install
+
+      - name: Build one
+        # 内部会先跑 merge:one（合并 历史基线 + 每期增量 → one-data.json）
+        run: cd one && pnpm run build
+
+      # ---- 合并产物：one 挂到 /notes/one/ ----
+      # notes base=/notes/，one base=/notes/one/，
+      # 因此把 one/dist 放进 .vitepress/dist/one 即对应 URL /notes/one/
+      - name: Merge artifacts
+        run: cp -r one/dist .vitepress/dist/one
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
