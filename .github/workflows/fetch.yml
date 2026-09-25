@@ -1,14 +1,12 @@
 name: 'Fetch One Data'
 
-# 从旧仓库 novlan1/one 迁移过来：定时抓取 ONE 的下一期，
-# 只提交「新增的那一期」增量小文件（~100B），完整数据由构建时的
-# merge:one 合并 基线 + 增量 生成。
+# 从旧仓库 novlan1/one 迁移过来，沿用它的方案：
+# 定时抓取 ONE 的下一期，读改写 one/src/logic/config/one-data.json 并提交。
+# 前端 src/logic/one/get-data.ts 直接 import 这个文件，构建时不需要合并步骤。
 #
-# 为什么数据要进 git：
-#   不入库的话每次构建拿到的都是空的增量目录，只能从基线往前推一期，
-#   抓完即丢弃，数据会永远卡在「基线 + 1 期」。
-#   早期 3.5G 的教训是「每次把 1.3MB 全量 json 重写一遍」，
-#   不是增量提交：100B/期 ≈ 36KB/年，可忽略。
+# 体积提示：one-data.json 约 1.4MB，每有更新就整体重写提交，约 456MB/年。
+# 旧仓库 .git 涨到 3.5G 的主因是历史图片（4582 张共 1.8G，占 69.9%），
+# json 只占 24%；图片没有迁过来，所以这边只会有 json 这一项的增长。
 
 on:
   schedule:
@@ -54,11 +52,7 @@ jobs:
       - name: Check for changes
         id: check
         run: |
-          # 必须先 add 再比较：新增的期数是 untracked 文件，
-          # 直接 git diff 是检测不到的
-          if [ -d one/src/logic/config/one-data ]; then
-            git add one/src/logic/config/one-data
-          fi
+          git add one/src/logic/config/one-data.json
           if git diff --cached --quiet; then
             echo "has_changes=false" >> $GITHUB_OUTPUT
             echo ">>> 没有新数据，跳过提交"

@@ -27,7 +27,3 @@ coverage
 *.sw?
 
 *.tsbuildinfo
-
-# 构建产物：由 one-data.base.json（历史基线）+ one-data/（每期增量）合并生成
-# 见 script/merge-one-data.js。每次 fetch 只提交 ~100B 增量，避免 git 历史膨胀
-src/logic/config/one-data.json

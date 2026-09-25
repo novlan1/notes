@@ -4,15 +4,14 @@
   "private": true,
   "author": "novlan1",
   "scripts": {
-    "dev": "npm run merge:one && vite",
-    "build": "npm run merge:one && run-p type-check \"build-only {@}\" --",
+    "dev": "vite",
+    "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
     "docs:build": "npm run build",
     "fetch:new": "node script/fetch-new-data",
-    "merge:one": "node script/merge-one-data",
     "extra:install": "bash script/extra-install.sh"
   },
   "dependencies": {

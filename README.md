@@ -83,21 +83,19 @@ pnpm uniapp type-check
 
 | 文件 | 说明 | 入库 |
 |---|---|---|
-| `one/src/logic/config/one-data.base.json` | 历史基线，约 5000 期 | ✅ 一次性 |
-| `one/src/logic/config/one-data/<vol>.json` | 每期增量，约 100B | ✅ 每天新增 |
-| `one/src/logic/config/one-data.json` | 完整数据（前端 import） | ❌ 构建产物，已 gitignore |
+| `one/src/logic/config/one-data.json` | 完整数据，`src/logic/one/get-data.ts` 直接 import，约 1.4MB / 5100 期 | ✅ 入库，fetch 后整体重写提交 |
 
-> 历史教训：早期每次 fetch 都把 1.3MB 的全量 json 重写一遍并提交，
-> 导致 git 历史膨胀到 **3.5G**。现在只提交「新增的那一期」，年增长约 36KB。
+> 体积：每有更新就整体重写这 1.4MB，约 **456MB/年**。
+> 旧仓库 `.git` 涨到 3.5G 的主因是历史图片（`public/images/` 4582 张共 1.8G，占 69.9%），
+> `one-data.json` 只占 24%（496 个版本 622MB）。图片没有迁移过来，
+> 所以本仓只会有 json 这一项的增长。
 
 命令：
 
 ```bash
-pnpm run one:install   # 安装依赖
 pnpm run one:dev       # 开发
-pnpm run one:build     # 构建（内部先跑 merge:one 合并数据）
-pnpm run one:fetch     # 抓取最新一期 → 写增量小文件
-pnpm run one:merge     # 合并 基线+增量 → one-data.json
+pnpm run one:build     # 构建（直接 vite build，无合并步骤）
+pnpm run one:fetch     # 抓取最新一期 → 读改写 one-data.json
 ```
 
 ### 部署

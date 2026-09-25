@@ -1,7 +1,6 @@
 const https = require('https');
 
 const path = require('path');
-const { existsSync, readdirSync, mkdirSync } = require('fs');
 
 const axios = require('axios');
 
@@ -13,12 +12,7 @@ const { writeFileSync, readFileSync, timeStampFormat } = require('t-comm');
 
 
 const ONE_PREFIX = 'https://wufazhuce.com/one/';
-// 历史基线：既往全部期数，一次性提交（约 1.3MB）
-const ONE_DATA_BASE_PATH = path.resolve(__dirname, '../src/logic/config/one-data.base.json');
-// 增量目录：每期一个 ~100B 的小文件。
-// 历史教训：早期每次 fetch 都把 1.3MB 全量 json 重写一遍并提交，
-// 导致 git 历史膨胀到 3.5G。现在只提交「新增的这一期」。
-const ONE_DATA_DIR = path.resolve(__dirname, '../src/logic/config/one-data');
+const ONE_DATA_JSON_PATH = path.resolve(__dirname, '../src/logic/config/one-data.json');
 
 
 // 链接无序，但是不会偏离太远
@@ -34,28 +28,8 @@ const getVol = url => +url.split('--')[0];
 const getLinkIndex = url => +url.split('--')[2];
 
 
-// 读取全部数据 = 历史基线 + 增量目录下的小文件
-function readAllOneData() {
-  let list = [];
-
-  if (existsSync(ONE_DATA_BASE_PATH)) {
-    list = readFileSync(ONE_DATA_BASE_PATH, true) || [];
-  }
-
-  if (existsSync(ONE_DATA_DIR)) {
-    readdirSync(ONE_DATA_DIR)
-      .filter(f => f.endsWith('.json'))
-      .forEach((f) => {
-        const item = readFileSync(path.join(ONE_DATA_DIR, f), true);
-        if (item && item.picName) list.push(item);
-      });
-  }
-
-  return list;
-}
-
 function getLastLinkIndex() {
-  const oneDataList = readAllOneData();
+  const oneDataList = readFileSync(ONE_DATA_JSON_PATH, true);
   oneDataList.sort((a, b) => {
     const aIndex = getVol(a.picName);
     const bIndex = getVol(b.picName);
@@ -149,6 +123,7 @@ async function main() {
 function updateOneDataJson(info) {
   const { pic, text, vol, linkIndex, month, date } = info;
 
+  const oneDataList = readFileSync(ONE_DATA_JSON_PATH, true);
   const parsedDate = timeStampFormat(new Date(`${date} ${month}`).getTime(), 'yyyy-MM-dd');
   const parsedInfo = {
     pic,
@@ -156,16 +131,12 @@ function updateOneDataJson(info) {
     picName: `${vol}--${parsedDate}--${linkIndex}`,
 
   };
+  const newList = [
+    ...oneDataList,
+    parsedInfo,
+  ];
   console.log('>>> parsedInfo:\n', parsedInfo);
-
-  // 只写增量小文件（~100B）：不再把 1.3MB 全量重写一遍。
-  // 完整数据由 merge-one-data.js 在构建前合并生成。
-  if (!existsSync(ONE_DATA_DIR)) {
-    mkdirSync(ONE_DATA_DIR, { recursive: true });
-  }
-  const filePath = path.join(ONE_DATA_DIR, `${vol}.json`);
-  writeFileSync(filePath, parsedInfo, true);
-  console.log('>>> 已写入增量文件:', filePath);
+  writeFileSync(ONE_DATA_JSON_PATH, newList, true);
 }
 
 

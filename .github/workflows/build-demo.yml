@@ -58,7 +58,7 @@ jobs:
         run: pnpm --filter one run extra:install
 
       - name: Build one
-        # 内部会先跑 merge:one（合并 历史基线 + 每期增量 → one-data.json）
+        # 前端直接 import 已入库的 one-data.json，构建时无需合并步骤
         run: pnpm --filter one run build
 
       # ---- 合并产物：one 挂到 /notes/one/ ----
