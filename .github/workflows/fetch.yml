@@ -14,6 +14,13 @@ name: 'Fetch One Data'
 # 都是公开信息，直接写在 one/script/upload-one-data.js 里，不必配成 Secrets。
 
 on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - 'scripts/**'
+      - 'README.md'
+      - '.gitignore'
   schedule:
     # UTC 0,4,6,23 点 = 北京时间 8,12,14,7 点
     - cron: '0 0,4,6,23 * * *'
