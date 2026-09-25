@@ -22,12 +22,13 @@ concurrency:
 
 jobs:
   build:
+    name: 构建（notes 文档站 + one 子应用）
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: 检出代码
         uses: actions/checkout@v5
 
-      - name: Setup pnpm
+      - name: 准备 pnpm 10
         uses: pnpm/action-setup@v4
         with:
           # 必须与本地（10.17.1）保持一致：
@@ -35,39 +36,38 @@ jobs:
           # 且 pnpm-lock.yaml 现在由 pnpm 10 生成
           version: 10
 
-      - name: Setup Node.js
+      - name: 准备 Node.js 20
         uses: actions/setup-node@v5
         with:
           node-version: 20
           cache: pnpm
 
-      # ---- 统一安装：workspace 根（notes）+ 所有子包（含 one）----
       # pnpm-workspace.yaml 声明 packages: ['one']，
       # 一次 install 搞定 notes 和 one 的依赖，共用根 pnpm-lock.yaml
-      - name: Install deps (workspace)
+      - name: 安装依赖（workspace：notes + one）
         run: pnpm install --frozen-lockfile
 
-      - name: notes extra install
+      # extra:install = 额外装一批 @latest 依赖（plugin-light、press-* 等），
+      # 这些不走 lock 文件，每次强制拉最新版
+      - name: notes 装一批最新依赖（extra:install）
         run: pnpm run extra:install
 
-      - name: Build notes (VitePress)
+      - name: 构建 notes（VitePress 文档站）
         run: pnpm run docs:build
 
-      # ---- one（Vue3 子应用，workspace 子包）----
-      - name: one extra install
+      - name: one 装一批最新依赖（extra:install）
         run: pnpm --filter one run extra:install
 
-      - name: Build one
+      - name: 构建 one（Vue3 子应用）
         # 前端运行时从 CDN 拉最新数据（见 .github/workflows/fetch.yml），
         # 这里注入的是数据文件的地址；未配置时只显示随构建打包的本地快照
         env:
           VITE_ONE_DATA_URL: ${{ vars.VITE_ONE_DATA_URL }}
         run: pnpm --filter one run build
 
-      # ---- 合并产物：one 挂到 /notes/one/ ----
       # notes base=/notes/，one base=/notes/one/，
       # 因此把 one/dist 放进 .vitepress/dist/one 即对应 URL /notes/one/
-      - name: Merge artifacts
+      - name: 合并产物：把 one/dist 挂到 /notes/one/
         # 注意：必须先 mkdir 再用 `one/dist/.` 复制「目录内容」。
         # 直接 `cp -r one/dist .vitepress/dist/one` 在目标已存在时（VitePress 若
         # 扫到 one 下的 md 会先建出 one/ 目录）会嵌套成 one/dist/，页面就 404 了。
@@ -76,18 +76,19 @@ jobs:
           cp -r one/dist/. .vitepress/dist/one/
           ls .vitepress/dist/one
 
-      - name: Upload artifact
+      - name: 上传 Pages 产物
         uses: actions/upload-pages-artifact@v4
         with:
           path: .vitepress/dist
 
   deploy:
+    name: 部署
     needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy to GitHub Pages
+      - name: 发布到 GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
