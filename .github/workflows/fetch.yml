@@ -8,9 +8,10 @@ name: 'Fetch One Data'
 #      前端运行时直接从 CDN 拉最新数据，更新即刻生效。
 #
 # 需要的 Secrets（仓库 Settings → Secrets and variables → Actions）：
-#   COS_SECRET_ID / COS_SECRET_KEY / COS_BUCKET / COS_REGION
-#   COS_KEY（可选，默认 one/one-data.json）
-#   COS_CDN_URL（可选，仅用于日志提示）
+#   COS_SECRET_ID / COS_SECRET_KEY
+#
+# 桶名（mike-1255355338）、地域（ap-guangzhou）、对象路径（one/one-data.json）
+# 都是公开信息，直接写在 one/script/upload-one-data.js 里，不必配成 Secrets。
 
 on:
   schedule:
@@ -51,11 +52,8 @@ jobs:
         run: pnpm --filter one run fetch:new
 
       - name: Upload to COS (CDN)
+        # 桶名/地域/路径已写死在脚本里，这里只需要密钥
         env:
           COS_SECRET_ID: ${{ secrets.COS_SECRET_ID }}
           COS_SECRET_KEY: ${{ secrets.COS_SECRET_KEY }}
-          COS_BUCKET: ${{ secrets.COS_BUCKET }}
-          COS_REGION: ${{ secrets.COS_REGION }}
-          COS_KEY: ${{ secrets.COS_KEY }}
-          COS_CDN_URL: ${{ secrets.COS_CDN_URL }}
         run: pnpm --filter one run upload:data

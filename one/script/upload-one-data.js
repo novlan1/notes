@@ -5,13 +5,12 @@
  * 不必像之前那样把 1.4MB 的 json 提交进 git，也不必为了 100 字节
  * 重跑一次全站构建（VitePress 2m41s）。
  *
- * 需要的环境变量（本地放 one/.env.local，CI 放仓库 Secrets）：
+ * 只有密钥是敏感信息，放仓库 Secrets / 本地 .env.local：
  *   COS_SECRET_ID
  *   COS_SECRET_KEY
- *   COS_BUCKET      例如 one-1250000000
- *   COS_REGION      例如 ap-guangzhou
- *   COS_KEY         可选，对象路径，默认 one/one-data.json
- *   COS_CDN_URL     可选，仅用于打印 CDN 地址提示
+ *
+ * 桶名、地域、对象路径都是公开信息，直接写在下面的常量里，
+ * 需要换环境时用同名环境变量覆盖即可。
  */
 const fs = require('fs');
 const path = require('path');
@@ -23,7 +22,13 @@ require('dotenv').config({ path: path.resolve(__dirname, '../.env.local') });
 
 const DATA_PATH = path.resolve(__dirname, '../src/logic/config/one-data.json');
 
-const REQUIRED = ['COS_SECRET_ID', 'COS_SECRET_KEY', 'COS_BUCKET', 'COS_REGION'];
+// ---- 公开配置，直接写死 ----
+const DEFAULT_BUCKET = 'mike-1255355338';
+const DEFAULT_REGION = 'ap-guangzhou';
+const DEFAULT_KEY = 'one/one-data.json';
+const CDN_BASE = 'https://cdn.uwayfly.com';
+
+const REQUIRED = ['COS_SECRET_ID', 'COS_SECRET_KEY'];
 
 
 async function main() {
@@ -37,11 +42,11 @@ async function main() {
   const {
     COS_SECRET_ID: SecretId,
     COS_SECRET_KEY: SecretKey,
-    COS_BUCKET: Bucket,
-    COS_REGION: Region,
   } = process.env;
 
-  const Key = process.env.COS_KEY || 'one/one-data.json';
+  const Bucket = process.env.COS_BUCKET || DEFAULT_BUCKET;
+  const Region = process.env.COS_REGION || DEFAULT_REGION;
+  const Key = process.env.COS_KEY || DEFAULT_KEY;
 
   const cos = new COS({ SecretId, SecretKey });
 
@@ -67,9 +72,8 @@ async function main() {
 
   const size = (fs.statSync(DATA_PATH).size / 1024 / 1024).toFixed(2);
   console.log(`>>> 上传成功: ${Key} (${size} MB)`);
-  if (process.env.COS_CDN_URL) {
-    console.log(`>>> CDN 地址: ${process.env.COS_CDN_URL}/${Key}`);
-  }
+  console.log(`>>> CDN 地址: ${CDN_BASE}/${Key}`);
+  console.log('>>> 提示：CDN/COS 需允许 https://novlan1.github.io 跨域 GET，否则前端拉不到');
 }
 
 main().catch((e) => {

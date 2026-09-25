@@ -11,5 +11,6 @@ export const ONE_PICK_PREFIX = 'https://wufazhuce.com/one/';
 
 // ONE 数据文件的 CDN 地址：运行时拉取最新数据，
 // 避免每抓一期都要重新构建部署整站。
-// 构建时由环境变量 VITE_ONE_DATA_URL 注入；未配置时只显示本地快照。
-export const ONE_DATA_URL: string = import.meta.env.VITE_ONE_DATA_URL || '';
+// 默认用 cdn.uwayfly.com；需要换地址时用 VITE_ONE_DATA_URL 覆盖。
+export const ONE_DATA_URL: string = import.meta.env.VITE_ONE_DATA_URL
+  || 'https://cdn.uwayfly.com/one/one-data.json';
