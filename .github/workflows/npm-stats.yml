@@ -3,13 +3,6 @@
 name: NPM Download Statistics
 
 on:
-  push:
-    branches:
-      - master
-    paths-ignore:
-      - 'scripts/**'
-      - 'README.md'
-      - '.gitignore'
   schedule:
     # UTC 1:00 = 北京时间 9:00，每天一次
     - cron: '0 1 * * *'
