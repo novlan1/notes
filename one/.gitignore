@@ -27,3 +27,7 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+# 本地环境变量（含 COS 密钥，绝不能提交；模板见 .env.local.example）
+.env.local
+.env.*.local

@@ -64,7 +64,7 @@ import {
 
 import { useRouter, useRoute } from 'vue-router';
 
-import { getOneData } from '../../logic/one/get-data';
+import { getOneData, fetchOneData } from '../../logic/one/get-data';
 
 
 const router = useRouter();
@@ -126,17 +126,28 @@ onMounted(() => {
 });
 
 
-const onGetImages = (isRefresh?: boolean) => {
-  if (isRefresh) {
-    imageInfo.value.currentPage = 1;
-  }
-
-  const list = getOneData();
+const renderList = (list: Array<{ url: string; name: string }>) => {
   imageInfo.value.total = list.length;
   imageInfo.value.list = list.slice(
     (imageInfo.value.currentPage - 1) * imageInfo.value.pageSize,
     imageInfo.value.currentPage * imageInfo.value.pageSize,
   );
+};
+
+const onGetImages = async (isRefresh?: boolean) => {
+  if (isRefresh) {
+    imageInfo.value.currentPage = 1;
+  }
+
+  // 先用本地快照渲染，保证首屏立即可见
+  renderList(getOneData());
+
+  // 再拉 CDN 上的最新数据覆盖；失败就继续沿用快照
+  try {
+    renderList(await fetchOneData());
+  } catch (e) {
+    console.warn('[one] CDN 数据拉取失败，沿用本地快照:', e);
+  }
 };
 
 

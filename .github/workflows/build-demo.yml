@@ -58,7 +58,10 @@ jobs:
         run: pnpm --filter one run extra:install
 
       - name: Build one
-        # 前端直接 import 已入库的 one-data.json，构建时无需合并步骤
+        # 前端运行时从 CDN 拉最新数据（见 .github/workflows/fetch.yml），
+        # 这里注入的是数据文件的地址；未配置时只显示随构建打包的本地快照
+        env:
+          VITE_ONE_DATA_URL: ${{ vars.VITE_ONE_DATA_URL }}
         run: pnpm --filter one run build
 
       # ---- 合并产物：one 挂到 /notes/one/ ----

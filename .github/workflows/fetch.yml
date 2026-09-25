@@ -1,12 +1,16 @@
 name: 'Fetch One Data'
 
-# 从旧仓库 novlan1/one 迁移过来，沿用它的方案：
-# 定时抓取 ONE 的下一期，读改写 one/src/logic/config/one-data.json 并提交。
-# 前端 src/logic/one/get-data.ts 直接 import 这个文件，构建时不需要合并步骤。
+# 定时抓取 ONE 的下一期 → 直接上传到 COS/CDN。
 #
-# 体积提示：one-data.json 约 1.4MB，每有更新就整体重写提交，约 456MB/年。
-# 旧仓库 .git 涨到 3.5G 的主因是历史图片（4582 张共 1.8G，占 69.9%），
-# json 只占 24%；图片没有迁过来，所以这边只会有 json 这一项的增长。
+# 数据不再进 git，带来两个好处：
+#   1. .git 不会因每期重写 1.4MB 的 json 而膨胀；
+#   2. 不必为了 100 字节的新数据重跑一次 VitePress 全站构建（约 2m41s），
+#      前端运行时直接从 CDN 拉最新数据，更新即刻生效。
+#
+# 需要的 Secrets（仓库 Settings → Secrets and variables → Actions）：
+#   COS_SECRET_ID / COS_SECRET_KEY / COS_BUCKET / COS_REGION
+#   COS_KEY（可选，默认 one/one-data.json）
+#   COS_CDN_URL（可选，仅用于日志提示）
 
 on:
   schedule:
@@ -21,9 +25,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
-        with:
-          # 不走默认的 GITHUB_TOKEN，下面用 PAT 推送
-          persist-credentials: false
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -45,30 +46,16 @@ jobs:
 
       - name: Fetch new data
         # 数据源偶尔抽风/被限流时，不让定时任务天天报错刷屏；
-        # 没抓到自然就没有 diff，下面会跳过提交，站点继续用基线构建
+        # 没抓到也只是把现有数据重新上传一次，没有副作用
         continue-on-error: true
         run: pnpm --filter one run fetch:new
 
-      - name: Check for changes
-        id: check
-        run: |
-          git add one/src/logic/config/one-data.json
-          if git diff --cached --quiet; then
-            echo "has_changes=false" >> $GITHUB_OUTPUT
-            echo ">>> 没有新数据，跳过提交"
-          else
-            echo "has_changes=true" >> $GITHUB_OUTPUT
-            echo ">>> 有新数据，准备提交"
-          fi
-
-      - name: Commit and push
-        if: steps.check.outputs.has_changes == 'true'
-        run: |
-          git config user.name 'novlan1'
-          git config user.email '1576271227@qq.com'
-          git commit -m "feat: fetch new one data $(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')"
-          # 必须用 PAT：GITHUB_TOKEN 触发的 push 不会再触发其他 workflow，
-          # 那样数据更新了但不会重新部署。
-          # 推送到 master 会命中 build-demo.yml（数据文件不在 paths-ignore 里），
-          # 自动带上新数据重新部署。
-          git push "https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com/novlan1/notes.git" HEAD:master
+      - name: Upload to COS (CDN)
+        env:
+          COS_SECRET_ID: ${{ secrets.COS_SECRET_ID }}
+          COS_SECRET_KEY: ${{ secrets.COS_SECRET_KEY }}
+          COS_BUCKET: ${{ secrets.COS_BUCKET }}
+          COS_REGION: ${{ secrets.COS_REGION }}
+          COS_KEY: ${{ secrets.COS_KEY }}
+          COS_CDN_URL: ${{ secrets.COS_CDN_URL }}
+        run: pnpm --filter one run upload:data

@@ -12,6 +12,7 @@
     "lint": "eslint . --fix",
     "docs:build": "npm run build",
     "fetch:new": "node script/fetch-new-data",
+    "upload:data": "node script/upload-one-data",
     "extra:install": "bash script/extra-install.sh"
   },
   "dependencies": {
@@ -63,6 +64,7 @@
     "@vue/eslint-config-typescript": "^14.5.0",
     "@vue/tsconfig": "^0.7.0",
     "autoprefixer": "^10.4.21",
+    "cos-nodejs-sdk-v5": "^2.14.0",
     "dotenv": "^16.5.0",
     "eslint": "8.57.1",
     "eslint-config-light": "^1.5.7",
