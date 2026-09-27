@@ -1,0 +1,64 @@
+name: 'Fetch One Data'
+
+# 定时任务（schedule）只在仓库**默认分支**上注册，而本仓库的默认分支是 develop。
+# 真正的代码（one/ 子项目、脚本、pnpm workspace）都在 master 上，
+# 所以这里在 develop 上放一份同样的 workflow：
+#   1. 它的唯一职责是让 GitHub 注册下面这个 cron；
+#   2. 执行时用 ref: master 显式检出 master 代码，跑的仍然是 master 上的脚本。
+#
+# ⚠ 维护约定：改动抓取 / 上传逻辑时，master 与 develop 两份文件要同步改。
+#   更彻底的做法是把仓库默认分支切成 master，那样就只需保留 master 这一份。
+#
+# 需要的 Secrets（仓库 Settings → Secrets and variables → Actions）：
+#   COS_SECRET_ID / COS_SECRET_KEY
+#
+# 桶名（mike-1255355338）、地域（ap-guangzhou）、对象路径（one/one-data.json）
+# 都是公开信息，直接写在 one/script/upload-one-data.js 里，不必配成 Secrets。
+
+on:
+  schedule:
+    # UTC 0,4,6,23 点 = 北京时间 8,12,14,7 点
+    - cron: '0 0,4,6,23 * * *'
+  # 方便手动触发验证 / 补抓
+  workflow_dispatch:
+
+jobs:
+  fetch:
+    name: 抓取并上传 ONE 数据
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出 master 代码
+        uses: actions/checkout@v5
+        with:
+          # 默认会检出 develop（上面既没有 workflow 也没有 one/ 子项目），这里显式切 master
+          ref: master
+
+      - name: 准备 pnpm 10
+        uses: pnpm/action-setup@v4
+        with:
+          # 与 build-demo.yml 保持一致（allowBuilds 是 pnpm 10 的配置）
+          version: 10
+
+      - name: 准备 Node.js 20
+        uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: 安装依赖（workspace）
+        run: pnpm install --frozen-lockfile
+
+      # 这里不跑 extra:install：那批 @latest 依赖（plugin-light、press-* 等）
+      # 是构建用的，抓数据只要 axios / cheerio / t-comm（都在 dependencies 里）
+      - name: 抓取 ONE 最新一期
+        # 数据源偶尔抽风/被限流时，不让定时任务天天报错刷屏；
+        # 没抓到也只是把现有数据重新上传一次，没有副作用
+        continue-on-error: true
+        run: pnpm --filter one run fetch:new
+
+      - name: 上传到 COS（CDN 源站）
+        # 桶名/地域/路径已写死在脚本里，这里只需要密钥
+        env:
+          COS_SECRET_ID: ${{ secrets.COS_SECRET_ID }}
+          COS_SECRET_KEY: ${{ secrets.COS_SECRET_KEY }}
+        run: pnpm --filter one run upload:data
