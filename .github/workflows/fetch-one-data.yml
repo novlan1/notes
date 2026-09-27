@@ -43,6 +43,20 @@ jobs:
       - name: 安装依赖（workspace）
         run: pnpm install --frozen-lockfile
 
+      # 仓库里的 one/src/logic/config/one-data.json 只是一份停更的快照，
+      # 每次运行都从它开始抓，就只能永远补同一期（数据不进 git 后必然这样）。
+      # 真源是 CDN，先拉下来当基线；拉取失败再退回仓库快照。
+      - name: 同步线上最新数据作为基线
+        run: |
+          set -e
+          if curl -fsSL https://cdn.uwayfly.com/one/one-data.json -o /tmp/one-data.cdn.json \
+            && node -e "JSON.parse(require('fs').readFileSync('/tmp/one-data.cdn.json'))"; then
+            cp /tmp/one-data.cdn.json one/src/logic/config/one-data.json
+            echo ">>> 已用线上数据覆盖本地基线"
+          else
+            echo ">>> 线上数据不可用，沿用仓库基线"
+          fi
+
       # 这里不跑 extra:install：那批 @latest 依赖（plugin-light、press-* 等）
       # 是构建用的，抓数据只要 axios / cheerio / t-comm（都在 dependencies 里）
       - name: 抓取 ONE 最新一期

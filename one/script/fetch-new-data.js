@@ -99,8 +99,14 @@ async function main() {
     });
   }
 
-  console.log('>>> urlList:\n', urlList);
+  console.log(`>>> 扫描区间: ${min} ~ ${max - 1}（共 ${urlList.length} 个链接）`);
 
+  // 站点链接编号（/one/5273）与 VOL 编号（5101）不是单调对应的：
+  // 实测 5273↔VOL.5101、5246↔VOL.5102、5306↔VOL.5104。
+  // 所以不能「只找 lastVol + 1 然后 break」——那样一次运行只补一期，
+  // 一旦落后（定时任务没跑 / 某次失败）缺口就再也补不回来。
+  // 这里改成：一次遍历把窗口内所有比 lastVol 新的期都收齐，去重后按顺序补齐。
+  const foundMap = new Map(); // vol -> info
 
   for (const item of urlList) {
     const { url, linkIndex } = item;
@@ -108,35 +114,42 @@ async function main() {
     try {
       const result = await fetchRawText({ url, linkIndex });
 
-      if (result.vol === lastVol + 1) {
-        console.log('>>> Found next vol:\n', result);
-        updateOneDataJson(result);
-        break;
+      // 只要比当前最新一期新就收下；同一 vol 可能有多个链接，取第一个
+      if (result.vol > lastVol && !foundMap.has(result.vol)) {
+        foundMap.set(result.vol, result);
       }
     } catch (e) {
 
     }
   }
+
+  const newList = [...foundMap.values()].sort((a, b) => a.vol - b.vol);
+
+  if (!newList.length) {
+    console.log('>>> 没有更新的期，结束');
+    return;
+  }
+
+  console.log(`>>> 本次新增 ${newList.length} 期: ${newList.map(item => item.vol).join(', ')}`);
+  updateOneDataJsonList(newList);
 }
 
 
-function updateOneDataJson(info) {
-  const { pic, text, vol, linkIndex, month, date } = info;
-
+function updateOneDataJsonList(infoList) {
   const oneDataList = readFileSync(ONE_DATA_JSON_PATH, true);
-  const parsedDate = timeStampFormat(new Date(`${date} ${month}`).getTime(), 'yyyy-MM-dd');
-  const parsedInfo = {
-    pic,
-    text,
-    picName: `${vol}--${parsedDate}--${linkIndex}`,
+  const parsedList = infoList.map(info => {
+    const { pic, text, vol, linkIndex, month, date } = info;
+    const parsedDate = timeStampFormat(new Date(`${date} ${month}`).getTime(), 'yyyy-MM-dd');
 
-  };
-  const newList = [
-    ...oneDataList,
-    parsedInfo,
-  ];
-  console.log('>>> parsedInfo:\n', parsedInfo);
-  writeFileSync(ONE_DATA_JSON_PATH, newList, true);
+    return {
+      pic,
+      text,
+      picName: `${vol}--${parsedDate}--${linkIndex}`,
+    };
+  });
+
+  console.log('>>> parsedList:\n', parsedList);
+  writeFileSync(ONE_DATA_JSON_PATH, [...oneDataList, ...parsedList], true);
 }
 
 
