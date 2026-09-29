@@ -1,4 +1,7 @@
 {
+  "id": "/notes/",
+  "lang": "zh-CN",
+  "dir": "ltr",
   "name": "简单点",
   "short_name": "笔记",
   "description": "杨的笔记",
@@ -11,12 +14,14 @@
     {
       "src": "/notes/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/notes/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }

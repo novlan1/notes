@@ -23,9 +23,15 @@ export default withMermaid({
 
   head: [
     ['link', { rel: 'icon', href: 'https://cdn.uwayfly.com/article/2026/7/own_mike_RTabY5dKitRNRdBB.png' }],
+    // manifest 只在首页生效（详情页由下面的 transformHead 移除），原因见 transformHead 注释
     ['link', { rel: 'manifest', href: '/notes/manifest.json' }],
     ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/notes/icon-192.png' }],
-    ['meta', { name: 'theme-color', content: '#ffffff' }],
+    // iOS 全屏三件套：详情页不带 manifest，靠这组 meta 保证「添加到主屏幕」后仍是独立窗口 + 有图标
+    ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
+    ['meta', { name: 'apple-mobile-web-app-title', content: '笔记' }],
+    ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'default' }],
+    ['meta', { name: 'theme-color', content: '#ffffff', media: '(prefers-color-scheme: light)' }],
+    ['meta', { name: 'theme-color', content: '#1b1b1b', media: '(prefers-color-scheme: dark)' }],
     ['meta', { name: 'author', content: 'novlan1' }],
     [
       'meta',
@@ -37,6 +43,17 @@ export default withMermaid({
     ],
     ['script', {}, `console.log('welcome notes of novlan1!');`],
   ],
+
+  // 详情页不带 manifest：iOS「添加到主屏幕」在有 manifest 时会优先用 start_url，
+  // 而 start_url 是全站唯一的 /notes/，导致不管在哪篇笔记里添加快捷方式都会回到首页。
+  // 去掉 manifest 后 iOS 回退成「用当前页 URL」，快捷方式就钉在那篇笔记上；
+  // 独立窗口和图标由 apple-mobile-web-app-* + apple-touch-icon 兜住。
+  // 首页保留 manifest，正常安装时仍是 standalone + start_url。
+  transformHead({ head, page }) {
+    if (page === 'index.md') return head;
+    return head.filter(([tag, attrs]) => !(tag === 'link' && attrs?.rel === 'manifest'));
+  },
+
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
